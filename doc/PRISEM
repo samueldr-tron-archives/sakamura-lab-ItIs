@@ -1,0 +1,627 @@
+
+		＝ 優先度継承セマフォ機能の仕様 ＝
+
+	     (Release 1.3β対応，最終更新: 17-Feb-1995)
+
+    * TRON は The Real-time Operating system Nucleus の略称です．
+    * ITRON は Industrial TRON の略称です．
+
+------------------------------------------------------------------------ 
+	    ItIs - ITRON Implementation by Sakamura Lab
+
+Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the name of the University nor the names of the laboratory
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+------------------------------------------------------------------------
+
+
+１．優先度継承セマフォについて
+
+優先度継承とは，優先度逆転が上限なく続くこと (unbounded priority
+inversion) を防ぐための仕組みである．優先度逆転とは，優先度の高いタス
+クを実行すべきであるにもかかわらず，何らかの理由により優先度の低いタス
+クが実行されている状態をいう．優先度逆転は，「本来実行すべきタスクが実
+行されない」という意味で好ましくない状態であるが，リソース制約の問題に
+より，一時的に起こることは避けられない．そこで，優先度逆転を短い時間に
+押える仕組みである優先度継承が重要になる．
+
+優先度継承のコンセプトを一言でいうと，「他のタスクを待たせているタスク
+は，待たされているタスクの優先度を継承する」ということになる．そのため，
+本来は，待ちを伴うタスク間同期・通信機能すべてに関連することになる．
+
+ITRON仕様に優先度継承を取り込む方法はいくつか考えられるが，ItIs ではそ
+の検討の一貫として，優先度継承機能を持ったセマフォをサポートしている．
+これを優先度継承セマフォと呼ぶ．優先度継承セマフォ機能の仕様を検討して
+いくと，理想的だが実装負荷が大きい (実行効率が悪い, カーネルサイズが大
+きい) 仕様と，実装負荷は軽いが使用にあたって制約がある仕様が考えられる．
+どちらの仕様が良いかは，アプリケーションにもより一概には決められないた
+め，ItIs の現バージョンではその両方の仕様をサポートしている．
+
+ItIs では，前者の (理想的だが効率が悪い方の) 仕様を仕様1，後者の (効率
+は良いが制約がある方の) 仕様を仕様2 と呼ぶ．どちらの仕様を用いるかは，
+システム構成設定ファイル中の prisem_spec で指定する．デフォルトは，仕
+様1 である．
+
+優先度継承セマフォに関する詳しい議論については，以下の参考文献を参照さ
+れたい．
+
+[1] L. Sha, R. Rajkumar, and J. P. Lehoczky, "Priority Inheritance
+Protocols: An Approach to Real-Time Synchronization," IEEE Trans. 
+Computers, vol. 39, pp. 1175-1185, Sep. 1990.
+
+[2] H. Takada and K. Sakamura, "Experimental Implementations of
+Priority Inheritance Semaphore on ITRON-specification Kernel",
+Proc. 11th TRON Project International Symposium, pp. 106-113, IEEE CS
+Press, Dec. 1994.
+
+
+２．仕様1 における優先度継承セマフォ機能の仕様
+
+仕様1 における優先度継承セマフォ機能では，chg_pri を使わない場合のタス
+クの優先度は，そのタスクの初期優先度と，そのタスクが獲得している優先度
+継承セマフォを待っている中で最高優先度のタスクの優先度との，高い (値が
+小さい) 方に設定される．そのために OS は，タスクが獲得している優先度継
+承セマフォのリストを管理している．
+
+優先度継承セマフォを獲得/解放するタスクの優先度を chg_pri によって変更
+しても，優先度継承セマフォの機能によって優先度が変更されると，chg_pri 
+で設定した優先度は無効になる．つまり，chg_pri はタスクの現在優先度を一
+時的に変更するものということになる．優先度継承セマフォ機能の実装に 
+chg_pri が使われていると考えるわかりやすいかもしれない．
+
+優先度継承セマフォを待っているタスクの優先度を chg_pri によって変更し
+た場合，その優先度継承セマフォを獲得しているタスクの優先度が再計算・変
+更される場合がある．具体的には，次の 2つのケースで，優先度の変更が行わ
+れる．(1) 優先度を変更されたタスクの変更後の優先度が，優先度継承セマフォ
+を獲得しているタスクの現在優先度よりも高い (値が小さい) 場合．(2) 優先
+度が変更されたタスクの変更前の優先度が，優先度継承セマフォを獲得してい
+るタスクの優先度に等しい場合に，そのタスクの優先度が再計算され，その結
+果得られた値が現在優先度と等しくない場合．
+
+仕様1 では，ext_tsk, exd_tsk, ter_tsk によりタスクが終了する場合，タス
+クが獲得していた優先度継承セマフォは，OS によって自動的に解放される．
+
+(1) vcre_pis	優先度継承セマフォ生成			    (機能コード: -257)
+
+    vcre_pis: Create Priority Inheritance Semaphore
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
+
+【解説】
+vcre_pis では，pisid で指定された ID番号を持つ優先度継承セマフォを生成
+する．具体的には，生成するセマフォに対して管理ブロックを割り付け，セマ
+フォの初期値を 1 に初期化する．
+
+ID番号の正負の扱いや使用できない範囲，それらの場合のエラーコード，拡張
+情報 (exinf) の扱いについては，他の同期・通信オブジェクトと同様である．
+
+pisatr は，下位側がシステム属性を表し，上位側がインプリメント依存属性
+を表す．pisatr のシステム属性の部分では，次のような指定を行う．
+
+	sematr := TA_TPRI
+
+	    TA_TPRI	待ちタスクのキューイングは優先度順
+
+優先度継承セマフォでは，待ちタスクのキューイングは優先度順でないと意味
+がないため，FIFO キューイングは用意していない．そのため，TA_TPRI を指
+定しなくても優先度順のキューイングになるが，他の同期・通信オブジェクト
+との統一性のために，TA_TPRI を指定してもよいことにしている．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_RSATR	予約属性 (pisatr が不正あるいは利用できない)
+    E_OBJ	オブジェクトの状態が不正 (同一ID番号の優先度継承セマフォ
+		が既に存在)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+
+(2) vvcre_pis	優先度継承セマフォ生成 (ID自動割当)	    (機能コード: -259)
+
+    vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
+
+【パラメータ】
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
+
+【リターンパラメータ】
+    ER		ercd		生成した優先度継承セマフォのID, エラーコード
+
+【C言語インタフェース】
+    ER ercd =vvcre_pis(T_CPIS *pk_cpis);
+
+【解説】
+ID番号を指定せずに優先度継承セマフォを生成し，生成した優先度継承セマフォ
+の ID (必ず正の値) を ercd に返す．ercd が負の場合は，エラーコードを表
+す．割り当て可能な ID がない場合，EV_FULLエラーとなる．その他について
+は，vcre_pis と同じ．
+
+(3) vdel_pis	優先度継承セマフォ削除			    (機能コード: -258)
+
+    vdel_pis: Delete Priority Inheritance Semaphore
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd =vdel_pis(ID pisid);
+
+【解説】
+pisid で示された優先度継承セマフォを削除する．
+
+本システムコールの発行により，対象優先度継承セマフォの管理ブロック用の
+領域は解放される．また，このシステムコールが終了した後は，同じ ID番号
+の優先度継承セマフォを再び生成することができる．
+
+対象優先度継承セマフォを獲得しているタスクがあった場合，そのタスクの優
+先度が再計算・変更される場合がある．具体的には，そのタスクの現在優先度
+が，優先度継承セマフォを待っている中で最高優先度のタスクの優先度に等し
+い場合に，優先度継承セマフォを獲得していたタスクの優先度が再計算され，
+その結果得られた値がそのタスクの現在優先度よりも低い (値が大きい) 場合
+に，優先度の変更が行われる．
+
+対象優先度継承セマフォにおいて条件成立を待っているタスクがあった場合に
+も，本システムコールは正常終了するが，待ち状態にあったタスクにはエラー 
+E_DLT が返される．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+
+(4) vsig_pis	優先度継承セマフォ資源解放		    (機能コード: -264)
+
+    vsig_pis: Signal Priority Inheritance Semaphore
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd =vsig_pis(ID pisid);
+
+【解説】
+pisid で示された優先度継承セマフォに対して，資源を解放する操作を行う．
+具体的には，対象優先度継承セマフォに対して既に待っているタスクがあれば，
+待ち行列の先頭のタスクを READY状態に移す．この場合，その優先度継承セマ
+フォは獲得された状態のままである．一方，対象優先度継承セマフォに対して
+待っているタスクが無ければ，その優先度継承セマフォが解放される．
+
+このシステムコールをタスク独立部から呼び出すことはできない．呼び出した
+場合，E_CTXエラーとなる．また，獲得されていない，ないしは，他タスクに
+獲得されている優先度継承セマフォを解放しようとした場合，E_OBJエラーと
+なる．
+
+優先度継承セマフォを解放することにより，本システムコールの発行タスクの
+優先度が再計算・変更される場合がある．具体的には，発行タスクの現在優先
+度が，解放した優先度継承セマフォを待っていた中で最高優先度のタスクの優
+先度に等しい場合に，発行タスクの優先度が再計算され，その結果得られた値
+がそのタスクの現在優先度よりも低い (値が大きい) 場合に，優先度の変更が
+行われる．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_CTX	コンテキストエラー (タスク独立部からの発行)
+    E_OBJ	オブジェクトの状態が不正 (pisid の優先度継承セマフォが
+		獲得されていない．または，他のタスクが獲得している)
+
+(5) vwai_pis	優先度継承セマフォ資源獲得		    (機能コード: -261)
+(6) vpreq_pis	優先度継承セマフォ資源獲得 (ポーリング)	    (機能コード: -262)
+(7) vtwai_pis	優先度継承セマフォ資源獲得 (タイムアウト有) (機能コード: -263)
+
+    vwai_pis: Wait on Priority Inheritance Semaphore
+   vpreq_pis: Poll and Request Priority Inheritance Semaphore
+   vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
+
+【パラメータ (vwai_pis, vpreq_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
+
+【パラメータ (vtwai_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
+    TMO		tmout		タイムアウト指定
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd = vwai_pis(ID pisid);
+    ER ercd =vpreq_pis(ID pisid);
+    ER ercd =vtwai_pis(ID pisid, TMO tmout);
+
+【解説】
+vwai_pis では，pisid で示された優先度継承セマフォから，資源を獲得する
+操作を行う．具体的には，対象優先度継承セマフォが獲得されていない場合に
+は，優先度継承セマフォの獲得に成功する．この場合，本システムコールの発
+行タスクは待ち状態に入らず，実行を継続する．一方、対象優先度継承セマフォ
+が獲得されている場合には，本システムコールを発行したタスクは待ち状態に
+入る．すなわち，その優先度継承セマフォに対する待ち行列につながれる．
+
+本システムコールを発行したタスクが待ち状態に入る場合，対象優先度継承セ
+マフォを獲得しているタスクが，発行タスクの優先度を継承する場合がある．
+具体的には，優先度継承セマフォを獲得しているタスクの現在優先度が，発行
+タスクの現在優先度よりも低い (値が大きい) 場合に，優先度の継承が行われ
+る．
+
+vpreq_pis は，wai_pis から待ち状態に入る機能を取り除いたシステムコール
+である．一方，vtwai_pis は，wai_pis にタイムアウトの機能を付け加えたシ
+ステムコールであり，tmout により待ち時間の最大値 (タイムアウト値) を指
+定することができる．ポーリングやタイムアウトの扱いについては，他の同期・
+通信オブジェクトと同様である．
+
+twai_pis または vtwai_pis によって優先度継承セマフォ待ち状態に入ったタ
+スクが，rel_wai の発行，タイムアウト (vtwai_pis のみ)，ないしは対象優
+先度継承セマフォの削除によって待ち解除される場合に，その優先度継承セマ
+フォを獲得しているタスクの優先度が再計算・変更される場合がある．具体的
+には，そのタスクの現在優先度が，待ち解除されたタスクの優先度に等しい場
+合に，優先度継承セマフォを獲得しているタスクの優先度が再計算され，その
+結果得られた値がそのタスクの現在優先度と等しくない場合に，優先度の変更
+が行われる．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_PAR	パラメータエラー (tmout <= (-2))
+    E_DLT	待ちオブジェクトが削除された (待ちの間に対象優先度継承
+		セマフォが削除)
+    E_RLWAI	待ち状態強制解除 (待ちの間に rel_wai を受け付け)
+    E_TMOUT	ポーリング失敗またはタイムアウト
+    E_CTX	コンテキストエラー (タスク独立部またはディスパッチ禁止
+		状態で実行)
+
+(8) vref_pis	優先度継承セマフォ状態参照		    (機能コード: -260)
+
+    vref_pis: Refer Priority Inheritance Semaphore Status
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_RPIS*	pk_rpis		優先度継承セマフォ状態を返すパケットアドレス
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+  pk_rpis の内容
+    VP		exinf		拡張情報
+    BOOL_ID	wtsk		待ちタスクの有無
+    BOOL_ID	pistsk		獲得タスクの有無
+
+【C言語インタフェース】
+    ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
+
+【解説】
+pisid で示された優先度継承セマフォの各種の状態を参照し，リターンパラメー
+タとして待ちタスクの有無 (wtsk)，獲得タスクの有無 (pistsk)，拡張情報 
+(exinf) を返す．
+
+wtsk は，この優先度継承セマフォで待っているタスクの有無を示す．待ちタ
+スクが無い場合は wtsk = FALSE = 0 となる．待ちタスクがある場合，wtsk 
+には待ち行列の先頭のタスクの ID を返す．
+
+pistsk は，この優先度継承セマフォを獲得しているタスクの有無を示す．獲
+得タスクが無い場合は pistsk = FALSE = 0 となる．獲得タスクがある場合，
+pistsk には獲得タスクの ID を返す．
+
+vref_pis で対象優先度継承セマフォが存在しない場合には，E_NOEXSエラーと
+なる．
+
+どんな場合でも，wtsk = FALSE と pistsk != FALSE の少なくとも一方は成り
+立つ．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+
+
+３．仕様2 における優先度継承セマフォ機能の仕様
+
+仕様2 における優先度継承セマフォ機能では，優先度継承セマフォを解放した
+場合に，タスクの優先度を初期優先度に戻す．これは，他の優先度継承セマフォ
+を獲得している場合にも一律に行われるので，複数の優先度継承セマフォを獲
+得している場合に正しい動作を行わせるには，獲得しているすべての優先度継
+承セマフォをディスパッチ禁止状態で一度に解放する必要がある．
+
+優先度継承セマフォを獲得/解放するタスクの優先度を chg_pri によって変更
+しても，優先度継承セマフォの機能によって優先度が変更されると，chg_pri 
+で設定した優先度は無効になる．つまり，chg_pri はタスクの現在優先度を一
+時的に変更するものということになる．優先度継承セマフォ機能の実装に 
+chg_pri が使われていると考えるわかりやすいかもしれない．
+
+優先度継承セマフォを待っているタスクの優先度を chg_pri によって変更し
+た場合，その優先度継承セマフォを獲得しているタスクの優先度が再計算・変
+更される場合がある．具体的には，優先度を変更されたタスクの変更後の優先
+度が，優先度継承セマフォを獲得しているタスクの現在優先度よりも高い (値
+が小さい) 場合に，優先度の変更が行われる．
+
+(1) vcre_pis	優先度継承セマフォ生成			    (機能コード: -257)
+
+    vcre_pis: Create Priority Inheritance Semaphore
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
+
+【解説】
+vcre_pis では，pisid で指定された ID番号を持つ優先度継承セマフォを生成
+する．具体的には，生成するセマフォに対して管理ブロックを割り付け，セマ
+フォの初期値を 1 に初期化する．
+
+ID番号の正負の扱いや使用できない範囲，それらの場合のエラーコード，拡張
+情報 (exinf) の扱いについては，他の同期・通信オブジェクトと同様である．
+
+pisatr は，下位側がシステム属性を表し，上位側がインプリメント依存属性
+を表す．pisatr のシステム属性の部分では，次のような指定を行う．
+
+	sematr := TA_TPRI
+
+	    TA_TPRI	待ちタスクのキューイングは優先度順
+
+優先度継承セマフォでは，待ちタスクのキューイングは優先度順でないと意味
+がないため，FIFO キューイングは用意していない．そのため，TA_TPRI を指
+定しなくても優先度順のキューイングになるが，他の同期・通信オブジェクト
+との統一性のために，TA_TPRI を指定してもよいことにしている．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_RSATR	予約属性 (pisatr が不正あるいは利用できない)
+    E_OBJ	オブジェクトの状態が不正 (同一ID番号の優先度継承セマフォ
+		が既に存在)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+
+(2) vvcre_pis	優先度継承セマフォ生成 (ID自動割当)	    (機能コード: -259)
+
+    vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
+
+【パラメータ】
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
+
+【リターンパラメータ】
+    ER		ercd		生成した優先度継承セマフォのID, エラーコード
+
+【C言語インタフェース】
+    ER ercd =vvcre_pis(T_CPIS *pk_cpis);
+
+【解説】
+ID番号を指定せずに優先度継承セマフォを生成し，生成した優先度継承セマフォ
+の ID (必ず正の値) を ercd に返す．ercd が負の場合は，エラーコードを表
+す．割り当て可能な ID がない場合，EV_FULLエラーとなる．その他について
+は，vcre_pis と同じ．
+
+(3) vdel_pis	優先度継承セマフォ削除			    (機能コード: -258)
+
+    vdel_pis: Delete Priority Inheritance Semaphore
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd =vdel_pis(ID pisid);
+
+【解説】
+pisid で示された優先度継承セマフォを削除する．
+
+本システムコールの発行により，対象優先度継承セマフォの管理ブロック用の
+領域は解放される．また，このシステムコールが終了した後は，同じ ID番号
+の優先度継承セマフォを再び生成することができる．
+
+対象優先度継承セマフォにおいて条件成立を待っているタスクがあった場合に
+も，本システムコールは正常終了するが，待ち状態にあったタスクにはエラー 
+E_DLT が返される．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+
+(4) vsig_pis	優先度継承セマフォ資源返却		    (機能コード: -264)
+
+    vsig_pis: Signal Priority Inheritance Semaphore
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd =vsig_pis(ID pisid);
+
+【解説】
+pisid で示された優先度継承セマフォに対して，資源を解放する操作を行う．
+具体的には，対象優先度継承セマフォに対して既に待っているタスクがあれば，
+待ち行列の先頭のタスクを READY状態に移す．この場合，その優先度継承セマ
+フォは獲得された状態のままである．一方，対象優先度継承セマフォに対して
+待っているタスクが無ければ，その優先度継承セマフォが解放される．
+
+このシステムコールをタスク独立部から呼び出すことはできない．呼び出した
+場合，E_CTXエラーとなる．また，獲得されていない，ないしは，他タスクに
+獲得されている優先度継承セマフォを解放しようとした場合，E_OBJエラーと
+なる．
+
+優先度継承セマフォを解放することにより，タスクの優先度は，必要な場合に
+初期優先度に戻される．具体的には，タスクの優先度が初期優先度よりも高い
+場合にのみ，初期優先度に戻す処理が行われる．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_CTX	コンテキストエラー (タスク独立部からの発行)
+    E_OBJ	オブジェクトの状態が不正 (pisid の優先度継承セマフォが
+		獲得されていない．または，他のタスクが獲得している)
+
+(5) vwai_pis	優先度継承セマフォ資源獲得		    (機能コード: -261)
+(6) vpreq_pis	優先度継承セマフォ資源獲得 (ポーリング)	    (機能コード: -262)
+(7) vtwai_pis	優先度継承セマフォ資源獲得 (タイムアウト有) (機能コード: -263)
+
+    vwai_pis: Wait on Priority Inheritance Semaphore
+   vpreq_pis: Poll and Request Priority Inheritance Semaphore
+   vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
+
+【パラメータ (vwai_pis, vpreq_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
+
+【パラメータ (vtwai_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
+    TMO		tmout		タイムアウト指定
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+【C言語インタフェース】
+    ER ercd = vwai_pis(ID pisid);
+    ER ercd =vpreq_pis(ID pisid);
+    ER ercd =vtwai_pis(ID pisid, TMO tmout);
+
+【解説】
+vwai_pis では，pisid で示された優先度継承セマフォから，資源を獲得する
+操作を行う．具体的には，対象優先度継承セマフォが獲得されていない場合に
+は，優先度継承セマフォの獲得に成功する．この場合，本システムコールの発
+行タスクは待ち状態に入らず，実行を継続する．一方、対象優先度継承セマフォ
+が獲得されている場合には，本システムコールを発行したタスクは待ち状態に
+入る．すなわち，その優先度継承セマフォに対する待ち行列につながれる．
+
+本システムコールを発行したタスクが待ち状態に入る場合，対象優先度継承セ
+マフォを獲得しているタスクが，発行タスクの優先度を継承する場合がある．
+具体的には，優先度継承セマフォを獲得しているタスクの現在優先度が，発行
+タスクの現在優先度よりも低い (値が大きい) 場合に，優先度の継承が行われ
+る．
+
+vpreq_pis は，wai_pis から待ち状態に入る機能を取り除いたシステムコール
+である．一方，vtwai_pis は，wai_pis にタイムアウトの機能を付け加えたシ
+ステムコールであり，tmout により待ち時間の最大値 (タイムアウト値) を指
+定することができる．ポーリングやタイムアウトの扱いについては，他の同期・
+通信オブジェクトと同様である．
+
+twai_pis または vtwai_pis によって優先度継承セマフォ待ち状態に入ったタ
+スクが，rel_wai の発行，タイムアウト (vtwai_pis のみ)，ないしは対象優
+先度継承セマフォの削除によって待ち解除された場合でも，その優先度継承セ
+マフォを獲得しているタスクの優先度は変更されない．そのため，優先度継承
+セマフォを獲得しているタスクの優先度が高すぎる値に設定され，その結果，
+待ち解除されたタスクの実行が遅れる場合がある．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_PAR	パラメータエラー (tmout <= (-2))
+    E_DLT	待ちオブジェクトが削除された (待ちの間に対象優先度継承
+		セマフォが削除)
+    E_RLWAI	待ち状態強制解除 (待ちの間に rel_wai を受け付け)
+    E_TMOUT	ポーリング失敗またはタイムアウト
+    E_CTX	コンテキストエラー (タスク独立部またはディスパッチ禁止
+		状態で実行)
+
+(8) vref_pis	優先度継承セマフォ状態参照		    (機能コード: -260)
+
+    vref_pis: Refer Priority Inheritance Semaphore Status
+
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_RPIS*	pk_rpis		優先度継承セマフォ状態を返すパケットアドレス
+
+【リターンパラメータ】
+    ER		ercd		エラーコード
+
+  pk_rpis の内容
+    VP		exinf		拡張情報
+    BOOL_ID	wtsk		待ちタスクの有無
+    BOOL_ID	pistsk		獲得タスクの有無
+
+【C言語インタフェース】
+    ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
+
+【解説】
+pisid で示された優先度継承セマフォの各種の状態を参照し，リターンパラメー
+タとして待ちタスクの有無 (wtsk)，獲得タスクの有無 (pistsk)，拡張情報 
+(exinf) を返す．
+
+wtsk は，この優先度継承セマフォで待っているタスクの有無を示す．待ちタ
+スクが無い場合は wtsk = FALSE = 0 となる．待ちタスクがある場合，wtsk 
+には待ち行列の先頭のタスクの ID を返す．
+
+pistsk は，この優先度継承セマフォを獲得しているタスクの有無を示す．獲
+得タスクが無い場合は pistsk = FALSE = 0 となる．獲得タスクがある場合，
+pistsk には獲得タスクの ID を返す．
+
+vref_pis で対象優先度継承セマフォが存在しない場合には，E_NOEXSエラーと
+なる．
+
+どんな場合でも，wtsk = FALSE と pistsk != FALSE の少なくとも一方は成り
+立つ．
+
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))

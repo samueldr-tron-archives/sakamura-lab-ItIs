@@ -1,0 +1,553 @@
+#! /usr/local/bin/perl
+# 
+# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 
+# Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the University nor the names of the laboratory
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+#  @(#) $Id: genconfig,v 1.18 1998/01/30 06:54:01 hiro Exp $
+#
+
+#
+#  システム構成定義生成プログラム
+#
+#  システム構成設定ファイル (config.def) を読み込んで，以下のファイルを
+#  生成する．
+#
+#	config.h
+#
+
+#  大域変数の初期化
+
+$line = "";
+$word = "";
+$lineno = 0;
+
+#  字句解析ルーチン
+
+sub getline {
+	$line = <>;
+	$lineno++;
+}
+
+sub getword {
+	# 空行と空白のスキップ
+	$line =~ s/^[ \t]+//;
+	while ($line eq "") {
+		do getline();
+		return($word = "") unless ($line);
+		chop $line;
+		$line =~ s/^[ \t]+//;
+	}
+
+	# コメントのスキップ
+	if ($line =~ /^\/\*/) {
+		while ($line !~ /\*\/(.*)$/) {
+			do getline();
+			return($word = "") unless ($line);
+			chop $line;
+		}
+		$line =~ /\*\/(.*)$/;
+		$line = $1;
+		return(do getword());
+	}
+
+	# 語の切り出し
+	if ($line =~ /^([A-Za-z_][A-Za-z0-9_]*)(.*)$/) {
+		# 識別子
+		$word = $1;
+		$line = $2;
+	}
+	elsif ($line =~ /^(-?)0x([0-9A-Fa-f]+)(.*)$/) {
+		# 16進数
+		$word = hex($1.$2);
+		$line = $3;
+	}
+	elsif ($line =~ /^(-?[0-9]+)(.*)$/) {
+		# 10進数
+		$word = $1;
+		$line = $2;
+	}
+	else {
+		# その他の記号
+		$word = substr($line, 0, 1);
+		$line = substr($line, 1);
+	}
+
+	# 小文字に変換 (大文字と小文字は区別しない)
+	$word =~ y/A-Z/a-z/;
+	return($word);
+}
+
+#  エラー出力ルーチン
+
+sub out_error {
+	if ($word) {
+		print STDERR "Syntax error at line: ",$lineno,".\n";
+	}
+	else {
+		print STDERR "Unexpected EOF.\n";
+	}
+	exit(1);
+}
+
+#  次の語のチェック
+
+sub nextword {
+	local($next) = @_;
+
+	if ($word ne $next) {
+		do out_error();
+	}
+	else {
+		do getword();
+	}
+}
+
+#  シンボルの定義
+
+%resource_spec = (
+	"min_tskid", 1,
+	"max_tskid", 1,
+	"min_semid", 1,
+	"max_semid", 1,
+	"min_flgid", 1,
+	"max_flgid", 1,
+	"min_mbxid", 1,
+	"max_mbxid", 1,
+	"min_mbfid", 1,
+	"max_mbfid", 1,
+	"min_porid", 1,
+	"max_porid", 1,
+	"min_pisid", 1,
+	"max_pisid", 1,
+	"min_mplid", 1,
+	"max_mplid", 1,
+	"min_mpfid", 1,
+	"max_mpfid", 1,
+
+	"sys_tskid", 11,
+	"sys_semid", 11,
+	"sys_flgid", 11,
+	"sys_mbxid", 11,
+	"sys_mbfid", 11,
+	"sys_porid", 11,
+	"sys_pisid", 11,
+	"sys_mplid", 11,
+	"sys_mpfid", 11,
+
+	"num_kernel_mbf", 1,
+	"num_kernel_mpl", 1,
+
+	"num_cyc", 1,
+	"num_alm", 1,
+	"num_svc", 1,
+);
+
+%priority_spec = (
+	"min_pri", 1,
+	"max_pri", 1,
+);
+
+%errorcheck_spec = (
+	"chk_nospt", 1,
+	"chk_rsatr", 1,
+	"chk_par", 1,
+	"chk_id", 1,
+	"chk_oacv", 1,
+	"chk_ctx", 1,
+	"chk_ctx1", 1,
+	"chk_ctx2", 1,
+	"chk_self", 1,
+);
+
+%rootvar_spec = (
+	"use_suspend_self", 1,
+	"use_qtsk_portion", 1,
+	"use_auto_id", 1,
+	"use_debug_support", 1,
+	"use_vget_tim", 1,
+	"prisem_spec", 1,
+	"use_task_mailbox", 1,
+	"min_sys_stack_size", 1,
+	"def_sys_stack_size", 1,
+	"sys_mpl_size", 1,
+);
+
+#  シンボルリストを読み込む
+
+sub readsymlist {
+	local($symlist);
+
+	$symlist = "";
+	while ($word ne "}") {
+		$symlist .= "\0" if ($symlist);
+		$symlist .= $word;
+		do getword();
+		do nextword(";");
+	}
+	do getword();
+	return($symlist);
+}
+
+#  シンボルの定義を読み込む
+
+sub readvalue {
+	local($var, $varspec) = @_;
+
+	if ($varspec == 1) {			# 数値の読み込み
+		if ($word eq "=") {
+			do getword();
+			$val{$var} = $word;
+			do getword();
+		}
+	}
+	elsif ($varspec == 11) {		# シンボルリストの読み込み
+		if ($word eq "{") {
+			do getword();
+			$val{$var} = do readsymlist();
+		}
+	}
+	do nextword(";");
+}
+
+#  定義テーブルを読み込む
+
+sub readtable {
+	local($id, %spec) = @_;
+	local($var, $varspec);
+
+	do nextword("=");
+	do nextword("{");
+	while ($varspec = $spec{$word}) {
+		$var = $word;
+		do getword();
+		do readvalue($id."\$".$var, $varspec);
+	}
+	do nextword("}");
+	do nextword(";");
+}
+
+#
+#  定義ファイルの読み込み
+#
+
+do getword();
+while ($word) {
+	if ($word eq "errorcheck") {
+		do getword();
+		do readtable("errorcheck", %errorcheck_spec);
+	}
+	elsif ($word eq "resource") {
+		do getword();
+		do readtable("resource", %resource_spec);
+	}
+	elsif ($word eq "priority") {
+		do getword();
+		do readtable("priority", %priority_spec);
+	}
+	elsif ($varspec = $rootvar_spec{$word}) {
+		$var = $word;
+		do getword();
+		do readvalue($var, $varspec);
+	}
+	else {
+		do out_error();
+	}
+}
+
+#
+#  各種の定義生成ルーチン
+#
+
+sub out_object_def {
+	print FILE "#define MIN_",$objstr,"ID\t(",$min,")\n";
+	print FILE "#define MAX_",$objstr,"ID\t(",$max,")\n";
+	print FILE "#define NUM_",$objstr,"ID\t(",$num,")\n";
+
+	print FILE "#define CHK_",$objstr,"ID(id)\t";
+	if ($min < 0) {
+		print FILE "(((MIN_",$objstr,"ID) <= (id)";
+		print FILE " && (id) < -",4-$numkernel,")";
+		print FILE " || (0 < (id) && (id) <= (MAX_",$objstr,"ID)))\n";
+	}
+	elsif ($numkernel) {
+		print FILE "((-4 <= (id) && (id) < -",4-$numkernel,")";
+		print FILE " || ((MIN_",$objstr,"ID) <= (id)";
+		print FILE " && (id) <= (MAX_",$objstr,"ID)))\n";
+	}
+	else {
+		print FILE "((MIN_",$objstr,"ID) <= (id)";
+		print FILE " && (id) <= (MAX_",$objstr,"ID))\n";
+	}
+
+	print FILE "#define SYS_",$objstr,"ID(id)\t";
+	if ($min < 0 || $numkernel) {
+		print FILE "((id) < 0)\n";
+	}
+	else {
+		print FILE "(0)\n";
+	}
+
+	print FILE "#define INDEX_",$objstr,"(id)\t";
+	if ($min < 0) {
+		print FILE "((id) < 0 ? ((id)-(MIN_",$objstr,"ID)) : ",
+				"((id)-(MIN_",$objstr,"ID)-",
+				5-$numkernel,"))\n";
+	}
+	elsif ($numkernel) {
+		print FILE "((id) < 0 ? ((id)-(-4)) : ",
+				"((id)-(MIN_",$objstr,"ID)+",$numkernel,"))\n";
+	}
+	else {
+		print FILE "((id)-(MIN_",$objstr,"ID))\n";
+	}
+
+	print FILE "#define ID_",$objstr,"(index)\t";
+	if ($min < 0) {
+		print FILE "((index) <= (-(MIN_",$objstr,"ID)-",5-$numkernel,
+				") ? ((index)+(MIN_",$objstr,"ID)) : ",
+				"((index)+(MIN_",$objstr,"ID)+",5-$numkernel,
+				"))\n";
+	}
+	elsif ($numkernel) {
+		print FILE "((index) <= ",$numkernel-1," ? ((index)+(-4)) : ",
+				"((index)+(MIN_",$objstr,"ID)-",$numkernel,
+				"))\n";
+	}
+	else {
+		print FILE "((index)+(MIN_",$objstr,"ID))\n";
+	}
+	print FILE "\n";
+}
+
+sub out_sysid_def {
+	local($name, $id);
+
+	$id = -4;
+	foreach $name (split(/\0/, $sys)) {
+		$name =~ y/a-z/A-Z/;
+		print FILE "#define ",$name,"\t(",--$id,")\n";
+	}
+	print FILE "\n";
+}
+
+sub gen_object_def {
+	local($obj, $numkernel) = @_;
+	local($minvar, $maxsvar, $sysvar, $objstr);
+	local($min, $max, $sys, $num);
+
+	$minvar = "min_".$obj."id";
+	$maxvar = "max_".$obj."id";
+	$sysvar = "sys_".$obj."id";
+	$objstr = $obj; $objstr =~ y/a-z/A-Z/;
+	$min = $val{"resource\$".$minvar};
+	$max = $val{"resource\$".$maxvar};
+	$sys = $val{"resource\$".$sysvar};
+	$numsys = split(/\0/, $sys);
+
+	if ($min eq "") {
+		$min = 1;
+	}
+	elsif (-4 <= $min && $min <= 0 || 1 < $min) {
+		print STDERR $minvar," is illegal.\n";
+		return;
+	}
+
+	if ($max eq "") {
+		$max = 0;
+	}
+	elsif ($max < 0) {
+		print STDERR $maxvar," is illegal.\n";
+		return;
+	}
+
+	if ($numsys && $min > -4-$numsys) {
+		$min = -4-$numsys;
+	}
+	$num = $max - $min + ($min < 0 ? -4 : 1) + $numkernel;
+	do out_object_def() if ($num);
+	do out_sysid_def() if ($numsys);
+}
+
+sub gen_resnum_def {
+	local($res) = @_;
+	local($numvar, $resstr, $num);
+
+	$numvar = "num_".$res;
+	$resstr = $res; $resstr =~ y/a-z/A-Z/;
+	$num = $val{"resource\$".$numvar};
+	if ($num < 0) {
+		print STDERR $numvar," is illegal.\n";
+		return;
+	}
+	if ($num > 0) {
+		print FILE "#define NUM_",$resstr,"\t\t(",$num,")\n";
+	}
+}
+
+sub gen_priority_def {
+	local($minvar, $maxsvar);
+	local($min, $max, $num);
+
+	$minvar = "min_pri";
+	$maxvar = "max_pri";
+	$min = $val{"priority\$".$minvar};
+	$max = $val{"priority\$".$maxvar};
+	$num = $max - $min + 1;
+
+	if ($min eq "") {
+		print STDERR $mixvar," is not defined.\n";
+		return;
+	}
+	if ($max eq "") {
+		print STDERR $maxvar," is not defined.\n";
+		return;
+	}
+	if ($num <= 0) {
+		print STDERR $minvar," is larger than ",$maxvar."\n";
+		return;
+	}
+	if (-4 <= $min && $min <= 0) {
+		print STDERR $minvar," is illegal.\n";
+		return;
+	}
+	print FILE "#define MIN_PRI\t\t(",$min,")\n";
+	print FILE "#define MAX_PRI\t\t(",$max,")\n";
+	print FILE "#define NUM_PRI\t\t(",$num,")\n";
+	print FILE "#define CHK_PRI(pri)\t";
+	if ($min < 0) {
+		print FILE "(((MIN_PRI) <= (pri) && (pri) < -4)";
+		print FILE " || (0 < (pri) && (pri) <= (MAX_PRI)))\n";
+	}
+	else {
+		print FILE "((MIN_PRI) <= (pri) && (pri) <= (MAX_PRI))\n";
+	}
+	print FILE "\n";
+}
+
+sub gen_errorcheck_def {
+	local($class) = @_;
+	local($flagvar, $classstr);
+
+	$flagvar = "chk_".$class;
+	if ($val{"errorcheck\$".$flagvar}) {
+		$classstr = $class; $classstr =~ y/a-z/A-Z/;
+		print FILE "#define CHK_",$classstr,"\n";
+	}
+}
+
+sub gen_value_def {
+	local($var) = @_;
+	local($varstr, $num);
+
+	$varstr = $var; $varstr =~ y/a-z/A-Z/;
+	$num = $val{$var};
+	if ($num < 0) {
+		print STDERR $var," is illegal.\n";
+		return;
+	}
+	if ($num > 0) {
+		print FILE "#define ",$varstr,"\t(",$num,")\n";
+	}
+}
+
+sub gen_flag_def {
+	local($flagvar) = @_;
+	local($flagstr);
+
+	if ($val{$flagvar}) {
+		$flagstr = $flagvar; $flagstr =~ y/a-z/A-Z/;
+		print FILE "#define ",$flagstr,"\n";
+	}
+}
+
+#
+#  config.h の生成
+#
+
+open(FILE, "> config.h");
+print FILE <<END_OF_HEADER;
+/*  This file is generated from config.def by genconfig.  */
+
+#ifndef _CONFIG_
+#define _CONFIG_
+
+END_OF_HEADER
+
+# オブジェクトID の範囲定義の生成
+do gen_object_def("tsk", 0);
+do gen_object_def("sem", 0);
+do gen_object_def("flg", 0);
+do gen_object_def("mbx", 0);
+do gen_object_def("mbf", $val{"resource\$num_kernel_mbf"});
+do gen_object_def("por", 0);
+do gen_object_def("pis", 0);
+do gen_object_def("mpl", $val{"resource\$num_kernel_mpl"});
+do gen_object_def("mpf", 0);
+
+do gen_resnum_def("cyc");
+do gen_resnum_def("alm");
+do gen_resnum_def("svc");
+print FILE "\n";
+
+# 拡張SVC を使う時は，準タスク部が必要
+if ($val{"resource\$num_svc"} > 0 && !$val{"use_qtsk_portion"}) {
+	$val{"use_qtsk_portion"} = 1;
+}
+
+# 優先度値の範囲定義の生成
+do gen_priority_def();
+
+# エラーチェック仕様の定義の生成
+do gen_errorcheck_def("nospt");
+do gen_errorcheck_def("rsatr");
+do gen_errorcheck_def("par");
+do gen_errorcheck_def("id");
+do gen_errorcheck_def("oacv");
+do gen_errorcheck_def("ctx");
+do gen_errorcheck_def("ctx1");
+do gen_errorcheck_def("ctx2");
+do gen_errorcheck_def("self");
+print FILE "\n";
+
+# その他の定義の生成
+do gen_flag_def("use_suspend_self");
+do gen_flag_def("use_qtsk_portion");
+do gen_flag_def("use_auto_id");
+do gen_flag_def("use_debug_support");
+do gen_flag_def("use_vget_tim");
+do gen_value_def("prisem_spec");
+do gen_flag_def("use_task_mailbox");
+do gen_value_def("min_sys_stack_size");
+do gen_value_def("def_sys_stack_size");
+do gen_value_def("sys_mpl_size");
+
+print FILE <<END_OF_TAILER;
+
+#endif /* _CONFIG_ */
+END_OF_TAILER
+close(FILE);

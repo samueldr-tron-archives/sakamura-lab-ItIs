@@ -1,0 +1,340 @@
+#
+# 
+# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 
+# Copyright (C) 1989-1997 by Sakamura Lab, the University of Tokyo, JAPAN
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the University nor the names of the laboratory
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+#  @(#) $Id: syscall.def,v 1.10 1998/01/30 06:57:48 hiro Exp $
+# 
+#
+#  システムコール定義ファイル
+# 
+#  各行は，機能番号，フラグ，システムコールのプロトタイプ宣言から構成さ
+#  れる．行頭がスペース (空白または TAB) で始まる時は，機能コードが省略
+#  されたとみなす．行末の "\" は継続行を示す．
+#
+#  最初のシステムコールの機能コードは省略できない．最後のシステムコール
+#  の機能コードが -1 になるようにすること．
+#
+#  プロトタイプ宣言中では，型名と変数名の分離を容易にするために，型名と
+#  変数名の間に空白を入れ，型名の途中に空白を入れないこと．
+#
+#  フラグの意味は次の通り．
+#
+#	R, S, E, C, RN, SN, EN, CN : システムコールのレベル
+#	V, VN : ItIs独自のシステムコール
+#	M, MN : ItIs/MP独自のシステムコール
+#	N, n : 接続機能に対応する必要がある
+#	m : メモリ上にリターン値を返す
+#	i : カーネルはサポートしない
+#	v : リターンしない
+#	- : 未サポート機能，未定義機能
+#
+-272	V	vsnd_tmb(ID tskid, T_MSG* pk_msg)
+	Vm	vtrcv_tmb(T_MSG** ppk_msg, TMO tmout)
+	Vm	vprcv_tmb(T_MSG** ppk_msg)
+	Vm	vrcv_tmb(T_MSG** ppk_msg)
+	Vm	vref_tmb(T_RTMB* pk_rtmb, ID tskid)
+	-	
+	-	
+	-	
+-264	VN	vsig_pis(ID pisid)
+	VN	vtwai_pis(ID pisid, TMO tmout)
+	VN	vpreq_pis(ID pisid)
+	VN	vwai_pis(ID pisid)
+	VNm	vref_pis(T_RPIS* pk_rpis, ID pisid)
+	VN	vvcre_pis(T_CPIS* pk_cpis)
+	VN	vdel_pis(ID pisid)
+	VN	vcre_pis(ID pisid, T_CPIS* pk_cpis)
+-256	V	vdef_alm(T_DALM* pk_dalm)
+	V	vdef_cyc(T_DCYC* pk_dcyc)
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-248	V	vcre_mpf(T_CMPF* pk_cmpf)
+	V	vcre_mpl(T_CMPL* pk_cmpl)
+	VN	vcre_por(T_CPOR* pk_cpor)
+	VN	vcre_mbf(T_CMBF* pk_cmbf)
+	VN	vcre_mbx(T_CMBX* pk_cmbx)
+	VN	vcre_flg(T_CFLG* pk_cflg)
+	VN	vcre_sem(T_CSEM* pk_csem)
+	VN	vcre_tsk(T_CTSK* pk_ctsk)
+-240	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-232	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	Vm	vget_reg(T_REGS* pk_regs, T_EIT* pk_eit, T_CREGS* pk_cregs, \
+			ID tskid)
+	V	vset_reg(ID tskid, T_REGS* pk_regs, T_EIT* pk_eit, \
+			T_CREGS* pk_cregs)
+-224	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-216	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-208	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-200	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-192	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-184	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-176	Enm	tacp_por(RNO* p_rdvno, VP msg, INT* p_cmsgsz, ID porid, \
+			UINT acpptn, TMO tmout)
+	ENm	tcal_por(VP msg, INT* p_rmsgsz, ID porid, UINT calptn, \
+			INT cmsgsz, TMO tmout)
+	ENm	trcv_mbf(VP msg, INT* p_msgsz, ID mbfid, TMO tmout)
+	EN	tsnd_mbf(ID mbfid, VP msg, INT msgsz, TMO tmout)
+	Em	trcv_msg(T_MSG** ppk_msg, ID mbxid, TMO tmout)
+	EN	twai_sem(ID semid, TMO tmout)
+	ENm	twai_flg(UINT* p_flgptn, ID flgid, UINT waiptn, UINT wfmode, \
+			TMO tmout)
+	-	
+-168	Em	tget_blk(VP* p_blk, ID mplid, INT blksz, TMO tmout)
+	Em	tget_blf(VP* p_blf, ID mpfid, TMO tmout)
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-160	-	
+	-	
+	ENm	rcv_mbf(VP msg, INT* p_msgsz, ID mbfid)
+	EN	snd_mbf(ID mbfid, VP msg, INT msgsz)
+	ENm	ref_mbf(T_RMBF* pk_rmbf, ID mbfid)
+	-	
+	EN	del_mbf(ID mbfid)
+	EN	cre_mbf(ID mbfid, T_CMBF* pk_cmbf)
+-152	En	fwd_por(ID porid, UINT calptn, RNO rdvno, VP msg, INT cmsgsz)
+	En	rpl_rdv(RNO rdvno, VP msg, INT rmsgsz)
+	Enm	acp_por(RNO* p_rdvno, VP msg, INT* p_cmsgsz, ID porid, \
+			UINT acpptn)
+	ENm	cal_por(VP msg, INT* p_rmsgsz, ID porid, UINT calptn, \
+			INT cmsgsz)
+	ENm	ref_por(T_RPOR* pk_rpor, ID porid)
+	-	ref_rdv
+	EN	del_por(ID porid)
+	EN	cre_por(ID porid, T_CPOR* pk_cpor)
+-144	-	urel_blk
+	E	rel_blk(ID mplid, VP blk)
+	-	uget_blk
+	Em	get_blk(VP* p_blk, ID mplid, INT blksz)
+	Em	ref_mpl(T_RMPL* pk_rmpl, ID mplid)
+	-	ref_blk
+	E	del_mpl(ID mplid)
+	E	cre_mpl(ID mplid, T_CMPL* pk_cmpl)
+-136	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+-128	-	
+	-	irel_wai
+	-	
+	-	ipsnd_mbf
+	-	isnd_msg
+	-	isig_sem
+	-	iset_flg
+	-	iwup_tsk
+-120	-	ipget_blk
+	-	ipget_blf
+	-	irot_rdq
+	-	ichg_pri
+	-	ifrsm_tsk
+	-	irsm_tsk
+	-	
+	-	isus_tsk
+-112	Enm	pacp_por(RNO* p_rdvno, VP msg, INT* p_cmsgsz, ID porid, \
+			UINT acpptn)
+	ENm	pcal_por(VP msg, INT* p_rmsgsz, ID porid, UINT calptn, \
+			INT cmsgsz)
+	ENm	prcv_mbf(VP msg, INT* p_msgsz, ID mbfid)
+	EN	psnd_mbf(ID mbfid, VP msg, INT msgsz)
+	Sm	prcv_msg(T_MSG** ppk_msg, ID mbxid)
+	RN	preq_sem(ID semid)
+	SNm	pol_flg(UINT* p_flgptn, ID flgid, UINT waiptn, UINT wfmode)
+	-	
+-104	Em	pget_blk(VP* p_blk, ID mplid, INT blksz)
+	Em	pget_blf(VP* p_blf, ID mpfid)
+	-	
+	-	
+	SNim	nwri_dat(INT* p_wrisz, NODE dstnode, VP dstadr, VP srcadr, \
+			INT datsz)
+	SNim	nrea_dat(INT* p_reasz, VP dstadr, NODE srcnode, VP srcadr, \
+			INT datsz)
+	SNim	nget_ver(T_VER* pk_ver, NODE node)
+	SNim	nget_nod(NODE* p_node)
+-96	-	
+	-	
+	E	act_cyc(HNO cycno, UINT cycact)
+	-Ev	ret_tmr()
+	Em	ref_cyc(T_RCYC* pk_rcyc, HNO cycno)
+	Em	ref_alm(T_RALM* pk_ralm, HNO almno)
+	E	def_cyc(HNO cycno, T_DCYC* pk_dcyc)
+	E	def_alm(HNO almno, T_DALM* pk_dalm)
+-88	-	can_cyc
+	-	cyc_wup
+	-	
+	S	dly_tsk(DLYTIME dlytim)
+	Sm	get_tim(SYSTIME* pk_tim)
+	S	set_tim(SYSTIME* pk_tim)
+	Vm	vget_tim(SYSUTIME* pk_utim)
+	-	
+-80	-	urel_blf
+	E	rel_blf(ID mpfid, VP blf)
+	-	uget_blf
+	Em	get_blf(VP* p_blf, ID mpfid)
+	Em	ref_mpf(T_RMPF* pk_rmpf, ID mpfid)
+	-	ref_blf
+	E	del_mpf(ID mpfid)
+	E	cre_mpf(ID mpfid, T_CMPF* pk_cmpf)
+-72	C	dis_int(UINT eintno)
+	C	ena_int(UINT eintno)
+	-Ev	ret_wup(ID tskid)
+	-Rv	ret_int()
+	Cm	ref_iXX(UINT* p_iXXXX)
+	C	chg_iXX(UINT iXXXX)
+	-	
+	C	def_int(UINT dintno, T_DINT* pk_dint)
+-64	-	usnd_msg
+	S	snd_msg(ID mbxid, T_MSG* pk_msg)
+	-	urcv_msg
+	Sm	rcv_msg(T_MSG** ppk_msg, ID mbxid)
+	Em	ref_mbx(T_RMBX* pk_rmbx, ID mbxid)
+	-	
+	E	del_mbx(ID mbxid)
+	E	cre_mbx(ID mbxid, T_CMBX* pk_cmbx)
+-56	-	usig_sem
+	RN	sig_sem(ID semid)
+	-	uwai_sem
+	RN	wai_sem(ID semid)
+	ENm	ref_sem(T_RSEM* pk_rsem, ID semid)
+	-	
+	EN	del_sem(ID semid)
+	EN	cre_sem(ID semid, T_CSEM* pk_csem)
+-48	SN	set_flg(ID flgid, UINT setptn)
+	SN	clr_flg(ID flgid, UINT clrptn)
+	SNm	wai_flg(UINT* p_flgptn, ID flgid, UINT waiptn, UINT wfmode)
+	-	cwai_flg
+	ENm	ref_flg(T_RFLG* pk_rflg, ID flgid)
+	-	
+	EN	del_flg(ID flgid)
+	EN	cre_flg(ID flgid, T_CFLG* pk_cflg)
+-40	SNm	can_wup(INT* p_wupcnt, ID tskid)
+	RN	wup_tsk(ID tskid)
+	R	slp_tsk()
+	E	tslp_tsk(TMO tmout)
+	EN	frsm_tsk(ID tskid)
+	SN	rsm_tsk(ID tskid)
+	-	
+	SN	sus_tsk(ID tskid)
+-32	-	ras_ext
+	SN	rel_wai(ID tskid)
+	R	dis_dsp()
+	R	ena_dsp()
+	S	rot_rdq(PRI tskpri)
+	SN	chg_pri(ID tskid, PRI tskpri)
+	-	abo_tsk
+	SN	ter_tsk(ID tskid)
+-24	Sm	get_tid(ID* p_tskid)
+	SN	sta_tsk(ID tskid, INT stacd)
+	Ev	exd_tsk()
+	Sv	ext_tsk()
+	ENm	ref_tsk(T_RTSK* pk_rtsk, ID tskid)
+	-	hdr_sts
+	EN	del_tsk(ID tskid)
+	EN	cre_tsk(ID tskid, T_CTSK* pk_ctsk)
+-16	Rnm	get_ver(T_VER* pk_ver)
+	-	
+	Cnm	ref_cfg(T_RCFG* pk_rcfg)
+	-	ret_svc
+	Em	ref_sys(T_RSYS* pk_rsys)
+	-	def_exc
+	-	sdef_svc
+	C	def_svc(FN s_fncd, T_DSVC* pk_dsvc)
+-8	R	loc_cpu()
+	R	unl_cpu()
+	-	
+	-	
+	-	
+	-	
+	-	
+	-	
+# end of system call definitions

@@ -1,0 +1,234 @@
+#
+# 
+# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 
+# Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the University nor the names of the laboratory
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+#  @(#) $Id: Makefile.tvme,v 1.20 1997/01/13 03:53:48 hiro Exp $
+# 
+
+#
+#  ターゲット定義 (CPU名, システム名)
+#
+CPU = tron
+SYS = tvme
+
+#
+#  共通定義
+#
+include ../$(CPU)/Makefile.config
+
+#
+#  コンパイラオプションの定義
+#
+INCLUDES = -I. -I../include -I../include/$(CPU) -I../$(CPU) -I../$(CPU)/$(SYS)
+CFLAGS := -DITIS -DLINK_KERNEL $(INCLUDES) $(CFLAGS)
+LDFLAGS = -N
+
+#
+#  データセクションの初期化処理を行うかどうかの定義
+#
+IDATA = true
+#IDATA = false
+
+#
+#  各セグメントの開始アドレスの定義
+#
+#TEXT_START_ADDRESS=0 (default)
+DATA_START_ADDRESS=80000
+
+#
+#  初期起動タスクの定義
+#
+FIRST_TASK = scheme
+
+ifeq ($(FIRST_TASK),scheme)
+    FTASK_DIR = ../xscheme:../systask
+    FTASK_ASMOBJS =
+    FTASK_COBJS = xscheme.o xsdmem.o xsimage.o xsio.o xsobj.o \
+		  xsprint.o xsread.o xssym.o xsfun1.o xsfun2.o \
+		  xsmath.o xsftab.o xsinit.o xscom.o xsint.o \
+		  itisstuff.o itis3call.o sysio.o
+    FTASK_CFLAGS = -msoft-float -DNO_FLOAT
+    FTASK_LIBS = -lc-itis
+endif
+
+#
+#  システムタスク (システムタスク用ライブラリを含む) の定義
+#
+STASK_DIR = ../systask:../libitis
+STASK_ASMOBJS =
+STASK_COBJS = inittask.o serial.o logtask.o \
+	      itis_perror.o perror.o strerror.o syslog.o sysstat.o
+STASK_CFLAGS = -msoft-float -I../systask
+
+#
+#  カーネル関係の定義
+#
+KERNEL = ../kernel
+KERNEL_DIR = ../$(CPU):../$(CPU)/$(SYS):$(KERNEL)
+KERNEL_ASMOBJS = cpu_support.o sys_support.o
+KERNEL_COBJS = startup.o cpu_util.o sys_util.o \
+	       task.o wait.o timer.o isyslog.o vsprintf.o \
+	       task_manage.o task_sync.o misc_calls.o cpu_calls.o \
+	       semaphore.o eventflag.o mailbox.o messagebuf.o rendezvous.o \
+	       mempool.o mempfix.o time_calls.o \
+	       debug_calls.o prisem.o taskmbox.o
+KERNEL_CFLAGS = -msoft-float -I$(KERNEL)
+
+#
+#  ターゲットファイル
+#
+all: itis.S
+
+# 以下は編集しないこと
+
+SRCDIR = $(KERNEL_DIR):$(STASK_DIR):$(FTASK_DIR)
+
+vpath %.c $(SRCDIR)
+vpath %.S $(SRCDIR)
+
+ifdef TEXT_START_ADDRESS
+    LINK_T = -Ttext $(TEXT_START_ADDRESS)
+else
+    LINK_T =
+endif
+ifdef DATA_START_ADDRESS
+    LINK_D = -Tdata $(DATA_START_ADDRESS)
+else
+    LINK_D =
+endif
+LDFLAGS := $(LDFLAGS) $(LINK_T) $(LINK_D)
+
+ASMOBJS = $(KERNEL_ASMOBJS) $(STASK_ASMOBJS) $(FTASK_ASMOBJS)
+COBJS = $(KERNEL_COBJS) $(STASK_COBJS) $(FTASK_COBJS)
+OBJS = $(ASMOBJS) $(COBJS)
+LIBS = $(FTASK_LIBS)
+
+itis.S: itis
+	aout2 -v itis
+
+itis.bin: itis
+	aout2 -b -v itis
+
+itis: Makefile $(OBJS) version.o
+	$(CC) $(LDFLAGS) -o itis version.o $(OBJS) $(LIBS)
+ifeq ($(IDATA),true)
+	extidata itis
+	$(CC) $(LDFLAGS) -o itis version.o $(OBJS) itis-idata.s $(LIBS)
+	extidata itis
+	$(CC) $(LDFLAGS) -o itis version.o $(OBJS) itis-idata.s $(LIBS)
+endif
+
+config.h: config.def $(KERNEL)/genconfig
+	$(KERNEL)/genconfig config.def
+
+offset.h: makeoffset.s ../utils/genoffset
+	../utils/genoffset makeoffset.s > offset.h
+
+version.c: Makefile $(OBJS) $(KERNEL)/newversion
+	$(KERNEL)/newversion -c $(CPU) -s $(SYS) > version.c
+
+KERNEL_AUX_COBJS = makeoffset.o version.o
+KERNEL_ALL_COBJS = $(KERNEL_COBJS) $(KERNEL_AUX_COBJS)
+
+clean:
+	rm -f \#* *~ *.o
+	rm -f itis itis.S itis.bin version.c itis-idata.s
+	rm -f makeoffset.s offset.h Makefile.old ems.log
+
+cleandep:
+	../utils/deldep Makefile
+
+realclean: cleandep clean
+	rm -rf config.h
+
+depend: config.h offset.h
+	../utils/deldep Makefile
+	../utils/makedep -C $(CC) -S $(KERNEL_DIR) \
+		-O "$(KERNEL_CFLAGS) $(CFLAGS)" \
+		$(KERNEL_ASMOBJS:.o=.S) $(KERNEL_COBJS:.o=.c) >> Makefile
+	../utils/makedep -C $(CC) -S $(KERNEL_DIR) \
+		-O "$(KERNEL_CFLAGS) $(CFLAGS)" \
+		-s makeoffset.c >> Makefile
+	../utils/makedep -C $(CC) -S $(STASK_DIR) \
+		-O "$(STASK_CFLAGS) $(CFLAGS)" \
+		$(STASK_ASMOBJS:.o=.S) $(STASK_COBJS:.o=.c) >> Makefile
+	../utils/makedep -C $(CC) -S $(FTASK_DIR) \
+		-O "$(FTASK_CFLAGS) $(CFLAGS)" \
+		$(FTASK_ASMOBJS:.o=.S) $(FTASK_COBJS:.o=.c) >> Makefile
+
+#
+#  コンパイルルールの定義
+#
+$(KERNEL_ALL_COBJS): %.o: %.c
+	$(CC) -c $(KERNEL_CFLAGS) $(CFLAGS) $<
+
+$(KERNEL_ALL_COBJS:.o=.s): %.s: %.c
+	$(CC) -S $(KERNEL_CFLAGS) $(CFLAGS) $<
+
+$(KERNEL_ASMOBJS): %.o: %.S
+	$(CC) -c $(KERNEL_CFLAGS) $(CFLAGS) $<
+
+$(STASK_COBJS): %.o: %.c
+	$(CC) -c $(STASK_CFLAGS) $(CFLAGS) $<
+
+$(STASK_COBJS:.o=.s): %.s: %.c
+	$(CC) -S $(STASK_CFLAGS) $(CFLAGS) $<
+
+ifdef $(STASK_ASMOBJS)
+$(STASK_ASMOBJS): %.o: %.S
+	$(CC) -c $(STASK_CFLAGS) $(CFLAGS) $<
+endif
+
+$(FTASK_COBJS): %.o: %.c
+	$(CC) -c $(FTASK_CFLAGS) $(CFLAGS) $<
+
+$(FTASK_COBJS:.o=.s): %.s: %.c
+	$(CC) -S $(FTASK_CFLAGS) $(CFLAGS) $<
+
+ifdef $(FTASK_ASMOBJS)
+$(FTASK_ASMOBJS): %.o: %.S
+	$(CC) -c $(FTASK_CFLAGS) $(CFLAGS) $<
+endif
+
+#
+#  デフォルトコンパイルルールを上書き
+#
+%.o: %.c
+	@echo "*** Default compile rules should not be used."
+	$(CC) -c $(CFLAGS) $<
+
+%.s: %.c
+	@echo "*** Default compile rules should not be used."
+	$(CC) -S $(CFLAGS) $<
+
+%.o: %.S
+	@echo "*** Default compile rules should not be used."
+	$(CC) -c $(CFLAGS) $<
+
+# DO NOT DELETE THIS LINE: makedep depends on it.

@@ -1,0 +1,105 @@
+#! /usr/local/bin/perl
+# 
+# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 
+# Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the University nor the names of the laboratory
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+#  @(#) $Id: makedep,v 1.5 1996/02/17 09:45:24 hiro Exp $
+#
+
+require "getopt.pl";
+
+#	オプションの定義
+#
+#	-C : Cコンパイラのコマンド名
+#	-O : Cコンパイラに渡すオプション
+#	-S : ソースをサーチするパス (":" で区切る)
+#	-s : ターゲットのサフィックスを ".s" にする (デフォルトは ".o")
+
+do Getopt("COS");
+
+$cc_path = $opt_C;
+$cc_opts = $opt_O;
+@src_paths = split(/:/, $opt_S);
+$suffix = $opt_s ? "s" : "o";
+
+#
+#  $dependlist に作られた依存関係を出力する
+#
+sub output_dependlist {
+	local($file) = @_;
+	local($column, $len);
+
+	$file =~ s/(.*)\.(.)/$1.$suffix/;
+	print $file, ": ";
+	$column = length($file) + 2;
+    
+	foreach $file (keys(%dependlist)) {
+		$len = length($file) + 1;
+		if ($column + $len >= 70) {
+			print "\\\n\t";
+			$column = 8;
+		}
+		$column += $len;
+		print "$file ";
+	}
+	print "\n";
+}
+
+#
+#  $file の依存関係を %dependlist に作る
+#
+sub makedepend_one {
+	local($file) = @_;
+	local($input, $dir, $fullpath);
+
+	foreach $dir (".", @src_paths) {
+		if (-e $dir."/".$file) {
+			$fullpath = $dir."/".$file;
+			last;
+		}
+	}
+	die "Can't open $file.\n" if (!$fullpath);
+
+	open(INPUT, "$cc_path -E $cc_opts $fullpath |")
+					|| die "Can't open $fullpath.\n";
+	while ($line = <INPUT>) {
+		if ($line =~ /^\#\s*([0-9]+)\s*\"([^\"]+)\"/) {
+			$dependlist{$2} = 1;
+		}
+	}
+	close(INPUT);
+}
+
+#
+#  メインルーチン
+#
+foreach $file (@ARGV) {
+	%dependlist = ();
+	do makedepend_one($file);
+	do output_dependlist($file) if (%dependlist);
+}

@@ -1,0 +1,358 @@
+#! /usr/local/bin/perl
+# 
+# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 
+# Copyright (C) 1989-1997 by Sakamura Lab, the University of Tokyo, JAPAN
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the University nor the names of the laboratory
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+#  @(#) $Id: genisyscall,v 1.9 1998/01/30 06:57:49 hiro Exp $
+#
+
+#
+#  システムコールインタフェース生成プログラム (カーネル用)
+#
+#  システムコール定義ファイル (syscall.def) を読み込んで，以下のファイ
+#  ルを生成する．
+#
+#	itron_fncode.h	→ ../include に移動
+#	isyscall.h
+#	itis_isyscall.h	→ ../include に移動
+#	itable.S
+#	ptable.S
+#
+
+#  大域変数の初期化
+
+$lineno = 0;
+%flagtable = ();
+%prototable = ();
+%nametable = ();
+%argstable = ();
+%argno = ();
+
+#  1行読み込み (行番号をカウントする)
+
+sub getline {
+	local($l);
+
+	$l = <>;
+	$lineno++;
+	return($l);
+}
+
+#  エラー出力
+
+sub syntax_error {
+	print STDERR "Syntax error at line: ",$lineno,".\n";
+	exit(1);
+}
+
+sub eof_error {
+	print STDERR "Unexpected EOF.\n";
+	exit(1);
+}
+
+#
+#  定義ファイルの読み込み
+#
+
+$next_fncd = "";
+while ($line = do getline()) {
+	chop $line;
+
+	# 継続行 ("\" でおわる行) の処理
+	while ($line =~ /^(.*)\\$/) {
+		$line = $1;
+		unless ($line1 = do getline()) {
+			do eof_error();
+		}
+		chop $line1;
+		$line .= $line1;
+	}
+
+	# コメント行のスキップ
+	next if ($line =~ /^[ \t]*$/ || $line =~ /^#/);
+
+	# システムコール定義のパーズ
+	unless ($line =~ /^(-?[0-9]*)[ \t]+([^ \t]+)[ \t]*(.*)$/) {
+		do syntax_error();
+	}
+	$fncd = $1 ? $1 : $next_fncd;
+	$flags = $2;
+	$proto = $3;
+
+	# 機能コードのエラーをチェック
+	if ($fncd eq "") {
+		print STDERR "Function code unknown at line: ",$lineno,"\n";
+		exit(1);
+	}
+	elsif ($next_fncd ne "" && $next_fncd != $fncd) {
+		print STDERR "Function code skipped at line: ",$lineno,"\n";
+	}
+
+	# システムコール定義の格納
+	$proto =~ s/,[ \t]+/, /g;
+	$flagtable{$fncd} = $flags;
+	$prototable{$fncd} = $proto;
+
+	# システムコール定義の文法チェック
+	if ($flags !~ /^-/) {
+		unless ($proto =~ /^([a-zX_]+)\((.*)\)$/) {
+			do syntax_error();
+		}
+		$nametable{$fncd} = $1;
+		$argstable{$fncd} = $2;
+		foreach $arg (split(/, */, $2)) {
+			unless ($arg =~ /^[^ ]+ [^ ]+$/) {
+				do syntax_error();
+			}
+		}
+	}
+
+	# 最初の機能コード，次の機能コードの計算
+	unless ($next_fncd) {
+		$first_fncd = $fncd;
+	}
+	$next_fncd = $fncd + 1;
+}
+
+# 最後の機能コードのチェック
+unless ($next_fncd == 0) {
+	print STDERR "The last function code is not -1.\n";
+}
+
+#
+#  機能コード番号リストの生成
+#
+#	fncd_list: すべての機能コード番号リスト
+#	valid_fncd_list: システムコールがある機能コード番号リスト
+#	ivalid_fncd_list: カーネルにシステムコールがある機能コード番号リスト
+#
+@fncd_list = ();
+@valid_fncd_list = ();
+@ivalid_fncd_list = ();
+foreach $fncd (1 .. -$first_fncd) {
+	push(@fncd_list, -$fncd);
+	push(@valid_fncd_list, -$fncd) if ($flagtable{-$fncd} !~ /^-/);
+	push(@ivalid_fncd_list, -$fncd) if ($flagtable{-$fncd} !~ /^-/
+						&& $flagtable{-$fncd} !~ /i/);
+}
+
+#
+#  itron_fncode.h の生成
+#
+
+open(FILE, "> itron_fncode.h");
+print FILE <<END_OF_HEADER;
+/*  This file is generated from syscall.def by genisyscall.  */
+
+#ifndef _ITRON_FNCODE_
+#define _ITRON_FNCODE_
+
+END_OF_HEADER
+
+foreach $fncd (@valid_fncd_list) {
+	$name = $nametable{$fncd};
+	$name =~ y/a-z/A-Z/;
+	print FILE "#define TFN_",$name,"\t(",$fncd,")\n";
+}
+
+print FILE <<END_OF_TAILER;
+
+#endif /* _ITRON_FNCODE_ */
+END_OF_TAILER
+close(FILE);
+
+#
+#  isyscall.h の生成
+#
+
+open(FILE, "> isyscall.h");
+print FILE <<END_OF_HEADER;
+/*  This file is generated from syscall.def by genisyscall.  */
+
+#ifndef _ISYSCALL_
+#define _ISYSCALL_
+
+END_OF_HEADER
+
+foreach $fncd (@ivalid_fncd_list) {
+	print FILE "extern ";
+	print FILE ($flagtable{$fncd} =~ /v/) ? "void " : "ER ";
+	$proto = $prototable{$fncd};
+	$proto =~ s/\(\)/(void)/;
+	$proto =~ s/\* / */g;
+	print FILE "i_",$proto,";\n";
+}
+
+print FILE <<END_OF_TAILER;
+
+#endif /* _ISYSCALL_ */
+END_OF_TAILER
+close(FILE);
+
+#
+#  itis_isyscall.h の生成
+#
+
+open(FILE, "> itis_isyscall.h");
+print FILE <<END_OF_HEADER;
+/*  This file is generated from syscall.def by genisyscall.  */
+
+#ifndef _ITIS_ISYSCALL_
+#define _ITIS_ISYSCALL_
+
+#include <itis_scint.h>
+
+#ifdef LINK_KERNEL
+
+END_OF_HEADER
+
+# サブルーチンコールで呼び出す場合のインタフェース
+foreach $fncd (@ivalid_fncd_list) {
+	next if ($nametable{$fncd} =~ /X/);
+	print FILE "#define ";
+	$name = $nametable{$fncd};
+	print FILE $name," i_",$name,"\n";
+}
+print FILE "\n";
+
+foreach $fncd (@ivalid_fncd_list) {
+	print FILE "extern ";
+	print FILE ($flagtable{$fncd} =~ /v/) ? "void " : "ER ";
+	$proto = $prototable{$fncd};
+	$proto =~ s/\(\)/(void)/;
+	$proto =~ s/\* / */g;
+	print FILE $proto,";\n";
+}
+
+# TRAPA で呼び出す場合のインタフェース
+print FILE <<END_OF_SEPARATOR;
+
+#else /* LINK_KERNEL */
+
+Inline ER
+sys_cal(FN fncd, INT par1, INT par2, INT par3, INT par4, INT par5, INT par6)
+{
+	SYS_CAL_6M(fncd, par1, par2, par3, par4, par5, par6);
+}
+
+END_OF_SEPARATOR
+
+foreach $fncd (@ivalid_fncd_list) {
+	$flag = $flagtable{$fncd};
+	$void = ($flag =~ /v/);
+
+	# 関数ヘッダの生成
+	print FILE "Inline ";
+	print FILE $void ? "void\n" : "ER\n";
+
+	$proto = $prototable{$fncd};
+	$proto =~ s/\(\)/(void)/;
+	$proto =~ s/\* / */g;
+	print FILE $proto,"\n";
+
+	# レジスタ変数宣言の生成
+	print FILE "{\n";
+	$arglist = "";
+	$argno = 0;
+	foreach $arg (split(/, */, $argstable{$fncd})) {
+		$arg =~ /^[^ ]+ \*?([^ ]+)$/;
+		$arglist .= ", ".$1;
+		$argno++;
+	}
+	print FILE "\tSYS_CAL_",$argno;
+	print FILE "M" if ($flagtable{$fncd} =~ /m/);
+	print FILE "V" if ($flagtable{$fncd} =~ /v/);
+
+	$name = $nametable{$fncd};
+	$name =~ y/a-z/A-Z/;
+	print FILE "(TFN_",$name,$arglist,");\n";
+
+	print FILE "}\n";
+	print FILE "\n";
+}
+
+print FILE <<END_OF_TAILER;
+#endif /* LINK_KERNEL */
+#endif /* _ITIS_ISYSCALL_ */
+END_OF_TAILER
+close(FILE);
+
+#
+#  itable.S の生成
+#
+
+open(FILE, "> itable.S");
+print FILE <<END_OF_HEADER;
+/*  This file is generated from syscall.def by genisyscall.  */
+
+#define __i_(func)	_i_ ## func
+#define _i_(func)	__i_(func)
+
+END_OF_HEADER
+
+# 最初の機能コードの書き出し
+print FILE "FIRST_FNCD = ",$first_fncd,"\n";
+print FILE "\n";
+
+# ジャンプテーブルの生成
+foreach $fncd ($first_fncd .. -1) {
+	if ($flagtable{$fncd} =~ /^-/ || $flagtable{$fncd} =~ /i/) {
+		$name = "_no_support";
+	}
+	elsif ($nametable{$fncd} =~ /X/) {
+		$name = "_i_(".$nametable{$fncd}.")";
+	}
+	else {
+		$name = "_i_".$nametable{$fncd};
+	}
+	print FILE "\t.int ",$name,"\n";
+}
+
+#
+#  ptable.S の生成
+#
+
+open(FILE, "> ptable.S");
+print FILE <<END_OF_HEADER;
+/*  This file is generated from syscall.def by genisyscall.  */
+
+END_OF_HEADER
+
+# ジャンプテーブルの生成
+foreach $fncd ($first_fncd .. -1) {
+	if ($flagtable{$fncd} =~ /^-/ || $flagtable{$fncd} =~ /i/) {
+		$name = "push_0";
+	}
+	else {
+		@args = split(/, */, $argstable{$fncd});
+		$name = "push_".sprintf("%d", $#args+1);
+	}
+	print FILE "\t.int ",$name,"\n";
+}
+
+close(FILE);

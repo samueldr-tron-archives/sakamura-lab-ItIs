@@ -1,0 +1,350 @@
+
+		  ＝ BSD UNIX 上での動作環境 ＝
+
+	     (Release 1.3β対応，最終更新: 17-Feb-1996)
+
+    * TRON は The Real-time Operating system Nucleus の略称です．
+    * ITRON は Industrial TRON の略称です．
+
+------------------------------------------------------------------------ 
+	    ItIs - ITRON Implementation by Sakamura Lab
+
+Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the name of the University nor the names of the laboratory
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+------------------------------------------------------------------------
+
+
+１．BSD UNIX上での動作環境の概要
+
+ItIs のシミュレーション環境として，BSD UNIX上で動作する設定を用意して
+いる．このシミュレーション環境は，BSD UNIX の 1つのプロセスの中で複数
+のタスクを切り替えて動作させるもので，BSD UNIX上のスレッドライブラリと
+して使うこともできる．
+
+
+1.1. サポートしていない機能
+
+BSD UNIX上のシミュレーション環境では，ItIs が持っている機能の内，以下
+の機能はサポートしていない．
+
+・ソフトウェア割込みによるシステムコール呼び出し
+・def_int システムコール
+・拡張SVC機能と準タスク部
+・vset_reg, vget_reg システムコール
+・性能評価用システム時刻参照機能
+
+
+1.2. ターゲットシステムと移植
+
+現時点では，ターゲットシステムとして Sparc プロセッサ上の SunOS 4.X
+(SunOS 4.1.3 で動作確認) と x86 プロセッサ上での FreeBSD のみをサポー
+トしているが，他の BSD UNIX への移植も可能である．BSD UNIX に依存した
+機能を利用しているため，他の系列の UNIX への移植は手間がかかるものと思
+われる．
+
+BSD UNIX上のシミュレーション環境の実装にあたって，下の文献を参考にした．
+他の BSD UNIX への移植の際には，参考になる文献であろう．
+
+[1] 安倍広多, 松浦敏雄,「移植性に優れた軽量プロセスライブラリの実装法」,
+Proc. 21st JUS UNIX Symposium, pp. 77-89, 1993.
+
+
+1.3. システムコールインタフェース
+
+BSD UNIX上のシミュレーション環境では，シミュレーション環境を構成するす
+べてのプログラム (タスク部，タスク独立部，カーネルの内部) が同じ実行レ
+ベルで実行される．そのため，タスク部と準タスク部の区別は意味がなく，準
+タスク部および拡張SVC機能はサポートしていない．
+
+システムコールの呼び出し方としては，サブルーチンコールによる方法のみを
+サポートし，システムコールインタフェースは，C言語のコーリングコンベン
+ションそのままになっている．
+
+
+1.4. 割込み
+
+BSD UNIX上のシミュレーション環境では，シグナルが割込みに対応する．シグ
+ナルハンドラは割込みハンドラとして扱われ，シグナルマスクが割込みマスク
+に対応する．ユーザがシグナルハンドラを定義することも可能であるが，一定
+のルールに従うことが必要である．
+
+BSD UNIX のシグナルの内，SIGUSR2 はタスクディスパッチ処理のために用い
+ているため，ユーザが利用することはできない．また，SIGALRM はカーネル内
+のタイマ割込みとして用いている．設定によっては，SIGIO のハンドラもカー
+ネル内で定義される (SIGIO の扱いについては３章を参照)．
+
+
+1.5. メモリ管理
+
+標準の設定では，ネイティブ環境と同様に，カーネルが必要とする各種の領域
+はシステムメモリプールから確保/解放される．システムメモリプールの領域
+は，OS標準の sbrkシステムコールによって確保される．システム構成ファイ
+ルで，システムメモリプールを使わない設定にする (num_kernel_mpl を 0 に
+する) ことで，システムメモリプールから領域を確保/解放する代わりに，OS 
+標準の malloc，free ライブラリが使われる．
+
+メモリの保護属性を変更するための mprotectシステムコールを OS がサポー
+トしている場合には，タスクが用いるスタックの下の 1ページ分の領域をアク
+セス禁止領域に設定し，スタック溢れの検出を可能にしている．アクセス禁止
+にする領域の分を補うために，スタック領域は多めのサイズを確保している．
+そのため，システムメモリプールの使用量は，ネイティブ環境とは一致しない 
+(デフォルト/最小のシステムスタックサイズも異なるため，システムメモリプー
+ルの使用量が一致しなくなるのはやむを得ない)．
+
+
+1.6. 時間管理
+
+周期割込みの間隔は 10ミリ秒を標準としているが，ターゲット依存のタイマ
+モジュールのみの修正で変更できる．シミュレーション環境全体が 1つのプロ
+セスとして実行されるため，シミュレーション環境全体に割り当てられる CPU
+時間が UNIX のスケジューラによって決められる．そのため，高い時間精度を
+期待することはできない．
+
+時間を表すパラメータ (SYSTIME，CYCTIME，ALMTIME，DLYTIME，TMO 型のもの) 
+の基準時間は，すべて 1ミリ秒である．
+
+
+２．システムコール仕様の違い
+
+以下では，BSD UNIX上でのシミュレーション環境での，各システムコールの仕
+様の違いについて述べる．
+
+(1) cre_tsk		タスク生成
+
+・タスクを動作させるリングレベルを指定する機能はない．指定しても，無視
+する (エラーにはならない)．
+
+・ユーザスタックとシステムスタックの区別はない．両者のサイズを加えたサ
+イズのスタック領域が確保される．
+
+(2) dis_dsp		ディスパッチ禁止
+
+・dis_dsp は，シグナルマスクを SIGUSR2 シグナルのみマスクした状態に設
+定する．
+
+(3) ena_dsp		ディスパッチ許可
+
+・ena_dsp は，すべてのシグナルマスクを解除した状態に設定する．
+
+(4) def_int		割込みハンドラ定義
+
+・サポートしていない．
+
+(5) loc_cpu		割込みとディスパッチの禁止
+
+・loc_cpu は，すべてのシグナルをマスクした状態に設定する．
+
+(6) unl_cpu		割込みとディスパッチの許可
+
+・unl_cpu は，すべてのシグナルマスクを解除した状態に設定する．
+
+(7) chg_ims		割込みマスク変更
+
+・chg_ims は，シグナルマスクを指定した値に設定する．タスク独立部から呼
+び出した場合には，SIGUSR2 シグナルのマスクを解除することはできない (解
+除しようとすると，E_PAR エラーになる)．
+
+・設定したシグナルマスクの値と，ref_sys で参照できるタスク部のシステム
+状態 (sysstat) の関係は以下のようになる．
+
+	シグナルマスク		sysstat
+	--------------------------------
+	SIGUSR2 以外もマスク	TTS_LOC
+	SIGUSR2 のみマスク	TTS_DDSP
+	すべて解除		TTS_TSK
+
+(8) ref_ims		割込みマスク参照
+
+・ref_ims は，シグナルマスクの現在値を読み出すシステムコールである．
+
+(9) get_ver		バージョン参照
+
+・CPU情報は 0x0000 (CPU を特定しない) になる．これは，CPU の機能をその
+まま使っているわけではないため，正確な CPU情報を返す意義が低いためであ
+る．
+
+(10) def_svc		拡張SVCハンドラ定義
+
+・サポートしていない．
+
+(11) vset_reg		タスクのレジスタ内容設定
+(12) vget_reg		タスクのレジスタ内容参照
+
+・サポートしていない．
+
+(13) vget_tim		性能評価用システム時刻参照
+
+・サポートしていない．
+
+
+３．ノンブロッキングI/O
+
+3.1. ノンブロッキングI/O の必要性
+
+ItIs のシミュレーション環境全体が 1つのプロセスとして動作しているため，
+ItIs のタスクから UNIX カーネル内でブロックするシステムコールを呼び出
+した場合，シミュレーション環境全体がブロックされ，他のタスクを実行する
+ことができなくなる (厳密には，ブロック中にシグナルを受け取った場合には，
+ブロックが解除されて実行を継続できる)．そのため，UNIX カーネル内でのブ
+ロックが起こらないように，低速の I/Oアクセスは，ノンブロッキングモード
+で行う必要がある．
+
+BSD UNIX のノンブロッキングI/Oモードでは，通常であればカーネル中でブロッ
+クされるような read/writeシステムコールからもすぐにリターンしてくる 
+(この時，これらのシステムコールは EWOULDBLOCK エラーを報告する)．さら
+に非同期I/Oモードを併用すると，それらのシステムコールを呼び出してもブ
+ロックされない状況になった時に，UNIXカーネルは SIGIO シグナルを使って
+そのことをプロセスに知らせる．
+
+
+3.2. ItIs におけるサポート
+
+BSD UNIX のノンブロッキングI/O を ItIs のタスクから利用するためには，
+SIGIO を捕まえるシグナルハンドラを定義し，捕まえたシグナルを何らかの形
+でタスクに通知する必要がある．このタスクへの通知の手段として，ItIs で
+は，flgid = FLG_BSD_SIGIO のイベントフラグを用いる．これを SIGIO 通知
+イベントフラグと呼ぶ．
+
+具体的には，システム構成設定ファイルで SIGIO 通知イベントフラグが使え
+るように設定すると，SIGIO シグナルが来た時に SIGIO 通知イベントフラグ
+の最下位ビットをセットしすぐにクリアするハンドラが，初期化タスクによっ
+て定義される (systask/bsd_sigio.c)．ノンブロッキングI/Oモードに設定し
+た I/O に対して read/writeシステムコールを発行するタスクは，システムコー
+ル発行の結果 EWOULDBLOCK エラーになった場合には，SIGIO 通知イベントフ
+ラグの最下位ビットをクリア指定なしで待ち，待ち解除されたら read/write
+システムコールを再発行すればよい．
+
+一般に，read/writeシステムコールを使うタスクは，シグナルによるシステム
+コール実行の中断を示す EINTR エラーに対処する必要があるが，ノンブロッ
+キングI/Oモードの時に EINTR エラーが起こるかどうかは不明である．ItIs 
+の内部では，すべてのシグナルをマスクして read/writeシステムコールを呼
+び出すため (このようにしないと，errno の値が他のタスクによって書き換え
+られるおそれがある)，EINTR エラーは起こらないと考えてチェックしていな
+い．
+
+ItIs 上のタスクがノンブロッキングI/O を使うのをサポートするライブラリ
+として，nb_open，nb_close，nb_socket，nb_accept，nb_read，nb_write を
+用意している (libitis/bsd_nbio.c)．nb_close は，単に close を呼び出す
+だけの関数である．
+
+
+3.3. ノンブロッキングI/Oサポートの限界
+
+ItIs におけるノンブロッキングI/O のサポートには，errno の扱いに限界が
+ある．UNIX のシステムコールインタフェースでは，システムコールがエラー
+を起こした時のエラーの原因は errno変数に設定されることになっているが，
+この変数はプロセス全体で 1つしかなく，各タスクで共通となってしまうため，
+あるタスクが呼び出したシステムコールが返す errno を他のタスクが書き換
+えてしまうおそれがある．
+
+この問題を防ぐために，システムコールが返す errno を指定した領域に格納
+するノンブロッキングI/Oライブラリとして，nbe_open，nbe_close，
+nbe_socket，nbe_accept，nbe_read，nbe_writeを用意している 
+(libitis/bsd_nbeio.c)．
+
+
+3.4. 疑似シリアルドライバ
+
+BSD UNIX上のシミュレーション環境を，ネイティブ環境となるべく近いものと
+するために，ネイティブ環境のシリアルインタフェースドライバと同等の機能
+を持つ疑似シリアルドライバを用意している (systask/bsd_serial.c)．疑似
+シリアルドライバは，上で述べたノンブロッキングI/O の機能を用いて，シリ
+アルポートに対する入出力を，/dev/tty に対して行うものである．疑似シリ
+アルドライバは，シリアルインタフェースからの割込みをシミュレートするた
+めに，内部でタスクを 1つ (tskid = TSK_BSD_SERIAL) 用いている．
+
+
+４．インストール・その他
+
+4.1. インストール
+
+BSD UNIX上のシミュレーション環境をインストールするには，ItIs の標準リ
+リースに含まれる以外に，以下のツールが必要である．
+
+    GNU Cコンパイラ (GCC, 動作確認は 2.6.3)
+    perl 4.XXX (動作確認は 4.036)
+    GNU Make (動作確認は 3.72.1)
+
+標準的なインストール手順は以下の通りである．
+
+最初に，ItIs を展開したディレクトリに，オブジェクトファイルを置くため
+のディレクトリを作る (ディレクトリ名は何でもよい)．
+
+    % mkdir BSD
+    % cd BSD
+
+sample から，適当な Makefile と config.def をコピーし，内容を作りたい
+カーネル用に編集する．
+
+    % cp ../sample/Makefile.XXX Makefile
+    % cp ../sample/config.def.bsd config.def
+    % emacs Makefile config.def
+
+Makefile の依存関係定義部を作ってから，オブジェクトを作る．
+
+    % gmake depend
+    % gmake itis
+
+
+4.2. 疑似シリアルドライバ使用上の注意
+
+疑似シリアルドライバは，/dev/tty をノンブロッキングモードに設定する．
+BSD UNIX では，/dev/tty をノンブロッキングモードに設定したままの状態で
+プログラムを終了すると，シェルがエラーを起こして異常終了してしまう (ロ
+グインシェルが異常終了すると，自動的にログアウトする)．そのため，ItIs 
+を終了する前に必ずノンブロッキングモードを解除する必要があるが，プロセ
+スを終了させるシグナルは数多くあり，そのすべてには対処していない．また，
+ユーザプログラムで捕まえることのできないシグナルもあり，完全に対処する
+ことは不可能である．ログアウトしてしまうと再接続が面倒な場合には，
+"rlogin localhost" で自ホストにログインし直した状態で使うのがいいだろ
+う．
+
+なお，原因不明で，/dev/tty に対するノンブロッキングI/O が正しく動かな
+くなることがある．そのような場合には，シェルを再起動すると直るようだ．
+この意味でも，"rlogin localhost" して使うのが無難であろう．
+
+
+4.3. デバッガ使用上のヒント
+
+BSD UNIX上のシミュレーション環境は，UNIX上のシンボリックデバッガと組み
+合わせて使うことで，ItIs を用いたシステムのデバッグに力を発揮するわけ
+だが，デバッガと組み合わせて使う上で，ItIs がタスク切り替えに SIGUSR2
+シグナルを使っているために，タスク切り替えの度にデバッガに制御が戻って
+しまうという問題がある．GNU シンボリックデバッガ (GDB) の場合には，次
+のコマンドによりデバッガが SIGUSR2 を捕まえないように設定することがで
+きる．
+
+    (gdb) handle SIGUSR2 nostop noprint
+
+また，条件付ブレークポイントをサポートしているデバッガの場合は，特定の
+タスクが特定のアドレスを実行した場合に限って実行を停止させることができ
+る (停止するのは，システム全体で，特定のタスクだけではない)．例えば，
+GDB の場合には，次のコマンドにより，ID が TSKID のタスクが関数 FUNC を
+呼び出した場合にのみ実行を停止させることができる (厳密には，この指定方
+法では，ID が TSKID のタスクが実行中に起動された割込みハンドラが FUNC 
+を呼び出した場合にも停止する)．
+
+    (gdb) break FUNC if ctxtsk->tskid==TSKID
