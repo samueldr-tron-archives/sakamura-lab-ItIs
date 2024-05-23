@@ -34,7 +34,7 @@
 #include <itis_services.h>
 
 /*
- *  ƒGƒ‰[ƒƒbƒZ[ƒW•¶Žš—ñ‚ð•Ô‚·ŠÖ”
+ *  ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ–‡å­—åˆ—ã‚’è¿”ã™é–¢æ•°
  */
 char *
 itron_strerror(ER ercd)

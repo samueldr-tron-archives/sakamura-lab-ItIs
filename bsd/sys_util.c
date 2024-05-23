@@ -34,7 +34,7 @@
 #include "itis_kernel.h"
 
 /*
- *  ターゲット依存関数
+ *  繧ｿ繝ｼ繧ｲ繝�繝井ｾ晏ｭ倬未謨ｰ
  */
 void
 sys_initialize(void)

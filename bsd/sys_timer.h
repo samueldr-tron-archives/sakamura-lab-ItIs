@@ -37,38 +37,38 @@
 #include <sys/time.h>
 
 /*
- *  �n�[�h�E�F�A�ˑ��^�C�}���W���[��
+ *  ハードウェア依存タイマモジュール
  *
- *  ���̃��W���[�����ŁC�ȉ��̒萔����ъ֐����`���Ȃ���΂Ȃ�Ȃ��D
+ *  このモジュール内で，以下の定数および関数を定義しなければならない．
  * 
- *  TIMER_PERIOD : �^�C�}�����݂̎��� (�P�ʂ� msec)�DItIs �ł̕W���l�� 
- *  1msec �ł��邪�C�^�C�}�����݂ɂ��I�[�o�w�b�h���������������ꍇ��
- *  �́C�����ƒ��������ɐݒ肵�Ă��悢�D�������C�^�C���A�E�g���ԂȂ�
- *  �̕���x�͑e���Ȃ� (�P�ʂ͕ς��Ȃ�)�D
+ *  TIMER_PERIOD : タイマ割込みの周期 (単位は msec)．ItIs での標準値は 
+ *  1msec であるが，タイマ割込みによるオーバヘッドを小さくしたい場合に
+ *  は，もっと長い周期に設定してもよい．もちろん，タイムアウト時間など
+ *  の分解度は粗くなる (単位は変わらない)．
  *
- *  void start_hw_timer(FP handler) : �^�C�}�����������C�����I�ȃ^�C�}
- *  �����݂��J�n������Dhandler �́C�����I�ɋN�����ׂ��n���h���̊J�n�A
- *  �h���X�D
+ *  void start_hw_timer(FP handler) : タイマを初期化し，周期的なタイマ
+ *  割込みを開始させる．handler は，周期的に起動すべきハンドラの開始ア
+ *  ドレス．
  *
- *  void clear_hw_timer_interupt(void) : �^�C�}�����ݗv�����N���A����D
- *  �^�C�}�����݃n���h���̍ŏ��ŌĂ΂��D
+ *  void clear_hw_timer_interupt(void) : タイマ割込み要求をクリアする．
+ *  タイマ割込みハンドラの最初で呼ばれる．
  *
- *  void terminate_hw_timer(void) : �^�C�}�̓�����~������D�V�X�e��
- *  ��~���ɌĂ΂��D
+ *  void terminate_hw_timer(void) : タイマの動作を停止させる．システム
+ *  停止時に呼ばれる．
  */ 
 
 /*
- *  �^�C�}�����݂̎��� (�P�ʂ� msec)
+ *  タイマ割込みの周期 (単位は msec)
  */
 #define TIMER_PERIOD	10
 
 /*
- *  �^�C�}�n���h��
+ *  タイマハンドラ
  */
 extern void	timer_handler(void);
 
 /*
- *  �^�C�}�̃X�^�[�g����
+ *  タイマのスタート処理
  */
 Inline void
 start_hw_timer(void)
@@ -88,7 +88,7 @@ start_hw_timer(void)
 }
 
 /*
- *  �^�C�}�����݂̃N���A
+ *  タイマ割込みのクリア
  */
 Inline void
 clear_hw_timer_interrupt(void)
@@ -96,7 +96,7 @@ clear_hw_timer_interrupt(void)
 }
 
 /*
- *  �^�C�}�̒�~����
+ *  タイマの停止処理
  */
 Inline void
 terminate_hw_timer(void)

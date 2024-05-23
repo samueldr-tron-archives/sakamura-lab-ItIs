@@ -37,17 +37,17 @@
 #include "sys_timer.h"
 
 /*
- *  Œ»ÝŽž (ƒ\ƒtƒgƒEƒFƒAƒNƒƒbƒN)
+ *  ç¾åœ¨æ™‚åˆ» (ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚¯ãƒ­ãƒƒã‚¯)
  */
 SYSTIME	current_time;
 
 /* 
- *  ƒ^ƒCƒ}ƒLƒ…[
+ *  ã‚¿ã‚¤ãƒžã‚­ãƒ¥ãƒ¼
  */
 static QUEUE	timer_queue;
 
 /*
- *  ƒ^ƒCƒ}ƒ‚ƒWƒ…[ƒ‹‚Ì‰Šú‰»
+ *  ã‚¿ã‚¤ãƒžãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®åˆæœŸåŒ–
  */
 void
 timer_initialize(void)
@@ -58,7 +58,7 @@ timer_initialize(void)
 }
 
 /*
- *  ƒ^ƒCƒ}‚Ì’âŽ~
+ *  ã‚¿ã‚¤ãƒžã®åœæ­¢
  */
 void
 timer_shutdown(void)
@@ -67,7 +67,7 @@ timer_shutdown(void)
 }
 
 /*
- *  ƒ^ƒCƒ}ƒCƒxƒ“ƒg‚ðƒ^ƒCƒ}ƒLƒ…[‚Ö‘}“ü
+ *  ã‚¿ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆã‚’ã‚¿ã‚¤ãƒžã‚­ãƒ¥ãƒ¼ã¸æŒ¿å…¥
  */
 static void
 enqueue_tmeb(TMEB *event)
@@ -83,11 +83,11 @@ enqueue_tmeb(TMEB *event)
 }
 
 /*
- *  ƒ^ƒCƒ}ƒCƒxƒ“ƒg event ‚ðCƒ^ƒCƒ€ƒAƒEƒgŽžŠÔ tmout Œã‚É‹N“®‚³‚ê‚é‚æ‚¤
- *  ‚Éƒ^ƒCƒ}ƒLƒ…[‚Ö“o˜^‚·‚éDƒ^ƒCƒ€ƒAƒEƒgŽžŠÔ‚ª—ˆ‚é‚ÆCƒR[ƒ‹ƒoƒbƒNŠÖ 
- *  ” callback ‚Éˆø” arg ‚ð—^‚¦‚Ä‹N“®‚·‚éDtmout ‚ª TMO_FEVR ‚ÌŽž‚ÍC
- *  ƒ^ƒCƒ}ƒLƒ…[‚É‚Í“o˜^‚µ‚È‚¢‚ªCŒã‚Å timer_delete ‚ªŒÄ‚Î‚ê‚Ä‚à‚æ‚¢‚æ
- *  ‚¤‚ÉCƒLƒ…[‚ÌƒGƒŠƒA‚ð‰Šú‰»‚·‚éD
+ *  ã‚¿ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆ event ã‚’ï¼Œã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ tmout å¾Œã«èµ·å‹•ã•ã‚Œã‚‹ã‚ˆã†
+ *  ã«ã‚¿ã‚¤ãƒžã‚­ãƒ¥ãƒ¼ã¸ç™»éŒ²ã™ã‚‹ï¼Žã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ãŒæ¥ã‚‹ã¨ï¼Œã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢ 
+ *  æ•° callback ã«å¼•æ•° arg ã‚’ä¸Žãˆã¦èµ·å‹•ã™ã‚‹ï¼Žtmout ãŒ TMO_FEVR ã®æ™‚ã¯ï¼Œ
+ *  ã‚¿ã‚¤ãƒžã‚­ãƒ¥ãƒ¼ã«ã¯ç™»éŒ²ã—ãªã„ãŒï¼Œå¾Œã§ timer_delete ãŒå‘¼ã°ã‚Œã¦ã‚‚ã‚ˆã„ã‚ˆ
+ *  ã†ã«ï¼Œã‚­ãƒ¥ãƒ¼ã®ã‚¨ãƒªã‚¢ã‚’åˆæœŸåŒ–ã™ã‚‹ï¼Ž
  */
 void
 timer_insert(TMEB *event, TMO tmout, CBACK callback, VP arg)
@@ -106,8 +106,8 @@ timer_insert(TMEB *event, TMO tmout, CBACK callback, VP arg)
 }
 
 /*
- *  ƒ^ƒCƒ}ƒCƒxƒ“ƒg event ‚ðC(â‘Î) Žž time ‚É‹N“®‚³‚ê‚é‚æ‚¤‚Éƒ^ƒCƒ}
- *  ƒLƒ…[‚Ö“o˜^‚·‚éD
+ *  ã‚¿ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆ event ã‚’ï¼Œ(çµ¶å¯¾) æ™‚åˆ» time ã«èµ·å‹•ã•ã‚Œã‚‹ã‚ˆã†ã«ã‚¿ã‚¤ãƒž
+ *  ã‚­ãƒ¥ãƒ¼ã¸ç™»éŒ²ã™ã‚‹ï¼Ž
  */
 void
 timer_insert_abs(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
@@ -120,8 +120,8 @@ timer_insert_abs(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
 }
 
 /*
- *  ƒ^ƒCƒ}ƒCƒxƒ“ƒg event ‚ðCtime ŽžŠÔŒã‚É‹N“®‚³‚ê‚é‚æ‚¤‚É‚Éƒ^ƒCƒ}ƒLƒ…[
- *  ‚Ö“o˜^‚·‚éD
+ *  ã‚¿ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆ event ã‚’ï¼Œtime æ™‚é–“å¾Œã«èµ·å‹•ã•ã‚Œã‚‹ã‚ˆã†ã«ã«ã‚¿ã‚¤ãƒžã‚­ãƒ¥ãƒ¼
+ *  ã¸ç™»éŒ²ã™ã‚‹ï¼Ž
  */
 void
 timer_insert_rel(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
@@ -134,18 +134,18 @@ timer_insert_rel(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
 }
 
 /*
- *  ƒ^ƒCƒ}Š„ž‚Ýƒnƒ“ƒhƒ‰
+ *  ã‚¿ã‚¤ãƒžå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©
  *
- *  ƒ^ƒCƒ}Š„ž‚Ýƒnƒ“ƒhƒ‰‚ÍCƒn[ƒhƒEƒFƒAƒ^ƒCƒ}‚É‚æ‚è TIMER_PERIODƒ~ƒŠ•b
- *  ‚ÌŽüŠú‚Å‹N“®‚³‚ê‚éDƒ\ƒtƒgƒEƒFƒAƒNƒƒbƒN‚ðXV‚µC‹N“®ŽžŠÔ‚Ì—ˆ‚½ƒ^
- *  ƒCƒ}ƒCƒxƒ“ƒg‚Ì‹N“®‚ðs‚¤D
+ *  ã‚¿ã‚¤ãƒžå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã¯ï¼Œãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã‚¿ã‚¤ãƒžã«ã‚ˆã‚Š TIMER_PERIODãƒŸãƒªç§’
+ *  ã®å‘¨æœŸã§èµ·å‹•ã•ã‚Œã‚‹ï¼Žã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚¯ãƒ­ãƒƒã‚¯ã‚’æ›´æ–°ã—ï¼Œèµ·å‹•æ™‚é–“ã®æ¥ãŸã‚¿
+ *  ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆã®èµ·å‹•ã‚’è¡Œã†ï¼Ž
  */
 void
 timer_handler(void)
 {
 	TMEB	*event;
 
-	clear_hw_timer_interrupt();		/* ƒ^ƒCƒ}Š„ž‚Ý‚ÌƒNƒŠƒA */
+	clear_hw_timer_interrupt();		/* ã‚¿ã‚¤ãƒžå‰²è¾¼ã¿ã®ã‚¯ãƒªã‚¢ */
 
 	BEGIN_CRITICAL_SECTION;
 	current_time += TIMER_PERIOD;
@@ -166,7 +166,7 @@ timer_handler(void)
 }
 
 /*
- *  «”\•]‰¿—pƒVƒXƒeƒ€ŽžŽQÆ‹@”\
+ *  æ€§èƒ½è©•ä¾¡ç”¨ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»å‚ç…§æ©Ÿèƒ½
  */
 
 #ifndef _i_vget_tim

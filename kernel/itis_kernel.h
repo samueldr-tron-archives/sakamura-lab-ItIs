@@ -35,11 +35,11 @@
 #define _ITIS_KERNEL_
 
 /*
- *  ItIsƒJ[ƒlƒ‹ •W€ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+ *  ItIsã‚«ãƒ¼ãƒãƒ« æ¨™æº–ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
  */
 
 /*
- *  ItIs •W€ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+ *  ItIs æ¨™æº–ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
  */
 #include <itron.h>
 #include <itron_errno.h>
@@ -49,7 +49,7 @@
 #include <itis_syslog.h>
 
 /*
- *  ƒJ[ƒlƒ‹—p assertƒ}ƒNƒ‚Ì’è‹`
+ *  ã‚«ãƒ¼ãƒãƒ«ç”¨ assertãƒžã‚¯ãƒ­ã®å®šç¾©
  */
 #ifndef NDEBUG
 
@@ -65,7 +65,7 @@ extern void	i_assert_fail(const char *expr, const char *file,
 #endif /* NDEBUG */
 
 /*
- *  ƒJ[ƒlƒ‹\¬Ý’èƒtƒ@ƒCƒ‹
+ *  ã‚«ãƒ¼ãƒãƒ«æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
  */
 #include "config.h"
 #include "cpu_conf.h"
@@ -73,17 +73,17 @@ extern void	i_assert_fail(const char *expr, const char *file,
 #include "isysconf.h"
 
 /*
- *  CPUˆË‘¶ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+ *  CPUä¾å­˜ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
  */
 #include "cpu_status.h"
 
 /*
- *  ƒVƒXƒeƒ€ƒR[ƒ‹ƒvƒƒgƒ^ƒCƒvéŒ¾
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
  */
 #include "isyscall.h"
 
 /*
- *  ƒVƒXƒeƒ€‰Šú‰»—pŠÖ” (Šeƒ‚ƒWƒ…[ƒ‹)
+ *  ã‚·ã‚¹ãƒ†ãƒ åˆæœŸåŒ–ç”¨é–¢æ•° (å„ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«)
  */
 extern void	task_initialize(void);
 extern void	semaphore_initialize(void);
@@ -99,36 +99,36 @@ extern void	alarmhandler_initialize(void);
 extern void	extended_svc_initialize(void);
 
 /*
- *  ƒVƒXƒeƒ€I—¹—pŠÖ” (startup.c)
+ *  ã‚·ã‚¹ãƒ†ãƒ çµ‚äº†ç”¨é–¢æ•° (startup.c)
  */
 extern void	itis_exit(void);
 
 /*
- *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚©‚ç‚Ìƒƒ‚ƒŠƒuƒƒbƒN‚ÌŽæ“¾‚Æ•Ô‹p (mempool.c)
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã‹ã‚‰ã®ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã®å–å¾—ã¨è¿”å´ (mempool.c)
  *
- *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚ÍCID ‚ª TMPL_OS ‚Ìƒƒ‚ƒŠƒv[ƒ‹‚Æ‚µ‚ÄƒAƒNƒZƒX
- *  ‚·‚é‚±‚Æ‚à‚Å‚«‚é‚ªCƒJ[ƒlƒ‹“à‚©‚ç—p‚¢‚é‚½‚ß‚ÌƒCƒ“ƒ^ƒtƒF[ƒX‚ð—pˆÓ
- *  ‚µ‚Ä‚¢‚éDsys_get_blk ‚ÍCƒƒ‚ƒŠƒuƒƒbƒN‚ªŽæ‚ê‚È‚©‚Á‚½ê‡‚ÉC‘Ò‚¿
- *  ó‘Ô‚É‚Í“ü‚ç‚¸‚ÉC‘¦À‚É NULL ‚ð•Ô‚·D
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã¯ï¼ŒID ãŒ TMPL_OS ã®ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã¨ã—ã¦ã‚¢ã‚¯ã‚»ã‚¹
+ *  ã™ã‚‹ã“ã¨ã‚‚ã§ãã‚‹ãŒï¼Œã‚«ãƒ¼ãƒãƒ«å†…ã‹ã‚‰ç”¨ã„ã‚‹ãŸã‚ã®ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã‚’ç”¨æ„
+ *  ã—ã¦ã„ã‚‹ï¼Žsys_get_blk ã¯ï¼Œãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ãŒå–ã‚Œãªã‹ã£ãŸå ´åˆã«ï¼Œå¾…ã¡
+ *  çŠ¶æ…‹ã«ã¯å…¥ã‚‰ãšã«ï¼Œå³åº§ã« NULL ã‚’è¿”ã™ï¼Ž
  */
 extern ER	sys_cre_mpl(void);
 extern VP	sys_get_blk(INT size);
 extern void	sys_rel_blk(VP blk);
 
 /*
- *  ƒJ[ƒlƒ‹—pƒVƒXƒeƒ€ƒƒO‹L˜^ƒ‰ƒCƒuƒ‰ƒŠ (isyslog.c)
+ *  ã‚«ãƒ¼ãƒãƒ«ç”¨ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°è¨˜éŒ²ãƒ©ã‚¤ãƒ–ãƒ©ãƒª (isyslog.c)
  */
 extern void	i_syslog(int class, const char *format, ...);
 
 /*
- *  ƒ^[ƒQƒbƒgƒVƒXƒeƒ€ˆË‘¶ƒ‹[ƒ`ƒ“ (sys_util.c)
+ *  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚·ã‚¹ãƒ†ãƒ ä¾å­˜ãƒ«ãƒ¼ãƒãƒ³ (sys_util.c)
  */
 extern void	sys_initialize(void);
 extern void	sys_exit(void);
 extern int	sys_write(const char *buf, unsigned int len);
 
 /*
- *  ‚»‚Ì‘¼‚Ì’è‹`
+ *  ãã®ä»–ã®å®šç¾©
  */
 #define	offsetof(structure, field) ((INT) &(((structure *) 0)->field))
 

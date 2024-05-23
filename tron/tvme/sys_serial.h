@@ -35,70 +35,70 @@
 #define _SYS_SERIAL_
 
 /*
- *  TVME-150 CPUƒ{[ƒh—p ’áƒŒƒxƒ‹ƒVƒŠƒAƒ‹I/O ŠÖ˜A‚Ì’è‹`
+ *  TVME-150 CPUãƒœãƒ¼ãƒ‰ç”¨ ä½ãƒ¬ãƒ™ãƒ«ã‚·ãƒªã‚¢ãƒ«I/O é–¢é€£ã®å®šç¾©
  */
 
 #include "tvme150.h"
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ìƒn[ƒhƒEƒFƒAˆË‘¶î•ñ‚Ì’è‹`
+ *  ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã®ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ä¾å­˜æƒ…å ±ã®å®šç¾©
  */
 typedef struct raw_serial_port_descripter {
-	BOOL	*initflag;	/* ‰Šú‰»Ïƒtƒ‰ƒO‚Ö‚Ìƒ|ƒCƒ“ƒ^ */
-	IOREG	*data;		/* ƒf[ƒ^ƒŒƒWƒXƒ^‚Ì”Ô’n */
-	IOREG	*cntrl;		/* ƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^‚Ì”Ô’n */
+	BOOL	*initflag;	/* åˆæœŸåŒ–æ¸ˆãƒ•ãƒ©ã‚°ã¸ã®ãƒã‚¤ãƒ³ã‚¿ */
+	IOREG	*data;		/* ãƒ‡ãƒ¼ã‚¿ãƒ¬ã‚¸ã‚¹ã‚¿ã®ç•ªåœ° */
+	IOREG	*cntrl;		/* ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿ã®ç•ªåœ° */
 
-	byte	com_reset;	/* ƒ|[ƒgƒŠƒZƒbƒgƒRƒ}ƒ“ƒh */
-	byte	mode3_def;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l (WR3) */
-	byte	mode4_def;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l (WR4) */
-	byte	mode5_def;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l (WR5) */
-	byte	mode12_def;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l (WR12) */
-	byte	mode13_def;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l (WR13) */
+	byte	com_reset;	/* ãƒãƒ¼ãƒˆãƒªã‚»ãƒƒãƒˆã‚³ãƒãƒ³ãƒ‰ */
+	byte	mode3_def;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤ (WR3) */
+	byte	mode4_def;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤ (WR4) */
+	byte	mode5_def;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤ (WR5) */
+	byte	mode12_def;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤ (WR12) */
+	byte	mode13_def;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤ (WR13) */
 } RPORT;
 
 /*
- *  SCCƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^‚Ìİ’è’l
+ *  SCCã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿ã®è¨­å®šå€¤
  */
 
-#define MODE4_DEF	0x44		/* ƒXƒgƒbƒvƒrƒbƒg 1bit, ƒpƒŠƒeƒB‚È‚µ */
-#define MODE3_DEF	0xc1		/* ƒf[ƒ^ 8bit, óMƒCƒl[ƒuƒ‹ */
-#define MODE3_INIT_MASK	0xfe		/* óMƒfƒBƒXƒG[ƒuƒ‹ */
-#define MODE5_DEF	0xea		/* ƒf[ƒ^ 8bit, ‘—MƒCƒl[ƒuƒ‹ */
-#define MODE5_INIT_MASK	0x75		/* ‘—MƒfƒBƒXƒG[ƒuƒ‹ */
+#define MODE4_DEF	0x44		/* ã‚¹ãƒˆãƒƒãƒ—ãƒ“ãƒƒãƒˆ 1bit, ãƒ‘ãƒªãƒ†ã‚£ãªã— */
+#define MODE3_DEF	0xc1		/* ãƒ‡ãƒ¼ã‚¿ 8bit, å—ä¿¡ã‚¤ãƒãƒ¼ãƒ–ãƒ« */
+#define MODE3_INIT_MASK	0xfe		/* å—ä¿¡ãƒ‡ã‚£ã‚¹ã‚¨ãƒ¼ãƒ–ãƒ« */
+#define MODE5_DEF	0xea		/* ãƒ‡ãƒ¼ã‚¿ 8bit, é€ä¿¡ã‚¤ãƒãƒ¼ãƒ–ãƒ« */
+#define MODE5_INIT_MASK	0x75		/* é€ä¿¡ãƒ‡ã‚£ã‚¹ã‚¨ãƒ¼ãƒ–ãƒ« */
 
 #define MODE10_DEF	0x00		/* NRZ */
-#define MODE11_DEF	0x56		/* ƒNƒƒbƒN‚ÉŠÖ‚·‚éİ’è */
+#define MODE11_DEF	0x56		/* ã‚¯ãƒ­ãƒƒã‚¯ã«é–¢ã™ã‚‹è¨­å®š */
 #define MODE12_DEF	24		/* 9600bps */
 #define MODE13_DEF	0		/* 9600bps */
-#define MODE14_DEF	0x03		/* ƒ{[ƒŒ[ƒgƒWƒFƒlƒŒ[ƒ^ */
+#define MODE14_DEF	0x03		/* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ */
 
-#define MODE1_DEF	0x13		/* ŠeŠ„‚İ‚ğ‹–‰Â */
-#define MODE1_DOWN	0x00		/* ‘SŠ„‚İ‚ğ‹Ö~ */
-#define MODE15_DEF	0x00		/* ‚»‚Ì‘¼‚ÌŠ„‚İ‚Ì‹Ö~ */
-#define MODE9_INIT	0x02		/* ƒ}ƒXƒ^[Š„‚İ‹Ö~ */
-#define MODE9_DEF	0x0a		/* ƒ}ƒXƒ^[Š„‚İ‹–‰Â */
-#define MODE9_DOWN	0x02		/* ƒ}ƒXƒ^[Š„‚İ‹Ö~ */
+#define MODE1_DEF	0x13		/* å„å‰²è¾¼ã¿ã‚’è¨±å¯ */
+#define MODE1_DOWN	0x00		/* å…¨å‰²è¾¼ã¿ã‚’ç¦æ­¢ */
+#define MODE15_DEF	0x00		/* ãã®ä»–ã®å‰²è¾¼ã¿ã®ç¦æ­¢ */
+#define MODE9_INIT	0x02		/* ãƒã‚¹ã‚¿ãƒ¼å‰²è¾¼ã¿ç¦æ­¢ */
+#define MODE9_DEF	0x0a		/* ãƒã‚¹ã‚¿ãƒ¼å‰²è¾¼ã¿è¨±å¯ */
+#define MODE9_DOWN	0x02		/* ãƒã‚¹ã‚¿ãƒ¼å‰²è¾¼ã¿ç¦æ­¢ */
 
 /*
- *  Š„‚İƒxƒNƒ^‚Æƒnƒ“ƒhƒ‰ƒAƒhƒŒƒX‚Ìæ‚èo‚µ
+ *  å‰²è¾¼ã¿ãƒ™ã‚¯ã‚¿ã¨ãƒãƒ³ãƒ‰ãƒ©ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å–ã‚Šå‡ºã—
  */
 #define raw_int_vector(p)	INT_VECTOR(3)
 #define raw_int_handler(p)	int_handler_scc
 
 /*
- *  Š„‚İƒnƒ“ƒhƒ‰‚ÌƒGƒ“ƒgƒŠ (‘O•ûéŒ¾)
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®ã‚¨ãƒ³ãƒˆãƒª (å‰æ–¹å®£è¨€)
  */
 static void	int_handler_scc(void);
 
 static void	serial_int_handler(int portid);
 
 /*
- *  ’áƒŒƒxƒ‹ƒ|[ƒgî•ñŠÇ—ƒuƒƒbƒN‚Ì‰Šú’l
+ *  ä½ãƒ¬ãƒ™ãƒ«ãƒãƒ¼ãƒˆæƒ…å ±ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸå€¤
  */
 
-#define NUM_PORT	2	/* ƒTƒ|[ƒg‚·‚éƒVƒŠƒAƒ‹ƒ|[ƒg‚Ì” */
+#define NUM_PORT	2	/* ã‚µãƒãƒ¼ãƒˆã™ã‚‹ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã®æ•° */
 
-static BOOL	initflag[2] = { 0, -1 } ;	/* ‰Šú‰»Ïƒtƒ‰ƒO */
+static BOOL	initflag[2] = { 0, -1 } ;	/* åˆæœŸåŒ–æ¸ˆãƒ•ãƒ©ã‚° */
 
 #define RAWPORT1	{ &initflag[0], SCC_DATAA, SCC_CNTRLA,		\
 			  0x80, MODE3_DEF, MODE4_DEF, MODE5_DEF,	\
@@ -108,7 +108,7 @@ static BOOL	initflag[2] = { 0, -1 } ;	/* ‰Šú‰»Ïƒtƒ‰ƒO */
 			  MODE12_DEF, MODE13_DEF }
 
 /*
- *  ƒVƒŠƒAƒ‹ I/O ƒ|[ƒg‚Ì‰Šú‰»
+ *  ã‚·ãƒªã‚¢ãƒ« I/O ãƒãƒ¼ãƒˆã®åˆæœŸåŒ–
  */
 Inline BOOL
 raw_port_init(RPORT *p)
@@ -116,9 +116,9 @@ raw_port_init(RPORT *p)
 	byte	n;
 
 	/*
-	 *  SCC ‚Ìİ’è
+	 *  SCC ã®è¨­å®š
 	 */
-	io_write(p->cntrl, SCC_WR0);			/* WR0 w’è */
+	io_write(p->cntrl, SCC_WR0);			/* WR0 æŒ‡å®š */
 	if (*(p->initflag) == 0) {
 		scc_write(p->cntrl, SCC_WR9, p->com_reset);
 
@@ -138,36 +138,36 @@ raw_port_init(RPORT *p)
 	}
 
 	/*
-	 *  interrupt handler ‚Ìİ’è
+	 *  interrupt handler ã®è¨­å®š
 	 */
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
 		scb_assign(SCB_R0, 3);
-		scb_assign(SCB_R1, 0x04);		/* ƒŒƒxƒ‹ƒgƒŠƒK */
-		scb_or_assign(SCB_R3, LRQ3_BIT);	/* Š„‚İƒ}ƒXƒN‰ğœ */
+		scb_assign(SCB_R1, 0x04);		/* ãƒ¬ãƒ™ãƒ«ãƒˆãƒªã‚¬ */
+		scb_or_assign(SCB_R3, LRQ3_BIT);	/* å‰²è¾¼ã¿ãƒã‚¹ã‚¯è§£é™¤ */
 	}
 
 	/*
-	 *  SCC ‚ÌŠ„‚İŠÖŒW‚Ìİ’è
+	 *  SCC ã®å‰²è¾¼ã¿é–¢ä¿‚ã®è¨­å®š
 	 */
 	scc_write(p->cntrl, SCC_WR15, MODE15_DEF);
 	scc_write(p->cntrl, SCC_WR1, MODE1_DEF);
 	io_write(p->cntrl, 0x28);
 	scc_write(p->cntrl, SCC_WR9, MODE9_DEF);
 
-	*(p->initflag) = 1;				/* ‰Šú‰»ƒtƒ‰ƒOİ’è */
+	*(p->initflag) = 1;				/* åˆæœŸåŒ–ãƒ•ãƒ©ã‚°è¨­å®š */
 	return(0);
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ I/O ƒ|[ƒg‚ÌƒVƒƒƒbƒgƒ_ƒEƒ“
+ *  ã‚·ãƒªã‚¢ãƒ« I/O ãƒãƒ¼ãƒˆã®ã‚·ãƒ£ãƒƒãƒˆãƒ€ã‚¦ãƒ³
  */
 Inline void
 raw_port_shutdown(RPORT *p)
 {
-	*(p->initflag) = -1;				/* ‰Šú‰»ƒtƒ‰ƒOİ’è */
+	*(p->initflag) = -1;				/* åˆæœŸåŒ–ãƒ•ãƒ©ã‚°è¨­å®š */
 
 	/*
-	 *  SCC ‚ÌŠ„‚İŠÖŒW‚Ìİ’è
+	 *  SCC ã®å‰²è¾¼ã¿é–¢ä¿‚ã®è¨­å®š
 	 */
 	scc_write(p->cntrl, SCC_WR1, MODE1_DOWN);
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
@@ -175,15 +175,15 @@ raw_port_shutdown(RPORT *p)
 	}
 
 	/*
-	 *  interrupt handler ‚Ìİ’è
+	 *  interrupt handler ã®è¨­å®š
 	 */
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
-		scb_and_assign(SCB_R3, ~LRQ3_BIT);	/* Š„‚İƒ}ƒXƒNİ’è */
+		scb_and_assign(SCB_R3, ~LRQ3_BIT);	/* å‰²è¾¼ã¿ãƒã‚¹ã‚¯è¨­å®š */
 	}
 }
 
 /*
- *  Š„‚İƒnƒ“ƒhƒ‰‚ÌƒGƒ“ƒgƒŠ
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®ã‚¨ãƒ³ãƒˆãƒª
  */
 static void
 int_handler_scc(void)
@@ -197,7 +197,7 @@ int_handler_scc(void)
 }
 
 /*
- *  Š„‚İƒNƒŠƒAˆ—
+ *  å‰²è¾¼ã¿ã‚¯ãƒªã‚¢å‡¦ç†
  */
 Inline void
 raw_port_clear_int(RPORT *p)
@@ -206,7 +206,7 @@ raw_port_clear_int(RPORT *p)
 }
 
 /*
- *  •¶š‚ğóM‚µ‚½‚©H
+ *  æ–‡å­—ã‚’å—ä¿¡ã—ãŸã‹ï¼Ÿ
  */
 Inline BOOL
 raw_port_getready(RPORT *p)
@@ -215,7 +215,7 @@ raw_port_getready(RPORT *p)
 }
 
 /*
- *  •¶š‚ğ‘—M‚Å‚«‚é‚©H
+ *  æ–‡å­—ã‚’é€ä¿¡ã§ãã‚‹ã‹ï¼Ÿ
  */
 Inline BOOL
 raw_port_putready(RPORT *p)
@@ -224,7 +224,7 @@ raw_port_putready(RPORT *p)
 }
 
 /*
- *  óM‚µ‚½•¶š‚Ìæ‚èo‚µ
+ *  å—ä¿¡ã—ãŸæ–‡å­—ã®å–ã‚Šå‡ºã—
  */
 Inline byte
 raw_port_getchar(RPORT *p)
@@ -233,7 +233,7 @@ raw_port_getchar(RPORT *p)
 }
 
 /*
- *  ‘—M‚·‚é•¶š‚Ì‘‚«‚İ
+ *  é€ä¿¡ã™ã‚‹æ–‡å­—ã®æ›¸ãè¾¼ã¿
  */
 Inline void
 raw_port_putchar(RPORT *p, byte c)
@@ -242,7 +242,7 @@ raw_port_putchar(RPORT *p, byte c)
 }
 
 /*
- *  ‘—M§ŒäŠÖ”
+ *  é€ä¿¡åˆ¶å¾¡é–¢æ•°
  */
 Inline void
 raw_port_sendstart(RPORT *p)

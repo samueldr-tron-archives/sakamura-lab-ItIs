@@ -39,20 +39,20 @@
 #ifdef USE_MPL
 
 /*
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 
-typedef QUEUE	AREAQ;		/* ƒGƒŠƒAƒLƒ…[ */
-typedef QUEUE	FREEQ;		/* ƒtƒŠ[ƒuƒƒbƒNƒLƒ…[ */
+typedef QUEUE	AREAQ;		/* ã‚¨ãƒªã‚¢ã‚­ãƒ¥ãƒ¼ */
+typedef QUEUE	FREEQ;		/* ãƒ•ãƒªãƒ¼ãƒ–ãƒ­ãƒƒã‚¯ã‚­ãƒ¥ãƒ¼ */
 
 typedef struct memorypool_control_block {
-	QUEUE	wait_queue;	/* ƒƒ‚ƒŠƒv[ƒ‹‘Ò‚¿ƒLƒ…[ */
-	ID	mplid;		/* ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ID */
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	mplatr;		/* ƒƒ‚ƒŠƒv[ƒ‹‘®« */
-	INT	mplsz;		/* ƒƒ‚ƒŠƒv[ƒ‹‘S‘Ì‚ÌƒTƒCƒY */
-	VP	mempool;	/* ƒƒ‚ƒŠƒv[ƒ‹‚Ìæ“ªƒAƒhƒŒƒX */
-	FREEQ	freequeue;	/* ‹ó‚«ƒuƒƒbƒN‚ÌƒLƒ…[ */
+	QUEUE	wait_queue;	/* ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å¾…ã¡ã‚­ãƒ¥ãƒ¼ */
+	ID	mplid;		/* å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ID */
+	VP	exinf;		/* æ‹¡å¼µæƒ…å ± */
+	ATR	mplatr;		/* ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å±žæ€§ */
+	INT	mplsz;		/* ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å…¨ä½“ã®ã‚µã‚¤ã‚º */
+	VP	mempool;	/* ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	FREEQ	freequeue;	/* ç©ºããƒ–ãƒ­ãƒƒã‚¯ã®ã‚­ãƒ¥ãƒ¼ */
 } MPLCB;
 
 static MPLCB	mplcb_table[NUM_MPLID];
@@ -60,14 +60,14 @@ static MPLCB	mplcb_table[NUM_MPLID];
 #define get_mplcb(id)	(&(mplcb_table[INDEX_MPL(id)]))
 
 /*
- *  –¢Žg—p‚Ì‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ŠÇ—ƒuƒƒbƒN‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã®å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vcre_mpl
 QUEUE	free_mplcb;
 #endif /* _i_vcre_mpl */
 
 /* 
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void
 memorypool_initialize(void)
@@ -93,7 +93,7 @@ memorypool_initialize(void)
 }
 
 /*
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ŠÇ——pƒ‹[ƒ`ƒ“
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ç®¡ç†ç”¨ãƒ«ãƒ¼ãƒãƒ³
  */
 
 #define ROUNDSIZE	(sizeof(FREEQ))
@@ -130,7 +130,7 @@ mempool_end(MPLCB *mplcb)
 }
 
 /*
- *  ƒƒ‚ƒŠƒv[ƒ‹‚Ì‰Šú‰»ƒ‹[ƒ`ƒ“
+ *  ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã®åˆæœŸåŒ–ãƒ«ãƒ¼ãƒãƒ³
  */
 static void
 init_mpl(VP mempool, INT mplsz)
@@ -147,7 +147,7 @@ init_mpl(VP mempool, INT mplsz)
 }
 
 /*
- *  ƒƒ‚ƒŠƒuƒƒbƒN‚ÌŠl“¾ƒ‹[ƒ`ƒ“
+ *  ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã®ç²å¾—ãƒ«ãƒ¼ãƒãƒ³
  */
 static VP
 _get_blk(FREEQ *freequeue, INT blksz)
@@ -161,7 +161,7 @@ _get_blk(FREEQ *freequeue, INT blksz)
 		if ((remsz = BLOCKSIZE(area) - blksz) >= 0) {
 			if (remsz >= MINSIZE) {
 				/*
-				 *  ƒGƒŠƒA‚ð 2‚Â‚É•ªŠ„‚·‚é
+				 *  ã‚¨ãƒªã‚¢ã‚’ 2ã¤ã«åˆ†å‰²ã™ã‚‹
 				 */
 				new = (AREAQ *)(((VB *) area) + remsz);
 				new->prev = area;
@@ -181,7 +181,7 @@ _get_blk(FREEQ *freequeue, INT blksz)
 }
 
 /*
- *  ƒƒ‚ƒŠƒuƒƒbƒN‚Ì‰ð•úƒ‹[ƒ`ƒ“
+ *  ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã®è§£æ”¾ãƒ«ãƒ¼ãƒãƒ³
  */
 ER
 _rel_blk(FREEQ *freequeue, VP blk)
@@ -202,13 +202,13 @@ _rel_blk(FREEQ *freequeue, VP blk)
 	if (FIRST_AREA(area) || USED_AREA(prevarea = area->prev)) {
 		if (USED_AREA(nextarea = area->next)) {
 			/*
-			 *  ƒ}[ƒW‚Ì•K—v‚È‚µD
+			 *  ãƒžãƒ¼ã‚¸ã®å¿…è¦ãªã—ï¼Ž
 			 */
 			queue_insert(free, freequeue->next);
 		}
 		else {
 			/*
-			 *  ’¼Œã‚ÌƒGƒŠƒA‚Æƒ}[ƒW‚·‚éD
+			 *  ç›´å¾Œã®ã‚¨ãƒªã‚¢ã¨ãƒžãƒ¼ã‚¸ã™ã‚‹ï¼Ž
 			 */
 			area->next = nextarea->next;
 			_ASSIGN(nextarea->next->prev, area);
@@ -219,14 +219,14 @@ _rel_blk(FREEQ *freequeue, VP blk)
 	else {
 		if (USED_AREA(nextarea = area->next)) {
 			/*
-			 *  ’¼‘O‚ÌƒGƒŠƒA‚Æƒ}[ƒW‚·‚éD
+			 *  ç›´å‰ã®ã‚¨ãƒªã‚¢ã¨ãƒžãƒ¼ã‚¸ã™ã‚‹ï¼Ž
 			 */
 			prevarea->next = nextarea;
 			_ASSIGN(nextarea->prev, prevarea);
 		}
 		else {
 			/*
-			 *  ‘OŒã‚ÌƒGƒŠƒA‚Æƒ}[ƒW‚·‚éD
+			 *  å‰å¾Œã®ã‚¨ãƒªã‚¢ã¨ãƒžãƒ¼ã‚¸ã™ã‚‹ï¼Ž
 			 */
 			prevarea->next = nextarea->next;
 			_ASSIGN(nextarea->next->prev, prevarea);
@@ -237,7 +237,7 @@ _rel_blk(FREEQ *freequeue, VP blk)
 }
 
 /*
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹‘Ò‚¿‚Ìƒ^ƒXƒN‚ðƒƒ‚ƒŠ‚ª‚ ‚éŒÀ‚è‹N‚±‚·
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å¾…ã¡ã®ã‚¿ã‚¹ã‚¯ã‚’ãƒ¡ãƒ¢ãƒªãŒã‚ã‚‹é™ã‚Šèµ·ã“ã™
  */
 static void
 wakeup_mpl(MPLCB *mplcb)
@@ -266,13 +266,13 @@ wakeup_mpl(MPLCB *mplcb)
 }
 
 /*
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹‘Ò‚¿Žd—l‚Ì’è‹`
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å¾…ã¡ä»•æ§˜ã®å®šç¾©
  */
 static WSPEC wspec_mpl_tfifo = { TTW_MPL, 0, 0 };
 static WSPEC wspec_mpl_tpri = { TTW_MPL, obj_chg_pri, 0 };
 
 /*
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ŠÇ—‹@”\
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ç®¡ç†æ©Ÿèƒ½
  */
 
 #if !defined(_i_cre_mpl) || !defined(_i_vcre_mpl)
@@ -522,9 +522,9 @@ i_ref_mpl(T_RMPL *pk_rmpl, ID mplid)
 #endif /* _i_ref_mpl */
 
 /*
- *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹ŠÇ—ƒ‹[ƒ`ƒ“
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ç®¡ç†ãƒ«ãƒ¼ãƒãƒ³
  *
- *  ˆÈ‰º‚ÌŠÖ”‚ÍC•K‚¸ƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“‚Ì’†‚©‚çŒÄ‚Ô‚±‚ÆD
+ *  ä»¥ä¸‹ã®é–¢æ•°ã¯ï¼Œå¿…ãšã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®ä¸­ã‹ã‚‰å‘¼ã¶ã“ã¨ï¼Ž
  */
 
 #ifdef USE_TMPL_OS

@@ -32,7 +32,7 @@
  */
 
 /* 
- *  ‚»‚Ì‘¼‚ÌƒVƒXƒeƒ€ƒR[ƒ‹
+ *  ãã®ä»–ã®ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
  */
 
 #include "itis_kernel.h"
@@ -41,7 +41,7 @@
 #include "patchlevel.h"
 
 /*
- *  ƒVƒXƒeƒ€ó‘ÔŽQÆ
+ *  ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ…‹å‚ç…§
  */
 
 #ifndef _i_ref_sys
@@ -74,7 +74,7 @@ i_ref_sys(T_RSYS *pk_rsys)
 #endif /* _i_ref_sys */
 
 /*
- *  ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“î•ñŽQÆ
+ *  ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±å‚ç…§
  */
 
 #ifndef _i_ref_cfg
@@ -88,20 +88,20 @@ i_ref_cfg(T_RCFG *pk_rcfg)
 #endif /* _i_ref_cfg */
 
 /*
- *  Šg’£SVC ŠÇ—‹@”\
+ *  æ‹¡å¼µSVC ç®¡ç†æ©Ÿèƒ½
  */
 
 #ifdef USE_SVC
 
 /*
- *  Šg’£SVC ŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  æ‹¡å¼µSVC ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 
-typedef ER	(*SVC)();	/* Šg’£SVCƒnƒ“ƒhƒ‰ƒAƒhƒŒƒX‚ÌŒ^ */
+typedef ER	(*SVC)();	/* æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ©ã‚¢ãƒ‰ãƒ¬ã‚¹ã®åž‹ */
 
 typedef struct extended_svc_control_block {
-	ATR	svcatr;		/* Šg’£SVCƒnƒ“ƒhƒ‰‘®« */
-	SVC	svchdr;		/* Šg’£SVCƒnƒ“ƒhƒ‰ƒAƒhƒŒƒX */
+	ATR	svcatr;		/* æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ©å±žæ€§ */
+	SVC	svchdr;		/* æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ©ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } SVCCB;
 
 SVCCB	svccb_table[NUM_SVC];
@@ -111,7 +111,7 @@ SVCCB	svccb_table[NUM_SVC];
 extern ER	no_support(void);
 
 /* 
- *  Šg’£SVC ŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  æ‹¡å¼µSVC ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void
 extended_svc_initialize(void)
@@ -124,7 +124,7 @@ extended_svc_initialize(void)
 }
 
 /*
- *  Šg’£SVC ‚Ì’è‹`
+ *  æ‹¡å¼µSVC ã®å®šç¾©
  */
 
 #ifndef _i_def_svc
@@ -156,10 +156,10 @@ i_def_svc(FN s_fncd, T_DSVC *pk_dsvc)
 #endif /* _i_def_svc */
 
 /*
- *  Šg’£SVCƒnƒ“ƒhƒ‰‚Ö‚Ì•ªŠòƒ‹[ƒ`ƒ“
+ *  æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ©ã¸ã®åˆ†å²ãƒ«ãƒ¼ãƒãƒ³
  *
- *  s_fncd ‚ÅŽw’è‚·‚éŠg’£SVCƒnƒ“ƒhƒ‰‚Ö•ªŠò‚·‚éDientry.s ‚Ì’†‚©‚çŒÄ‚Î
- *  ‚ê‚éDctxtsk->sysmode ‚ÉC€ƒ^ƒXƒN•”ŽÀs’†‚Å‚ ‚é‚±‚Æ‚ð‹L˜^‚·‚éD
+ *  s_fncd ã§æŒ‡å®šã™ã‚‹æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ©ã¸åˆ†å²ã™ã‚‹ï¼Žientry.s ã®ä¸­ã‹ã‚‰å‘¼ã°
+ *  ã‚Œã‚‹ï¼Žctxtsk->sysmode ã«ï¼Œæº–ã‚¿ã‚¹ã‚¯éƒ¨å®Ÿè¡Œä¸­ã§ã‚ã‚‹ã“ã¨ã‚’è¨˜éŒ²ã™ã‚‹ï¼Ž
  */
 ER
 svc_ientry(INT par1, INT par2, INT par3, INT par4, INT par5, INT par6,
@@ -187,7 +187,7 @@ svc_ientry(INT par1, INT par2, INT par3, INT par4, INT par5, INT par6,
 #endif /* USE_SVC */
 
 /*
- *  ƒo[ƒWƒ‡ƒ“î•ñŽQÆ
+ *  ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±å‚ç…§
  */
 
 #ifndef _i_get_ver
@@ -195,15 +195,15 @@ svc_ientry(INT par1, INT par2, INT par3, INT par4, INT par5, INT par6,
 SYSCALL ER
 i_get_ver(T_VER *pk_ver)
 {
-	pk_ver->maker = 0x0001;		/* “Œ‹ž‘åŠw */
-	pk_ver->id = 0x5003;		/* ([‚¢ˆÓ–¡‚Í‚È‚¢) */
-	pk_ver->spver = 0x5302;		/* ƒÊITRON, Ver.3.02 */
+	pk_ver->maker = 0x0001;		/* æ±äº¬å¤§å­¦ */
+	pk_ver->id = 0x5003;		/* (æ·±ã„æ„å‘³ã¯ãªã„) */
+	pk_ver->spver = 0x5302;		/* Î¼ITRON, Ver.3.02 */
 	pk_ver->prver = (MAJOR_REL << 12) + (MINOR_REL << 4) + PATCH_LEVEL;
 					/* Release X.YY.Z */
 	memset(pk_ver->prno, 0, sizeof(pk_ver->prno));
-					/* (–¢Žg—p) */
-	pk_ver->cpu = CPU_CODE;		/* CPUƒR[ƒh (cpu_conf.h ‚Å’è‹`) */
-	pk_ver->var = 0xc000;		/* ƒŒƒxƒ‹E */
+					/* (æœªä½¿ç”¨) */
+	pk_ver->cpu = CPU_CODE;		/* CPUã‚³ãƒ¼ãƒ‰ (cpu_conf.h ã§å®šç¾©) */
+	pk_ver->var = 0xc000;		/* ãƒ¬ãƒ™ãƒ«E */
 	return(E_OK);
 }
 

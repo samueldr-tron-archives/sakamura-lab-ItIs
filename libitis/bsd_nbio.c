@@ -32,7 +32,7 @@
  */
 
 /*
- *  BSD UNIX�p �m���u���b�L���OI/O���C�u����
+ *  BSD UNIX用 ノンブロッキングI/Oライブラリ
  */
 
 #include <stdarg.h>
@@ -43,11 +43,11 @@
 #include <sys/socket.h>
 
 /*
- *  errno ���v���Z�X�S�̂ŋ��L�����ϐ��Ȃ̂ŁC�V�X�e���R�[�����Ăяo
- *  ������Cerrno ��ǂނ܂ł͊����݂��֎~���Ă���D
+ *  errno がプロセス全体で共有される変数なので，システムコールを呼び出
+ *  した後，errno を読むまでは割込みを禁止している．
  *
- *  �m���u���b�L���O���[�h�ł��邱�ƂƁC���ׂẴV�O�i�����}�X�N���Ă�
- *  �邱�Ƃ���CEINTR �͕Ԃ�Ȃ��͂��Ȃ̂ŁC�Ώ����Ă��Ȃ��D
+ *  ノンブロッキングモードであることと，すべてのシグナルをマスクしてい
+ *  ることから，EINTR は返らないはずなので，対処していない．
  */
 
 #define NONBLOCK(func) \

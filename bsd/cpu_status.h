@@ -35,25 +35,25 @@
 #define	_CPU_STATUS_
 
 /* 
- *  BSD UNIX �ˑ���`
+ *  BSD UNIX 依存定義
  */
 
 /* 
- *  BSD UNIX �W���C���N���[�h�t�@�C��
+ *  BSD UNIX 標準インクルードファイル
  */
 #include <signal.h>
 #include <setjmp.h>
 
 /*
- *  �V�O�i���}�X�N�̒�`
+ *  シグナルマスクの定義
  *
- *  �^�X�N�f�B�X�p�b�`���N���p�� SIGUSR2 ���g���D
+ *  タスクディスパッチャ起動用に SIGUSR2 を使う．
  *
- *  �ʏ�̃^�X�N�����s���̓V�O�i���}�X�N�� 0 (���ׂẴV�O�i���}�X�N�� 
- *  �������ꂽ���) �ɂȂ��Ă���D�f�B�X�p�b�`�֎~��Ԃł� SIGUSR2 �� 
- *  �}�X�N���C�����݂���уf�B�X�p�b�`�֎~��Ԃł͂��ׂẴV�O�i�����}
- *  �X�N����D�^�X�N�Ɨ������s���́C���Ȃ��Ƃ� SIGUSR2 ���}�X�N���Ȃ�
- *  ��΂Ȃ�Ȃ��D
+ *  通常のタスク部実行中はシグナルマスクは 0 (すべてのシグナルマスクが 
+ *  解除された状態) になっている．ディスパッチ禁止状態では SIGUSR2 を 
+ *  マスクし，割込みおよびディスパッチ禁止状態ではすべてのシグナルをマ
+ *  スクする．タスク独立部実行中は，少なくとも SIGUSR2 をマスクしなけ
+ *  ればならない．
  */
 #define SIGMASK_TASK	(0)
 #define SIGMASK_DDSP	(sigmask(SIGUSR2))
@@ -61,10 +61,10 @@
 #define SIGMASK_INDP	(sigmask(SIGUSR2))
 
 /*
- *  ���ݎg�p���̃X�^�b�N�𒲂ׂ�
+ *  現在使用中のスタックを調べる
  *
- *  �^�X�N�Ɨ������s���́C�V�O�i���X�^�b�N���g�����Ƃɂ��āC�V�O�i���X
- *  �^�b�N���g���Ă��邩�ǂ����ŁC�^�X�N�Ɨ����𔻕ʂ���D
+ *  タスク独立部実行中は，シグナルスタックを使うことにして，シグナルス
+ *  タックを使っているかどうかで，タスク独立部を判別する．
  */
 Inline int
 current_stack()
@@ -84,7 +84,7 @@ current_stack()
 }
 
 /*
- *  �N���e�B�J���Z�N�V������`�p�}�N��
+ *  クリティカルセクション定義用マクロ
  */
 
 #define BEGIN_CRITICAL_SECTION	{ int mask = sigblock(SIGMASK_LOC);
@@ -93,51 +93,51 @@ current_stack()
 #define DISABLE_INTERRUPT	{ sigblock(SIGMASK_LOC); }
 
 /*
- *  �V�X�e����Ԕ��ʗp�}�N��
+ *  システム状態判別用マクロ
  */
 
 /*
- *  in_indp(): �V�X�e���R�[�����C�^�X�N�Ɨ�������Ă΂ꂽ���𔻕ʂ��邽
- *  �߂̃}�N���D
+ *  in_indp(): システムコールが，タスク独立部から呼ばれたかを判別するた
+ *  めのマクロ．
  *
- *  �V�O�i���X�^�b�N���g���Ă��邩�ǂ����Ŕ��f����D
+ *  シグナルスタックを使っているかどうかで判断する．
  */
 #define in_indp()	(current_stack())
 
 /*
- *  in_ddsp(): �V�X�e���R�[�����f�B�X�p�b�`�֎~���ɌĂ΂ꂽ���𔻕ʂ���
- *  ���߂̃}�N���D�^�X�N�Ɨ������C�f�B�X�p�b�`�֎~���Ɋ܂ށD
+ *  in_ddsp(): システムコールがディスパッチ禁止中に呼ばれたかを判別する
+ *  ためのマクロ．タスク独立部も，ディスパッチ禁止中に含む．
  *
- *  SIGUSR2 ���}�X�N����Ă��邩�ǂ����Ŕ��f����D
+ *  SIGUSR2 がマスクされているかどうかで判断する．
  */
 #define in_ddsp()	(sigblock(0) & SIGMASK_DDSP)
 
 /*
- *  in_loc(): �V�X�e���R�[���� CPU���b�N���ɌĂ΂ꂽ���𔻕ʂ��邽�߂�
- *  �}�N���D�^�X�N�Ɨ������CCPU���b�N���Ɋ܂ށD
+ *  in_loc(): システムコールが CPUロック中に呼ばれたかを判別するための
+ *  マクロ．タスク独立部も，CPUロック中に含む．
  *
- *  SIGUSR2 �ȊO�̂����ꂩ�̃V�O�i�����}�X�N����Ă���ꍇ�ɁCCPU���b
- *  �N���ł���Ɣ��f����D�^�X�N�Ɨ����ł́CSIGUSR2 �ȊO�̂����ꂩ�̃V
- *  �O�i�����}�X�N����Ă���͂��D
+ *  SIGUSR2 以外のいずれかのシグナルがマスクされている場合に，CPUロッ
+ *  ク中であると判断する．タスク独立部では，SIGUSR2 以外のいずれかのシ
+ *  グナルがマスクされているはず．
  */
 #define in_loc()	(sigblock(0) & ~SIGMASK_DDSP)
 
 /*
- *  in_sysmode(): �V�X�e���R�[�����V�X�e�����\�[�X���A�N�Z�X�ł����Ԃ�
- *  ��Ă΂ꂽ���𔻕ʂ��邽�߂̃}�N���DE_OACV�G���[�̃`�F�b�N�ɗp����D
+ *  in_sysmode(): システムコールがシステムリソースをアクセスできる状態か
+ *  ら呼ばれたかを判別するためのマクロ．E_OACVエラーのチェックに用いる．
  *
- *  ctxtsk �� sysmode�t�B�[���h�����Ĕ��ʂ���K�v������D
+ *  ctxtsk の sysmodeフィールドを見て判別する必要がある．
  */
 #define	in_sysmode()	(in_indp() || ctxtsk->sysmode)
 
 /*
- *  in_qtsk(): �V�X�e���R�[�����C���^�X�N�������s������Ă΂ꂽ���𔻕�
- *  ���邽�߂̃}�N���D�^�X�N�Ɨ����Ƃ͋�ʂ��Ȃ��̂ŁCin_indp() �� FALSE 
- *  �̎��ɂ̂ݎg�����ƁD
+ *  in_qtsk(): システムコールが，準タスク部を実行中から呼ばれたかを判別
+ *  するためのマクロ．タスク独立部とは区別しないので，in_indp() が FALSE 
+ *  の時にのみ使うこと．
  *
- *  ���̔��ʂ��\�ɂ��邽�߂ɁCTCB ���� isysmode�t�B�[���h��p�ӂ���D
- *  USE_QTSK_PORTION ����`����Ă��Ȃ��ꍇ�ɂ́C���^�X�N���͎g���Ȃ�
- *  �̂ŁC��� FALSE �Ƃ���D
+ *  この判別を可能にするために，TCB 中に isysmodeフィールドを用意する．
+ *  USE_QTSK_PORTION が定義されていない場合には，準タスク部は使われない
+ *  ので，常に FALSE とする．
  */
 #ifdef USE_QTSK_PORTION
 #define in_qtsk()	(ctxtsk->sysmode > ctxtsk->isysmode)
@@ -146,11 +146,11 @@ current_stack()
 #endif /* USE_QTSK_PORTION */
 
 /*
- *  �^�X�N�f�B�X�p�b�`���N�����[�`��
+ *  タスクディスパッチャ起動ルーチン
  */
 
 /*
- *  �^�X�N�f�B�X�p�b�`���̋N���v�����o���D
+ *  タスクディスパッチャの起動要求を出す．
  */
 Inline void
 dispatch_request(void)
@@ -159,11 +159,11 @@ dispatch_request(void)
 }
 
 /*
- *  ���݂̃^�X�N�̃R���e�L�X�g���̂ĂāC���Ɏ��s���ׂ��^�X�N�֋����I��
- *  �f�B�X�p�b�`����D
+ *  現在のタスクのコンテキストを捨てて，次に実行すべきタスクへ強制的に
+ *  ディスパッチする．
  *
- *  �V�X�e���N��������� ext_tsk, ext_tsk �̏����ŗp����Dctxtsk ���O
- *  ���Q�ƂɂȂ邽�߁Cforce_dispatch �{�̂́C�}�N���Ƃ��Ē�`����D
+ *  システム起動時および ext_tsk, ext_tsk の処理で用いる．ctxtsk が前
+ *  方参照になるため，force_dispatch 本体は，マクロとして定義する．
  */
 Inline void
 _force_dispatch(void)
@@ -193,11 +193,11 @@ _force_dispatch(void)
 }
 
 /*
- *  �^�X�N�R���e�L�X�g�u���b�N�̒�`
+ *  タスクコンテキストブロックの定義
  */
 typedef struct {
-	INT	stacd;		/* �^�X�N�N���R�[�h */
-	jmp_buf	env;		/* CPU�R���e�L�X�g */
+	INT	stacd;		/* タスク起動コード */
+	jmp_buf	env;		/* CPUコンテキスト */
 } CTXB;
 
 #endif /* _CPU_STATUS_ */

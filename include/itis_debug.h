@@ -35,7 +35,7 @@
 #define _ITIS_DEBUG_
 
 /*
- *  ƒfƒoƒbƒNƒTƒ|[ƒg‹@”\ŠÖŒW‚Ì’è‹`
+ *  ãƒ‡ãƒãƒƒã‚¯ã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½é–¢ä¿‚ã®å®šç¾©
  */
 
 #ifdef tron
@@ -55,21 +55,21 @@ typedef struct {
 	VW      r11;		/* R11 */
 	VW      r12;		/* R12 */
 	VW      r13;		/* R13 */
-	VW      r14;		/* R14 (ƒtƒŒ[ƒ€ƒ|ƒCƒ“ƒ^) */
-	VW      sp;		/* ƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^ */
+	VW      r14;		/* R14 (ãƒ•ãƒ¬ãƒ¼ãƒ ãƒã‚¤ãƒ³ã‚¿) */
+	VW      sp;		/* ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿ */
 } T_REGS;
 
 typedef	struct {
-	VW	pc;		/* PC (ƒvƒƒOƒ‰ƒ€ƒJƒEƒ“ƒ^) */
+	VW	pc;		/* PC (ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚«ã‚¦ãƒ³ã‚¿) */
 	VW	psw;		/* PSW */
 } T_EIT;
 
 typedef struct t_cregs {
 	VW	csw;		/* CSW */
-	VW	sp0;		/* SP0 (ƒŠƒ“ƒO0 ‚ÌƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^) */
-	VW	sp1;		/* SP1 (ƒŠƒ“ƒO1 ‚ÌƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^) */
-	VW	sp2;		/* SP2 (ƒŠƒ“ƒO2 ‚ÌƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^) */
-	VW	sp3;		/* SP3 (ƒŠƒ“ƒO3 ‚ÌƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^) */
+	VW	sp0;		/* SP0 (ãƒªãƒ³ã‚°0 ã®ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿) */
+	VW	sp1;		/* SP1 (ãƒªãƒ³ã‚°1 ã®ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿) */
+	VW	sp2;		/* SP2 (ãƒªãƒ³ã‚°2 ã®ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿) */
+	VW	sp3;		/* SP3 (ãƒªãƒ³ã‚°3 ã®ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿) */
 	VW	uatb;		/* UATB */
 	VW	lsid;		/* LSID */
 } T_CREGS;
@@ -92,18 +92,18 @@ typedef struct {
 	VW      a3;		/* A3 */
 	VW      a4;		/* A4 */
 	VW      a5;		/* A5 */
-	VW      a6;		/* A6 (ƒtƒŒ[ƒ€ƒ|ƒCƒ“ƒ^) */
-	VW      sp;		/* ƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^ */
+	VW      a6;		/* A6 (ãƒ•ãƒ¬ãƒ¼ãƒ ãƒã‚¤ãƒ³ã‚¿) */
+	VW      sp;		/* ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿ */
 } T_REGS;
 
 typedef	struct {
-	VW	pc;		/* PC (ƒvƒƒOƒ‰ƒ€ƒJƒEƒ“ƒ^) */
+	VW	pc;		/* PC (ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚«ã‚¦ãƒ³ã‚¿) */
 	VH	sr;		/* SR */
 } T_EIT;
 
 typedef struct t_cregs {
-	VW	msp;		/* MSP (ƒX[ƒpƒoƒCƒUƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^) */
-	VW	usp;		/* USP (ƒ†[ƒUƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^) */
+	VW	msp;		/* MSP (ã‚¹ãƒ¼ãƒ‘ãƒã‚¤ã‚¶ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿) */
+	VW	usp;		/* USP (ãƒ¦ãƒ¼ã‚¶ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿) */
 } T_CREGS;
 
 #else /* mc68000 */

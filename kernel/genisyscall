@@ -32,19 +32,19 @@
 #
 
 #
-#  ƒVƒXƒeƒ€ƒR[ƒ‹ƒCƒ“ƒ^ƒtƒF[ƒX¶¬ƒvƒƒOƒ‰ƒ€ (ƒJ[ƒlƒ‹—p)
+#  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ç”Ÿæˆãƒ—ãƒ­ã‚°ãƒ©ãƒ  (ã‚«ãƒ¼ãƒãƒ«ç”¨)
 #
-#  ƒVƒXƒeƒ€ƒR[ƒ‹’è‹`ƒtƒ@ƒCƒ‹ (syscall.def) ‚ð“Ç‚Ýž‚ñ‚ÅCˆÈ‰º‚Ìƒtƒ@ƒC
-#  ƒ‹‚ð¶¬‚·‚éD
+#  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ« (syscall.def) ã‚’èª­ã¿è¾¼ã‚“ã§ï¼Œä»¥ä¸‹ã®ãƒ•ã‚¡ã‚¤
+#  ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ï¼Ž
 #
-#	itron_fncode.h	¨ ../include ‚ÉˆÚ“®
+#	itron_fncode.h	â†’ ../include ã«ç§»å‹•
 #	isyscall.h
-#	itis_isyscall.h	¨ ../include ‚ÉˆÚ“®
+#	itis_isyscall.h	â†’ ../include ã«ç§»å‹•
 #	itable.S
 #	ptable.S
 #
 
-#  ‘åˆæ•Ï”‚Ì‰Šú‰»
+#  å¤§åŸŸå¤‰æ•°ã®åˆæœŸåŒ–
 
 $lineno = 0;
 %flagtable = ();
@@ -53,7 +53,7 @@ $lineno = 0;
 %argstable = ();
 %argno = ();
 
-#  1s“Ç‚Ýž‚Ý (s”Ô†‚ðƒJƒEƒ“ƒg‚·‚é)
+#  1è¡Œèª­ã¿è¾¼ã¿ (è¡Œç•ªå·ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹)
 
 sub getline {
 	local($l);
@@ -63,7 +63,7 @@ sub getline {
 	return($l);
 }
 
-#  ƒGƒ‰[o—Í
+#  ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 
 sub syntax_error {
 	print STDERR "Syntax error at line: ",$lineno,".\n";
@@ -76,14 +76,14 @@ sub eof_error {
 }
 
 #
-#  ’è‹`ƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý
+#  å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 #
 
 $next_fncd = "";
 while ($line = do getline()) {
 	chop $line;
 
-	# Œp‘±s ("\" ‚Å‚¨‚í‚és) ‚Ìˆ—
+	# ç¶™ç¶šè¡Œ ("\" ã§ãŠã‚ã‚‹è¡Œ) ã®å‡¦ç†
 	while ($line =~ /^(.*)\\$/) {
 		$line = $1;
 		unless ($line1 = do getline()) {
@@ -93,10 +93,10 @@ while ($line = do getline()) {
 		$line .= $line1;
 	}
 
-	# ƒRƒƒ“ƒgs‚ÌƒXƒLƒbƒv
+	# ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã®ã‚¹ã‚­ãƒƒãƒ—
 	next if ($line =~ /^[ \t]*$/ || $line =~ /^#/);
 
-	# ƒVƒXƒeƒ€ƒR[ƒ‹’è‹`‚Ìƒp[ƒY
+	# ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å®šç¾©ã®ãƒ‘ãƒ¼ã‚º
 	unless ($line =~ /^(-?[0-9]*)[ \t]+([^ \t]+)[ \t]*(.*)$/) {
 		do syntax_error();
 	}
@@ -104,7 +104,7 @@ while ($line = do getline()) {
 	$flags = $2;
 	$proto = $3;
 
-	# ‹@”\ƒR[ƒh‚ÌƒGƒ‰[‚ðƒ`ƒFƒbƒN
+	# æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã®ã‚¨ãƒ©ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	if ($fncd eq "") {
 		print STDERR "Function code unknown at line: ",$lineno,"\n";
 		exit(1);
@@ -113,12 +113,12 @@ while ($line = do getline()) {
 		print STDERR "Function code skipped at line: ",$lineno,"\n";
 	}
 
-	# ƒVƒXƒeƒ€ƒR[ƒ‹’è‹`‚ÌŠi”[
+	# ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å®šç¾©ã®æ ¼ç´
 	$proto =~ s/,[ \t]+/, /g;
 	$flagtable{$fncd} = $flags;
 	$prototable{$fncd} = $proto;
 
-	# ƒVƒXƒeƒ€ƒR[ƒ‹’è‹`‚Ì•¶–@ƒ`ƒFƒbƒN
+	# ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å®šç¾©ã®æ–‡æ³•ãƒã‚§ãƒƒã‚¯
 	if ($flags !~ /^-/) {
 		unless ($proto =~ /^([a-zX_]+)\((.*)\)$/) {
 			do syntax_error();
@@ -132,24 +132,24 @@ while ($line = do getline()) {
 		}
 	}
 
-	# Å‰‚Ì‹@”\ƒR[ƒhCŽŸ‚Ì‹@”\ƒR[ƒh‚ÌŒvŽZ
+	# æœ€åˆã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ï¼Œæ¬¡ã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã®è¨ˆç®—
 	unless ($next_fncd) {
 		$first_fncd = $fncd;
 	}
 	$next_fncd = $fncd + 1;
 }
 
-# ÅŒã‚Ì‹@”\ƒR[ƒh‚Ìƒ`ƒFƒbƒN
+# æœ€å¾Œã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã®ãƒã‚§ãƒƒã‚¯
 unless ($next_fncd == 0) {
 	print STDERR "The last function code is not -1.\n";
 }
 
 #
-#  ‹@”\ƒR[ƒh”Ô†ƒŠƒXƒg‚Ì¶¬
+#  æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ç•ªå·ãƒªã‚¹ãƒˆã®ç”Ÿæˆ
 #
-#	fncd_list: ‚·‚×‚Ä‚Ì‹@”\ƒR[ƒh”Ô†ƒŠƒXƒg
-#	valid_fncd_list: ƒVƒXƒeƒ€ƒR[ƒ‹‚ª‚ ‚é‹@”\ƒR[ƒh”Ô†ƒŠƒXƒg
-#	ivalid_fncd_list: ƒJ[ƒlƒ‹‚ÉƒVƒXƒeƒ€ƒR[ƒ‹‚ª‚ ‚é‹@”\ƒR[ƒh”Ô†ƒŠƒXƒg
+#	fncd_list: ã™ã¹ã¦ã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ç•ªå·ãƒªã‚¹ãƒˆ
+#	valid_fncd_list: ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ãŒã‚ã‚‹æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ç•ªå·ãƒªã‚¹ãƒˆ
+#	ivalid_fncd_list: ã‚«ãƒ¼ãƒãƒ«ã«ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ãŒã‚ã‚‹æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ç•ªå·ãƒªã‚¹ãƒˆ
 #
 @fncd_list = ();
 @valid_fncd_list = ();
@@ -162,7 +162,7 @@ foreach $fncd (1 .. -$first_fncd) {
 }
 
 #
-#  itron_fncode.h ‚Ì¶¬
+#  itron_fncode.h ã®ç”Ÿæˆ
 #
 
 open(FILE, "> itron_fncode.h");
@@ -187,7 +187,7 @@ END_OF_TAILER
 close(FILE);
 
 #
-#  isyscall.h ‚Ì¶¬
+#  isyscall.h ã®ç”Ÿæˆ
 #
 
 open(FILE, "> isyscall.h");
@@ -215,7 +215,7 @@ END_OF_TAILER
 close(FILE);
 
 #
-#  itis_isyscall.h ‚Ì¶¬
+#  itis_isyscall.h ã®ç”Ÿæˆ
 #
 
 open(FILE, "> itis_isyscall.h");
@@ -231,7 +231,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ƒTƒuƒ‹[ƒ`ƒ“ƒR[ƒ‹‚ÅŒÄ‚Ño‚·ê‡‚ÌƒCƒ“ƒ^ƒtƒF[ƒX
+# ã‚µãƒ–ãƒ«ãƒ¼ãƒãƒ³ã‚³ãƒ¼ãƒ«ã§å‘¼ã³å‡ºã™å ´åˆã®ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹
 foreach $fncd (@ivalid_fncd_list) {
 	next if ($nametable{$fncd} =~ /X/);
 	print FILE "#define ";
@@ -249,7 +249,7 @@ foreach $fncd (@ivalid_fncd_list) {
 	print FILE $proto,";\n";
 }
 
-# TRAPA ‚ÅŒÄ‚Ño‚·ê‡‚ÌƒCƒ“ƒ^ƒtƒF[ƒX
+# TRAPA ã§å‘¼ã³å‡ºã™å ´åˆã®ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹
 print FILE <<END_OF_SEPARATOR;
 
 #else /* LINK_KERNEL */
@@ -266,7 +266,7 @@ foreach $fncd (@ivalid_fncd_list) {
 	$flag = $flagtable{$fncd};
 	$void = ($flag =~ /v/);
 
-	# ŠÖ”ƒwƒbƒ_‚Ì¶¬
+	# é–¢æ•°ãƒ˜ãƒƒãƒ€ã®ç”Ÿæˆ
 	print FILE "Inline ";
 	print FILE $void ? "void\n" : "ER\n";
 
@@ -275,7 +275,7 @@ foreach $fncd (@ivalid_fncd_list) {
 	$proto =~ s/\* / */g;
 	print FILE $proto,"\n";
 
-	# ƒŒƒWƒXƒ^•Ï”éŒ¾‚Ì¶¬
+	# ãƒ¬ã‚¸ã‚¹ã‚¿å¤‰æ•°å®£è¨€ã®ç”Ÿæˆ
 	print FILE "{\n";
 	$arglist = "";
 	$argno = 0;
@@ -303,7 +303,7 @@ END_OF_TAILER
 close(FILE);
 
 #
-#  itable.S ‚Ì¶¬
+#  itable.S ã®ç”Ÿæˆ
 #
 
 open(FILE, "> itable.S");
@@ -315,11 +315,11 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# Å‰‚Ì‹@”\ƒR[ƒh‚Ì‘‚«o‚µ
+# æœ€åˆã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã®æ›¸ãå‡ºã—
 print FILE "FIRST_FNCD = ",$first_fncd,"\n";
 print FILE "\n";
 
-# ƒWƒƒƒ“ƒvƒe[ƒuƒ‹‚Ì¶¬
+# ã‚¸ãƒ£ãƒ³ãƒ—ãƒ†ãƒ¼ãƒ–ãƒ«ã®ç”Ÿæˆ
 foreach $fncd ($first_fncd .. -1) {
 	if ($flagtable{$fncd} =~ /^-/ || $flagtable{$fncd} =~ /i/) {
 		$name = "_no_support";
@@ -334,7 +334,7 @@ foreach $fncd ($first_fncd .. -1) {
 }
 
 #
-#  ptable.S ‚Ì¶¬
+#  ptable.S ã®ç”Ÿæˆ
 #
 
 open(FILE, "> ptable.S");
@@ -343,7 +343,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ƒWƒƒƒ“ƒvƒe[ƒuƒ‹‚Ì¶¬
+# ã‚¸ãƒ£ãƒ³ãƒ—ãƒ†ãƒ¼ãƒ–ãƒ«ã®ç”Ÿæˆ
 foreach $fncd ($first_fncd .. -1) {
 	if ($flagtable{$fncd} =~ /^-/ || $flagtable{$fncd} =~ /i/) {
 		$name = "push_0";

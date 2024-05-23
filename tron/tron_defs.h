@@ -35,7 +35,7 @@
 #define _TRON_DEFS_
 
 /*
- *  TRON�d�l�`�b�v�̐��䃌�W�X�^�̔Ԓn�̒�`
+ *  TRON仕様チップの制御レジスタの番地の定義
  */
 #define PSW		0x0004		/* Gmicro/200, Gmicro/300, TX-2 */
 #define SMRNG		0x000c		/* Gmicro/200, Gmicro/300, TX-2 */
@@ -88,18 +88,18 @@
 #define TX2_OBA1	0x050c
 
 /*
- *  ���䃌�W�X�^�A�N�Z�X�p�}�N��
+ *  制御レジスタアクセス用マクロ
  */
 #define CREG(ADDR)	(*((VW *)(ADDR)))
 
 /*
- *  �f�B�X�p�b�`���֘A�̒萔�̒�`
+ *  ディスパッチャ関連の定数の定義
  */
 #ifndef TRON_NO_DI
-#define DI14_EITINF	0x0003005e	/* DI=14 �ɑ΂��� EITINF */
+#define DI14_EITINF	0x0003005e	/* DI=14 に対する EITINF */
 #else /* TRON_NO_DI */
-#define TRAPA4_EITINF	0x02010024	/* TRAPA #4 �ɑ΂��� EITINF */
-#define DISPATCHER_PSW	0x800f6000	/* �f�B�X�p�b�`�������� PSW */
+#define TRAPA4_EITINF	0x02010024	/* TRAPA #4 に対する EITINF */
+#define DISPATCHER_PSW	0x800f6000	/* ディスパッチャ分岐後の PSW */
 #endif /* TRON_NO_DI */
 
 #endif /* _TRON_DEFS_ */

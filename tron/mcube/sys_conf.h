@@ -35,42 +35,42 @@
 #define _SYS_CONF_
 
 /*
- *  ItIs ���쎞�̃������}�b�v (�f�t�H���g��)
+ *  ItIs 動作時のメモリマップ (デフォルト時)
  *
- *	80000000 - 8000ffff	ROM���j�^���[�N�G���A
- *	80020000 -		�J�[�l���R�[�h�̈�
- *		 - 8007efff	�^�X�N�Ɨ����p�X�^�b�N�̈� (ItIs �� SPI)
- *	8007f000 - 8007ffff	EIT�x�N�^�e�[�u�� (���ۂ͂��̔����̂ݎg�p)
- *	80080000 - 800fffff	�J�[�l���f�[�^�̈� (�傫�����邱�Ƃ��\)
- *	80100000 -		���g�p (���[�U�v���O�����̈�)
- *		 - 80ffffff	ROM���j�^�̏���SPI (���o�C�g�󂳂��)
+ *	80000000 - 8000ffff	ROMモニタワークエリア
+ *	80020000 -		カーネルコード領域
+ *		 - 8007efff	タスク独立部用スタック領域 (ItIs の SPI)
+ *	8007f000 - 8007ffff	EITベクタテーブル (実際はこの半分のみ使用)
+ *	80080000 - 800fffff	カーネルデータ領域 (大きくすることも可能)
+ *	80100000 -		未使用 (ユーザプログラム領域)
+ *		 - 80ffffff	ROMモニタの初期SPI (数バイト壊される)
  */
 
 /*
- *  �X�^�b�N�G���A�C�q�[�v�G���A�̒�`
+ *  スタックエリア，ヒープエリアの定義
  *
- *  _end �́C�v���O�����Ŏg�p����f�[�^�G���A�̍Ō�̎��̔Ԓn�D
+ *  _end は，プログラムで使用するデータエリアの最後の次の番地．
  */
-#define STACKTOP	0x8007f000	/* �^�X�N�Ɨ����p�X�^�b�N�̏����l */
-#define HEAPTOP		_end		/* �q�[�v�G���A�̐擪 */
-#define HEAPLIMIT	0x80100000	/* �q�[�v�G���A�̏�� */
+#define STACKTOP	0x8007f000	/* タスク独立部用スタックの初期値 */
+#define HEAPTOP		_end		/* ヒープエリアの先頭 */
+#define HEAPLIMIT	0x80100000	/* ヒープエリアの上限 */
 
 /*
- *  EIT�x�N�^�e�[�u���֘A�̒�`
+ *  EITベクタテーブル関連の定義
  *
- *  MCUBE �� ROM���j�^ (BMS) �ł́CEIT�x�N�^�e�[�u���� FFFFF000 �Ԓn��
- *  �� ROM �ɒu���Ă���D�����ŁCItIs �N�����ɁCEIT�x�N�^�e�[�u���� RAM 
- *  ��ɍ��K�v������DEITVB_ITIS �Ԓn�ɁCEIT�x�N�^�e�[�u���̏����ݒ�
- *  �� ROM ����R�s�[���Ďg���D
+ *  MCUBE の ROMモニタ (BMS) では，EITベクタテーブルを FFFFF000 番地か
+ *  ら ROM に置いている．そこで，ItIs 起動時に，EITベクタテーブルを RAM 
+ *  上に作る必要がある．EITVB_ITIS 番地に，EITベクタテーブルの初期設定
+ *  を ROM からコピーして使う．
  */
 #define EITVB_ORIG	((EITVE *) 0xfffff000)
 #define EITVB_ITIS	((EITVE *) 0x8007f000)
 #define EITVT_LEN	0x800
 
 /*
- *  �V�X�e���^�X�N�Ɋւ����`
+ *  システムタスクに関する定義
  */
-#define	CONSOLE_PORT	1	/* �R���\�[���p�ɗp����V���A���|�[�g�ԍ� */
-#define	LOGTASK_PORT	1	/* �V�X�e�����O���o�͂���V���A���|�[�g�ԍ� */
+#define	CONSOLE_PORT	1	/* コンソール用に用いるシリアルポート番号 */
+#define	LOGTASK_PORT	1	/* システムログを出力するシリアルポート番号 */
 
 #endif /* _SYS_CONF_ */

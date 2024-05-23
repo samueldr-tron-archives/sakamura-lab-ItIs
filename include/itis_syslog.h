@@ -35,46 +35,46 @@
 #define	_ITIS_SYSLOG_
 
 /* 
- *  �V�X�e�����O�o�̓��C�u�����̒�`
+ *  システムログ出力ライブラリの定義
  * 
- *  �V�X�e�����O�փ��b�Z�[�W���o�͂��邽�߂̊֐��̒�`�DUNIX �̃C���^�t�F�[
- *  �X�Ƌ߂��C���^�t�F�[�X�ɂ��Ă��邪�C���̂Ƃ��� facility �͎g���Ă��Ȃ��D
+ *  システムログへメッセージを出力するための関数の定義．UNIX のインタフェー
+ *  スと近いインタフェースにしてあるが，今のところ facility は使っていない．
  *
- *  �J�[�l���p�� setlogmask �͗p�ӂ��Ă��Ȃ� (���̂͊ȒP)�D
+ *  カーネル用の setlogmask は用意していない (作るのは簡単)．
  */
 
 extern void	syslog(int priority, const char *format, ...);
 extern int	setlogmask(int maskpri);
 
 /*
- *  facility �̒�`
+ *  facility の定義
  */
-#define LOG_KERN	(0 << 3)	/* �J�[�l�� */
-#define LOG_NKERN	(1 << 3)	/* �O�j */
-#define LOG_INDP	(2 << 3)	/* �^�X�N�Ɨ��� */
-#define LOG_EXTSVC	(3 << 3)	/* �g��SVC�n���h�� */
-#define LOG_STASK	(4 << 3)	/* �V�X�e���^�X�N */
-#define LOG_UTASK	(5 << 3)	/* ���[�U�^�X�N */
+#define LOG_KERN	(0 << 3)	/* カーネル */
+#define LOG_NKERN	(1 << 3)	/* 外核 */
+#define LOG_INDP	(2 << 3)	/* タスク独立部 */
+#define LOG_EXTSVC	(3 << 3)	/* 拡張SVCハンドラ */
+#define LOG_STASK	(4 << 3)	/* システムタスク */
+#define LOG_UTASK	(5 << 3)	/* ユーザタスク */
 
-#define LOG_NFACILITIES	16		/* facility �̐� */
-#define LOG_FACMASK	0x0078		/* facility �����o�����̃}�X�N�l */
+#define LOG_NFACILITIES	16		/* facility の数 */
+#define LOG_FACMASK	0x0078		/* facility を取り出す時のマスク値 */
 
 /*
- *  priority �̒�`
+ *  priority の定義
  */
-#define LOG_EMERG	0		/* �V�X�e���_�E���ɒl����G���[ */
+#define LOG_EMERG	0		/* システムダウンに値するエラー */
 #define LOG_ALERT	1
 #define LOG_CRIT	2
-#define LOG_ERR		3		/* �V�X�e���G���[ */
+#define LOG_ERR		3		/* システムエラー */
 #define LOG_WARNING	4
 #define LOG_NOTICE	5
 #define LOG_INFO	6
-#define LOG_DEBUG	7		/* �f�o�b�O�p���b�Z�[�W */
+#define LOG_DEBUG	7		/* デバッグ用メッセージ */
 
-#define LOG_PRIMASK	0x0007		/* priority �����o���}�X�N�l */
+#define LOG_PRIMASK	0x0007		/* priority を取り出すマスク値 */
 
 /*
- *  setlogmask �̈�������邽�߂̃}�N��
+ *  setlogmask の引数を作るためのマクロ
  */
 #define LOG_MASK(pri)	(1 << (pri))
 #define LOG_UPTO(pri)	((1 << ((pri) + 1)) - 1)

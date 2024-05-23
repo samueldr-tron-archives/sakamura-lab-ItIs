@@ -35,10 +35,10 @@
 #define	_QUEUE_
 
 /*
- *  �_�u�������N�L���[
+ *  ダブルリンクキュー
  * 
- *  �_�u�������N�L���[�̍\���́CTRON�d�l�`�b�v�̃L���[���얽�߂������`
- *  ���ɂ��킹�Ă���D
+ *  ダブルリンクキューの構造は，TRON仕様チップのキュー操作命令が扱う形
+ *  式にあわせてある．
  */
 typedef struct queue {
 	struct queue *next;
@@ -46,11 +46,11 @@ typedef struct queue {
 } QUEUE;
 
 /*
- *  �L���[���색�C�u����
+ *  キュー操作ライブラリ
  */
 
 /*
- *  �L���[�̏�����
+ *  キューの初期化
  */
 Inline void
 queue_initialize(QUEUE *queue)
@@ -59,10 +59,10 @@ queue_initialize(QUEUE *queue)
 }
 
 /*
- *  �L���[�փG���g����}��
+ *  キューへエントリを挿入
  *
- *  queue �̒��O�� entry ��}������Dqueue ���L���[�w�b�_���w���ꍇ�ɂ́C
- *  �L���[�̍Ō���� entry ��}�����邱�ƂɂȂ�D
+ *  queue の直前に entry を挿入する．queue がキューヘッダを指す場合には，
+ *  キューの最後尾に entry を挿入することになる．
  */
 Inline void
 queue_insert(QUEUE *entry, QUEUE *queue)
@@ -78,9 +78,9 @@ queue_insert(QUEUE *entry, QUEUE *queue)
 }
 
 /*
- *  �L���[����G���g�����폜
+ *  キューからエントリを削除
  *
- *  entry ���L���[����폜����D
+ *  entry をキューから削除する．
  */
 Inline void
 queue_delete(QUEUE *entry)
@@ -96,11 +96,11 @@ queue_delete(QUEUE *entry)
 }
 
 /*
- *  �L���[�̐擪�̃G���g���̎��o��
+ *  キューの先頭のエントリの取り出し
  *
- *  queue �̒���̃G���g�����L���[����폜���C�폜�����G���g����Ԃ��D
- *  queue ���L���[�w�b�_���w���ꍇ�ɂ́C�L���[�̐擪�̃G���g�������o
- *  �����ƂɂȂ�D
+ *  queue の直後のエントリをキューから削除し，削除したエントリを返す．
+ *  queue がキューヘッダを指す場合には，キューの先頭のエントリを取り出
+ *  すことになる．
  */
 Inline QUEUE *
 queue_delete_next(QUEUE *queue)
@@ -119,11 +119,11 @@ queue_delete_next(QUEUE *queue)
 }
 
 /*
- *  �L���[���̃G���g���̃T�[�`
+ *  キュー中のエントリのサーチ
  *
- *  queue �Ŏ����L���[����Coffset �Ŏ����t�B�[���h�� val ���傫����
- *  �G���g�����T�[�`���C���̃G���g����Ԃ��D�Y������G���g�����Ȃ��ꍇ
- *  �́Cqueue ��Ԃ��D
+ *  queue で示すキューから，offset で示すフィールドが val より大きいの
+ *  エントリをサーチし，そのエントリを返す．該当するエントリがない場合
+ *  は，queue を返す．
  */
 Inline QUEUE *
 queue_search_gt(QUEUE *queue, INT val, INT offset)
@@ -152,7 +152,7 @@ queue_search_gt(QUEUE *queue, INT val, INT offset)
 }
 
 /*
- *  �L���[���󂩂ǂ����̃`�F�b�N
+ *  キューが空かどうかのチェック
  */
 Inline BOOL
 queue_empty_p(QUEUE *queue)

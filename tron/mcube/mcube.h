@@ -35,14 +35,14 @@
 #define _MCUBE_
 
 /*
- *  MCUBE Šî–{ƒ{[ƒh‚Ìƒn[ƒhƒEƒFƒA‘Œ¹‚Ì’è‹`
+ *  MCUBE åŸºæœ¬ãƒœãƒ¼ãƒ‰ã®ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢è³‡æºã®å®šç¾©
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/OƒŒƒWƒXƒ^‚ÌŒ^ */
+typedef volatile byte	IOREG;		/* I/Oãƒ¬ã‚¸ã‚¹ã‚¿ã®å‹ */
 
 /*
- *  ’á‘¬‚Ì I/OƒfƒoƒCƒX‚ğ‘€ì‚·‚é‚½‚ß‚ÌŠÖ”
+ *  ä½é€Ÿã® I/Oãƒ‡ãƒã‚¤ã‚¹ã‚’æ“ä½œã™ã‚‹ãŸã‚ã®é–¢æ•°
  */
 
 Inline void
@@ -71,7 +71,7 @@ io_write(IOREG *addr, byte val)
 }
 
 /*
- *  IRC (MB92421) ‚ÌƒŒƒWƒXƒ^
+ *  IRC (MB92421) ã®ãƒ¬ã‚¸ã‚¹ã‚¿
  */
 
 #define	IRC1_LMR(n)	((IOREG *) (0xffbffd3f+(n)*4))
@@ -94,23 +94,23 @@ io_write(IOREG *addr, byte val)
 #define	IRC2_BMR	((IOREG *) 0xffbffdb3)
 #define	IRC2_BRR	((IOREG *) 0xffbffdb7)
 
-#define	LIR0_BIT	0x01		/* ƒ[ƒJƒ‹Š„‚İ 0 */
-#define	LIR1_BIT	0x02		/* ƒ[ƒJƒ‹Š„‚İ 1 */
-#define	LIR2_BIT	0x04		/* ƒ[ƒJƒ‹Š„‚İ 2 */
-#define	LIR3_BIT	0x08		/* ƒ[ƒJƒ‹Š„‚İ 3 */
-#define	LIR4_BIT	0x10		/* ƒ[ƒJƒ‹Š„‚İ 4 */
-#define	LIR5_BIT	0x20		/* ƒ[ƒJƒ‹Š„‚İ 5 */
-#define	LIR6_BIT	0x40		/* ƒ[ƒJƒ‹Š„‚İ 6 */
+#define	LIR0_BIT	0x01		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 0 */
+#define	LIR1_BIT	0x02		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 1 */
+#define	LIR2_BIT	0x04		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 2 */
+#define	LIR3_BIT	0x08		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 3 */
+#define	LIR4_BIT	0x10		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 4 */
+#define	LIR5_BIT	0x20		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 5 */
+#define	LIR6_BIT	0x40		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 6 */
 
-#define	BIR0_BIT	0x01		/* ƒoƒXŠ„‚İ 0 */
-#define	BIR1_BIT	0x02		/* ƒoƒXŠ„‚İ 1 */
-#define	BIR2_BIT	0x04		/* ƒoƒXŠ„‚İ 2 */
-#define	BIR3_BIT	0x08		/* ƒoƒXŠ„‚İ 3 */
-#define	BIR4_BIT	0x10		/* ƒoƒXŠ„‚İ 4 */
-#define	BIR5_BIT	0x20		/* ƒoƒXŠ„‚İ 5 */
-#define	BIR6_BIT	0x40		/* ƒoƒXŠ„‚İ 6 */
+#define	BIR0_BIT	0x01		/* ãƒã‚¹å‰²è¾¼ã¿ 0 */
+#define	BIR1_BIT	0x02		/* ãƒã‚¹å‰²è¾¼ã¿ 1 */
+#define	BIR2_BIT	0x04		/* ãƒã‚¹å‰²è¾¼ã¿ 2 */
+#define	BIR3_BIT	0x08		/* ãƒã‚¹å‰²è¾¼ã¿ 3 */
+#define	BIR4_BIT	0x10		/* ãƒã‚¹å‰²è¾¼ã¿ 4 */
+#define	BIR5_BIT	0x20		/* ãƒã‚¹å‰²è¾¼ã¿ 5 */
+#define	BIR6_BIT	0x40		/* ãƒã‚¹å‰²è¾¼ã¿ 6 */
 
-#define	IRC1_VECTOR(n)	(0x40+(n))	/* ƒŒƒxƒ‹n ‚ÌŠ„‚İ‚ÌƒxƒNƒ^”Ô† */
+#define	IRC1_VECTOR(n)	(0x40+(n))	/* ãƒ¬ãƒ™ãƒ«n ã®å‰²è¾¼ã¿ã®ãƒ™ã‚¯ã‚¿ç•ªå· */
 #define IRC2_VECTOR_BASE 0x80
 #define	IRC2_VECTOR(n)	(IRC2_VECTOR_BASE+(n))
 
@@ -160,7 +160,7 @@ irc_read(IOREG *addr)
 }
 
 /*
- *  ƒ^ƒCƒ} (MB89254) ‚ÌƒŒƒWƒXƒ^
+ *  ã‚¿ã‚¤ãƒ (MB89254) ã®ãƒ¬ã‚¸ã‚¹ã‚¿
  */
 
 #define TMR_CNT0	((IOREG *) 0xffbffee3)
@@ -194,14 +194,14 @@ tmr_write(IOREG *addr, byte val)
 }
 
 /*
- *  SCC (Z85C30) ‚ÌƒŒƒWƒXƒ^
+ *  SCC (Z85C30) ã®ãƒ¬ã‚¸ã‚¹ã‚¿
  */
 #define	SCC_CNTRLB	((IOREG *) 0xffbfff03)
 #define	SCC_DATAB	((IOREG *) 0xffbfff07)
 #define	SCC_CNTRLA	((IOREG *) 0xffbffef3)
 #define	SCC_DATAA	((IOREG *) 0xffbffef7)
 
-#define	SCC_WR0		0x00		/* SCC ‘‚«‚İƒŒƒWƒXƒ^ */
+#define	SCC_WR0		0x00		/* SCC æ›¸ãè¾¼ã¿ãƒ¬ã‚¸ã‚¹ã‚¿ */
 #define	SCC_WR1		0x01
 #define	SCC_WR2		0x02
 #define	SCC_WR3		0x03
@@ -215,7 +215,7 @@ tmr_write(IOREG *addr, byte val)
 #define	SCC_WR14	0x0e
 #define	SCC_WR15	0x0f
 
-#define	SCC_RR0		0x00		/* SCC “Ç‚İo‚µƒŒƒWƒXƒ^ */
+#define	SCC_RR0		0x00		/* SCC èª­ã¿å‡ºã—ãƒ¬ã‚¸ã‚¹ã‚¿ */
 
 Inline byte
 scc_read(IOREG *addr, int reg)
@@ -232,7 +232,7 @@ scc_write(IOREG *addr, int reg, int val)
 }
 
 /*
- *  ƒ‚ƒjƒ^ŒÄ‚Ño‚µƒ‹[ƒ`ƒ“
+ *  ãƒ¢ãƒ‹ã‚¿å‘¼ã³å‡ºã—ãƒ«ãƒ¼ãƒãƒ³
  */
 
 Inline void

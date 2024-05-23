@@ -39,27 +39,27 @@
 #ifdef USE_MBF
 
 /*
- *  ���b�Z�[�W�o�b�t�@�Ǘ��u���b�N�̒�`
+ *  メッセージバッファ管理ブロックの定義
  *
- *  1�̃��b�Z�[�W�o�b�t�@�ɑ΂��āC��M�҂� (TTW_MBF) �̃^�X�N�Ƒ��M
- *  �҂� (TTW_SMBF) �̃^�X�N�������ɑ��݂��邱�Ƃ͂Ȃ����߁C�҂��L���[
- *  �����p�ł���\�������邪�C���b�Z�[�W�o�b�t�@�̃T�C�Y�� 0 �̎��ɁC
- *  �҂��L���[���ǂ���̖ړI�Ŏg���Ă��邩���ʂ���̂��ʓ|�ɂȂ邽�߁C
- *  ���̕��@�͍̗p���Ȃ��D
+ *  1つのメッセージバッファに対して，受信待ち (TTW_MBF) のタスクと送信
+ *  待ち (TTW_SMBF) のタスクが同時に存在することはないため，待ちキュー
+ *  を共用できる可能性があるが，メッセージバッファのサイズが 0 の時に，
+ *  待ちキューがどちらの目的で使われているか判別するのが面倒になるため，
+ *  この方法は採用しない．
  */
 
 typedef struct messagebuffer_control_block {
-	QUEUE	wait_queue;	/* ���b�Z�[�W�o�b�t�@��M�҂��L���[ */
-	ID	mbfid;		/* ���b�Z�[�W�o�b�t�@ID */
-	VP	exinf;		/* �g����� */
-	ATR	mbfatr;		/* ���b�Z�[�W�o�b�t�@���� */
-	QUEUE	send_queue;	/* ���b�Z�[�W�o�b�t�@���M�҂��L���[ */
-	INT	bufsz;		/* ���b�Z�[�W�o�b�t�@�̃T�C�Y */
-	INT	maxmsz;		/* ���b�Z�[�W�̍ő咷 */
-	INT	frbufsz;	/* �󂫃o�b�t�@�̃T�C�Y */
-	INT	head;		/* �ŏ��̃��b�Z�[�W�̊i�[�ꏊ */
-	INT	tail;		/* �Ō�̃��b�Z�[�W�̊i�[�ꏊ�̎� */
-	VB	*buffer;	/* ���b�Z�[�W�o�b�t�@�̔Ԓn */
+	QUEUE	wait_queue;	/* メッセージバッファ受信待ちキュー */
+	ID	mbfid;		/* メッセージバッファID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	mbfatr;		/* メッセージバッファ属性 */
+	QUEUE	send_queue;	/* メッセージバッファ送信待ちキュー */
+	INT	bufsz;		/* メッセージバッファのサイズ */
+	INT	maxmsz;		/* メッセージの最大長 */
+	INT	frbufsz;	/* 空きバッファのサイズ */
+	INT	head;		/* 最初のメッセージの格納場所 */
+	INT	tail;		/* 最後のメッセージの格納場所の次 */
+	VB	*buffer;	/* メッセージバッファの番地 */
 } MBFCB;
 
 static MBFCB	mbfcb_table[NUM_MBFID];
@@ -67,14 +67,14 @@ static MBFCB	mbfcb_table[NUM_MBFID];
 #define get_mbfcb(id)	(&(mbfcb_table[INDEX_MBF(id)]))
 
 /*
- *  ���g�p�̃��b�Z�[�W�o�b�t�@�Ǘ��u���b�N�̃��X�g
+ *  未使用のメッセージバッファ管理ブロックのリスト
  */
 #ifndef _i_vcre_mbf
 QUEUE	free_mbfcb;
 #endif /* _i_vcre_mbf */
 
 /* 
- *  ���b�Z�[�W�o�b�t�@�Ǘ��u���b�N�̏�����
+ *  メッセージバッファ管理ブロックの初期化
  */
 void
 messagebuffer_initialize()
@@ -100,7 +100,7 @@ messagebuffer_initialize()
 }
 
 /*
- *  ���b�Z�[�W�o�b�t�@���샋�[�`��
+ *  メッセージバッファ操作ルーチン
  */
 
 typedef INT		HEADER;
@@ -110,11 +110,11 @@ typedef INT		HEADER;
 #define	ROUNDSZ(sz)	(((sz) + (ROUNDSIZE-1)) & ~(ROUNDSIZE-1))
 
 /*
- *  �T�C�Y�� msgsz ���b�Z�[�W���C���b�Z�[�W�o�b�t�@�ɓ��邩�ǂ����`�F�b
- *  �N����D
+ *  サイズが msgsz メッセージが，メッセージバッファに入るかどうかチェッ
+ *  クする．
  *
- *  �{���� msgsz �ł͂Ȃ� ROUNDSZ(msgsz) �Ƃ��ׂ��ł��邪�CHEADERSZ �� 
- *  mbfcb->frbufsz �� ROUNDSZ ����Ă��邽�߁C�������ƂɂȂ�D
+ *  本来は msgsz ではなく ROUNDSZ(msgsz) とすべきであるが，HEADERSZ も 
+ *  mbfcb->frbufsz も ROUNDSZ されているため，同じことになる．
  */
 Inline BOOL
 mbf_free(MBFCB* mbfcb, INT msgsz)
@@ -123,7 +123,7 @@ mbf_free(MBFCB* mbfcb, INT msgsz)
 }
 
 /*
- *  ���b�Z�[�W�o�b�t�@���󂩂ǂ����`�F�b�N����D
+ *  メッセージバッファが空かどうかチェックする．
  */
 Inline BOOL
 mbf_empty(MBFCB* mbfcb)
@@ -132,7 +132,7 @@ mbf_empty(MBFCB* mbfcb)
 }
 
 /*
- *  ���b�Z�[�W���C���b�Z�[�W�o�b�t�@�֒ǉ�����D
+ *  メッセージを，メッセージバッファへ追加する．
  */
 static void
 msg_to_mbf(MBFCB* mbfcb, VP msg, INT msgsz)
@@ -163,7 +163,7 @@ msg_to_mbf(MBFCB* mbfcb, VP msg, INT msgsz)
 }
 
 /*
- *  ���b�Z�[�W�o�b�t�@����C���b�Z�[�W�����o���D
+ *  メッセージバッファから，メッセージを取り出す．
  */
 static INT
 mbf_to_msg(MBFCB* mbfcb, VP msg)
@@ -197,14 +197,14 @@ mbf_to_msg(MBFCB* mbfcb, VP msg)
 }
 
 /*
- *  ���b�Z�[�W�o�b�t�@�҂��d�l�̒�`
+ *  メッセージバッファ待ち仕様の定義
  */
 static WSPEC wspec_mbf_tfifo = { TTW_MBF, 0, 0 };
 static WSPEC wspec_mbf_tpri = { TTW_MBF, obj_chg_pri, 0 };
 static WSPEC wspec_smbf = { TTW_SMBF, 0, 0 };
 
 /*
- *  ���b�Z�[�W�o�b�t�@�Ǘ��@�\
+ *  メッセージバッファ管理機能
  */
 
 #if !defined(_i_cre_mbf) || !defined(_i_vcre_mbf)
@@ -500,7 +500,7 @@ i_ref_mbf(T_RMBF *pk_rmbf, ID mbfid)
 #endif /* _i_ref_mbf */
 
 /*
- *  �V�X�e�����O�p���b�Z�[�W�o�b�t�@�ւ̑��M
+ *  システムログ用メッセージバッファへの送信
  */
 
 #ifdef USE_TMBF_OS

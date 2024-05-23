@@ -35,11 +35,11 @@
 #define	_SVC_FNCODE_
 
 /*
- *  �g��SVC�̋@�\�R�[�h�̒�`
+ *  拡張SVCの機能コードの定義
  */
 
 /*
- *  �V���A���C���^�t�F�[�X�h���C�o�̌Ăяo��
+ *  シリアルインタフェースドライバの呼び出し
  */
 #define SVC_SERIAL_INIT		1
 #define SVC_SERIAL_READ		2
@@ -48,7 +48,7 @@
 #define SVC_SERIAL_SHUTDOWN	5
 
 /*
- *  �V�X�e�����O�^�X�N�ւ̏o��
+ *  システムログタスクへの出力
  */
 #define SVC_SYSLOG_SEND		6
 

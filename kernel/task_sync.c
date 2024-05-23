@@ -32,7 +32,7 @@
  */
 
 /*
- *  ƒ^ƒXƒN•t‘®“¯Šú‹@”\
+ *  ã‚¿ã‚¹ã‚¯ä»˜å±žåŒæœŸæ©Ÿèƒ½
  */
 
 #include <limits.h>
@@ -173,7 +173,7 @@ i_frsm_tsk(ID tskid)
 #endif /* _i_frsm_tsk */
 
 /*
- *  ‹N°‘Ò‚¿Žd—l‚Ì’è‹`
+ *  èµ·åºŠå¾…ã¡ä»•æ§˜ã®å®šç¾©
  */
 #if !defined(_i_slp_tsk) || !defined(_i_tslp_tsk) || !defined(_i_wup_tsk)
 static WSPEC wspec_slp = { TTW_SLP, 0, 0 };

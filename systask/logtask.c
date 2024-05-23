@@ -32,25 +32,25 @@
  */
 
 /*
- *  �V�X�e�����O�^�X�N
+ *  システムログタスク
  */
 
 #include <stdarg.h>
 #include "systask.h"
 
 /*
- *  ���O�^�X�N�̕ϐ�
+ *  ログタスクの変数
  */
-int	logtask_alive = 0;	/* ���O�^�X�N�������Ă��邩 */
-int	log_msg_maxmsz;		/* ���O���b�Z�[�W�̍ő咷 */
+int	logtask_alive = 0;	/* ログタスクが動いているか */
+int	log_msg_maxmsz;		/* ログメッセージの最大長 */
 
 /*
- *  �O���Q�Ɛ錾
+ *  前方参照宣言
  */
 ER	svc_syslog_send(const char *string, int len);
 
 /*
- *  ���O�^�X�N�̋N���Ə������C�g��SVC�̒�`
+ *  ログタスクの起動と初期化，拡張SVCの定義
  */
 void
 logtask_startup(int portid)
@@ -71,11 +71,11 @@ logtask_startup(int portid)
 }
 
 /*
- *  ���O�^�X�N�̖{��
+ *  ログタスクの本体
  */
 
-static int	logtask_portid;			/* ���O�o�̓|�[�g�ԍ� */
-static char	logtask_buf[MBF_LOG_MAXMSZ+1];	/* ���O�^�X�N�p�o�b�t�@ */
+static int	logtask_portid;			/* ログ出力ポート番号 */
+static char	logtask_buf[MBF_LOG_MAXMSZ+1];	/* ログタスク用バッファ */
 
 void
 log_task(int portid)
@@ -94,10 +94,10 @@ log_task(int portid)
 }
 
 /*
- *  �g��SVC�n���h���{��
+ *  拡張SVCハンドラ本体
  *
- *  ���O�^�X�N�������Ă���ꍇ�́C���O���b�Z�[�W�o�b�t�@�֑���D������
- *  ���Ȃ��ꍇ�́C���ڒ჌�x���̕����o�̓��[�`�����g���ďo�͂���D
+ *  ログタスクが動いている場合は，ログメッセージバッファへ送る．動いて
+ *  いない場合は，直接低レベルの文字出力ルーチンを使って出力する．
  */
 
 ER

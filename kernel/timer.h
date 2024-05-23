@@ -35,37 +35,37 @@
 #define _TIMER_
 
 /*
- *  ƒ^ƒCƒ}ƒ‚ƒWƒ…[ƒ‹
+ *  ã‚¿ã‚¤ãƒãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 
 #include "queue.h"
 
 /* 
- *  ƒ^ƒCƒ}ƒCƒxƒ“ƒgƒuƒƒbƒN‚Ì’è‹`
+ *  ã‚¿ã‚¤ãƒã‚¤ãƒ™ãƒ³ãƒˆãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 
-typedef void	(*CBACK)(VP);	/* ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌŒ^ */
+typedef void	(*CBACK)(VP);	/* ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å‹ */
 
 typedef struct timer_event_block {
-	QUEUE	queue;		/* ƒ^ƒCƒ}ƒCƒxƒ“ƒgƒLƒ…[ */
-	SYSTIME	time;		/* ƒCƒxƒ“ƒg */
-	CBACK	callback;	/* ƒR[ƒ‹ƒoƒbƒNŠÖ” */
-	VP	arg;		/* ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ö“n‚·ˆø” */
+	QUEUE	queue;		/* ã‚¿ã‚¤ãƒã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒ¥ãƒ¼ */
+	SYSTIME	time;		/* ã‚¤ãƒ™ãƒ³ãƒˆæ™‚åˆ» */
+	CBACK	callback;	/* ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•° */
+	VP	arg;		/* ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã¸æ¸¡ã™å¼•æ•° */
 } TMEB;
 
 /*
- *  Œ»İ (ƒ\ƒtƒgƒEƒFƒAƒNƒƒbƒN)
+ *  ç¾åœ¨æ™‚åˆ» (ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚¯ãƒ­ãƒƒã‚¯)
  */
 extern SYSTIME	current_time;
 
 /*
- *  ƒ^ƒCƒ}‚Ì‰Šú‰»‚Æ’â~
+ *  ã‚¿ã‚¤ãƒã®åˆæœŸåŒ–ã¨åœæ­¢
  */
 extern void	timer_initialize(void);
 extern void	timer_shutdown(void);
 
 /*
- *  ƒ^ƒCƒ}ƒCƒxƒ“ƒg‚Ìƒ^ƒCƒ}ƒLƒ…[‚Ö‚Ì“o˜^
+ *  ã‚¿ã‚¤ãƒã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¿ã‚¤ãƒã‚­ãƒ¥ãƒ¼ã¸ã®ç™»éŒ²
  */
 extern void	timer_insert(TMEB *event, TMO tmout,
 				CBACK callback, VP arg);
@@ -75,7 +75,7 @@ extern void	timer_insert_rel(TMEB *event, SYSTIME *time,
 				CBACK callback, VP arg);
 
 /*
- *  ƒ^ƒCƒ}ƒLƒ…[‚©‚ç‚Ìíœ
+ *  ã‚¿ã‚¤ãƒã‚­ãƒ¥ãƒ¼ã‹ã‚‰ã®å‰Šé™¤
  */
 Inline void
 timer_delete(TMEB *event)

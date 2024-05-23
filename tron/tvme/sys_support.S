@@ -39,44 +39,44 @@
 #include "tron_defs.h"
 
 /*
- *  TVME-150 CPUƒ{[ƒhã‚ÌƒŒƒWƒXƒ^ƒAƒhƒŒƒX‚Ì’è‹`
+ *  TVME-150 CPUãƒœãƒ¼ãƒ‰ä¸Šã®ãƒ¬ã‚¸ã‚¹ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å®šç¾©
  */
-#define TVME_STAT0	0xfffb0020	/* ƒXƒe[ƒ^ƒXƒŒƒWƒXƒ^0 */
-#define TVME_STAT1	0xfffb0021	/* ƒXƒe[ƒ^ƒXƒŒƒWƒXƒ^1 */
-#define TVME_STAT2	0xfffb0022	/* ƒXƒe[ƒ^ƒXƒŒƒWƒXƒ^2 */
-#define TVME_CNTL1	0xfffb0029	/* ƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^1 */
-#define TVME_CNTL2	0xfffb002b	/* ƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^2 */
+#define TVME_STAT0	0xfffb0020	/* ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿0 */
+#define TVME_STAT1	0xfffb0021	/* ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿1 */
+#define TVME_STAT2	0xfffb0022	/* ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿2 */
+#define TVME_CNTL1	0xfffb0029	/* ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿1 */
+#define TVME_CNTL2	0xfffb002b	/* ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿2 */
 
 /*
- *  TVME-150 CPUƒ{[ƒh—p ƒXƒ^[ƒgƒAƒbƒvƒ‚ƒWƒ…[ƒ‹
+ *  TVME-150 CPUãƒœãƒ¼ãƒ‰ç”¨ ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 	.text
 	.align 1
 	.globl ___sys_init
 ___sys_init:
 tvme_start:
-	mov r0, r13			/* –ß‚è”Ô’n‚ð R13 ‚É•Û‘¶ */
+	mov r0, r13			/* æˆ»ã‚Šç•ªåœ°ã‚’ R13 ã«ä¿å­˜ */
 	stc @PSW, r0
-	and #0x1ff09fff, r0		/* SMRNG=0, IMASK=0, PRNG=0 ‚ÉÝ’è */
+	and #0x1ff09fff, r0		/* SMRNG=0, IMASK=0, PRNG=0 ã«è¨­å®š */
 	ldc r0, @PSW
-	mov #STACKTOP, sp		/* ƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^ (SPI) ‚Ì‰Šú‰» */
-	mov #0, fp			/* ƒtƒŒ[ƒ€ƒ|ƒCƒ“ƒ^‚Ì‰Šú‰» */
+	mov #STACKTOP, sp		/* ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿ (SPI) ã®åˆæœŸåŒ– */
+	mov #0, fp			/* ãƒ•ãƒ¬ãƒ¼ãƒ ãƒã‚¤ãƒ³ã‚¿ã®åˆæœŸåŒ– */
 
-	mov #0x30, @TVME_CNTL1.b	/* ƒRƒ“ƒgƒ[ƒ‹ƒŒƒWƒXƒ^1 ‚Ì‰Šú‰» */
-	mov @TVME_STAT1.b, r0.b		/* ƒƒCƒ‹ƒ{ƒbƒNƒXƒAƒhƒŒƒX‚Æ */
-	and #0x1f, r0.b			/*	VMEƒ‚[ƒh‚Ì‰Šú‰» */
+	mov #0x30, @TVME_CNTL1.b	/* ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ¬ã‚¸ã‚¹ã‚¿1 ã®åˆæœŸåŒ– */
+	mov @TVME_STAT1.b, r0.b		/* ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ã‚¢ãƒ‰ãƒ¬ã‚¹ã¨ */
+	and #0x1f, r0.b			/*	VMEãƒ¢ãƒ¼ãƒ‰ã®åˆæœŸåŒ– */
 	sha #2, r0.b
 	or #0x03, r0.b
 	mov r0.b, @TVME_CNTL2.b
 
 	ldc #0xf00, @G200_DCCW		/* all cache ON */
-	ldcpid #7			/* ƒRƒvƒƒZƒbƒTID ‚ð 7 ‚É */
-					/* (ƒRƒvƒƒZƒbƒT‚ðŽg‚í‚È‚¢) */
-	bsr ___rawio_init		/* ƒ‰ƒCƒuƒ‰ƒŠ‚Ì‰Šú‰» */
+	ldcpid #7			/* ã‚³ãƒ—ãƒ­ã‚»ãƒƒã‚µID ã‚’ 7 ã« */
+					/* (ã‚³ãƒ—ãƒ­ã‚»ãƒƒã‚µã‚’ä½¿ã‚ãªã„) */
+	bsr ___rawio_init		/* ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®åˆæœŸåŒ– */
 	jmp @r13
 
 /*
- *  ’áƒŒƒxƒ‹ƒƒ‚ƒŠƒGƒŠƒAŠm•Ûƒ‹[ƒ`ƒ“
+ *  ä½Žãƒ¬ãƒ™ãƒ«ãƒ¡ãƒ¢ãƒªã‚¨ãƒªã‚¢ç¢ºä¿ãƒ«ãƒ¼ãƒãƒ³
  *
  *  void *sbrk(int size)
  */
@@ -84,16 +84,16 @@ tvme_start:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	mov @_break, r1			/* _break ‚ÌŒ»Ý’l‚ðŽæ‚èo‚· */
+	mov @_break, r1			/* _break ã®ç¾åœ¨å€¤ã‚’å–ã‚Šå‡ºã™ */
 	add r1, r0
-	bxs sbrk_overflow		/* ƒƒ‚ƒŠƒtƒ‹‚Ìƒ`ƒFƒbƒN */
+	bxs sbrk_overflow		/* ãƒ¡ãƒ¢ãƒªãƒ•ãƒ«ã®ãƒã‚§ãƒƒã‚¯ */
 	cmpu #HEAPLIMIT, r0
 	bgt sbrk_overflow
-	mov r0, @_break			/* _break ‚ÌXV */
-	mov r1, r0			/* XV‘O‚Ì _break ‚ð•Ô‚· */
+	mov r0, @_break			/* _break ã®æ›´æ–° */
+	mov r1, r0			/* æ›´æ–°å‰ã® _break ã‚’è¿”ã™ */
 	rts
 sbrk_overflow:
-	mov #-1, r0			/* ƒI[ƒo[ƒtƒ[‚Ìê‡‚Í NADR */
+	mov #-1, r0			/* ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã®å ´åˆã¯ NADR */
 	rts
 
 	.data

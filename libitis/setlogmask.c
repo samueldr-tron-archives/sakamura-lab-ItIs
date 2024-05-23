@@ -35,7 +35,7 @@
 #include <itis_syslog.h>
 
 /*
- *  ГVГXГeГАГНГOГ}ГXГNВ╠Р▌Тш
+ *  уВ╖уВ╣уГЖуГауГнуВ░уГЮуВ╣уВпуБошинхоЪ
  */
 
 extern int	__logmask;

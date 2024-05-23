@@ -35,12 +35,12 @@
 #include <itis_syslog.h>
 
 /*
- *  ƒGƒ‰[ƒƒbƒZ[ƒW¶¬—p
+ *  ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç”Ÿæˆç”¨
  */
 extern char	*itron_strerror(ER);
 
 /*
- *  ƒGƒ‰[ƒƒbƒZ[ƒW‚Ìo—Í
+ *  ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡ºåŠ›
  */
 void
 perror(const char *prompt, ER ercd)

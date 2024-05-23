@@ -35,31 +35,31 @@
 #define _SYSTASK_
 
 /*
- *  ItIsƒVƒXƒeƒ€ƒ^ƒXƒN •W€ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+ *  ItIsã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ æ¨™æº–ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
  */
 
 /*
- *  ItIsƒAƒvƒŠƒP[ƒVƒ‡ƒ“•W€ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+ *  ItIsã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æ¨™æº–ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
  */
 #include <itis_services.h>
 #include <itis_syslog.h>
 
 /*
- *  ƒVƒXƒeƒ€\¬Ý’èƒtƒ@ƒCƒ‹
+ *  ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
  */
 #include "config.h"
 #include "cpu_conf.h"
 #include "sys_conf.h"
 
 /*
- *  Šg’£SVC ‚ðŽg‚¤‚©‚Ç‚¤‚©‚Ì’è‹`
+ *  æ‹¡å¼µSVC ã‚’ä½¿ã†ã‹ã©ã†ã‹ã®å®šç¾©
  */
 #ifdef NUM_SVC
 #define USE_EXTENDED_SVC
 #endif
 
 /*
- *  Šg’£SVC ŠÖŒW‚Ì’è‹`
+ *  æ‹¡å¼µSVC é–¢ä¿‚ã®å®šç¾©
  */
 
 #ifdef USE_EXTENDED_SVC
@@ -71,7 +71,7 @@
 #endif /* USE_EXTENDED_SVC */
 
 /*
- *  Šg’£SVC ‚Ìo“üŒû‚ÌƒfƒtƒHƒ‹ƒgˆ—
+ *  æ‹¡å¼µSVC ã®å‡ºå…¥å£ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå‡¦ç†
  */
 #ifndef ENTER_EXTENDED_SVC
 #define ENTER_EXTENDED_SVC	((void) 0)
@@ -82,18 +82,18 @@
 #endif
 
 /*
- *  ƒVƒXƒeƒ€‚Å—˜—p‚·‚éŽ‘Œ¹‚Ì’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ ã§åˆ©ç”¨ã™ã‚‹è³‡æºã®å®šç¾©
  */
 
 /*
- *  ‰Šú‰»ƒ^ƒXƒNŠÖ˜A‚Ì’è‹`
+ *  åˆæœŸåŒ–ã‚¿ã‚¹ã‚¯é–¢é€£ã®å®šç¾©
  */
 extern void	init_task(int);
 #define TSK_INIT_CTSK \
 		((T_CTSK) { 0, TA_HLNG, init_task, MIN_PRI, 8192 })
 
 /*
- *  ƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒXƒhƒ‰ƒCƒoŠÖ˜A‚Ì’è‹`
+ *  ã‚·ãƒªã‚¢ãƒ«ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ãƒ‰ãƒ©ã‚¤ãƒé–¢é€£ã®å®šç¾©
  */
 extern void	serial_startup(int portid);
 extern int	serial_init(int portid);
@@ -103,7 +103,7 @@ extern int	serial_write(int portid, char *buf, unsigned int len);
 extern int	serial_ioctl(int portid, int req, int arg);
 
 /*
- *  ƒVƒXƒeƒ€ƒƒOƒ^ƒXƒNŠÖ˜A‚Ì’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ã‚¿ã‚¹ã‚¯é–¢é€£ã®å®šç¾©
  */
 extern void	logtask_startup(int portid);
 
@@ -111,27 +111,27 @@ extern void	log_task(int);
 #define TSK_LOG_CTSK \
 		((T_CTSK) { 0, TA_HLNG, log_task, 5, 8192 })
 
-#define	MBF_LOG_BUFSZ	2048		/* ƒƒO—pƒƒbƒZ[ƒWƒoƒbƒtƒ@‚ÌƒTƒCƒY */
-#define	MBF_LOG_MAXMSZ	256		/* ƒƒOƒƒbƒZ[ƒW‚ÌÅ‘å’· */
+#define	MBF_LOG_BUFSZ	2048		/* ãƒ­ã‚°ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º */
+#define	MBF_LOG_MAXMSZ	256		/* ãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®æœ€å¤§é•· */
 #define MBF_LOG_CMBF \
 		((T_CMBF) { 0, 0, MBF_LOG_BUFSZ, MBF_LOG_MAXMSZ })
 
 /*
- *  ‰Šú‹N“®ƒ^ƒXƒNŠÖ˜A‚Ì’è‹`
+ *  åˆæœŸèµ·å‹•ã‚¿ã‚¹ã‚¯é–¢é€£ã®å®šç¾©
  */
 extern void	first_task(int);
 #define TSK_FIRST_CTSK \
 		((T_CTSK) { 0, TA_HLNG, first_task, 20, 8192 })
 
 /*
- *  BSD UNIX—p ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O ŠÖ˜A‚Ì’è‹`
+ *  BSD UNIXç”¨ ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/O é–¢é€£ã®å®šç¾©
  */
 extern void	bsd_sigio_startup(void);
 #define FLG_BSD_SIGIO_CFLG \
 		((T_CFLG) { 0, TA_WMUL, 0 })
 
 /*
- *  BSD UNIX—p ‹^Ž—ƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒoŠÖ˜A‚Ì’è‹`
+ *  BSD UNIXç”¨ ç–‘ä¼¼ã‚·ãƒªã‚¢ãƒ«ãƒ‰ãƒ©ã‚¤ãƒé–¢é€£ã®å®šç¾©
  */
 extern void	bsd_serial_task(void);
 #define TSK_BSD_SERIAL_CTSK \

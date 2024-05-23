@@ -35,39 +35,39 @@
 #define _CPU_TASK_
 
 /*
- *  �^�X�N�N���̂��߂̒萔�̒�`
+ *  タスク起動のための定数の定義
  */
-#define INI_PSW_RNG0	0x800f6000	/* PSW �̏����l (�����O���x��0) */
-#define INI_PSW_RNG1	0xa00f6000	/* PSW �̏����l (�����O���x��1) */
-#define INI_PSW_RNG2	0xc00f6000	/* PSW �̏����l (�����O���x��2) */
-#define INI_PSW_RNG3	0xe00f6000	/* PSW �̏����l (�����O���x��3) */
+#define INI_PSW_RNG0	0x800f6000	/* PSW の初期値 (リングレベル0) */
+#define INI_PSW_RNG1	0xa00f6000	/* PSW の初期値 (リングレベル1) */
+#define INI_PSW_RNG2	0xc00f6000	/* PSW の初期値 (リングレベル2) */
+#define INI_PSW_RNG3	0xe00f6000	/* PSW の初期値 (リングレベル3) */
 
-#define INI_CSW		0x00070000	/* CSW �̏����l */
+#define INI_CSW		0x00070000	/* CSW の初期値 */
 
 /*
- *  CPU�ˑ��̃^�X�N�N������
+ *  CPU依存のタスク起動処理
  *
- *  �V�X�e���X�^�b�N��ɁCEIT�X�^�b�N�t���[�������Dmake_dormant ����
- *  �Ă΂��D
+ *  システムスタック上に，EITスタックフレームを作る．make_dormant から
+ *  呼ばれる．
  */
 Inline void
 setup_context(TCB *tcb)
 {
 	VW	*ssp;
 
-	ssp = (VW *)(tcb->isstack);	/* �����V�X�e���X�^�b�N�|�C���^ */
+	ssp = (VW *)(tcb->isstack);	/* 初期システムスタックポインタ */
 #ifndef TRON_NO_DI
-	*--ssp = (VW)(tcb->task);	/* �^�X�N�N���A�h���X��ς� */
-	*--ssp = DI14_EITINF;		/* EIT����ς� */
+	*--ssp = (VW)(tcb->task);	/* タスク起動アドレスを積む */
+	*--ssp = DI14_EITINF;		/* EIT情報を積む */
 #else /* TRON_NO_DI */
-	*--ssp = 0;			/* EXPC (�_�~�[) ��ς� */
-	*--ssp = (VW)(tcb->task);	/* �^�X�N�N���A�h���X��ς� */
-	*--ssp = TRAPA4_EITINF;		/* EIT����ς� */
+	*--ssp = 0;			/* EXPC (ダミー) を積む */
+	*--ssp = (VW)(tcb->task);	/* タスク起動アドレスを積む */
+	*--ssp = TRAPA4_EITINF;		/* EIT情報を積む */
 #endif /* TRON_NO_DI */
 
 	/*
-	 *  PSW �̏����l���V�X�e���X�^�b�N�ɐς݁C���[�U�X�^�b�N�|�C��
-	 *  �^������������D
+	 *  PSW の初期値をシステムスタックに積み，ユーザスタックポイン
+	 *  タを初期化する．
 	 */
 	switch (tcb->tskatr & TA_RNG3) {
 	case TA_RNG0:
@@ -86,16 +86,16 @@ setup_context(TCB *tcb)
 		*--ssp = INI_PSW_RNG3;
 		break;
 	}
-	ssp -= 15;			/* R14�`R0 �̕��̃G���A����� */
+	ssp -= 15;			/* R14〜R0 の分のエリアを取る */
 
 	tcb->tskctxb.sp0 = ssp;
 	tcb->tskctxb.csw = INI_CSW;
 }
 
 /*
- *  make_dormant �ŉ󂳂��X�^�b�N�̈�̃T�C�Y�̒�`
+ *  make_dormant で壊されるスタック領域のサイズの定義
  *
- *  ext_tsk �̏������Ŏg����D
+ *  ext_tsk の処理中で使われる．
  */
 #ifndef TRON_NO_DI
 #define DORMANT_STACK_SIZE	(sizeof(VW) * 3)
@@ -104,9 +104,9 @@ setup_context(TCB *tcb)
 #endif /* TRON_NO_DI */
 
 /*
- *  �^�X�N�N���R�[�h���̐ݒ�
+ *  タスク起動コード等の設定
  *
- *  sta_tsk �̏�������Ă΂��D
+ *  sta_tsk の処理から呼ばれる．
  */
 Inline void
 setup_stacd(TCB *tcb, INT stacd)
@@ -114,8 +114,8 @@ setup_stacd(TCB *tcb, INT stacd)
 	VW	*ssp;
 
 	ssp = tcb->tskctxb.sp0;
-	*ssp = stacd;			/* �N���R�[�h��ς� (R0) */
-	*(ssp+1) = (VW)(tcb->exinf);	/* �^�X�N�g������ς� (R1) */
+	*ssp = stacd;			/* 起動コードを積む (R0) */
+	*(ssp+1) = (VW)(tcb->exinf);	/* タスク拡張情報を積む (R1) */
 }
 
 #endif /* _CPU_TASK_ */

@@ -32,36 +32,36 @@
 # 
 
 #
-#  ƒ^[ƒQƒbƒg’è‹` (CPU–¼, ƒVƒXƒeƒ€–¼)
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆå®šç¾© (CPUå, ã‚·ã‚¹ãƒ†ãƒ å)
 #
 CPU = bsd
 SYS = sunos4
 
 #
-#  ‹¤’Ê’è‹`
+#  å…±é€šå®šç¾©
 #
 include ../$(CPU)/Makefile.config
 
 #
-#  ƒRƒ“ƒpƒCƒ‰ƒIƒvƒVƒ‡ƒ“‚Ì’è‹`
+#  ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®å®šç¾©
 #
 INCLUDES = -I. -I../include -I../include/$(CPU) -I../$(CPU) -I../$(CPU)/$(SYS)
 CFLAGS := -DITIS -DLINK_KERNEL $(INCLUDES) $(CFLAGS)
 LDFLAGS = -static
 
 #
-#  ƒf[ƒ^ƒZƒNƒVƒ‡ƒ“‚Ì‰Šú‰»ˆ—‚ðs‚¤‚©‚Ç‚¤‚©‚Ì’è‹`
+#  ãƒ‡ãƒ¼ã‚¿ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–å‡¦ç†ã‚’è¡Œã†ã‹ã©ã†ã‹ã®å®šç¾©
 #
 #IDATA = true
 IDATA = false
 
 #
-#  ‰Šú‹N“®ƒ^ƒXƒN‚Ì’è‹`
+#  åˆæœŸèµ·å‹•ã‚¿ã‚¹ã‚¯ã®å®šç¾©
 #
 FIRST_TASK = sample1
 
 ifeq ($(FIRST_TASK),scheme)
-#    xscheme ‚Í‚»‚Ì‚Ü‚Ü‚Å‚Í“®‚©‚È‚¢
+#    xscheme ã¯ãã®ã¾ã¾ã§ã¯å‹•ã‹ãªã„
 #    FTASK_DIR = ../xscheme:../systask
 #    FTASK_ASMOBJS =
 #    FTASK_COBJS = xscheme.o xsdmem.o xsimage.o xsio.o xsobj.o \
@@ -79,7 +79,7 @@ else
 endif
 
 #
-#  ƒVƒXƒeƒ€ƒ^ƒXƒN (ƒVƒXƒeƒ€ƒ^ƒXƒN—pƒ‰ƒCƒuƒ‰ƒŠ‚ðŠÜ‚Þ) ‚Ì’è‹`
+#  ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ (ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’å«ã‚€) ã®å®šç¾©
 #
 STASK_DIR = ../systask:../libitis
 STASK_ASMOBJS =
@@ -89,7 +89,7 @@ STASK_COBJS = inittask.o bsd_serial.o logtask.o bsd_sigio.o \
 STASK_CFLAGS = -msoft-float -I../systask
 
 #
-#  ƒJ[ƒlƒ‹ŠÖŒW‚Ì’è‹`
+#  ã‚«ãƒ¼ãƒãƒ«é–¢ä¿‚ã®å®šç¾©
 #
 KERNEL = ../kernel
 KERNEL_DIR = ../$(CPU):../$(CPU)/$(SYS):$(KERNEL)
@@ -103,11 +103,11 @@ KERNEL_COBJS = startup.o cpu_util.o sys_util.o \
 KERNEL_CFLAGS = -msoft-float -I$(KERNEL)
 
 #
-#  ƒ^[ƒQƒbƒgƒtƒ@ƒCƒ‹
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«
 #
 all: itis
 
-# ˆÈ‰º‚Í•ÒW‚µ‚È‚¢‚±‚Æ
+# ä»¥ä¸‹ã¯ç·¨é›†ã—ãªã„ã“ã¨
 
 SRCDIR = $(KERNEL_DIR):$(STASK_DIR):$(FTASK_DIR)
 
@@ -185,7 +185,7 @@ depend: config.h
 		$(FTASK_ASMOBJS:.o=.S) $(FTASK_COBJS:.o=.c) >> Makefile
 
 #
-#  ƒRƒ“ƒpƒCƒ‹ƒ‹[ƒ‹‚Ì’è‹`
+#  ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãƒ«ãƒ¼ãƒ«ã®å®šç¾©
 #
 $(KERNEL_ALL_COBJS): %.o: %.c
 	$(CC) -c $(KERNEL_CFLAGS) $(CFLAGS) $<
@@ -219,7 +219,7 @@ $(FTASK_ASMOBJS): %.o: %.S
 endif
 
 #
-#  ƒfƒtƒHƒ‹ƒgƒRƒ“ƒpƒCƒ‹ƒ‹[ƒ‹‚ðã‘‚«
+#  ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãƒ«ãƒ¼ãƒ«ã‚’ä¸Šæ›¸ã
 #
 %.o: %.c
 	@echo "*** Default compile rules should not be used."

@@ -42,10 +42,10 @@
 #include "offset.h"
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ
+ *  ã‚¿ã‚¹ã‚¯ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£
  *
- *  ’x‰„Š„‚İ‚ğg‚¤ê‡‚Æg‚í‚È‚¢ê‡‚Å‘å‚«‚­ˆá‚¤‚½‚ßC¬—‚ğ”ğ‚¯‚é‚½
- *  ‚ß‚ÉCƒtƒ@ƒCƒ‹‚ğ•ª‚¯‚Ä‚¢‚éD
+ *  é…å»¶å‰²è¾¼ã¿ã‚’ä½¿ã†å ´åˆã¨ä½¿ã‚ãªã„å ´åˆã§å¤§ããé•ã†ãŸã‚ï¼Œæ··ä¹±ã‚’é¿ã‘ã‚‹ãŸ
+ *  ã‚ã«ï¼Œãƒ•ã‚¡ã‚¤ãƒ«ã‚’åˆ†ã‘ã¦ã„ã‚‹ï¼
  */
 #ifndef TRON_NO_DI
 #include "dispatch.S"
@@ -54,10 +54,10 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  ƒVƒXƒeƒ€ƒR[ƒ‹‹N“®ƒ‹[ƒ`ƒ“
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«èµ·å‹•ãƒ«ãƒ¼ãƒãƒ³
  *
- *  TRAPA ‚ğg‚Á‚ÄƒVƒXƒeƒ€ƒR[ƒ‹‚ğ‹N“®‚·‚é‚½‚ß‚Ì•ªŠòƒ‹[ƒ`ƒ“D‹@”\ƒR[
- *  ƒh‚É]‚Á‚ÄCŠeƒVƒXƒeƒ€ƒR[ƒ‹‚Ìˆ—ƒ‹[ƒ`ƒ“‚Ö•ªŠò‚·‚éD
+ *  TRAPA ã‚’ä½¿ã£ã¦ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚’èµ·å‹•ã™ã‚‹ãŸã‚ã®åˆ†å²ãƒ«ãƒ¼ãƒãƒ³ï¼æ©Ÿèƒ½ã‚³ãƒ¼
+ *  ãƒ‰ã«å¾“ã£ã¦ï¼Œå„ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®å‡¦ç†ãƒ«ãƒ¼ãƒãƒ³ã¸åˆ†å²ã™ã‚‹ï¼
  */
 	.text
 	.align 1
@@ -65,13 +65,13 @@
 _trapa_ientry:
 	cmp #0, r6
 	bgt _trapa_ientry_1
-	cmp #FIRST_FNCD, r6		/* ‹@”\ƒR[ƒh‚Ì‰ºŒÀ‚Ìƒ`ƒFƒbƒN */
+	cmp #FIRST_FNCD, r6		/* æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã®ä¸‹é™ã®ãƒã‚§ãƒƒã‚¯ */
 	blt _trapa_ientry_2
-	jsr @@(_itable,r6*4)		/* ƒVƒXƒeƒ€ƒR[ƒ‹ˆ—ƒ‹[ƒ`ƒ“‚Ö•ªŠò */
+	jsr @@(_itable,r6*4)		/* ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å‡¦ç†ãƒ«ãƒ¼ãƒãƒ³ã¸åˆ†å² */
 	reit
 _trapa_ientry_1:
 #ifdef USE_SVC
-	jsr @_svc_ientry		/* Šg’£SVCƒnƒ“ƒhƒ‰‚Ö‚Ì•ªŠò */
+	jsr @_svc_ientry		/* æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ©ã¸ã®åˆ†å² */
 	reit
 #endif /* USE_SVC */
 _trapa_ientry_2:
@@ -79,7 +79,7 @@ _trapa_ientry_2:
 	reit
 
 /*
- *  –¢ƒTƒ|[ƒgƒVƒXƒeƒ€ƒR[ƒ‹‚ÌƒGƒ“ƒgƒŠ
+ *  æœªã‚µãƒãƒ¼ãƒˆã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®ã‚¨ãƒ³ãƒˆãƒª
  */
 	.text
 	.align 1
@@ -89,17 +89,17 @@ _no_support:
 	rts
 
 /*
- *  ƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚·‚é•K—v‚ª‚ ‚éƒVƒXƒeƒ€ƒR[ƒ‹
+ *  ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã§è¨˜è¿°ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
  *
- *  ƒVƒXƒeƒ€ƒR[ƒ‹ƒGƒ“ƒgƒŠƒe[ƒuƒ‹‚ğ·‚µ‘Ö‚¦‚é‚½‚ß‚ÉCTRAPA ‚ÅŒÄ‚Ño‚µ
- *  ‚½‚Ìˆ—‚ğƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚·‚é•K—v‚Ì‚ ‚éƒVƒXƒeƒ€ƒR[ƒ‹ ???_??? 
- *  ‚É‘Î‚µ‚Ä‚ÍC_i_???_??? ‚ğ _z_???_??? ‚É’è‹`‚·‚éD
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚¨ãƒ³ãƒˆãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å·®ã—æ›¿ãˆã‚‹ãŸã‚ã«ï¼ŒTRAPA ã§å‘¼ã³å‡ºã—
+ *  ãŸæ™‚ã®å‡¦ç†ã‚’ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã§è¨˜è¿°ã™ã‚‹å¿…è¦ã®ã‚ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« ???_??? 
+ *  ã«å¯¾ã—ã¦ã¯ï¼Œ_i_???_??? ã‚’ _z_???_??? ã«å®šç¾©ã™ã‚‹ï¼
  */
 
 /*
- *  ƒfƒBƒXƒpƒbƒ`‚Ì‹Ö~/‹–‰Â‹@”\
+ *  ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒã®ç¦æ­¢/è¨±å¯æ©Ÿèƒ½
  *
- *  TRON_NO_DI ‚Ì‚ÍCCŒ¾Œê‚Å‘‚¢‚½ƒ‹[ƒ`ƒ“‚ğg‚¦‚éD
+ *  TRON_NO_DI ã®æ™‚ã¯ï¼ŒCè¨€èªã§æ›¸ã„ãŸãƒ«ãƒ¼ãƒãƒ³ã‚’ä½¿ãˆã‚‹ï¼
  */
 
 #ifndef TRON_NO_DI
@@ -111,11 +111,11 @@ _no_support:
 	.globl _z_dis_dsp
 _z_dis_dsp:
 #ifdef CHK_CTX
-	bfextu #12,#4,@(4,sp), r0	/* IMASK ‚ğ EITî•ñ‚©‚çæ‚èo‚· */
-	cmpu #14, r0			/* IMASK < 14 ‚È‚ç E_CTXƒGƒ‰[ */
+	bfextu #12,#4,@(4,sp), r0	/* IMASK ã‚’ EITæƒ…å ±ã‹ã‚‰å–ã‚Šå‡ºã™ */
+	cmpu #14, r0			/* IMASK < 14 ãªã‚‰ E_CTXã‚¨ãƒ©ãƒ¼ */
 	blt _context_error
 #endif /* CHK_CTX */
-	bfinsu #14, #12,#4,@(4,sp)	/* IMASK ‚ğ EITî•ñ’†‚Éİ’è */
+	bfinsu #14, #12,#4,@(4,sp)	/* IMASK ã‚’ EITæƒ…å ±ä¸­ã«è¨­å®š */
 	mov #E_OK, r0
 	rts
 
@@ -128,11 +128,11 @@ _z_dis_dsp:
 	.globl _z_ena_dsp
 _z_ena_dsp:
 #ifdef CHK_CTX
-	bfextu #12,#4,@(4,sp), r0	/* IMASK ‚ğ EITî•ñ‚©‚çæ‚èo‚· */
-	cmpu #14, r0			/* IMASK < 14 ‚È‚ç E_CTXƒGƒ‰[ */
+	bfextu #12,#4,@(4,sp), r0	/* IMASK ã‚’ EITæƒ…å ±ã‹ã‚‰å–ã‚Šå‡ºã™ */
+	cmpu #14, r0			/* IMASK < 14 ãªã‚‰ E_CTXã‚¨ãƒ©ãƒ¼ */
 	blt _context_error
 #endif /* CHK_CTX */
-	bfinsu #15, #12,#4,@(4,sp)	/* IMASK ‚ğ EITî•ñ’†‚Éİ’è */
+	bfinsu #15, #12,#4,@(4,sp)	/* IMASK ã‚’ EITæƒ…å ±ä¸­ã«è¨­å®š */
 	mov #E_OK, r0
 	rts
 
@@ -140,7 +140,7 @@ _z_ena_dsp:
 #endif /* TRON_NO_DI */
 
 /*
- *  Š„‚İ‚Ì‹Ö~/‹–‰Â‹@”\
+ *  å‰²è¾¼ã¿ã®ç¦æ­¢/è¨±å¯æ©Ÿèƒ½
  */
 
 #ifndef _z_loc_cpu
@@ -151,10 +151,10 @@ _z_ena_dsp:
 	.globl _z_loc_cpu
 _z_loc_cpu:
 #ifdef CHK_CTX
-	btst #0,@(4,sp)			/* ƒ^ƒXƒN“Æ—§•”‚È‚ç E_CTXƒGƒ‰[ */
+	btst #0,@(4,sp)			/* ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ãªã‚‰ E_CTXã‚¨ãƒ©ãƒ¼ */
 	beq _context_error
 #endif /* CHK_CTX */
-	bfinsu #0, #12,#4,@(4,sp)	/* IMASK ‚ğ EITî•ñ’†‚Éİ’è */
+	bfinsu #0, #12,#4,@(4,sp)	/* IMASK ã‚’ EITæƒ…å ±ä¸­ã«è¨­å®š */
 	mov #E_OK, r0
 	rts
 
@@ -167,14 +167,14 @@ _z_loc_cpu:
 	.globl _z_unl_cpu
 _z_unl_cpu:
 #ifdef CHK_CTX
-	btst #0,@(4,sp)			/* ƒ^ƒXƒN“Æ—§•”‚È‚ç E_CTXƒGƒ‰[ */
+	btst #0,@(4,sp)			/* ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ãªã‚‰ E_CTXã‚¨ãƒ©ãƒ¼ */
 	beq _context_error
 #endif /* CHK_CTX */
-	bfinsu #15, #12,#4,@(4,sp)	/* IMASK ‚ğ EITî•ñ’†‚Éİ’è */
+	bfinsu #15, #12,#4,@(4,sp)	/* IMASK ã‚’ EITæƒ…å ±ä¸­ã«è¨­å®š */
 #ifdef TRON_NO_DI
 	mov #0, @_dispatch_disabled
-	cmp @_ctxtsk, @_schedtsk	/* ctxtsk != schedtsk ‚Ì */
-        bne _dispatch			/* ƒfƒBƒXƒpƒbƒ`ƒƒ‚ğ‹N“® */
+	cmp @_ctxtsk, @_schedtsk	/* ctxtsk != schedtsk ã®æ™‚ */
+        bne _dispatch			/* ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã‚’èµ·å‹• */
 #endif /* TRON_NO_DI */
 	mov #E_OK, r0
 	rts
@@ -182,7 +182,7 @@ _z_unl_cpu:
 #endif /* _z_unl_cpu */
 
 /*
- *  IMASK ‚Ìİ’è/QÆ‹@”\
+ *  IMASK ã®è¨­å®š/å‚ç…§æ©Ÿèƒ½
  */
 
 #ifndef _z_chg_ims
@@ -193,21 +193,21 @@ _z_unl_cpu:
 	.globl _z_chg_ims
 _z_chg_ims:
 #ifdef CHK_PAR
-	btst #0,@(4,sp)			/* ƒ^ƒXƒN“Æ—§•”‚È‚ç z_chg_ims_1 ‚Ö */
+	btst #0,@(4,sp)			/* ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ãªã‚‰ z_chg_ims_1 ã¸ */
 	beq z_chg_ims_1
-	cmpu #15, r0			/* IMASK > 15 ‚È‚ç E_PARƒGƒ‰[ */
+	cmpu #15, r0			/* IMASK > 15 ãªã‚‰ E_PARã‚¨ãƒ©ãƒ¼ */
 	bra z_chg_ims_2
 z_chg_ims_1:
-	cmpu #7, r0			/* IMASK > 7 ‚È‚ç E_PARƒGƒ‰[ */
+	cmpu #7, r0			/* IMASK > 7 ãªã‚‰ E_PARã‚¨ãƒ©ãƒ¼ */
 z_chg_ims_2:
 	bgt _parameter_error
 #endif /* CHK_PAR */
-	bfinsu r0, #12,#4,@(4,sp)	/* IMASK ‚ğ EITî•ñ’†‚Éİ’è */
+	bfinsu r0, #12,#4,@(4,sp)	/* IMASK ã‚’ EITæƒ…å ±ä¸­ã«è¨­å®š */
 #ifdef TRON_NO_DI
-	cmp #15, r0			/* İ’è‚µ‚½IMASK’l == 15 ‚©‚Â */
-	bne z_chg_ims_3			/* dispatch_disabled == 0 ‚©‚Â */
-	cmp #0, @_dispatch_disabled	/* ctxtsk != schedtsk ‚Ì */
-	bne z_chg_ims_3			/* ƒfƒBƒXƒpƒbƒ`ƒƒ‚ğ‹N“® */
+	cmp #15, r0			/* è¨­å®šã—ãŸIMASKå€¤ == 15 ã‹ã¤ */
+	bne z_chg_ims_3			/* dispatch_disabled == 0 ã‹ã¤ */
+	cmp #0, @_dispatch_disabled	/* ctxtsk != schedtsk ã®æ™‚ */
+	bne z_chg_ims_3			/* ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã‚’èµ·å‹• */
 	cmp @_ctxtsk, @_schedtsk
 	bne _dispatch
 #endif /* TRON_NO_DI */
@@ -223,7 +223,7 @@ z_chg_ims_3:
 	.align 1
 	.globl _z_ref_ims
 _z_ref_ims:
-	bfextu #12,#4,@(4,sp), r1	/* IMASK ‚ğ EITî•ñ‚©‚çæ‚èo‚· */
+	bfextu #12,#4,@(4,sp), r1	/* IMASK ã‚’ EITæƒ…å ±ã‹ã‚‰å–ã‚Šå‡ºã™ */
 	mov r1, @r0
 	mov #E_OK, r0
 	rts
@@ -231,46 +231,46 @@ _z_ref_ims:
 #endif /* _z_ref_ims */
 
 /*
- *  ƒfƒBƒXƒpƒbƒ`ƒƒ‚Ö‚Ì•ªŠòƒ‹[ƒ`ƒ“
+ *  ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã¸ã®åˆ†å²ãƒ«ãƒ¼ãƒãƒ³
  */
 #ifdef TRON_NO_DI
 	.text
 	.align 1
 _dispatch:
-	trapa #4			/* ƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‹N“® */
+	trapa #4			/* ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã®èµ·å‹• */
 	mov #E_OK, r0
 	rts
 #endif /* TRON_NO_DI */
 
 /*
- *  ƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚³‚ê‚½ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì‹¤’ÊƒGƒ‰[ˆ—ƒ‹[ƒ`ƒ“
+ *  ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã§è¨˜è¿°ã•ã‚ŒãŸã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®å…±é€šã‚¨ãƒ©ãƒ¼å‡¦ç†ãƒ«ãƒ¼ãƒãƒ³
  */
 	.text
 	.align 1
 
 #ifdef CHK_CTX
-_context_error:				/* ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[ */
+_context_error:				/* ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ©ãƒ¼ */
 	mov #E_CTX, r0
 	rts
 #endif /* CHK_CTX */
 
 #ifdef CHK_PAR
-_parameter_error:			/* ƒpƒ‰ƒ[ƒ^ƒGƒ‰[ */
+_parameter_error:			/* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚¨ãƒ©ãƒ¼ */
 	mov #E_PAR, r0
 	rts
 #endif /* CHK_PAR */
 
 /*
- *  ƒVƒXƒeƒ€ƒR[ƒ‹ƒGƒ“ƒgƒŠƒe[ƒuƒ‹
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚¨ãƒ³ãƒˆãƒªãƒ†ãƒ¼ãƒ–ãƒ«
  */
 	.text
 	.align 2
 #include "itable.S"
 _itable:
-	.int _no_support		/* ‹@”\”Ô† 0 ‚É‘Î‰‚·‚éƒGƒ“ƒgƒŠ */
+	.int _no_support		/* æ©Ÿèƒ½ç•ªå· 0 ã«å¯¾å¿œã™ã‚‹ã‚¨ãƒ³ãƒˆãƒª */
 
 /*
- *  ƒ^ƒCƒ}ƒnƒ“ƒhƒ‰‹N“®‚Ì‚½‚ß‚Ì‚‹‰Œ¾Œê‘Î‰ƒ‹[ƒ`ƒ“
+ *  ã‚¿ã‚¤ãƒãƒãƒ³ãƒ‰ãƒ©èµ·å‹•ã®ãŸã‚ã®é«˜ç´šè¨€èªå¯¾å¿œãƒ«ãƒ¼ãƒãƒ³
  */
 	.text
 	.align 1

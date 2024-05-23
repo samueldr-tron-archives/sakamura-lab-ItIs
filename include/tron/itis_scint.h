@@ -35,7 +35,7 @@
 #define	_ITIS_SCINT_
 
 /*
- *  CPU�ˑ��̃V�X�e���R�[����/�p�����[�^���̐ݒ�
+ *  CPU依存のシステムコール名/パラメータ名の設定
  */
 #define chg_iXX	chg_ims
 #define ref_iXX	ref_ims
@@ -48,7 +48,7 @@
 #endif /* LINK_KERNEL */
 
 /*
- *  �\�t�g�E�F�A�����݂ɂ��V�X�e���R�[���C���^�t�F�[�X�̒�`
+ *  ソフトウェア割込みによるシステムコールインタフェースの定義
  */
 #ifndef LINK_KERNEL
 

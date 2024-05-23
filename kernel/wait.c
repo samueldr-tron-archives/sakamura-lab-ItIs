@@ -32,7 +32,7 @@
  */
 
 /*
- *  �^�X�N�ԓ����E�ʐM�I�u�W�F�N�g�ėp���[�`��
+ *  タスク間同期・通信オブジェクト汎用ルーチン
  */
 
 #include "itis_kernel.h"
@@ -40,10 +40,10 @@
 #include "wait.h"
 
 /*
- *  �҂���Ԃ���������悤�^�X�N��Ԃ��X�V����D���f�B��ԂɂȂ�ꍇ�́C
- *  ���f�B�L���[�ɂȂ��D
+ *  待ち状態が解除するようタスク状態を更新する．レディ状態になる場合は，
+ *  レディキューにつなぐ．
  *
- *  �^�X�N���҂���� (��d�҂����܂�) �̎��ɌĂԂ��ƁD
+ *  タスクが待ち状態 (二重待ちを含む) の時に呼ぶこと．
  */
 Inline void
 make_non_wait(TCB *tcb)
@@ -59,7 +59,7 @@ make_non_wait(TCB *tcb)
 }
 
 /*
- *  �^�X�N�̑҂���Ԃ���������D
+ *  タスクの待ち状態を解除する．
  */
 __inline__ void
 wait_release(TCB *tcb)
@@ -89,12 +89,12 @@ wait_release_tmout(TCB *tcb)
 }
 
 /*
- *  ���s���̃^�X�N��҂���ԂɈڍs�����C�^�C�}�C�x���g�L���[�ɂȂ��D
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューにつなぐ．
  *
- *  ctxtsk �� RUN��ԂɂȂ��Ă���̂��ʏ�ł��邪�C���s���̃V�X�e���R�[ 
- *  ���̓r���Ŋ����݂��������C���̊����݃n���h�����ŌĂ΂ꂽ�V�X�e���R�[ 
- *  ���ɂ���� ctxtsk �����̑��̏�ԂɂȂ�ꍇ������D�������CWAIT���
- *  �ɂȂ邱�Ƃ͂Ȃ��D
+ *  ctxtsk は RUN状態になっているのが通常であるが，実行中のシステムコー 
+ *  ルの途中で割込みが発生し，その割込みハンドラ中で呼ばれたシステムコー 
+ *  ルによって ctxtsk がその他の状態になる場合がある．ただし，WAIT状態
+ *  になることはない．
  */
 void
 make_wait(TMO tmout)
@@ -115,8 +115,8 @@ make_wait(TMO tmout)
 }
 
 /*
- *  �҂��L���[�ɂȂ����Ă���^�X�N�̑҂���Ԃ����ׂĉ������CE_DLT�G���[
- *  �Ƃ���D
+ *  待ちキューにつながっているタスクの待ち状態をすべて解除し，E_DLTエラー
+ *  とする．
  */
 void
 wait_delete(QUEUE *wait_queue)
@@ -131,7 +131,7 @@ wait_delete(QUEUE *wait_queue)
 }
 
 /*
- *  �҂��L���[�̐擪�̃^�X�N�� ID �����o���D
+ *  待ちキューの先頭のタスクの ID を取り出す．
  */
 ID
 wait_tskid(QUEUE *wait_queue)
@@ -145,7 +145,7 @@ wait_tskid(QUEUE *wait_queue)
 }
 
 /*
- *  �^�X�N��D��x���̑҂��L���[�ɂȂ��D
+ *  タスクを優先度順の待ちキューにつなぐ．
  */
 Inline void
 queue_insert_tpri(TCB *tcb, QUEUE *queue)
@@ -157,8 +157,8 @@ queue_insert_tpri(TCB *tcb, QUEUE *queue)
 }
 
 /*
- *  ���s���̃^�X�N��҂���ԂɈڍs�����C�^�C�}�C�x���g�L���[����уI�u
- *  �W�F�N�g�̑҂��L���[�ɂȂ��D�܂��Cctxtsk �� wgcb ��ݒ肷��D
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューおよびオブ
+ *  ジェクトの待ちキューにつなぐ．また，ctxtsk の wgcb を設定する．
  */
 void
 gcb_make_wait(GCB *gcb, TMO tmout)
@@ -174,9 +174,9 @@ gcb_make_wait(GCB *gcb, TMO tmout)
 }
 
 /*
- *  �^�X�N�̗D��x���ς�����ۂɁC�҂��L���[�̒��ł̃^�X�N�̈ʒu���C��
- *  ����D�I�u�W�F�N�g������ TA_TPRI ���w�肳��Ă���ꍇ�ɂ̂݁C�Ăяo
- *  �����D
+ *  タスクの優先度が変わった際に，待ちキューの中でのタスクの位置を修正
+ *  する．オブジェクト属性に TA_TPRI が指定されている場合にのみ，呼び出
+ *  される．
  */
 inline void
 gcb_change_priority(GCB *gcb, TCB *tcb)

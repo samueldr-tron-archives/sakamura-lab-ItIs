@@ -32,56 +32,56 @@
  */
 
 /*
- *  ƒVƒXƒeƒ€\¬Ý’èƒtƒ@ƒCƒ‹
+ *  ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
  */
 
 /*
- *  ƒŠƒ\[ƒXID ‚Ì”C”ÍˆÍC–¼‘O‚Ì’è‹`
+ *  ãƒªã‚½ãƒ¼ã‚¹ID ã®æ•°ï¼Œç¯„å›²ï¼Œåå‰ã®å®šç¾©
  */
 resource = {
 	/*
-	 *  ƒIƒuƒWƒFƒNƒgID ‚ÌãŒÀ‚Ì’è‹`
+	 *  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆID ã®ä¸Šé™ã®å®šç¾©
 	 */
-	max_tskid = 32;		/* ƒ^ƒXƒNID ‚ÌãŒÀ */
-	max_semid = 64;		/* ƒZƒ}ƒtƒHID ‚ÌãŒÀ */
-	max_flgid = 8;		/* ƒCƒxƒ“ƒgƒtƒ‰ƒOID ‚ÌãŒÀ */
-	max_mbxid = 32;		/* ƒƒCƒ‹ƒ{ƒbƒNƒXID ‚ÌãŒÀ */
-	max_mbfid = 8;		/* ƒƒbƒZ[ƒWƒoƒbƒtƒ@ID ‚ÌãŒÀ */
-	max_porid = 8;		/* ƒ‰ƒ“ƒfƒu—pƒ|[ƒgID ‚ÌãŒÀ */
-	max_pisid = 32;		/* —Dæ“xŒp³ƒZƒ}ƒtƒHID ‚ÌãŒÀ */
-	max_mplid = 4;		/* ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ID ‚ÌãŒÀ */
-	max_mpfid = 4;		/* ŒÅ’è’·ƒƒ‚ƒŠƒv[ƒ‹ID ‚ÌãŒÀ */
+	max_tskid = 32;		/* ã‚¿ã‚¹ã‚¯ID ã®ä¸Šé™ */
+	max_semid = 64;		/* ã‚»ãƒžãƒ•ã‚©ID ã®ä¸Šé™ */
+	max_flgid = 8;		/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ID ã®ä¸Šé™ */
+	max_mbxid = 32;		/* ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ID ã®ä¸Šé™ */
+	max_mbfid = 8;		/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ID ã®ä¸Šé™ */
+	max_porid = 8;		/* ãƒ©ãƒ³ãƒ‡ãƒ–ç”¨ãƒãƒ¼ãƒˆID ã®ä¸Šé™ */
+	max_pisid = 32;		/* å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒžãƒ•ã‚©ID ã®ä¸Šé™ */
+	max_mplid = 4;		/* å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ID ã®ä¸Šé™ */
+	max_mpfid = 4;		/* å›ºå®šé•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ID ã®ä¸Šé™ */
 
 	/*
-	 *  ƒVƒXƒeƒ€—pƒIƒuƒWƒFƒNƒgID ‚Ì–¼‘O‚Æ”‚Ì’è‹`
+	 *  ã‚·ã‚¹ãƒ†ãƒ ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆID ã®åå‰ã¨æ•°ã®å®šç¾©
 	 */
-	sys_tskid {		/* ƒVƒXƒeƒ€ƒ^ƒXƒN‚Ì’è‹` */
+	sys_tskid {		/* ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ã®å®šç¾© */
 		TSK_INIT;
 		TSK_LOG;
 		TSK_FIRST;
 	};
-	sys_semid {		/* ƒVƒXƒeƒ€ƒZƒ}ƒtƒH‚Ì’è‹` */
+	sys_semid {		/* ã‚·ã‚¹ãƒ†ãƒ ã‚»ãƒžãƒ•ã‚©ã®å®šç¾© */
 		SEM_SERIAL1_IN;
 		SEM_SERIAL1_OUT;
 		SEM_SERIAL2_IN;
 		SEM_SERIAL2_OUT;
 	};
-	sys_mplid {		/* ƒVƒXƒeƒ€‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹‚Ì’è‹` */
+	sys_mplid {		/* ã‚·ã‚¹ãƒ†ãƒ å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã®å®šç¾© */
 		MPL_XSCHEME;
 	};
 
 	/*
-	 *  ƒJ[ƒlƒ‹—pƒIƒuƒWƒFƒNƒg‚Ì”‚Ì’è‹`
+	 *  ã‚«ãƒ¼ãƒãƒ«ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ•°ã®å®šç¾©
 	 *
-	 *  ƒJ[ƒlƒ‹‚ª—p‚¢‚éƒIƒuƒWƒFƒNƒg‚Ì”‚Ì’è‹`DID ‚ª -4`0 ‚ÌƒŠƒU[
-	 *  ƒu—Ìˆæ‚©‚çŽæ‚ç‚ê‚éDƒƒbƒZ[ƒWƒoƒbƒtƒ@ (ƒVƒXƒeƒ€ƒƒO—p, ƒf
-	 *  ƒoƒbƒO—p) ‚Æ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹ (ƒVƒXƒeƒ€—p) ‚Ì‚Ý’è‹`‚Å‚«‚éD
+	 *  ã‚«ãƒ¼ãƒãƒ«ãŒç”¨ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ•°ã®å®šç¾©ï¼ŽID ãŒ -4ã€œ0 ã®ãƒªã‚¶ãƒ¼
+	 *  ãƒ–é ˜åŸŸã‹ã‚‰å–ã‚‰ã‚Œã‚‹ï¼Žãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ (ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ç”¨, ãƒ‡
+	 *  ãƒãƒƒã‚°ç”¨) ã¨å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ« (ã‚·ã‚¹ãƒ†ãƒ ç”¨) ã®ã¿å®šç¾©ã§ãã‚‹ï¼Ž
 	 */
 	num_kernel_mbf = 2;
 	num_kernel_mpl = 1;
 
 	/*
-	 *  ‚»‚Ì‘¼‚ÌŽ‘Œ¹‚Ì”
+	 *  ãã®ä»–ã®è³‡æºã®æ•°
 	 */
 	num_cyc = 20;
 	num_alm = 20;
@@ -89,7 +89,7 @@ resource = {
 };
 
 /*
- *  —Dæ“x’l‚Ì”ÍˆÍ‚Ì’è‹`
+ *  å„ªå…ˆåº¦å€¤ã®ç¯„å›²ã®å®šç¾©
  */
 priority = {
 	min_pri = 1;
@@ -97,54 +97,54 @@ priority = {
 };
 
 /*
- *  ƒGƒ‰[ƒ`ƒFƒbƒNŽd—l‚Ì’è‹`
+ *  ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ä»•æ§˜ã®å®šç¾©
  */
 errorcheck = {
-	chk_nospt = 1;		/* E_NOSPT ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_rsatr = 1;		/* E_RSATR ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_par = 1;		/* E_PAR ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_id = 1;		/* E_ID ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_oacv = 1;		/* E_OACV ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_ctx = 1;		/* ’Êí‚Ì E_CTX ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_ctx1 = 1;		/* ”­sŒ³‚É•Ô‚ç‚È‚¢ E_CTX ‚ðƒ`ƒFƒbƒN‚·‚é */
-	chk_ctx2 = 1;		/* ’v–½“I‚È E_CTX Žž‚ÉƒVƒXƒeƒ€ƒ_ƒEƒ“‚³‚¹‚é */
-	chk_self = 1;		/* ‘ÎÛ‚ªŽ©ƒ^ƒXƒN‚Ì E_OBJ ‚ðƒ`ƒFƒbƒN‚·‚é */
+	chk_nospt = 1;		/* E_NOSPT ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_rsatr = 1;		/* E_RSATR ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_par = 1;		/* E_PAR ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_id = 1;		/* E_ID ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_oacv = 1;		/* E_OACV ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_ctx = 1;		/* é€šå¸¸ã® E_CTX ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_ctx1 = 1;		/* ç™ºè¡Œå…ƒã«è¿”ã‚‰ãªã„ E_CTX ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
+	chk_ctx2 = 1;		/* è‡´å‘½çš„ãª E_CTX æ™‚ã«ã‚·ã‚¹ãƒ†ãƒ ãƒ€ã‚¦ãƒ³ã•ã›ã‚‹ */
+	chk_self = 1;		/* å¯¾è±¡ãŒè‡ªã‚¿ã‚¹ã‚¯ã® E_OBJ ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ */
 };
 
 /*
- *  Ž©ƒ^ƒXƒN‚É‘Î‚·‚é‹­§‘Ò‚¿‚ð‹–‚·‚©‚Ì’è‹`
+ *  è‡ªã‚¿ã‚¹ã‚¯ã«å¯¾ã™ã‚‹å¼·åˆ¶å¾…ã¡ã‚’è¨±ã™ã‹ã®å®šç¾©
  */
 use_suspend_self = 1;
 
 /*
- *  €ƒ^ƒXƒN•”‚ðŽg‚¤‚©‚Ì’è‹`
+ *  æº–ã‚¿ã‚¹ã‚¯éƒ¨ã‚’ä½¿ã†ã‹ã®å®šç¾©
  *
- *  €ƒ^ƒXƒN•”‚ðŽg‚¤ê‡‚É’è‹`‚·‚éDŠg’£SVC ‚ðŽg‚¤ê‡‚É‚ÍCŽ©“®“I‚É’è
- *  ‹`‚³‚ê‚éD
+ *  æº–ã‚¿ã‚¹ã‚¯éƒ¨ã‚’ä½¿ã†å ´åˆã«å®šç¾©ã™ã‚‹ï¼Žæ‹¡å¼µSVC ã‚’ä½¿ã†å ´åˆã«ã¯ï¼Œè‡ªå‹•çš„ã«å®š
+ *  ç¾©ã•ã‚Œã‚‹ï¼Ž
  */
 use_qtsk_portion = 1;
 
 /*
- *  ƒIƒuƒWƒFƒNƒgID/ƒŠƒ\[ƒX”Ô† Ž©“®Š„“–‹@”\‚ðŽg‚¤‚©‚Ì’è‹`
+ *  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆID/ãƒªã‚½ãƒ¼ã‚¹ç•ªå· è‡ªå‹•å‰²å½“æ©Ÿèƒ½ã‚’ä½¿ã†ã‹ã®å®šç¾©
  */
 use_auto_id = 1;
 
 /*
- *  ƒfƒoƒbƒOƒTƒ|[ƒg‹@”\‚ðŽg‚¤‚©‚Ì’è‹`
+ *  ãƒ‡ãƒãƒƒã‚°ã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½ã‚’ä½¿ã†ã‹ã®å®šç¾©
  */
 use_debug_support = 1;
 
 /*
- *  «”\•]‰¿—pƒVƒXƒeƒ€ŽžŽQÆ‹@”\ (vget_tim) ‚ðŽg‚¤‚©‚Ì’è‹`
+ *  æ€§èƒ½è©•ä¾¡ç”¨ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»å‚ç…§æ©Ÿèƒ½ (vget_tim) ã‚’ä½¿ã†ã‹ã®å®šç¾©
  */
 use_vget_tim = 1;
 
 /*
- *  —Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŽd—l (1 ‚Ü‚½‚Í 2)
+ *  å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒžãƒ•ã‚©ã®ä»•æ§˜ (1 ã¾ãŸã¯ 2)
  */
 prisem_spec = 1;
 
 /*
- *  ƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‚ðŽg‚¤‚©‚Ì’è‹`
+ *  ã‚¿ã‚¹ã‚¯ä»˜å±žãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ã‚’ä½¿ã†ã‹ã®å®šç¾©
  */
 use_task_mailbox = 1;

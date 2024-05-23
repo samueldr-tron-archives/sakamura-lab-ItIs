@@ -35,7 +35,7 @@
 #include "h32sbc.h"
 
 /*
- *  �^�[�Q�b�g�V�X�e���ˑ� ���������[�`��
+ *  ターゲットシステム依存 初期化ルーチン
  */
 void
 sys_initialize(void)
@@ -43,9 +43,9 @@ sys_initialize(void)
 }
 
 /*
- *  �^�[�Q�b�g�V�X�e���̏I�����[�`��
+ *  ターゲットシステムの終了ルーチン
  *
- *  ItIs �̃V�X�e�����I�����鎞�Ɏg���D�ʏ�̓��j�^�Ăяo���Ŏ�������D
+ *  ItIs のシステムを終了する時に使う．通常はモニタ呼び出しで実現する．
  */
 void
 sys_exit(void)
@@ -54,10 +54,10 @@ sys_exit(void)
 }
 
 /*
- *  �^�[�Q�b�g�V�X�e���̕����o�̓��[�`��
+ *  ターゲットシステムの文字出力ルーチン
  *
- *  ���O�^�X�N�������Ă��Ȃ����ɁC�V�X�e������̃��b�Z�[�W���o�͂��邽
- *  �߂Ɏg���D�ʏ�̓��j�^�Ăяo���Ŏ�������D
+ *  ログタスクが動いていない時に，システムからのメッセージを出力するた
+ *  めに使う．通常はモニタ呼び出しで実現する．
  */
 int
 sys_write(const char *buf, unsigned int len)

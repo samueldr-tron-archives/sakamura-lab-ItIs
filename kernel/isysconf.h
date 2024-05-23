@@ -35,43 +35,43 @@
 #define _ISYSCONF_
 
 /*
- *  ƒVƒXƒeƒ€\¬Ý’èƒtƒ@ƒCƒ‹‚É‘Î‚·‚éƒfƒtƒHƒ‹ƒg’l‚Ì’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾ã™ã‚‹ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®å®šç¾©
  */
 
 /*
- *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹ƒTƒCƒY‚ÌƒfƒtƒHƒ‹ƒg’l
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã‚µã‚¤ã‚ºã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
  */
 #ifndef SYS_MPL_SIZE
 #define SYS_MPL_SIZE	0x60000
 #endif /* SYS_MPL_SIZE */
 
 /*
- *  —Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŽd—l‚ÌƒfƒtƒHƒ‹ƒg’l
+ *  å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒžãƒ•ã‚©ã®ä»•æ§˜ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
  */
 #ifndef PRISEM_SPEC
 #define PRISEM_SPEC	1
 #endif /* PRISEM_SPEC */
 
 /*
- *  ƒVƒXƒeƒ€\¬‚ÉŠÖ‚·‚é•â•’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆã«é–¢ã™ã‚‹è£œåŠ©å®šç¾©
  */
 
 /*
- *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚ðŽg‚¤‚©‚Ç‚¤‚©‚Ì’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã‚’ä½¿ã†ã‹ã©ã†ã‹ã®å®šç¾©
  */
 #if defined(NUM_MPLID) && CHK_MPLID(TMPL_OS)
 #define USE_TMPL_OS
 #endif
 
 /*
- *  ƒVƒXƒeƒ€ƒƒO—pƒƒbƒZ[ƒWƒoƒbƒtƒ@‚ðŽg‚¤‚©‚Ç‚¤‚©‚Ì’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ã†ã‹ã©ã†ã‹ã®å®šç¾©
  */
 #if defined(NUM_MBFID) && CHK_MBFID(TMBF_OS)
 #define USE_TMBF_OS
 #endif
 
 /*
- *  —Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŽd—l‚ÉŠÖ˜A‚·‚é’è‹`
+ *  å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒžãƒ•ã‚©ã®ä»•æ§˜ã«é–¢é€£ã™ã‚‹å®šç¾©
  */
 #ifdef NUM_PISID
 
@@ -88,17 +88,17 @@
 #endif /* NUM_PISID */
 
 /*
- *  ƒ^ƒXƒN‘Ò‚¿‰ðœŽž‚Ìˆ—ƒtƒbƒN‚ðŽg‚¤‚©‚Ç‚¤‚©‚Ì’è‹`
+ *  ã‚¿ã‚¹ã‚¯å¾…ã¡è§£é™¤æ™‚ã®å‡¦ç†ãƒ•ãƒƒã‚¯ã‚’ä½¿ã†ã‹ã©ã†ã‹ã®å®šç¾©
  *
- *  Žd—l1 ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŽg‚¤ê‡‚É‚ÍCƒ^ƒXƒN‘Ò‚¿‰ðœŽž‚Ìˆ—ƒtƒb
- *  ƒN‚ª•K—vD
+ *  ä»•æ§˜1 ã®å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒžãƒ•ã‚©ã‚’ä½¿ã†å ´åˆã«ã¯ï¼Œã‚¿ã‚¹ã‚¯å¾…ã¡è§£é™¤æ™‚ã®å‡¦ç†ãƒ•ãƒƒ
+ *  ã‚¯ãŒå¿…è¦ï¼Ž
  */
 #ifdef PRISEM_SPEC1
 #define USE_REL_WAI_HOOK
 #endif /* PRISEM_SPEC1 */
 
 /*
- *  Žg—p‚µ‚È‚¢‹@”\ƒuƒƒbƒN‚ÌŒˆ’è
+ *  ä½¿ç”¨ã—ãªã„æ©Ÿèƒ½ãƒ–ãƒ­ãƒƒã‚¯ã®æ±ºå®š
  */
 
 #ifdef NUM_SEMID
@@ -146,7 +146,7 @@
 #endif
 
 /*
- *  Žg—p‚µ‚È‚¢ƒVƒXƒeƒ€ƒR[ƒ‹‚ÉŠÖ‚·‚é’è‹`
+ *  ä½¿ç”¨ã—ãªã„ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã«é–¢ã™ã‚‹å®šç¾©
  */
 
 #ifndef USE_SEM

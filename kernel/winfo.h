@@ -35,86 +35,86 @@
 #define _WINFO_
 
 /*
- *  “¯ŠúE’ÊMƒIƒuƒWƒFƒNƒg–ˆ‚É•K—v‚È‘Ò‚¿î•ñ‚Ì’è‹`
+ *  åŒæœŸãƒ»é€šä¿¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ¯Žã«å¿…è¦ãªå¾…ã¡æƒ…å ±ã®å®šç¾©
  */
 
 /*
- *  ƒCƒxƒ“ƒgƒtƒ‰ƒO‘Ò‚¿ (TTW_FLG)
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°å¾…ã¡ (TTW_FLG)
  */
 typedef struct {
-	UINT	waiptn;		/* ‘Ò‚¿ƒrƒbƒgƒpƒ^[ƒ“ */
-	UINT	wfmode;		/* ‘Ò‚¿ƒ‚[ƒh */
-	UINT	*p_flgptn;	/* ‘Ò‚¿‰ðœŽžƒrƒbƒgƒpƒ^[ƒ“‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	UINT	waiptn;		/* å¾…ã¡ãƒ“ãƒƒãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ */
+	UINT	wfmode;		/* å¾…ã¡ãƒ¢ãƒ¼ãƒ‰ */
+	UINT	*p_flgptn;	/* å¾…ã¡è§£é™¤æ™‚ãƒ“ãƒƒãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_FLG;
 
 /*
- *  ƒƒCƒ‹ƒ{ƒbƒNƒX‘Ò‚¿ (TTW_MBX)
+ *  ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹å¾…ã¡ (TTW_MBX)
  */
 typedef struct {
-	T_MSG	**ppk_msg;	/* ƒƒbƒZ[ƒWƒpƒPƒbƒg‚Ìæ“ª‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	T_MSG	**ppk_msg;	/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ‘ã‚±ãƒƒãƒˆã®å…ˆé ­ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_MBX;
 
 /*
- *  ƒƒbƒZ[ƒWƒoƒbƒtƒ@ŽóM/‘—M‘Ò‚¿ (TTW_MBF, TTW_SMBF)
+ *  ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡å—ä¿¡/é€ä¿¡å¾…ã¡ (TTW_MBF, TTW_SMBF)
  */
 typedef struct {
-	VP	msg;		/* ŽóMƒƒbƒZ[ƒW‚ð“ü‚ê‚éƒAƒhƒŒƒX */
-	INT	*p_msgsz;	/* ŽóMƒƒbƒZ[ƒW‚ÌƒTƒCƒY‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	VP	msg;		/* å—ä¿¡ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	INT	*p_msgsz;	/* å—ä¿¡ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_MBF;
 
 typedef struct {
-	VP	msg;		/* ‘—MƒƒbƒZ[ƒW‚Ìæ“ªƒAƒhƒŒƒX */
-	INT	msgsz;		/* ‘—MƒƒbƒZ[ƒW‚ÌƒTƒCƒY */
+	VP	msg;		/* é€ä¿¡ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	INT	msgsz;		/* é€ä¿¡ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚º */
 } WINFO_SMBF;
 
 /*
- *  ƒ‰ƒ“ƒfƒuŒÄo/Žó•t/I—¹‘Ò‚¿ (TTW_CAL, TTW_ACP, TTW_RDV)
+ *  ãƒ©ãƒ³ãƒ‡ãƒ–å‘¼å‡º/å—ä»˜/çµ‚äº†å¾…ã¡ (TTW_CAL, TTW_ACP, TTW_RDV)
  */
 typedef struct {
-	UINT	calptn;		/* ŒÄo‘¤‘I‘ððŒ‚ð•\‚·ƒrƒbƒgƒpƒ^[ƒ“ */
-	VP	msg;		/* ƒƒbƒZ[ƒW‚ð“ü‚ê‚éƒAƒhƒŒƒX */
-	INT	cmsgsz;		/* ŒÄoƒƒbƒZ[ƒW‚ÌƒTƒCƒY */
-	INT	*p_rmsgsz;	/* •Ô“šƒƒbƒZ[ƒW‚ÌƒTƒCƒY‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	UINT	calptn;		/* å‘¼å‡ºå´é¸æŠžæ¡ä»¶ã‚’è¡¨ã™ãƒ“ãƒƒãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ */
+	VP	msg;		/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	INT	cmsgsz;		/* å‘¼å‡ºãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚º */
+	INT	*p_rmsgsz;	/* è¿”ç­”ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_CAL;
 
 typedef struct {
-	UINT	acpptn;		/* Žó•t‘¤‘I‘ððŒ‚ð•\‚·ƒrƒbƒgƒpƒ^[ƒ“ */
-	VP	msg;		/* ŒÄoƒƒbƒZ[ƒW‚ð“ü‚ê‚éƒAƒhƒŒƒX */
-	RNO	*p_rdvno;	/* ƒ‰ƒ“ƒfƒu”Ô†‚ð“ü‚ê‚éƒAƒhƒŒƒX */
-	INT	*p_cmsgsz;	/* ŒÄoƒƒbƒZ[ƒW‚ÌƒTƒCƒY‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	UINT	acpptn;		/* å—ä»˜å´é¸æŠžæ¡ä»¶ã‚’è¡¨ã™ãƒ“ãƒƒãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ */
+	VP	msg;		/* å‘¼å‡ºãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	RNO	*p_rdvno;	/* ãƒ©ãƒ³ãƒ‡ãƒ–ç•ªå·ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	INT	*p_cmsgsz;	/* å‘¼å‡ºãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_ACP;
 
 typedef struct {
-	RNO	rdvno;		/* ƒ‰ƒ“ƒfƒu”Ô† */
-	VP	msg;		/* ƒƒbƒZ[ƒW‚ð“ü‚ê‚éƒAƒhƒŒƒX */
-	INT	maxrmsz;	/* •Ô“šƒƒbƒZ[ƒW‚ÌÅ‘å’· */
-	INT	*p_rmsgsz;	/* •Ô“šƒƒbƒZ[ƒW‚ÌƒTƒCƒY‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	RNO	rdvno;		/* ãƒ©ãƒ³ãƒ‡ãƒ–ç•ªå· */
+	VP	msg;		/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	INT	maxrmsz;	/* è¿”ç­”ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®æœ€å¤§é•· */
+	INT	*p_rmsgsz;	/* è¿”ç­”ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_RDV;
 
 /*
- *  ƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‘Ò‚¿ (TTW_TMB)
+ *  ã‚¿ã‚¹ã‚¯ä»˜å±žãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹å¾…ã¡ (TTW_TMB)
  */
 typedef struct {
-	T_MSG	**ppk_msg;	/* ƒƒbƒZ[ƒWƒpƒPƒbƒg‚Ìæ“ª‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	T_MSG	**ppk_msg;	/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ‘ã‚±ãƒƒãƒˆã®å…ˆé ­ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_TMB;
 
 /*
- *  ‰Â•Ï’·ƒƒ‚ƒŠƒv[ƒ‹‘Ò‚¿ (TTW_MPL)
+ *  å¯å¤‰é•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å¾…ã¡ (TTW_MPL)
  */
 typedef struct {
-	INT	blksz;		/* ƒƒ‚ƒŠƒuƒƒbƒNƒTƒCƒY */
-	VP	*p_blk;		/* ƒƒ‚ƒŠƒuƒƒbƒN‚Ìæ“ª‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	INT	blksz;		/* ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º */
+	VP	*p_blk;		/* ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã®å…ˆé ­ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_MPL;
 
 /*
- *  ŒÅ’è’·ƒƒ‚ƒŠƒv[ƒ‹‘Ò‚¿ (TTW_MPF)
+ *  å›ºå®šé•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«å¾…ã¡ (TTW_MPF)
  */
 typedef struct {
-	VP	*p_blf;		/* ƒƒ‚ƒŠƒuƒƒbƒN‚Ìæ“ª‚ð“ü‚ê‚éƒAƒhƒŒƒX */
+	VP	*p_blf;		/* ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã®å…ˆé ­ã‚’å…¥ã‚Œã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 } WINFO_MPF;
 
 /*
- *  ƒ^ƒXƒNƒRƒ“ƒgƒ[ƒ‹ƒuƒƒbƒN’†‚ÉŽ‚Â‘Ò‚¿î•ñ‚Ì’è‹`
+ *  ã‚¿ã‚¹ã‚¯ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ–ãƒ­ãƒƒã‚¯ä¸­ã«æŒã¤å¾…ã¡æƒ…å ±ã®å®šç¾©
  */
 typedef union {
 #ifdef USE_FLG
@@ -144,13 +144,13 @@ typedef union {
 } WINFO;
 
 /*
- *  ‘Ò‚¿Žd—l\‘¢‘Ì‚Ì’è‹`
+ *  å¾…ã¡ä»•æ§˜æ§‹é€ ä½“ã®å®šç¾©
  */
 
 typedef const struct {
-	UINT	tskwait;			/* ‘Ò‚¿—vˆö */
-	void	(*chg_pri_hook)(TCB *, INT);	/* ƒ^ƒXƒN—Dæ“x•ÏXŽž‚Ìˆ— */
-	void	(*rel_wai_hook)(TCB *);		/* ƒ^ƒXƒN‘Ò‚¿‰ðœŽž‚Ìˆ— */
+	UINT	tskwait;			/* å¾…ã¡è¦å›  */
+	void	(*chg_pri_hook)(TCB *, INT);	/* ã‚¿ã‚¹ã‚¯å„ªå…ˆåº¦å¤‰æ›´æ™‚ã®å‡¦ç† */
+	void	(*rel_wai_hook)(TCB *);		/* ã‚¿ã‚¹ã‚¯å¾…ã¡è§£é™¤æ™‚ã®å‡¦ç† */
 } WSPEC;
 
 #endif /* _WINFO_ */

@@ -35,21 +35,21 @@
 #define	_CPU_STATUS_
 
 /* 
- *  TRON�d�l�`�b�v�ˑ���`
+ *  TRON仕様チップ依存定義
  */
 
 /*
- *  TRON�d�l�`�b�v �჌�x����`
+ *  TRON仕様チップ 低レベル定義
  */
 #include "tron_defs.h"
 #include "tron_insn.h"
 
 /*
- *  �N���e�B�J���Z�N�V������`�p�}�N��
+ *  クリティカルセクション定義用マクロ
  *
- *  �x�������݂��g��Ȃ��ꍇ�ɂ́C�N���e�B�J���Z�N�V�����I�����ɁC�f�B
- *  �X�p�b�`���K�v���ǂ������`�F�b�N���C�K�v�Ȃ�f�B�X�p�b�`�����N����
- *  ��K�v������D
+ *  遅延割込みを使わない場合には，クリティカルセクション終了時に，ディ
+ *  スパッチが必要かどうかをチェックし，必要ならディスパッチャを起動す
+ *  る必要がある．
  */
 
 #ifndef TRON_NO_DI
@@ -71,30 +71,30 @@
 #define DISABLE_INTERRUPT	{ disint(); }
 
 /*
- *  �V�X�e����Ԕ��ʗp�}�N��
+ *  システム状態判別用マクロ
  */
 
 /*
- *  in_indp(): �V�X�e���R�[�����C�^�X�N�Ɨ�������Ă΂ꂽ���𔻕ʂ��邽
- *  �߂̃}�N���D
+ *  in_indp(): システムコールが，タスク独立部から呼ばれたかを判別するた
+ *  めのマクロ．
  *
- *  �V�X�e���R�[���ďo���� TRAPA �ł́CPSW���̃X�^�b�N���[�h�͕ω�����
- *  ���̂ŁCin_indp ���Ă΂ꂽ���_�̃X�^�b�N���[�h�� 0 �Ȃ�^�X�N�Ɨ���
- *  ����Ă΂ꂽ�Ɣ��ʂł���D
+ *  システムコール呼出しの TRAPA では，PSW中のスタックモードは変化しな
+ *  いので，in_indp が呼ばれた時点のスタックモードが 0 ならタスク独立部
+ *  から呼ばれたと判別できる．
  */
 #define in_indp()	((current_psw() & 0x80000000) == 0)
 
 /*
- *  in_ddsp(): �V�X�e���R�[�����f�B�X�p�b�`�֎~���ɌĂ΂ꂽ���𔻕ʂ���
- *  ���߂̃}�N���D�^�X�N�Ɨ������C�f�B�X�p�b�`�֎~���Ɋ܂ށD
+ *  in_ddsp(): システムコールがディスパッチ禁止中に呼ばれたかを判別する
+ *  ためのマクロ．タスク独立部も，ディスパッチ禁止中に含む．
  *
- *  �V�X�e���R�[���Ăяo���� TRAPA �ł� IMASK �͕ω����Ȃ��̂ŁCin_ddsp 
- *  ���Ă΂ꂽ���_�� IMASK �� 15 �����Ȃ�C�f�B�X�p�b�`�֎~���ɌĂ΂ꂽ
- *  �Ɣ��ʂł���D�^�X�N�Ɨ����� IMASK �� 15 �ɂȂ�P�[�X�͍l���Ȃ��D
+ *  システムコール呼び出しの TRAPA では IMASK は変化しないので，in_ddsp 
+ *  が呼ばれた時点の IMASK が 15 未満なら，ディスパッチ禁止中に呼ばれた
+ *  と判別できる．タスク独立部で IMASK が 15 になるケースは考えない．
  *
- *  �x�������݂��g��Ȃ��ꍇ�ɂ́CIMASK = 14 �ɑ��������Ԃ��C
- *  dispatch_disabled �� TRUE �ɂ��邱�ƂŋL������邽�߁C
- *  dispatch_disabled �̃`�F�b�N���K�v�ł���D
+ *  遅延割込みを使わない場合には，IMASK = 14 に相当する状態が，
+ *  dispatch_disabled を TRUE にすることで記憶されるため，
+ *  dispatch_disabled のチェックも必要である．
  */
 #ifndef TRON_NO_DI
 #define in_ddsp()	(current_imask() < 15)
@@ -103,16 +103,16 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  in_loc(): �V�X�e���R�[���� CPU���b�N���ɌĂ΂ꂽ���𔻕ʂ��邽�߂�
- *  �}�N���D�^�X�N�Ɨ������CCPU���b�N���Ɋ܂ށD
+ *  in_loc(): システムコールが CPUロック中に呼ばれたかを判別するための
+ *  マクロ．タスク独立部も，CPUロック中に含む．
  *
- *  �V�X�e���R�[���Ăяo���� TRAPA �ł� IMASK �͕ω����Ȃ��̂ŁCin_loc 
- *  ���Ă΂ꂽ���_�� IMASK �� 14 �����Ȃ�CCPU���b�N���ɌĂ΂ꂽ�ƍl��
- *  ��D���ۂɂ́Cloc_cpu �V�X�e���R�[�����g���ƁCIMASK �� 0 �ɂȂ�D�^
- *  �X�N�Ɨ����� IMASK �� 14 �Ȃ����� 15 �ɂȂ�P�[�X�͍l���Ȃ��D
+ *  システムコール呼び出しの TRAPA では IMASK は変化しないので，in_loc 
+ *  が呼ばれた時点の IMASK が 14 未満なら，CPUロック中に呼ばれたと考え
+ *  る．実際には，loc_cpu システムコールを使うと，IMASK は 0 になる．タ
+ *  スク独立部で IMASK が 14 ないしは 15 になるケースは考えない．
  *
- *  �x�������݂��g��Ȃ��ꍇ�ɂ́CIMASK �� 14 �ɂȂ邱�Ƃ͂Ȃ��C15 ����
- *  ���ǂ����Ń`�F�b�N����D
+ *  遅延割込みを使わない場合には，IMASK が 14 になることはなく，15 未満
+ *  かどうかでチェックする．
  */
 #ifndef TRON_NO_DI
 #define in_loc()	(current_imask() < 14)
@@ -121,23 +121,23 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  in_sysmode(): �V�X�e���R�[�����V�X�e�����\�[�X���A�N�Z�X�ł����Ԃ�
- *  ��Ă΂ꂽ���𔻕ʂ��邽�߂̃}�N���DE_OACV�G���[�̃`�F�b�N�ɗp����D
+ *  in_sysmode(): システムコールがシステムリソースをアクセスできる状態か
+ *  ら呼ばれたかを判別するためのマクロ．E_OACVエラーのチェックに用いる．
  *
- *  PSW���̃����O���x���́C�V�X�e���R�[���Ăяo���� TRAPA �ɂ��ω�����
- *  ���߁Cin_sysmode ���Ă΂ꂽ���_�� RNG �����Ĕ��ʂ��邱�Ƃ͂ł����C
- *  ctxtsk �� sysmode�t�B�[���h�����Ĕ��ʂ���K�v������D
+ *  PSW中のリングレベルは，システムコール呼び出しの TRAPA により変化する
+ *  ため，in_sysmode が呼ばれた時点の RNG を見て判別することはできず，
+ *  ctxtsk の sysmodeフィールドを見て判別する必要がある．
  */
 #define	in_sysmode()	(in_indp() || ctxtsk->sysmode)
 
 /*
- *  in_qtsk(): �V�X�e���R�[�����C���^�X�N�������s������Ă΂ꂽ���𔻕�
- *  ���邽�߂̃}�N���D�^�X�N�Ɨ����Ƃ͋�ʂ��Ȃ��̂ŁCin_indp() �� FALSE 
- *  �̎��ɂ̂ݎg�����ƁD
+ *  in_qtsk(): システムコールが，準タスク部を実行中から呼ばれたかを判別
+ *  するためのマクロ．タスク独立部とは区別しないので，in_indp() が FALSE 
+ *  の時にのみ使うこと．
  *
- *  ���̔��ʂ��\�ɂ��邽�߂ɁCTCB ���� isysmode�t�B�[���h��p�ӂ���D
- *  USE_QTSK_PORTION ����`����Ă��Ȃ��ꍇ�ɂ́C���^�X�N���͎g���Ȃ�
- *  �̂ŁC��� FALSE �Ƃ���D
+ *  この判別を可能にするために，TCB 中に isysmodeフィールドを用意する．
+ *  USE_QTSK_PORTION が定義されていない場合には，準タスク部は使われない
+ *  ので，常に FALSE とする．
  */
 #ifdef USE_QTSK_PORTION
 #define in_qtsk()	(ctxtsk->sysmode > ctxtsk->isysmode)
@@ -146,11 +146,11 @@
 #endif /* USE_QTSK_PORTION */
 
 /*
- *  �^�X�N�f�B�X�p�b�`���N�����[�`��
+ *  タスクディスパッチャ起動ルーチン
  */
 
 /*
- *  �^�X�N�f�B�X�p�b�`���̋N���v�����o���D
+ *  タスクディスパッチャの起動要求を出す．
  */
 Inline void
 dispatch_request(void)
@@ -161,17 +161,17 @@ dispatch_request(void)
 }
 
 /*
- *  ���݂̃^�X�N�̃R���e�L�X�g���̂ĂāC���Ɏ��s���ׂ��^�X�N�֋����I��
- *  �f�B�X�p�b�`����D
+ *  現在のタスクのコンテキストを捨てて，次に実行すべきタスクへ強制的に
+ *  ディスパッチする．
  *
- *  �V�X�e���N��������� ext_tsk, exd_tsk �̏����ŗp����D
+ *  システム起動時および ext_tsk, exd_tsk の処理で用いる．
  *
- *  �������e�Ƃ��ẮCdispatch_to_schedtsk �֕��򂷂邾���ł���D�����
- *  �̓^�X�N�̃R���e�L�X�g�͎̂Ă���̂Ŋ֐��ďo���ł���{�I�ɂ͖��
- *  �Ȃ����CSPI ���g���Ă��郂�[�h�ŌĂ񂾏ꍇ (����Ɏg���Ă���΁C�V
- *  �X�e���N�����̂�) �ɁCbra ���߂ŕ��򂵂������֐��ďo�����s������
- *  �Ԃ�Ԓn�̃X�^�b�N�̈敪�� (�킸�� 4�o�C�g�����ł͂��邪) �ߖ�ł�
- *  ��D
+ *  処理内容としては，dispatch_to_schedtsk へ分岐するだけである．分岐後
+ *  はタスクのコンテキストは捨てられるので関数呼出しでも基本的には問題
+ *  ないが，SPI を使っているモードで呼んだ場合 (正常に使っていれば，シ
+ *  ステム起動時のみ) に，bra 命令で分岐した方が関数呼出しを行うよりも
+ *  返り番地のスタック領域分が (わずか 4バイトだけではあるが) 節約でき
+ *  る．
  */
 Inline void
 force_dispatch(void)
@@ -180,9 +180,9 @@ force_dispatch(void)
 }
 
 /*
- *  �^�X�N�f�B�X�p�b�`�����N������D
+ *  タスクディスパッチャを起動する．
  *
- *  TRON�d�l�`�b�v�ł́C�x�������݂��g��Ȃ��ꍇ�ɂ̂ݎg����D
+ *  TRON仕様チップでは，遅延割込みを使わない場合にのみ使われる．
  */
 #ifdef TRON_NO_DI
 Inline void
@@ -193,7 +193,7 @@ dispatch()
 #endif /* TRON_NO_DI */
 
 /*
- *  �^�X�N�R���e�L�X�g�u���b�N�̒�`
+ *  タスクコンテキストブロックの定義
  */
 typedef struct {
 	VW	csw;		/* CSW (Context Status Word) */

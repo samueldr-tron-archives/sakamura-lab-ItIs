@@ -35,32 +35,32 @@
 #define _SYS_CONF_
 
 /*
- *  ItIs ���쎞�̃������}�b�v
+ *  ItIs 動作時のメモリマップ
  *
- *	00000000 -		�J�[�l���R�[�h�̈�
- *		 - 00001000	ROM���j�^�̏���SPI (���o�C�g�󂳂��)
- *	00040000 - 0007ffff	���[�U�v���O�����̈� (256KB)
- *	00080000 - 000fffff	�J�[�l���f�[�^�̈� (512KB)
- *	fff20000 - fff27fff	���j�^���[�N�̈� (32KB)
- *	fff28000 - fff37fff	���g�p (32KB, �ꕔ�_�C���N�g�N���p�̃X�^�b�N)
- *		 - fff3ffff	�^�X�N�Ɨ����p�X�^�b�N�̈�
- *	fffb0000 - fffbffff	���[�J��I/O�̈�
- *	fffc0000 - fffc007f	���C���{�b�N�X�̈�
+ *	00000000 -		カーネルコード領域
+ *		 - 00001000	ROMモニタの初期SPI (数バイト壊される)
+ *	00040000 - 0007ffff	ユーザプログラム領域 (256KB)
+ *	00080000 - 000fffff	カーネルデータ領域 (512KB)
+ *	fff20000 - fff27fff	モニタワーク領域 (32KB)
+ *	fff28000 - fff37fff	未使用 (32KB, 一部ダイレクト起動用のスタック)
+ *		 - fff3ffff	タスク独立部用スタック領域
+ *	fffb0000 - fffbffff	ローカルI/O領域
+ *	fffc0000 - fffc007f	メイルボックス領域
  */
 
 /*
- *  �X�^�b�N�G���A�C�q�[�v�G���A�̒�`
+ *  スタックエリア，ヒープエリアの定義
  *
- *  _end �́C�v���O�����Ŏg�p����f�[�^�G���A�̍Ō�̎��̔Ԓn�D
+ *  _end は，プログラムで使用するデータエリアの最後の次の番地．
  */
-#define STACKTOP	0xfff40000	/* �^�X�N�Ɨ����p�X�^�b�N�̏����l */
-#define HEAPTOP		_end		/* �q�[�v�G���A�̐擪 */
-#define HEAPLIMIT	0x00100000	/* �q�[�v�G���A�̏�� */
+#define STACKTOP	0xfff40000	/* タスク独立部用スタックの初期値 */
+#define HEAPTOP		_end		/* ヒープエリアの先頭 */
+#define HEAPLIMIT	0x00100000	/* ヒープエリアの上限 */
 
 /*
- *  �V�X�e���^�X�N�Ɋւ����`
+ *  システムタスクに関する定義
  */
-#define	CONSOLE_PORT	1	/* �R���\�[���p�ɗp����V���A���|�[�g�ԍ� */
-#define	LOGTASK_PORT	1	/* �V�X�e�����O���o�͂���V���A���|�[�g�ԍ� */
+#define	CONSOLE_PORT	1	/* コンソール用に用いるシリアルポート番号 */
+#define	LOGTASK_PORT	1	/* システムログを出力するシリアルポート番号 */
 
 #endif /* _SYS_CONF_ */

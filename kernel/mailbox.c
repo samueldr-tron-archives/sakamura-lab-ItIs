@@ -39,23 +39,23 @@
 #ifdef USE_MBX
 
 /*
- *  ƒƒCƒ‹ƒ{ƒbƒNƒXŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  *
- *  mq_head ‚ÍCƒƒbƒZ[ƒWƒLƒ…[‚ÌÅ‰‚ÌƒƒbƒZ[ƒW‚ğw‚·ƒ|ƒCƒ“ƒ^‚ÅCƒƒb
- *  ƒZ[ƒWƒLƒ…[‚ª‹ó‚Ìê‡‚É‚Í NULL ‚É‚È‚Á‚Ä‚¢‚éD
+ *  mq_head ã¯ï¼Œãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ã®æœ€åˆã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã§ï¼Œãƒ¡ãƒƒ
+ *  ã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ãŒç©ºã®å ´åˆã«ã¯ NULL ã«ãªã£ã¦ã„ã‚‹ï¼
  *
- *  mq_tail ‚ÍCƒƒbƒZ[ƒWƒLƒ…[‚ª‹ó‚Å‚È‚¢ê‡‚ÉƒƒbƒZ[ƒWƒLƒ…[‚Ì––”ö
- *  ‚ğw‚·ƒ|ƒCƒ“ƒ^‚ÅCƒƒbƒZ[ƒWƒLƒ…[‚ª‹ó‚Ìê‡‚Ì’l‚Í•ÛØ‚³‚ê‚È‚¢Dƒƒb
- *  ƒZ[ƒW‚ÌƒLƒ…[ƒCƒ“ƒO‚ª FIFO ‚Ìê‡ (TA_MFIFO) ‚É‚Ì‚İg‚í‚ê‚éD
+ *  mq_tail ã¯ï¼Œãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ãŒç©ºã§ãªã„å ´åˆã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ã®æœ«å°¾
+ *  ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã§ï¼Œãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ãŒç©ºã®å ´åˆã®å€¤ã¯ä¿è¨¼ã•ã‚Œãªã„ï¼ãƒ¡ãƒƒ
+ *  ã‚»ãƒ¼ã‚¸ã®ã‚­ãƒ¥ãƒ¼ã‚¤ãƒ³ã‚°ãŒ FIFO ã®å ´åˆ (TA_MFIFO) ã«ã®ã¿ä½¿ã‚ã‚Œã‚‹ï¼
  */
 
 typedef struct mailbox_control_block {
-	QUEUE	wait_queue;	/* ƒƒCƒ‹ƒ{ƒbƒNƒX‘Ò‚¿ƒLƒ…[ */
-	ID	mbxid;		/* ƒƒCƒ‹ƒ{ƒbƒNƒXID */
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	mbxatr;		/* ƒƒCƒ‹ƒ{ƒbƒNƒX‘®« */
-	T_MSG	*mq_head;	/* ƒƒbƒZ[ƒWƒLƒ…[‚Ìæ“ª */
-	T_MSG	*mq_tail;	/* ƒƒbƒZ[ƒWƒLƒ…[‚Ì––”ö */
+	QUEUE	wait_queue;	/* ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹å¾…ã¡ã‚­ãƒ¥ãƒ¼ */
+	ID	mbxid;		/* ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ID */
+	VP	exinf;		/* æ‹¡å¼µæƒ…å ± */
+	ATR	mbxatr;		/* ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹å±æ€§ */
+	T_MSG	*mq_head;	/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ã®å…ˆé ­ */
+	T_MSG	*mq_tail;	/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ã®æœ«å°¾ */
 } MBXCB;
 
 static MBXCB	mbxcb_table[NUM_MBXID];
@@ -63,14 +63,14 @@ static MBXCB	mbxcb_table[NUM_MBXID];
 #define get_mbxcb(id)	(&(mbxcb_table[INDEX_MBX(id)]))
 
 /*
- *  –¢g—p‚ÌƒƒCƒ‹ƒ{ƒbƒNƒXŠÇ—ƒuƒƒbƒN‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã®ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vcre_mbx
 QUEUE	free_mbxcb;
 #endif /* _i_vcre_mbx */
 
 /* 
- *  ƒƒCƒ‹ƒ{ƒbƒNƒXŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void mailbox_initialize()
 {
@@ -95,12 +95,12 @@ void mailbox_initialize()
 }
 
 /*
- *  ƒƒbƒZ[ƒW‘€ì—pƒ}ƒNƒ
+ *  ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ“ä½œç”¨ãƒã‚¯ãƒ­
  */
 #define nextmsg(msg)	*((T_MSG **) &((msg)->msgque[0]))
 
 /*
- *  —Dæ“xƒx[ƒX‚ÌƒƒbƒZ[ƒWƒLƒ…[‚Ì‘€ì
+ *  å„ªå…ˆåº¦ãƒ™ãƒ¼ã‚¹ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ã®æ“ä½œ
  */
 Inline void
 queue_insert_mpri(T_MSG *pk_msg, T_MSG **head)
@@ -131,13 +131,13 @@ queue_insert_mpri(T_MSG *pk_msg, T_MSG **head)
 }
 
 /*
- *  ƒƒCƒ‹ƒ{ƒbƒNƒX‘Ò‚¿d—l‚Ì’è‹`
+ *  ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹å¾…ã¡ä»•æ§˜ã®å®šç¾©
  */
 static WSPEC wspec_mbx_tfifo = { TTW_MBX, 0, 0 };
 static WSPEC wspec_mbx_tpri = { TTW_MBX, obj_chg_pri, 0 };
 
 /*
- *  ƒƒCƒ‹ƒ{ƒbƒNƒXŠÇ—‹@”\
+ *  ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ç®¡ç†æ©Ÿèƒ½
  */
 
 #if !defined(_i_cre_mbx) || !defined(_i_vcre_mbx)

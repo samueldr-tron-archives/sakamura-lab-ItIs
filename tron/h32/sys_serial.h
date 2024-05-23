@@ -35,49 +35,49 @@
 #define _SYS_SERIAL_
 
 /*
- *  H32SBCƒVƒXƒeƒ€ CPUƒ{[ƒh—p ’áƒŒƒxƒ‹ƒVƒŠƒAƒ‹I/O ŠÖ˜A‚Ì’è‹`
+ *  H32SBCã‚·ã‚¹ãƒ†ãƒ  CPUãƒœãƒ¼ãƒ‰ç”¨ ä½ãƒ¬ãƒ™ãƒ«ã‚·ãƒªã‚¢ãƒ«I/O é–¢é€£ã®å®šç¾©
  */
 
 #include "h32sbc.h"
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ìƒn[ƒhƒEƒFƒAˆË‘¶î•ñ‚Ì’è‹`
+ *  ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã®ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ä¾å­˜æƒ…å ±ã®å®šç¾©
  */
 typedef struct raw_serial_port_descripter {
-	IOREG	*data;		/* ACIƒf[ƒ^ƒŒƒWƒXƒ^‚Ì”Ô’n */
-	IOREG	*status;	/* ACIƒXƒe[ƒ^ƒXƒŒƒWƒXƒ^‚Ì”Ô’n */
-	IOREG	*mode;		/* ACIƒ‚[ƒhƒŒƒWƒXƒ^‚Ì”Ô’n */
-	IOREG	*command;	/* ACIƒRƒ}ƒ“ƒhƒŒƒWƒXƒ^‚Ì”Ô’n */
+	IOREG	*data;		/* ACIãƒ‡ãƒ¼ã‚¿ãƒ¬ã‚¸ã‚¹ã‚¿ã®ç•ªåœ° */
+	IOREG	*status;	/* ACIã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ã®ç•ªåœ° */
+	IOREG	*mode;		/* ACIãƒ¢ãƒ¼ãƒ‰ãƒ¬ã‚¸ã‚¹ã‚¿ã®ç•ªåœ° */
+	IOREG	*command;	/* ACIã‚³ãƒãƒ³ãƒ‰ãƒ¬ã‚¸ã‚¹ã‚¿ã®ç•ªåœ° */
 
-	byte	def_mode1;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l(1) */
-	byte	def_mode2;	/* ƒfƒtƒH[ƒ‹ƒg‚Ìƒ‚[ƒhİ’è’l(2) */
+	byte	def_mode1;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤(1) */
+	byte	def_mode2;	/* ãƒ‡ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆã®ãƒ¢ãƒ¼ãƒ‰è¨­å®šå€¤(2) */
 
-	byte	irc_bit;	/* IRCİ’è‚Ìƒrƒbƒgƒpƒ^[ƒ“ */
-	byte	int_level;	/* Š„‚İƒŒƒxƒ‹ */
-	FP	int_handler;	/* Š„‚İƒnƒ“ƒhƒ‰ */
+	byte	irc_bit;	/* IRCè¨­å®šã®ãƒ“ãƒƒãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ */
+	byte	int_level;	/* å‰²è¾¼ã¿ãƒ¬ãƒ™ãƒ« */
+	FP	int_handler;	/* å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ© */
 } RPORT;
 
 /*
- *  ACIƒRƒ}ƒ“ƒhƒŒƒWƒXƒ^‚Ìİ’è’l
+ *  ACIã‚³ãƒãƒ³ãƒ‰ãƒ¬ã‚¸ã‚¹ã‚¿ã®è¨­å®šå€¤
  */
-#define	COM_STOP	0x32	/* ‘—óM‚Æ‚à’â~ */
-#define	COM_SSTOP	0x36	/* ‘—M’â~CóM‚ÍƒCƒl[ƒuƒ‹ */
-#define	COM_START	0x37	/* ‘—óM‚Æ‚àƒCƒl[ƒuƒ‹ */
+#define	COM_STOP	0x32	/* é€å—ä¿¡ã¨ã‚‚åœæ­¢ */
+#define	COM_SSTOP	0x36	/* é€ä¿¡åœæ­¢ï¼Œå—ä¿¡ã¯ã‚¤ãƒãƒ¼ãƒ–ãƒ« */
+#define	COM_START	0x37	/* é€å—ä¿¡ã¨ã‚‚ã‚¤ãƒãƒ¼ãƒ–ãƒ« */
 
 /*
- *  ACIƒ‚[ƒhƒŒƒWƒXƒ^‚ÌƒfƒtƒHƒ‹ƒgİ’è’l
+ *  ACIãƒ¢ãƒ¼ãƒ‰ãƒ¬ã‚¸ã‚¹ã‚¿ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®šå€¤
  */
-#define	DEF_MODE1	0x4d	/* 8bit, ƒXƒgƒbƒvƒrƒbƒg 1bit, ƒpƒŠƒeƒB‚È‚µ */
+#define	DEF_MODE1	0x4d	/* 8bit, ã‚¹ãƒˆãƒƒãƒ—ãƒ“ãƒƒãƒˆ 1bit, ãƒ‘ãƒªãƒ†ã‚£ãªã— */
 #define	DEF_MODE2	0x3e	/* 9600bps */
 
 /*
- *  Š„‚İƒxƒNƒ^‚Æƒnƒ“ƒhƒ‰ƒAƒhƒŒƒX‚Ìæ‚èo‚µ
+ *  å‰²è¾¼ã¿ãƒ™ã‚¯ã‚¿ã¨ãƒãƒ³ãƒ‰ãƒ©ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å–ã‚Šå‡ºã—
  */
 #define	raw_int_vector(p)	INT_VECTOR((p)->int_level)
 #define	raw_int_handler(p)	((p)->int_handler)
 
 /*
- *  Š„‚İƒnƒ“ƒhƒ‰‚ÌƒGƒ“ƒgƒŠ (‘O•ûéŒ¾)
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®ã‚¨ãƒ³ãƒˆãƒª (å‰æ–¹å®£è¨€)
  */
 static void	int_handler_aci1(void);
 static void	int_handler_aci0(void);
@@ -85,10 +85,10 @@ static void	int_handler_aci0(void);
 static void	serial_int_handler(int portid);
 
 /*
- *  ’áƒŒƒxƒ‹ƒ|[ƒgî•ñŠÇ—ƒuƒƒbƒN‚Ì‰Šú’l
+ *  ä½ãƒ¬ãƒ™ãƒ«ãƒãƒ¼ãƒˆæƒ…å ±ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸå€¤
  */
 
-#define NUM_PORT	2	/* ƒTƒ|[ƒg‚·‚éƒVƒŠƒAƒ‹ƒ|[ƒg‚Ì” */
+#define NUM_PORT	2	/* ã‚µãƒãƒ¼ãƒˆã™ã‚‹ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã®æ•° */
 
 #define	RAWPORT1	{ ACI0_DATA, ACI0_STATUS, ACI0_MODE, ACI0_COMMAND, \
 			  DEF_MODE1, DEF_MODE2,				   \
@@ -98,7 +98,7 @@ static void	serial_int_handler(int portid);
 			  LIR3_BIT, 3, int_handler_aci1 }
 
 /*
- *  ƒVƒŠƒAƒ‹ I/O ƒ|[ƒg‚Ì‰Šú‰»
+ *  ã‚·ãƒªã‚¢ãƒ« I/O ãƒãƒ¼ãƒˆã®åˆæœŸåŒ–
  */
 Inline BOOL
 raw_port_init(RPORT *p)
@@ -106,30 +106,30 @@ raw_port_init(RPORT *p)
 	byte	n;
 
 	/*
-	 *  ACI ‚Ìİ’è
+	 *  ACI ã®è¨­å®š
 	 */
 	*(p->command) = COM_STOP;
-	n = *(p->command);		/* ƒ_ƒ~[ƒŠ[ƒh */
+	n = *(p->command);		/* ãƒ€ãƒŸãƒ¼ãƒªãƒ¼ãƒ‰ */
 	*(p->mode) = p->def_mode1;
 	*(p->mode) = p->def_mode2;
-	*(p->command) = COM_SSTOP;	/* óM‚Ì‚İƒCƒl[ƒuƒ‹ */
+	*(p->command) = COM_SSTOP;	/* å—ä¿¡ã®ã¿ã‚¤ãƒãƒ¼ãƒ–ãƒ« */
 
 	/*
-	 *  IRC ‚Ìİ’è
+	 *  IRC ã®è¨­å®š
 	 */
 	irc_assign(IRC_LMR(p->int_level), p->irc_bit);
 	irc_or_assign(IRC_VMR, p->irc_bit);
-	irc_and_assign(IRC_TMR, ~(p->irc_bit));	/* ƒŒƒxƒ‹ƒgƒŠƒKƒ‚[ƒh */
-	irc_and_assign(IRC_IMR, ~(p->irc_bit));	/* Š„‚İƒ}ƒXƒN‰ğœ */
+	irc_and_assign(IRC_TMR, ~(p->irc_bit));	/* ãƒ¬ãƒ™ãƒ«ãƒˆãƒªã‚¬ãƒ¢ãƒ¼ãƒ‰ */
+	irc_and_assign(IRC_IMR, ~(p->irc_bit));	/* å‰²è¾¼ã¿ãƒã‚¹ã‚¯è§£é™¤ */
 
 	if ((n = irc_read(IRC_TMR)) & p->irc_bit) {
 		/*
-		 *  IRC ‚Ì‰Šú‰»‚É¸”s
+		 *  IRC ã®åˆæœŸåŒ–ã«å¤±æ•—
 		 *
-		 *  TMR (ƒgƒŠƒKƒ‚[ƒhƒŒƒWƒXƒ^) ‚Ì“Ç‚İo‚µ‚É¸”s‚µC‚»‚Ì
-		 *  Œ‹‰Ê³‚µ‚­Š„‚İ‚ª‚©‚©‚ç‚È‚­‚ ‚é‚Æ‚¢‚¤áŠQ‚ªo‚é‚±
-		 *  ‚Æ‚ª‘½‚¢D‚±‚ÌáŠQ‚ÍƒvƒƒOƒ‰ƒ€‚Ì’u‚©‚ê‚éˆÊ’u‚ÉˆË‘¶
-		 *  ‚µ‚Ä‹N‚±‚èCÄŒ»«‚à‚ ‚éDŒ´ˆö‚Í•s–¾D
+		 *  TMR (ãƒˆãƒªã‚¬ãƒ¢ãƒ¼ãƒ‰ãƒ¬ã‚¸ã‚¹ã‚¿) ã®èª­ã¿å‡ºã—ã«å¤±æ•—ã—ï¼Œãã®
+		 *  çµæœæ­£ã—ãå‰²è¾¼ã¿ãŒã‹ã‹ã‚‰ãªãã‚ã‚‹ã¨ã„ã†éšœå®³ãŒå‡ºã‚‹ã“
+		 *  ã¨ãŒå¤šã„ï¼ã“ã®éšœå®³ã¯ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ç½®ã‹ã‚Œã‚‹ä½ç½®ã«ä¾å­˜
+		 *  ã—ã¦èµ·ã“ã‚Šï¼Œå†ç¾æ€§ã‚‚ã‚ã‚‹ï¼åŸå› ã¯ä¸æ˜ï¼
 		 */
 		syslog(LOG_EMERG,
 			"Serial port initialization error (%02x).", n);
@@ -139,35 +139,35 @@ raw_port_init(RPORT *p)
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ I/O ƒ|[ƒg‚ÌƒVƒƒƒbƒgƒ_ƒEƒ“
+ *  ã‚·ãƒªã‚¢ãƒ« I/O ãƒãƒ¼ãƒˆã®ã‚·ãƒ£ãƒƒãƒˆãƒ€ã‚¦ãƒ³
  */
 Inline void
 raw_port_shutdown(RPORT *p)
 {
-	irc_or_assign(IRC_IMR, p->irc_bit);	/* Š„‚İ‚ğƒ}ƒXƒN */
+	irc_or_assign(IRC_IMR, p->irc_bit);	/* å‰²è¾¼ã¿ã‚’ãƒã‚¹ã‚¯ */
 }
 
 /*
- *  Š„‚İƒnƒ“ƒhƒ‰‚ÌƒGƒ“ƒgƒŠ
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®ã‚¨ãƒ³ãƒˆãƒª
  */
 static void
 int_handler_aci0(void)
 {
 	int	intmask;
 
-	irc_assign(IRC_IRR, LIR2_BIT);	/* Š„‚İ—v‹‚ğƒNƒŠƒA(–{—ˆ‚Í•s—v) */
+	irc_assign(IRC_IRR, LIR2_BIT);	/* å‰²è¾¼ã¿è¦æ±‚ã‚’ã‚¯ãƒªã‚¢(æœ¬æ¥ã¯ä¸è¦) */
 	serial_int_handler(1);
 }
 
 static void
 int_handler_aci1(void)
 {
-	irc_assign(IRC_IRR, LIR3_BIT);	/* Š„‚İ—v‹‚ğƒNƒŠƒA(–{—ˆ‚Í•s—v) */
+	irc_assign(IRC_IRR, LIR3_BIT);	/* å‰²è¾¼ã¿è¦æ±‚ã‚’ã‚¯ãƒªã‚¢(æœ¬æ¥ã¯ä¸è¦) */
 	serial_int_handler(2);
 }
 
 /*
- *  Š„‚İƒNƒŠƒAˆ—
+ *  å‰²è¾¼ã¿ã‚¯ãƒªã‚¢å‡¦ç†
  */
 Inline void
 raw_port_clear_int(RPORT *p)
@@ -175,7 +175,7 @@ raw_port_clear_int(RPORT *p)
 }
 
 /*
- *  •¶š‚ğóM‚µ‚½‚©H
+ *  æ–‡å­—ã‚’å—ä¿¡ã—ãŸã‹ï¼Ÿ
  */
 Inline BOOL
 raw_port_getready(RPORT *p)
@@ -184,7 +184,7 @@ raw_port_getready(RPORT *p)
 }
 
 /*
- *  •¶š‚ğ‘—M‚Å‚«‚é‚©H
+ *  æ–‡å­—ã‚’é€ä¿¡ã§ãã‚‹ã‹ï¼Ÿ
  */
 Inline BOOL
 raw_port_putready(RPORT *p)
@@ -193,7 +193,7 @@ raw_port_putready(RPORT *p)
 }
 
 /*
- *  óM‚µ‚½•¶š‚Ìæ‚èo‚µ
+ *  å—ä¿¡ã—ãŸæ–‡å­—ã®å–ã‚Šå‡ºã—
  */
 Inline byte
 raw_port_getchar(RPORT *p)
@@ -202,7 +202,7 @@ raw_port_getchar(RPORT *p)
 }
 
 /*
- *  ‘—M‚·‚é•¶š‚Ì‘‚«‚İ
+ *  é€ä¿¡ã™ã‚‹æ–‡å­—ã®æ›¸ãè¾¼ã¿
  */
 Inline void
 raw_port_putchar(RPORT *p, byte c)
@@ -211,7 +211,7 @@ raw_port_putchar(RPORT *p, byte c)
 }
 
 /*
- *  ‘—M§ŒäŠÖ”
+ *  é€ä¿¡åˆ¶å¾¡é–¢æ•°
  */
 Inline void
 raw_port_sendstart(RPORT *p)
@@ -226,7 +226,7 @@ raw_port_sendstop(RPORT *p)
 }
 
 /*
- *  IRC ‚Æ ACI ‚Ìİ’èó‘Ô‚ğ•\¦‚·‚é (ƒfƒoƒbƒO—p)D
+ *  IRC ã¨ ACI ã®è¨­å®šçŠ¶æ…‹ã‚’è¡¨ç¤ºã™ã‚‹ (ãƒ‡ãƒãƒƒã‚°ç”¨)ï¼
  */
 #ifdef DEBUG
 

@@ -35,29 +35,29 @@
 #include "mcube.h"
 
 /*
- *  �^�[�Q�b�g�V�X�e���ˑ��̏��������[�`��
+ *  ターゲットシステム依存の初期化ルーチン
  */
 void
 sys_initialize(void)
 {
 	/*
-	 *  IRC �̏�����
+	 *  IRC の初期化
 	 */
-	irc_assign(IRC1_IMR, 0x7e);	/* ABORT�ȊO�̑S�����݂��}�X�N */
+	irc_assign(IRC1_IMR, 0x7e);	/* ABORT以外の全割込みをマスク */
 	irc_assign(IRC1_BMR, 0x7f);
 	irc_assign(IRC2_IMR, 0x7f);
 
-	irc_assign(IRC1_VMR, 0x7f);	/* �I�[�g�x�N�^���[�h�ɐݒ� */
+	irc_assign(IRC1_VMR, 0x7f);	/* オートベクタモードに設定 */
 	irc_assign(IRC1_VNR, IRC2_VECTOR_BASE);
-	irc_assign(IRC2_VMR, 0x00);	/* IRC�x�N�^���[�h�ɐݒ� */
+	irc_assign(IRC2_VMR, 0x00);	/* IRCベクタモードに設定 */
 	irc_assign(IRC2_VSR, 0x00);
 	irc_assign(IRC2_VNR, IRC2_VECTOR_BASE);
 }
 
 /*
- *  �^�[�Q�b�g�V�X�e���̏I�����[�`��
+ *  ターゲットシステムの終了ルーチン
  *
- *  ItIs �̃V�X�e�����I�����鎞�Ɏg���D�ʏ�̓��j�^�Ăяo���Ŏ�������D
+ *  ItIs のシステムを終了する時に使う．通常はモニタ呼び出しで実現する．
  */
 void
 sys_exit(void)
@@ -67,10 +67,10 @@ sys_exit(void)
 }
 
 /*
- *  �^�[�Q�b�g�V�X�e���̕����o�̓��[�`��
+ *  ターゲットシステムの文字出力ルーチン
  *
- *  ���O�^�X�N�������Ă��Ȃ����ɁC�V�X�e������̃��b�Z�[�W���o�͂��邽
- *  �߂Ɏg���D�ʏ�̓��j�^�Ăяo���Ŏ�������D
+ *  ログタスクが動いていない時に，システムからのメッセージを出力するた
+ *  めに使う．通常はモニタ呼び出しで実現する．
  */
 int
 sys_write(const char *buf, unsigned int len)

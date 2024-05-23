@@ -36,25 +36,25 @@
 #include "task.h"
 
 /*
- *  ƒƒOƒ^ƒXƒN‚Ì•Ï”
+ *  ãƒ­ã‚°ã‚¿ã‚¹ã‚¯ã®å¤‰æ•°
  *
- *  ƒ^ƒXƒN‚Ì•Ï”‚ğƒJ[ƒlƒ‹‚ªQÆ‚·‚é‚Æ‚¢‚¤—áŠO“I‚Èˆ—‚É‚È‚Á‚Ä‚¢‚éD
+ *  ã‚¿ã‚¹ã‚¯ã®å¤‰æ•°ã‚’ã‚«ãƒ¼ãƒãƒ«ãŒå‚ç…§ã™ã‚‹ã¨ã„ã†ä¾‹å¤–çš„ãªå‡¦ç†ã«ãªã£ã¦ã„ã‚‹ï¼
  */
-extern int	logtask_alive;		/* ƒƒOƒ^ƒXƒN‚ª“®‚¢‚Ä‚¢‚é‚© */
-extern int	log_msg_maxmsz;		/* ƒƒOƒƒbƒZ[ƒW‚ÌÅ‘å’· */
+extern int	logtask_alive;		/* ãƒ­ã‚°ã‚¿ã‚¹ã‚¯ãŒå‹•ã„ã¦ã„ã‚‹ã‹ */
+extern int	log_msg_maxmsz;		/* ãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®æœ€å¤§é•· */
 
 /*
- *  ƒVƒXƒeƒ€ƒƒO—pƒƒbƒZ[ƒWƒoƒbƒtƒ@‚Ö‚Ì‘—M (messagebuf.c)
+ *  ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã¸ã®é€ä¿¡ (messagebuf.c)
  */
 extern ER	log_snd_mbf(VP msg, INT msgsz);
 
 /*
- *  ƒJ[ƒlƒ‹—pŠÈˆÕ vsprintfŠÖ” (vsprintf.c)
+ *  ã‚«ãƒ¼ãƒãƒ«ç”¨ç°¡æ˜“ vsprintfé–¢æ•° (vsprintf.c)
  */
 extern int	itis_vsprintf(char *buf, const char *format, va_list ap);
 
 /*
- *  ƒJ[ƒlƒ‹—pƒVƒXƒeƒ€ƒƒOo—Í—pƒ‰ƒCƒuƒ‰ƒŠ
+ *  ã‚«ãƒ¼ãƒãƒ«ç”¨ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°å‡ºåŠ›ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  */
 
 static int	i_logmask = LOG_UPTO(LOG_NOTICE);
@@ -64,10 +64,10 @@ static int	i_logmask = LOG_UPTO(LOG_NOTICE);
 static char	i_syslog_buf[FORMAT_BUFSIZ];
 
 /*
- *  ƒƒOƒƒbƒZ[ƒW‚Ìo—Í
+ *  ãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡ºåŠ›
  *
- *  ƒƒOƒ^ƒXƒN‚ª“®‚¢‚Ä‚¢‚éê‡‚ÍCƒƒOƒƒbƒZ[ƒWƒoƒbƒtƒ@‚Ö‘—‚éD“®‚¢‚Ä
- *  ‚¢‚È‚¢ê‡‚ÍC’¼Ú’áƒŒƒxƒ‹‚Ìo—Íƒ‹[ƒ`ƒ“‚ğg‚Á‚Äo—Í‚·‚éD
+ *  ãƒ­ã‚°ã‚¿ã‚¹ã‚¯ãŒå‹•ã„ã¦ã„ã‚‹å ´åˆã¯ï¼Œãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã¸é€ã‚‹ï¼å‹•ã„ã¦
+ *  ã„ãªã„å ´åˆã¯ï¼Œç›´æ¥ä½ãƒ¬ãƒ™ãƒ«ã®å‡ºåŠ›ãƒ«ãƒ¼ãƒãƒ³ã‚’ä½¿ã£ã¦å‡ºåŠ›ã™ã‚‹ï¼
  */
 static void
 i_syslog_send(const char *string, int len)
@@ -94,7 +94,7 @@ i_syslog_send(const char *string, int len)
 }
 
 /*
- *  ƒJ[ƒlƒ‹—p syslog ŠÖ”–{‘Ì
+ *  ã‚«ãƒ¼ãƒãƒ«ç”¨ syslog é–¢æ•°æœ¬ä½“
  */
 void
 i_syslog(int priority, const char *format, ...)
@@ -116,7 +116,7 @@ i_syslog(int priority, const char *format, ...)
 }
 
 /*
- *  ƒJ[ƒlƒ‹—p‚Ì assertƒ}ƒNƒ‚ÌƒƒbƒZ[ƒWo—Í
+ *  ã‚«ãƒ¼ãƒãƒ«ç”¨ã® assertãƒã‚¯ãƒ­ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›
  */
 
 #ifndef NDEBUG

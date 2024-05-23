@@ -35,12 +35,12 @@
 #define _ITIS_SERVICES_
 
 /* 
- *  ItIs�A�v���P�[�V���� �W���C���N���[�h�t�@�C��
+ *  ItIsアプリケーション 標準インクルードファイル
  *
- *  ItIs �̃V�X�e���R�[�����Ăяo���A�v���P�[�V�����́C���ׂĂ̂��̃t�@
- *  �C�����C���N���[�h���ׂ��ł���D
- *  �V�X�e���R�[�����T�u���[�`���R�[���ŌĂяo���ꍇ�ɂ́C���̃t�@�C��
- *  ���C���N���[�h����O�ɁCLINK_KERNEL ���` (#define) ���邱�ƁD
+ *  ItIs のシステムコールを呼び出すアプリケーションは，すべてのこのファ
+ *  イルをインクルードすべきである．
+ *  システムコールをサブルーチンコールで呼び出す場合には，このファイル
+ *  をインクルードする前に，LINK_KERNEL を定義 (#define) すること．
  */
 
 #include <itron.h>
@@ -51,7 +51,7 @@
 #include <itis_isyscall.h>
 
 /*
- *  �V�X�e���R�[���ďo�}�N��
+ *  システムコール呼出マクロ
  */
 extern void	itis_perror(const char *file, int line,
 				const char *expr, ER ercd);

@@ -38,7 +38,7 @@
 #include <itis_scint.h>
 #include <svc_fncode.h>
 
-#define CONSOLE_PORT	0	/* ƒRƒ“ƒ\[ƒ‹‚Ì I/Oƒ|[ƒg‚Ìw’è */
+#define CONSOLE_PORT	0	/* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã® I/Oãƒãƒ¼ãƒˆã®æŒ‡å®š */
 
 Inline int
 serial_init(int portid)

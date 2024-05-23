@@ -35,11 +35,11 @@
 #define _CHECK_
 
 /*
- *  �G���[�`�F�b�N�p�}�N���̒�`
+ *  エラーチェック用マクロの定義
  */
 
 /*
- *  �I�u�W�F�N�gID �͈̔͂̃`�F�b�N (E_ID)
+ *  オブジェクトID の範囲のチェック (E_ID)
  */
 
 #ifdef CHK_ID
@@ -126,7 +126,7 @@
 #endif /* CHK_ID */
 
 /*
- *  �I�u�W�F�N�g�̃A�N�Z�X���̃`�F�b�N (E_OACV)
+ *  オブジェクトのアクセス権のチェック (E_OACV)
  */
 
 #ifdef CHK_OACV
@@ -198,7 +198,7 @@
 #endif /* CHK_OACV */
 
 /*
- *  ���^�X�N���w�肵�Ă��Ȃ����̃`�F�b�N (E_OBJ)
+ *  自タスクを指定していないかのチェック (E_OBJ)
  */
 #ifdef CHK_SELF
 #define CHECK_NONSELF(tskid) {					\
@@ -211,7 +211,7 @@
 #endif /* CHK_SELF */
 
 /*
- *  �D��x�l�̃`�F�b�N (E_PAR)
+ *  優先度値のチェック (E_PAR)
  */
 
 #ifdef CHK_PAR
@@ -241,7 +241,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  �^�C���A�E�g�w��l�̃`�F�b�N (E_PAR)
+ *  タイムアウト指定値のチェック (E_PAR)
  */
 #ifdef CHK_PAR
 #define CHECK_TMOUT(tmout) {					\
@@ -254,7 +254,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  ���̑��̃p�����[�^�G���[�̃`�F�b�N (E_PAR)
+ *  その他のパラメータエラーのチェック (E_PAR)
  */
 #ifdef CHK_PAR
 #define CHECK_PAR(exp) {					\
@@ -267,7 +267,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  �\�񑮐��G���[�̃`�F�b�N (E_RSATR)
+ *  予約属性エラーのチェック (E_RSATR)
  */
 #ifdef CHK_RSATR
 #define CHECK_RSATR(atr, maxatr) {				\
@@ -280,7 +280,7 @@
 #endif /* CHK_RSATR */
 
 /*
- *  ���T�|�[�g�@�\�̃`�F�b�N (E_NOSPT)
+ *  未サポート機能のチェック (E_NOSPT)
  */
 #ifdef CHK_NOSPT
 #define CHECK_NOSPT(exp) {					\
@@ -293,7 +293,7 @@
 #endif /* CHK_NOSPT */
 
 /*
- *  �^�X�N�Ɨ������s���łȂ����̃`�F�b�N (E_CTX)
+ *  タスク独立部実行中でないかのチェック (E_CTX)
  */
 #ifdef CHK_CTX
 #define CHECK_INTSK() {						\
@@ -306,7 +306,7 @@
 #endif /* CHK_CTX */
 
 /*
- *  �f�B�X�p�b�`�֎~��ԂłȂ����̃`�F�b�N (E_CTX)
+ *  ディスパッチ禁止状態でないかのチェック (E_CTX)
  */
 
 #ifdef CHK_CTX
@@ -329,7 +329,7 @@
 #endif /* CHK_CTX */
 
 /*
- *  ���̑��̃R���e�L�X�g�G���[�̃`�F�b�N (E_CTX)
+ *  その他のコンテキストエラーのチェック (E_CTX)
  */
 #ifdef CHK_CTX
 #define CHECK_CTX(exp) {					\

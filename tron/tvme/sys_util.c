@@ -35,24 +35,24 @@
 #include "tvme150.h"
 
 /*
- *  �^�[�Q�b�g�V�X�e���ˑ� ���������[�`��
+ *  ターゲットシステム依存 初期化ルーチン
  */
 void
 sys_initialize(void)
 {
 	/*
-	 *  interrupt handler (�����݃R���g���[��) �̏�����
+	 *  interrupt handler (割込みコントローラ) の初期化
 	 */
-	scb_assign(SCB_R3, 0x81);	/* NMI �ȊO�̂��ׂĂ̊����݂��}�X�N */
+	scb_assign(SCB_R3, 0x81);	/* NMI 以外のすべての割込みをマスク */
 	scb_assign(SCB_R5, 0x00);
 	scb_assign(SCB_R2, INT_VECTOR_BASE);
-					/* ���[�J�������݃x�N�^�̐ݒ� */
+					/* ローカル割込みベクタの設定 */
 }
 
 /*
- *  �^�[�Q�b�g�V�X�e���̏I�����[�`��
+ *  ターゲットシステムの終了ルーチン
  *
- *  ItIs �̃V�X�e�����I�����鎞�Ɏg���D�ʏ�̓��j�^�Ăяo���Ŏ�������D
+ *  ItIs のシステムを終了する時に使う．通常はモニタ呼び出しで実現する．
  */
 void
 sys_exit(void)
@@ -62,10 +62,10 @@ sys_exit(void)
 }
 
 /*
- *  �^�[�Q�b�g�V�X�e���̕����o�̓��[�`��
+ *  ターゲットシステムの文字出力ルーチン
  *
- *  ���O�^�X�N�������Ă��Ȃ����ɁC�V�X�e������̃��b�Z�[�W���o�͂��邽
- *  �߂Ɏg���D�ʏ�̓��j�^�Ăяo���Ŏ�������D
+ *  ログタスクが動いていない時に，システムからのメッセージを出力するた
+ *  めに使う．通常はモニタ呼び出しで実現する．
  */
 int
 sys_write(const char *buf, unsigned int len)

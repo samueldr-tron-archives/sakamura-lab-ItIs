@@ -35,11 +35,11 @@
 #define	_TRON_INSN_
 
 /*
- *  ���䃌�W�X�^�̑���֐�
+ *  制御レジスタの操作関数
  */
 
 /*
- *  PSW �̌��ݒl�̓ǂݏo��
+ *  PSW の現在値の読み出し
  */
 Inline VW
 current_psw(void)
@@ -51,7 +51,7 @@ current_psw(void)
 }
 
 /*
- *  PSW �̌��ݒl�̕ύX
+ *  PSW の現在値の変更
  */
 Inline void
 set_psw(VW psw)
@@ -60,17 +60,17 @@ set_psw(VW psw)
 }
 
 /*
- *  IMASK �̌��ݒl�̓ǂݏo��
+ *  IMASK の現在値の読み出し
  *
- *  IMASK �̒l�Ƃ��āC0 �ȏ� 15 �ȉ��̒l���Ԃ�D
+ *  IMASK の値として，0 以上 15 以下の値が返る．
  */
 #define imask_psw(psw)	((psw >> 16) & 15)
 #define current_imask() (imask_psw(current_psw()))
 
 /*
- *  IMASK �̌��ݒl�̕ύX
+ *  IMASK の現在値の変更
  *
- *  imask �́C0 �ȏ� 15 �ȉ��ł��邱�ƁD
+ *  imask は，0 以上 15 以下であること．
  */
 Inline void
 set_imask(INT imask)
@@ -79,7 +79,7 @@ set_imask(INT imask)
 }
 
 /*
- *  �����݃}�X�N��Ԃ�����\���ŕԂ��D
+ *  割込みマスク状態を内部表現で返す．
  */
 Inline INT
 current_intmask(void)
@@ -91,7 +91,7 @@ current_intmask(void)
 }
 
 /*
- *  NMI ���������ׂĂ̊����݂��֎~����D
+ *  NMI を除くすべての割込みを禁止する．
  */
 Inline void
 disint(void)
@@ -100,13 +100,13 @@ disint(void)
 }
 
 /*
- *  current_intmask ���Ԃ��������݃}�X�N��Ԃ�n���āC�����݋֎~�O�̏�
- *  �Ԃɖ߂��D
+ *  current_intmask が返した割込みマスク状態を渡して，割込み禁止前の状
+ *  態に戻す．
  *
- *  clobber���X�g�� memory �����Ă���̂́Cenaint �̒���Ƀ^�X�N�f�B
- *  �X�p�b�`���N����C�\�����Ȃ��������G���A��������������\������
- *  �邱�Ƃ��R���p�C���ɒm�点�邽�߂ł���D��̓I�ɂ́C�G���[�R�[�h��
- *  �����ϐ������ɂȂ�D
+ *  clobberリストに memory を入れているのは，enaint の直後にタスクディ
+ *  スパッチが起こり，予期しないメモリエリアが書き換えられる可能性があ
+ *  ることをコンパイラに知らせるためである．具体的には，エラーコードを
+ *  入れる変数が問題になる．
  */
 Inline void
 enaint(INT intmask)
@@ -115,7 +115,7 @@ enaint(INT intmask)
 }
 
 /*
- *  DIR (�x�������ݗv�����W�X�^) �̌��ݒl�̓ǂݏo��
+ *  DIR (遅延割込み要求レジスタ) の現在値の読み出し
  */
 Inline VW
 current_dir(void)
@@ -127,9 +127,9 @@ current_dir(void)
 }
 
 /*
- *  DIR (�x�������ݗv�����W�X�^) �̌��ݒl�̕ύX
+ *  DIR (遅延割込み要求レジスタ) の現在値の変更
  *
- *  dir �́C0 �ȏ� 15 �ȉ��ł��邱�ƁD
+ *  dir は，0 以上 15 以下であること．
  */
 Inline void
 set_dir(INT dir)
@@ -138,30 +138,30 @@ set_dir(INT dir)
 }
 
 /*
- *  EIT�֘A�̒�`
+ *  EIT関連の定義
  */
 
-#define EITVEC_BUSERR	0x11		/* �o�X�G���[�̃x�N�^�ԍ� */
-#define EITVEC_TRAPA1	0x21		/* TRAPA #1 �̃x�N�^�ԍ� */
-#define EITVEC_TRAPA2	0x22		/* TRAPA #2 �̃x�N�^�ԍ� */
-#define EITVEC_TRAPA3	0x23		/* TRAPA #3 �̃x�N�^�ԍ� */
-#define EITVEC_TRAPA4	0x24		/* TRAPA #4 �̃x�N�^�ԍ� */
-#define EITVEC_DI14	0x5e		/* DI=14 �̃x�N�^�ԍ� */
+#define EITVEC_BUSERR	0x11		/* バスエラーのベクタ番号 */
+#define EITVEC_TRAPA1	0x21		/* TRAPA #1 のベクタ番号 */
+#define EITVEC_TRAPA2	0x22		/* TRAPA #2 のベクタ番号 */
+#define EITVEC_TRAPA3	0x23		/* TRAPA #3 のベクタ番号 */
+#define EITVEC_TRAPA4	0x24		/* TRAPA #4 のベクタ番号 */
+#define EITVEC_DI14	0x5e		/* DI=14 のベクタ番号 */
 
 #define EITATR(smode, imask)	(((smode) << 31) + ((imask) << 16))
 
 /*
- *  EIT�x�N�^�e�[�u���̍\���̒�`
+ *  EITベクタテーブルの構造の定義
  */
 typedef struct eit_vector_entry {
-	UINT	eitatr;			/* EIT���� */
-	FP	eithdr;			/* EIT�n���h���̃A�h���X */
+	UINT	eitatr;			/* EIT属性 */
+	FP	eithdr;			/* EITハンドラのアドレス */
 } EITVE;
 
 /*
- *  EIT�x�N�^�e�[�u���x�[�X (EITVB) �̐ݒ�
+ *  EITベクタテーブルベース (EITVB) の設定
  *
- *  �����������̒��Ŏg�����߂̊֐��D
+ *  初期化処理の中で使うための関数．
  */
 Inline void
 set_eitvb(EITVE *eitvb)
@@ -170,11 +170,11 @@ set_eitvb(EITVE *eitvb)
 }
 
 /*
- *  EIT�x�N�^�e�[�u���x�[�X (EITVB) �̌��ݒl�̓ǂݏo��
+ *  EITベクタテーブルベース (EITVB) の現在値の読み出し
  *
- *  EITVB_ITIS ����`����Ă��鎞�́C�����������̒��� EITVB���W�X�^��
- *  EITVB_ITIS �ɐݒ肷��̂ŁCEITVB_ITIS ��Ԃ��΂悢�D�����łȂ��ꍇ
- *  �́CCPU �� EITVB���W�X�^��ǂݏo���D
+ *  EITVB_ITIS が定義されている時は，初期化処理の中で EITVBレジスタを
+ *  EITVB_ITIS に設定するので，EITVB_ITIS を返せばよい．そうでない場合
+ *  は，CPU の EITVBレジスタを読み出す．
  */
 #ifdef EITVB_ITIS
 #define current_eitvb()	((EITVE *) EITVB_ITIS)
@@ -192,12 +192,12 @@ Inline EITVE
 #endif /* EITVB_ITIS */
 
 /*
- *  EIT�n���h���̐ݒ�
+ *  EITハンドラの設定
  *
- *  �x�N�g���ԍ� eitvec �� EIT�x�N�^�e�[�u���G���g���́CEIT���� (EIT�n
- *  ���h�����s���́C�X�^�b�N���[�h�C�A�h���X�ϊ����[�h�C�f�o�b�O���[�h�C
- *  �����݃}�X�N�����߂�) �� eitatr�CEIT�n���h���J�n�Ԓn�� eithdr �ɐ�
- *  �肷��D
+ *  ベクトル番号 eitvec の EITベクタテーブルエントリの，EIT属性 (EITハ
+ *  ンドラ実行時の，スタックモード，アドレス変換モード，デバッグモード，
+ *  割込みマスクを決める) を eitatr，EITハンドラ開始番地を eithdr に設
+ *  定する．
  */
 Inline void
 define_eit(INT eitvec, UINT eitatr, FP eithdr)
@@ -209,10 +209,10 @@ define_eit(INT eitvec, UINT eitatr, FP eithdr)
 }
 
 /*
- *  �������u���b�N���색�C�u����
+ *  メモリブロック操作ライブラリ
  *
- *  �֐��̎d�l�́CANSI C ���C�u�����̎d�l�Ɠ����D�W�����C�u�����̂��̂�
- *  �g���������������ǂ��\��������D
+ *  関数の仕様は，ANSI C ライブラリの仕様と同じ．標準ライブラリのものを
+ *  使った方が効率が良い可能性がある．
  */
 
 Inline VP

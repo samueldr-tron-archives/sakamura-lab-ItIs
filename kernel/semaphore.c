@@ -39,16 +39,16 @@
 #ifdef USE_SEM
 
 /*
- *  ƒZƒ}ƒtƒHŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  ã‚»ãƒãƒ•ã‚©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 
 typedef struct semaphore_control_block {
-	QUEUE	wait_queue;	/* ƒZƒ}ƒtƒH‘Ò‚¿ƒLƒ…[ */
-	ID	semid;		/* ƒZƒ}ƒtƒHID */
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	sematr;		/* ƒZƒ}ƒtƒH‘®« */
-	INT	semcnt;		/* ƒZƒ}ƒtƒHŒ»İƒJƒEƒ“ƒg’l */
-	INT	maxsem;		/* ƒZƒ}ƒtƒHÅ‘åƒJƒEƒ“ƒg’l */
+	QUEUE	wait_queue;	/* ã‚»ãƒãƒ•ã‚©å¾…ã¡ã‚­ãƒ¥ãƒ¼ */
+	ID	semid;		/* ã‚»ãƒãƒ•ã‚©ID */
+	VP	exinf;		/* æ‹¡å¼µæƒ…å ± */
+	ATR	sematr;		/* ã‚»ãƒãƒ•ã‚©å±æ€§ */
+	INT	semcnt;		/* ã‚»ãƒãƒ•ã‚©ç¾åœ¨ã‚«ã‚¦ãƒ³ãƒˆå€¤ */
+	INT	maxsem;		/* ã‚»ãƒãƒ•ã‚©æœ€å¤§ã‚«ã‚¦ãƒ³ãƒˆå€¤ */
 } SEMCB;
 
 static SEMCB	semcb_table[NUM_SEMID];
@@ -56,14 +56,14 @@ static SEMCB	semcb_table[NUM_SEMID];
 #define get_semcb(id)	(&(semcb_table[INDEX_SEM(id)]))
 
 /*
- *  –¢g—p‚ÌƒZƒ}ƒtƒHŠÇ—ƒuƒƒbƒN‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã®ã‚»ãƒãƒ•ã‚©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vcre_sem
 QUEUE	free_semcb;
 #endif /* _i_vcre_sem */
 
 /* 
- *  ƒZƒ}ƒtƒHŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  ã‚»ãƒãƒ•ã‚©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void
 semaphore_initialize(void)
@@ -89,13 +89,13 @@ semaphore_initialize(void)
 }
 
 /*
- *  ƒZƒ}ƒtƒH‘Ò‚¿d—l‚Ì’è‹`
+ *  ã‚»ãƒãƒ•ã‚©å¾…ã¡ä»•æ§˜ã®å®šç¾©
  */
 static WSPEC wspec_sem_tfifo = { TTW_SEM, 0, 0 };
 static WSPEC wspec_sem_tpri = { TTW_SEM, obj_chg_pri, 0 };
 
 /*
- *  ƒZƒ}ƒtƒHŠÇ—‹@”\
+ *  ã‚»ãƒãƒ•ã‚©ç®¡ç†æ©Ÿèƒ½
  */
 
 #if !defined(_i_cre_sem) || !defined(_i_vcre_sem)

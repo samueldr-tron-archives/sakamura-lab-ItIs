@@ -32,21 +32,21 @@
 #
 
 #
-#  ƒVƒXƒeƒ€\¬’è‹`¶¬ƒvƒƒOƒ‰ƒ€
+#  ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆå®šç¾©ç”Ÿæˆãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 #
-#  ƒVƒXƒeƒ€\¬İ’èƒtƒ@ƒCƒ‹ (config.def) ‚ğ“Ç‚İ‚ñ‚ÅCˆÈ‰º‚Ìƒtƒ@ƒCƒ‹‚ğ
-#  ¶¬‚·‚éD
+#  ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ« (config.def) ã‚’èª­ã¿è¾¼ã‚“ã§ï¼Œä»¥ä¸‹ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’
+#  ç”Ÿæˆã™ã‚‹ï¼
 #
 #	config.h
 #
 
-#  ‘åˆæ•Ï”‚Ì‰Šú‰»
+#  å¤§åŸŸå¤‰æ•°ã®åˆæœŸåŒ–
 
 $line = "";
 $word = "";
 $lineno = 0;
 
-#  š‹å‰ğÍƒ‹[ƒ`ƒ“
+#  å­—å¥è§£æãƒ«ãƒ¼ãƒãƒ³
 
 sub getline {
 	$line = <>;
@@ -54,7 +54,7 @@ sub getline {
 }
 
 sub getword {
-	# ‹ós‚Æ‹ó”’‚ÌƒXƒLƒbƒv
+	# ç©ºè¡Œã¨ç©ºç™½ã®ã‚¹ã‚­ãƒƒãƒ—
 	$line =~ s/^[ \t]+//;
 	while ($line eq "") {
 		do getline();
@@ -63,7 +63,7 @@ sub getword {
 		$line =~ s/^[ \t]+//;
 	}
 
-	# ƒRƒƒ“ƒg‚ÌƒXƒLƒbƒv
+	# ã‚³ãƒ¡ãƒ³ãƒˆã®ã‚¹ã‚­ãƒƒãƒ—
 	if ($line =~ /^\/\*/) {
 		while ($line !~ /\*\/(.*)$/) {
 			do getline();
@@ -75,34 +75,34 @@ sub getword {
 		return(do getword());
 	}
 
-	# Œê‚ÌØ‚èo‚µ
+	# èªã®åˆ‡ã‚Šå‡ºã—
 	if ($line =~ /^([A-Za-z_][A-Za-z0-9_]*)(.*)$/) {
-		# ¯•Êq
+		# è­˜åˆ¥å­
 		$word = $1;
 		$line = $2;
 	}
 	elsif ($line =~ /^(-?)0x([0-9A-Fa-f]+)(.*)$/) {
-		# 16i”
+		# 16é€²æ•°
 		$word = hex($1.$2);
 		$line = $3;
 	}
 	elsif ($line =~ /^(-?[0-9]+)(.*)$/) {
-		# 10i”
+		# 10é€²æ•°
 		$word = $1;
 		$line = $2;
 	}
 	else {
-		# ‚»‚Ì‘¼‚Ì‹L†
+		# ãã®ä»–ã®è¨˜å·
 		$word = substr($line, 0, 1);
 		$line = substr($line, 1);
 	}
 
-	# ¬•¶š‚É•ÏŠ· (‘å•¶š‚Æ¬•¶š‚Í‹æ•Ê‚µ‚È‚¢)
+	# å°æ–‡å­—ã«å¤‰æ› (å¤§æ–‡å­—ã¨å°æ–‡å­—ã¯åŒºåˆ¥ã—ãªã„)
 	$word =~ y/A-Z/a-z/;
 	return($word);
 }
 
-#  ƒGƒ‰[o—Íƒ‹[ƒ`ƒ“
+#  ã‚¨ãƒ©ãƒ¼å‡ºåŠ›ãƒ«ãƒ¼ãƒãƒ³
 
 sub out_error {
 	if ($word) {
@@ -114,7 +114,7 @@ sub out_error {
 	exit(1);
 }
 
-#  Ÿ‚ÌŒê‚Ìƒ`ƒFƒbƒN
+#  æ¬¡ã®èªã®ãƒã‚§ãƒƒã‚¯
 
 sub nextword {
 	local($next) = @_;
@@ -127,7 +127,7 @@ sub nextword {
 	}
 }
 
-#  ƒVƒ“ƒ{ƒ‹‚Ì’è‹`
+#  ã‚·ãƒ³ãƒœãƒ«ã®å®šç¾©
 
 %resource_spec = (
 	"min_tskid", 1,
@@ -197,7 +197,7 @@ sub nextword {
 	"sys_mpl_size", 1,
 );
 
-#  ƒVƒ“ƒ{ƒ‹ƒŠƒXƒg‚ğ“Ç‚İ‚Ş
+#  ã‚·ãƒ³ãƒœãƒ«ãƒªã‚¹ãƒˆã‚’èª­ã¿è¾¼ã‚€
 
 sub readsymlist {
 	local($symlist);
@@ -213,19 +213,19 @@ sub readsymlist {
 	return($symlist);
 }
 
-#  ƒVƒ“ƒ{ƒ‹‚Ì’è‹`‚ğ“Ç‚İ‚Ş
+#  ã‚·ãƒ³ãƒœãƒ«ã®å®šç¾©ã‚’èª­ã¿è¾¼ã‚€
 
 sub readvalue {
 	local($var, $varspec) = @_;
 
-	if ($varspec == 1) {			# ”’l‚Ì“Ç‚İ‚İ
+	if ($varspec == 1) {			# æ•°å€¤ã®èª­ã¿è¾¼ã¿
 		if ($word eq "=") {
 			do getword();
 			$val{$var} = $word;
 			do getword();
 		}
 	}
-	elsif ($varspec == 11) {		# ƒVƒ“ƒ{ƒ‹ƒŠƒXƒg‚Ì“Ç‚İ‚İ
+	elsif ($varspec == 11) {		# ã‚·ãƒ³ãƒœãƒ«ãƒªã‚¹ãƒˆã®èª­ã¿è¾¼ã¿
 		if ($word eq "{") {
 			do getword();
 			$val{$var} = do readsymlist();
@@ -234,7 +234,7 @@ sub readvalue {
 	do nextword(";");
 }
 
-#  ’è‹`ƒe[ƒuƒ‹‚ğ“Ç‚İ‚Ş
+#  å®šç¾©ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 
 sub readtable {
 	local($id, %spec) = @_;
@@ -252,7 +252,7 @@ sub readtable {
 }
 
 #
-#  ’è‹`ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+#  å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 #
 
 do getword();
@@ -280,7 +280,7 @@ while ($word) {
 }
 
 #
-#  Šeí‚Ì’è‹`¶¬ƒ‹[ƒ`ƒ“
+#  å„ç¨®ã®å®šç¾©ç”Ÿæˆãƒ«ãƒ¼ãƒãƒ³
 #
 
 sub out_object_def {
@@ -486,7 +486,7 @@ sub gen_flag_def {
 }
 
 #
-#  config.h ‚Ì¶¬
+#  config.h ã®ç”Ÿæˆ
 #
 
 open(FILE, "> config.h");
@@ -498,7 +498,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ƒIƒuƒWƒFƒNƒgID ‚Ì”ÍˆÍ’è‹`‚Ì¶¬
+# ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆID ã®ç¯„å›²å®šç¾©ã®ç”Ÿæˆ
 do gen_object_def("tsk", 0);
 do gen_object_def("sem", 0);
 do gen_object_def("flg", 0);
@@ -514,15 +514,15 @@ do gen_resnum_def("alm");
 do gen_resnum_def("svc");
 print FILE "\n";
 
-# Šg’£SVC ‚ğg‚¤‚ÍC€ƒ^ƒXƒN•”‚ª•K—v
+# æ‹¡å¼µSVC ã‚’ä½¿ã†æ™‚ã¯ï¼Œæº–ã‚¿ã‚¹ã‚¯éƒ¨ãŒå¿…è¦
 if ($val{"resource\$num_svc"} > 0 && !$val{"use_qtsk_portion"}) {
 	$val{"use_qtsk_portion"} = 1;
 }
 
-# —Dæ“x’l‚Ì”ÍˆÍ’è‹`‚Ì¶¬
+# å„ªå…ˆåº¦å€¤ã®ç¯„å›²å®šç¾©ã®ç”Ÿæˆ
 do gen_priority_def();
 
-# ƒGƒ‰[ƒ`ƒFƒbƒNd—l‚Ì’è‹`‚Ì¶¬
+# ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ä»•æ§˜ã®å®šç¾©ã®ç”Ÿæˆ
 do gen_errorcheck_def("nospt");
 do gen_errorcheck_def("rsatr");
 do gen_errorcheck_def("par");
@@ -534,7 +534,7 @@ do gen_errorcheck_def("ctx2");
 do gen_errorcheck_def("self");
 print FILE "\n";
 
-# ‚»‚Ì‘¼‚Ì’è‹`‚Ì¶¬
+# ãã®ä»–ã®å®šç¾©ã®ç”Ÿæˆ
 do gen_flag_def("use_suspend_self");
 do gen_flag_def("use_qtsk_portion");
 do gen_flag_def("use_auto_id");

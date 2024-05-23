@@ -34,7 +34,7 @@
 #include <itis_services.h>
 
 /*
- *  ƒVƒXƒeƒ€ó‘Ô‚ðŽæ‚èo‚·D
+ *  ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ…‹ã‚’å–ã‚Šå‡ºã™ï¼Ž
  */
 INT
 sysstat(void)

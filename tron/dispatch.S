@@ -32,38 +32,38 @@
  */
 
 /*
- *  �^�X�N�f�B�X�p�b�`��
+ *  タスクディスパッチャ
  * 
- *  ���s���̃^�X�N (ctxtsk) �̃R���e�L�X�g�� TCB �ɕۑ����C���s���ׂ��^
- *  �X�N (schedtsk) ��V�������s�^�X�N�Ƃ��āC���̃R���e�L�X�g�� TCB ��
- *  �畜�A����D
+ *  実行中のタスク (ctxtsk) のコンテキストを TCB に保存し，実行すべきタ
+ *  スク (schedtsk) を新しい実行タスクとして，そのコンテキストを TCB か
+ *  ら復帰する．
  *
- *  �f�B�X�p�b�`���́C�ȉ��� 2�ʂ�̕��@�ŋN�������D
+ *  ディスパッチャは，以下の 2通りの方法で起動される．
  * 
- *  �N�����@1:
+ *  起動方法1:
  * 
- *  DI=14 �̒x�������݂���C�X�^�b�N�� SP0�CIMASK �� 14 �ŋN�������D
- *  �^�X�N�Ɨ�������N������邱�Ƃ͂Ȃ��D
+ *  DI=14 の遅延割込みから，スタックは SP0，IMASK は 14 で起動される．
+ *  タスク独立部から起動されることはない．
  *
- *  �N�����@2:
+ *  起動方法2:
  * 
- *  �X�^�[�g�A�b�v���[�`���܂��͎��^�X�N���I������V�X�e���R�[��������C
- *  �����O���x���CIMASK �Ƃ��� 0 �̏�ԂŁC_dispatch_to_schedtsk �ւ̕�
- *  �򖽗߂ŋN�������D���̏ꍇ�Cctxtsk �͖������� schedtsk �Ƀf�B�X
- *  �p�b�`����D�N�����̃R���e�L�X�g�́CSP0 ���܂߂Ăǂ��ɂ��ۑ������
- *  ���D�X�^�[�g�A�b�v���[�`������N�������ꍇ�������ẮC�^�X�N�Ɨ�
- *  ������N������Ȃ��̂������ł��邪�C�V�X�e���R�[���𔭍s�����R���e
- *  �L�X�g�ɖ߂�Ȃ� E_CTX�G���[�����o�����ꍇ�ɂ́C��ނ������^�X�N��
- *  ��������N������邱�ƂɂȂ�D
+ *  スタートアップルーチンまたは自タスクを終了するシステムコール中から，
+ *  リングレベル，IMASK ともに 0 の状態で，_dispatch_to_schedtsk への分
+ *  岐命令で起動される．この場合，ctxtsk は無視して schedtsk にディス
+ *  パッチする．起動時のコンテキストは，SP0 を含めてどこにも保存されな
+ *  い．スタートアップルーチンから起動される場合を除いては，タスク独立
+ *  部から起動されないのが原則であるが，システムコールを発行したコンテ
+ *  キストに戻らない E_CTXエラーを検出した場合には，やむをえずタスク独
+ *  立部から起動されることになる．
  *
- *  �^�X�N�f�B�X�p�b�`�����ł́C�R���e�L�X�g�X�C�b�`�ɂ�� SP0 ���؂��
- *  ��邽�߁C�V�X�e���X�^�b�N��ɕۑ�����Ă����� (��̓I�ɂ́C�f�B
- *  �X�p�b�`���N���O�� PC�CPSW�CR0�`R14) �́C�R���e�L�X�g�ƂƂ��ɕۑ���
- *  ���D���ꂪ�C�f�B�X�p�b�`���� SP0 �œ��������R�ł���D���ۂɂ́C�V
- *  �X�e���X�^�b�N��ł̃t�H�[�}�b�g�́C���̂悤�ɂȂ�D
+ *  タスクディスパッチャ内では，コンテキストスイッチにより SP0 が切り替
+ *  わるため，システムスタック上に保存されている情報 (具体的には，ディ
+ *  スパッチャ起動前の PC，PSW，R0〜R14) は，コンテキストとともに保存さ
+ *  れる．これが，ディスパッチャを SP0 で動かす理由である．実際には，シ
+ *  ステムスタック上でのフォーマットは，次のようになる．
  *
- *  �� 	+-----------------------------------+ �� TCB ���ɕۑ�����Ă��� SP0
- *  ��	|                R0                 |
+ *  小 	+-----------------------------------+ ← TCB 中に保存されている SP0
+ *  ↑	|                R0                 |
  *	+-----------------------------------+
  *	|                R1                 |
  *	+-----------------------------------+
@@ -71,62 +71,62 @@
  *	+-----------------------------------+
  *	|               R14                 |
  *	+-----------------------------------+
- *	|    (�f�B�X�p�b�`���N���O��) PSW   |
+ *	|    (ディスパッチャ起動前の) PSW   |
  *	+-----------------------------------+
- *	| (�f�B�X�p�b�`���N���ɂ��) EITINF |
+ *	| (ディスパッチャ起動による) EITINF |
  *	+-----------------------------------+
- *  ��	|    (�f�B�X�p�b�`���N���O��) PC    |
- *  ��	+-----------------------------------+ �� �f�B�X�p�b�`���N���O�� SP0
+ *  ↓	|    (ディスパッチャ起動前の) PC    |
+ *  大	+-----------------------------------+ ← ディスパッチャ起動前の SP0
  *
  *
- *  �f�B�X�p�b�`���̑O���ł͊����݂͋�����Ă��邽�߁C�r���� schedtsk
- *  �����������\�������邽�߂ɒ��ӂ��K�v�ł���D����ɑ΂��āCctxtsk 
- *  �̓f�B�X�p�b�`���̒��ł̂ݍX�V�����D���̕������� ctxtsk ���X�V��
- *  �Ă͂Ȃ�Ȃ��D
+ *  ディスパッチャの前半では割込みは許可されているため，途中で schedtsk
+ *  が書きかわる可能性があるために注意が必要である．これに対して，ctxtsk 
+ *  はディスパッチャの中でのみ更新される．他の部分から ctxtsk を更新し
+ *  てはならない．
  *
- *  �f�B�X�p�b�`���̌㔼�͊����݋֎~��Ԃœ��삷��D����́Cschedtsk �� 
- *  R0 �ɓ��ꂽ��Ɋ����݂�������C���̊����݃n���h���̒��� schedtsk ��
- *  �폜���ꂽ�ꍇ�� schedtsk �̃V�X�e���X�^�b�N�̈悪�������Ă��܂��C
- *  �R���e�L�X�g�̕��A����эŌ�� REIT���߂̓��삪�ۏ؂ł��Ȃ��Ȃ邽��
- *  �ł���D����āC�^�X�N�Ɨ������� del_tsk �̔��s���邱�Ƃ��֎~���C�^
- *  �X�N�̃R���e�L�X�g�� DORMANT��Ԃɂ����Ă��L���ł���Ȃ�C�����݂�
- *  �֎~����K�v�͂Ȃ����̂Ǝv����D�Ȃ��C�����݋֎~�̉����́CREIT��
- *  �߂ɂ���čs����D
+ *  ディスパッチャの後半は割込み禁止状態で動作する．これは，schedtsk を 
+ *  R0 に入れた後に割込みがかかり，その割込みハンドラの中で schedtsk が
+ *  削除された場合に schedtsk のシステムスタック領域が解放されてしまい，
+ *  コンテキストの復帰および最後の REIT命令の動作が保証できなくなるため
+ *  である．よって，タスク独立部から del_tsk の発行することを禁止し，タ
+ *  スクのコンテキストが DORMANT状態においても有効であるなら，割込みを
+ *  禁止する必要はないものと思われる．なお，割込み禁止の解除は，REIT命
+ *  令によって行われる．
  *
- *  schedtsk �� NULL �̏ꍇ�́CWAIT���߂��g���āC�����łȂ��Ȃ�܂Ńf�B
- *  �X�p�b�`���̒��ő҂DWAIT ���߂̒���� DIR (�x�������ݗv�����W�X�^) 
- *  �� 15 �ɂ��邱�ƂŁC�^�X�N�f�B�X�p�b�`�����ēx�N������邱�Ƃ�h�~��
- *  ��D���̏����� dispatch_1 �̒���ōs�����ƂŁC�f�B�X�p�b�`�����N����
- *  �� dispatch_1 �ɓ��B����܂ł̊Ԃ� DIR ��������������󋵂Ńf�B�X
- *  �p�b�`���̍ċN����h�����Ƃ��ł��邪�C�m���I�ɒႭ�C�����͂ނ���ቺ
- *  ����Ǝv����D
+ *  schedtsk が NULL の場合は，WAIT命令を使って，そうでなくなるまでディ
+ *  スパッチャの中で待つ．WAIT 命令の直後で DIR (遅延割込み要求レジスタ) 
+ *  を 15 にすることで，タスクディスパッチャが再度起動されることを防止す
+ *  る．この処理を dispatch_1 の直後で行うことで，ディスパッチャが起動後
+ *  に dispatch_1 に到達するまでの間に DIR が書きかえられる状況でディス
+ *  パッチャの再起動を防ぐことができるが，確率的に低く，効率はむしろ低下
+ *  すると思われる．
  */
 	.text
 	.align 1
 	.globl _dispatch_to_schedtsk
 	.globl _dispatch_entry
 _dispatch_to_schedtsk:
-	stc @PSW, r0			/* �X�^�b�N�� SP0 �ɐؑւ��� */
+	stc @PSW, r0			/* スタックを SP0 に切替える */
 	bset #0, r0
 	ldc r0, @PSW
-	ldc #15, @DIR			/* �x�������ݗv���̉��� */
+	ldc #15, @DIR			/* 遅延割込み要求の解除 */
 	bra dispatch_1
 _dispatch_entry:
-	cmp @_ctxtsk, @_schedtsk	/* �^�X�N�X�C�b�`���K�v���H */
+	cmp @_ctxtsk, @_schedtsk	/* タスクスイッチが必要か？ */
 	beq dispatch_3
-	stm (r0-r14), @-sp		/* ���W�X�^�ƃR���e�L�X�g�̕ۑ� */
+	stm (r0-r14), @-sp		/* レジスタとコンテキストの保存 */
 	stctx/ls
 dispatch_1:
-	ldc #0, @IMASK			/* �����݂��֎~ */
-	mov @_schedtsk, r0		/* schedtsk �����邩�H */
+	ldc #0, @IMASK			/* 割込みを禁止 */
+	mov @_schedtsk, r0		/* schedtsk があるか？ */
 	bne dispatch_2
-	mov #0, @_ctxtsk		/* ctxtsk �� NULL �� */
-	wait #14			/* �����ݑ҂� */
-	ldc #15, @DIR			/* �x�������ݗv���̉��� */
+	mov #0, @_ctxtsk		/* ctxtsk を NULL に */
+	wait #14			/* 割込み待ち */
+	ldc #15, @DIR			/* 遅延割込み要求の解除 */
 	bra dispatch_1
 dispatch_2:
 	mov r0, @_ctxtsk
-	ldctx/ls @(TCB_tskctxb,r0)	/* ���W�X�^�ƃR���e�L�X�g�̕��A */
+	ldctx/ls @(TCB_tskctxb,r0)	/* レジスタとコンテキストの復帰 */
 	ldm @sp+, (r0-r14)
 dispatch_3:
 	reit

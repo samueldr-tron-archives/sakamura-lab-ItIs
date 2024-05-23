@@ -32,39 +32,39 @@
  */
 
 /*
- *  �^�X�N�f�B�X�p�b�`��
+ *  タスクディスパッチャ
  * 
- *  ���s���̃^�X�N (ctxtsk) �̃R���e�L�X�g�� TCB �ɕۑ����C���s���ׂ��^
- *  �X�N (schedtsk) ��V�������s�^�X�N�Ƃ��āC���̃R���e�L�X�g�� TCB ��
- *  �畜�A����D
+ *  実行中のタスク (ctxtsk) のコンテキストを TCB に保存し，実行すべきタ
+ *  スク (schedtsk) を新しい実行タスクとして，そのコンテキストを TCB か
+ *  ら復帰する．
  *
- *  �f�B�X�p�b�`���́C�ȉ��� 2�ʂ�̕��@�ŋN�������D
+ *  ディスパッチャは，以下の 2通りの方法で起動される．
  * 
- *  �N�����@1:
+ *  起動方法1:
  * 
- *  �V�X�e���R�[��������C�X�^�b�N�� SP0�CIMASK �� 15 �ŁCTRAPA���߂ɂ�
- *  ��N�������D�^�X�N�Ɨ�������Ă΂ꂽ�V�X�e���R�[�����ŋN�������
- *  ���Ƃ͂Ȃ��D
+ *  システムコール内から，スタックは SP0，IMASK は 15 で，TRAPA命令によ
+ *  り起動される．タスク独立部から呼ばれたシステムコール内で起動される
+ *  ことはない．
  *
- *  �N�����@2:
+ *  起動方法2:
  * 
- *  �X�^�[�g�A�b�v���[�`���܂��͎��^�X�N���I������V�X�e���R�[��������C
- *  �����O���x���CIMASK �Ƃ��� 0 �̏�ԂŁC_dispatch_to_schedtsk �ւ̕�
- *  �򖽗߂ŋN�������D���̏ꍇ�Cctxtsk �͖������� schedtsk �Ƀf�B�X
- *  �p�b�`����D�N�����̃R���e�L�X�g�́CSP0 ���܂߂Ăǂ��ɂ��ۑ������
- *  ���D�X�^�[�g�A�b�v���[�`������N�������ꍇ�������ẮC�^�X�N�Ɨ�
- *  ������N������Ȃ��̂������ł��邪�C�V�X�e���R�[���𔭍s�����R���e
- *  �L�X�g�ɖ߂�Ȃ� E_CTX�G���[�����o�����ꍇ�ɂ́C��ނ������^�X�N��
- *  ��������N������邱�ƂɂȂ�D
+ *  スタートアップルーチンまたは自タスクを終了するシステムコール中から，
+ *  リングレベル，IMASK ともに 0 の状態で，_dispatch_to_schedtsk への分
+ *  岐命令で起動される．この場合，ctxtsk は無視して schedtsk にディス
+ *  パッチする．起動時のコンテキストは，SP0 を含めてどこにも保存されな
+ *  い．スタートアップルーチンから起動される場合を除いては，タスク独立
+ *  部から起動されないのが原則であるが，システムコールを発行したコンテ
+ *  キストに戻らない E_CTXエラーを検出した場合には，やむをえずタスク独
+ *  立部から起動されることになる．
  *
- *  �^�X�N�f�B�X�p�b�`�����ł́C�R���e�L�X�g�X�C�b�`�ɂ�� SP0 ���؂��
- *  ��邽�߁C�V�X�e���X�^�b�N��ɕۑ�����Ă����� (��̓I�ɂ́C�f�B
- *  �X�p�b�`���N���O�� PC�CPSW�CR0�`R14) �́C�R���e�L�X�g�ƂƂ��ɕۑ���
- *  ���D���ꂪ�C�f�B�X�p�b�`���� SP0 �œ��������R�ł���D���ۂɂ́C�V
- *  �X�e���X�^�b�N��ł̃t�H�[�}�b�g�́C���̂悤�ɂȂ�D
+ *  タスクディスパッチャ内では，コンテキストスイッチにより SP0 が切り替
+ *  わるため，システムスタック上に保存されている情報 (具体的には，ディ
+ *  スパッチャ起動前の PC，PSW，R0〜R14) は，コンテキストとともに保存さ
+ *  れる．これが，ディスパッチャを SP0 で動かす理由である．実際には，シ
+ *  ステムスタック上でのフォーマットは，次のようになる．
  *
- *  �� 	+-----------------------------------+ �� TCB ���ɕۑ�����Ă��� SP0
- *  ��	|                R0                 |
+ *  小 	+-----------------------------------+ ← TCB 中に保存されている SP0
+ *  ↑	|                R0                 |
  *	+-----------------------------------+
  *	|                R1                 |
  *	+-----------------------------------+
@@ -72,99 +72,99 @@
  *	+-----------------------------------+
  *	|               R14                 |
  *	+-----------------------------------+
- *	|    (�f�B�X�p�b�`���N���O��) PSW   |
+ *	|    (ディスパッチャ起動前の) PSW   |
  *	+-----------------------------------+
- *	| (�f�B�X�p�b�`���N���ɂ��) EITINF |
+ *	| (ディスパッチャ起動による) EITINF |
  *	+-----------------------------------+
- *	|    (�f�B�X�p�b�`���N���O��) PC    |
+ *	|    (ディスパッチャ起動前の) PC    |
  *	+-----------------------------------+
- *  ��	|  (�f�B�X�p�b�`���N���ɂ��) EXPC  |
- *  ��	+-----------------------------------+ �� �f�B�X�p�b�`���N���O�� SP0
+ *  ↓	|  (ディスパッチャ起動による) EXPC  |
+ *  大	+-----------------------------------+ ← ディスパッチャ起動前の SP0
  *
- *  �Ō�ɂ��� EXPC �́CTRAPA���߂Ń^�X�N�f�B�X�p�b�`�����N�����ꂽ�ꍇ
- *  �ɂ́CTRAPA���߂̒u����Ă���Ԓn�����邱�ƂɂȂ�Dret_int �ɂ����
- *  �R���e�L�X�g���ۑ����ꂽ�ꍇ�ɂ́CTRAPA���߂͎g���Ȃ����߁CEXPC 
- *  �ɓ�����͈Ӗ��������Ȃ� (���ۂɂ� 0 �����Ă��邪�C�ȗ����Ă���
- *  ��Ȃ����낤)�D
+ *  最後にある EXPC は，TRAPA命令でタスクディスパッチャが起動された場合
+ *  には，TRAPA命令の置かれている番地が入ることになる．ret_int によって
+ *  コンテキストが保存された場合には，TRAPA命令は使われないため，EXPC 
+ *  に入る情報は意味を持たない (実際には 0 を入れているが，省略しても問
+ *  題ないだろう)．
  *
- *  �f�B�X�p�b�`���̑O���ł͊����݂͋�����Ă��邽�߁C�r���� schedtsk
- *  �����������\�������邽�߂ɒ��ӂ��K�v�ł���D����ɑ΂��āCctxtsk 
- *  �̓f�B�X�p�b�`���̒��ł̂ݍX�V�����D���̕������� ctxtsk ���X�V��
- *  �Ă͂Ȃ�Ȃ��D�܂��C�f�B�X�p�b�`�����s���ɂ������������݃n���h����
- *  �Ō�� ret_int�V�X�e���R�[���Ń^�X�N�f�B�X�p�b�`���N�����Ȃ��悤�ɁC
- *  �f�B�X�p�b�`�����쒆�� dispatch_disabled �� TRUE �ɂ���D
+ *  ディスパッチャの前半では割込みは許可されているため，途中で schedtsk
+ *  が書きかわる可能性があるために注意が必要である．これに対して，ctxtsk 
+ *  はディスパッチャの中でのみ更新される．他の部分から ctxtsk を更新し
+ *  てはならない．また，ディスパッチャ実行中にかかった割込みハンドラの
+ *  最後の ret_intシステムコールでタスクディスパッチを起こさないように，
+ *  ディスパッチャ動作中は dispatch_disabled を TRUE にする．
  *
- *  �f�B�X�p�b�`���̌㔼�͊����݋֎~��Ԃœ��삷��D����́Cschedtsk �� 
- *  R0 �ɓ��ꂽ��Ɋ����݂�������C���̊����݃n���h���̒��� schedtsk ��
- *  �폜���ꂽ�ꍇ�� schedtsk �̃V�X�e���X�^�b�N�̈悪�������Ă��܂��C
- *  �R���e�L�X�g�̕��A����эŌ�� REIT���߂̓��삪�ۏ؂ł��Ȃ��Ȃ邽��
- *  �ł���D����āC�^�X�N�Ɨ������� del_tsk �̔��s���邱�Ƃ��֎~���C�^
- *  �X�N�̃R���e�L�X�g�� DORMANT��Ԃɂ����Ă��L���ł���Ȃ�C�����݂�
- *  �֎~����K�v�͂Ȃ����̂Ǝv����D�Ȃ��C�����݋֎~�̉����́CREIT��
- *  �߂ɂ���čs����D
+ *  ディスパッチャの後半は割込み禁止状態で動作する．これは，schedtsk を 
+ *  R0 に入れた後に割込みがかかり，その割込みハンドラの中で schedtsk が
+ *  削除された場合に schedtsk のシステムスタック領域が解放されてしまい，
+ *  コンテキストの復帰および最後の REIT命令の動作が保証できなくなるため
+ *  である．よって，タスク独立部から del_tsk の発行することを禁止し，タ
+ *  スクのコンテキストが DORMANT状態においても有効であるなら，割込みを
+ *  禁止する必要はないものと思われる．なお，割込み禁止の解除は，REIT命
+ *  令によって行われる．
  *
- *  schedtsk �� NULL �̏ꍇ�́CWAIT���߂��g���āC�����łȂ��Ȃ�܂Ńf�B
- *  �X�p�b�`���̒��ő҂D��͂�Cdispatch_disabled �� TRUE �ɂ��邱��
- *  �ŁC���̊ԂɋN�����ꂽ�����݃n���h���̍Ō�ŌĂ΂�� ret_int �̒���
- *  �^�X�N�X�C�b�`���N����Ȃ��悤�ɂ��Ă���D
+ *  schedtsk が NULL の場合は，WAIT命令を使って，そうでなくなるまでディ
+ *  スパッチャの中で待つ．やはり，dispatch_disabled を TRUE にすること
+ *  で，この間に起動された割込みハンドラの最後で呼ばれる ret_int の中で
+ *  タスクスイッチが起こらないようにしている．
  */
 	.text
 	.align 1
 	.globl _dispatch_to_schedtsk
 	.globl _dispatch_entry
 _dispatch_to_schedtsk:
-	stc @PSW, r0			/* �X�^�b�N�� SP0 �ɐؑւ��� */
+	stc @PSW, r0			/* スタックを SP0 に切替える */
 	bset #0, r0
 	ldc r0, @PSW
-	mov #1, @_dispatch_disabled	/* �^�X�N�f�B�X�p�b�`���֎~ */
+	mov #1, @_dispatch_disabled	/* タスクディスパッチを禁止 */
 	bra dispatch_1
 _dispatch_entry:
-	mov #1, @_dispatch_disabled	/* �^�X�N�f�B�X�p�b�`���֎~ */
-	stm (r0-r14), @-sp		/* ���W�X�^�ƃR���e�L�X�g�̕ۑ� */
+	mov #1, @_dispatch_disabled	/* タスクディスパッチを禁止 */
+	stm (r0-r14), @-sp		/* レジスタとコンテキストの保存 */
 	stctx/ls
 dispatch_1:
-	ldc #0, @IMASK			/* �����݂��֎~ */
-	mov @_schedtsk, r0		/* schedtsk �����邩�H */
+	ldc #0, @IMASK			/* 割込みを禁止 */
+	mov @_schedtsk, r0		/* schedtsk があるか？ */
 	bne dispatch_2
-	mov #0, @_ctxtsk		/* ctxtsk �� NULL �� */
-	wait #15			/* �����ݑ҂� */
+	mov #0, @_ctxtsk		/* ctxtsk を NULL に */
+	wait #15			/* 割込み待ち */
 	bra dispatch_1
 dispatch_2:
 	mov r0, @_ctxtsk
-	ldctx/ls @(TCB_tskctxb,r0)	/* ���W�X�^�ƃR���e�L�X�g�̕��A */
+	ldctx/ls @(TCB_tskctxb,r0)	/* レジスタとコンテキストの復帰 */
 	ldm @sp+, (r0-r14)
-	mov #0, @_dispatch_disabled	/* �^�X�N�f�B�X�p�b�`������ */
+	mov #0, @_dispatch_disabled	/* タスクディスパッチを許可 */
 	reit
 
 /*
- *  ret_int�V�X�e���R�[���������[�`��
+ *  ret_intシステムコール処理ルーチン
  *
- *  _z_ret_int �� TRAPA ��p�����V�X�e���R�[���Ăяo���C���^�t�F�[�X��
- *  �������C_i_ret_int �̓T�u���[�`���R�[����p�����C���^�t�F�[�X�ɂ�
- *  ������ł���D__ret_int �� BRA���߂Ȃ����� JMP���߂ŕ��򂷂���@��
- *  ����D
+ *  _z_ret_int は TRAPA を用いたシステムコール呼び出しインタフェースに
+ *  よる入口，_i_ret_int はサブルーチンコールを用いたインタフェースによ
+ *  る入口である．__ret_int に BRA命令ないしは JMP命令で分岐する方法も
+ *  ある．
  *
- *  ret_int �̏����́C�ŏ��Ƀf�B�X�p�b�`���K�v�����`�F�b�N���镔������
- *  ���ẮC�^�X�N�f�B�X�p�b�`���Ɨގ��̓�����s���D�ő�̈Ⴂ�́C�^�X
- *  �N�f�B�X�p�b�`���� SP0 ���g���ē��삷��̂ɑ΂��āCret_int �̏�����
- *  �^�X�N�Ɨ�������Ă΂�邽�߂� SPI ���g���ē��삷�邱�Ƃł���D����
- *  ���߁C���W�X�^����ۑ�����ۂɁCR0 �� SP0 �̑���ɗp���Ă���D��
- *  ���C�߂��� PC �� PSW ���C�X�^�b�N�t���[���̒�������o���ĕۑ���
- *  ��K�v������D
+ *  ret_int の処理は，最初にディスパッチが必要かをチェックする部分を除
+ *  いては，タスクディスパッチャと類似の動作を行う．最大の違いは，タス
+ *  クディスパッチャが SP0 を使って動作するのに対して，ret_int の処理は
+ *  タスク独立部から呼ばれるために SPI を使って動作することである．その
+ *  ため，レジスタ等を保存する際に，R0 を SP0 の代わりに用いている．ま
+ *  た，戻り先の PC や PSW を，スタックフレームの中から取り出して保存す
+ *  る必要がある．
  *
- *  ����C���Ɏ��s���ׂ��^�X�N�̃��W�X�^���̕��A�́C�^�X�N�f�B�X�p�b�`
- *  ���[�`���ɔC���Ă���D�^�X�N�f�B�X�p�b�`���[�`���ɕ��򂷂�ۂ� REIT
- *  ���߂�p���Ă���̂́CEIT�X�^�b�N���ɕۑ�����Ă��鏈�����s���C
- *  EIT�X�^�b�N����������邽�߂ł���D
+ *  一方，次に実行すべきタスクのレジスタ等の復帰は，タスクディスパッチ
+ *  ルーチンに任せている．タスクディスパッチルーチンに分岐する際に REIT
+ *  命令を用いているのは，EITスタック情報に保存されている処理を行い，
+ *  EITスタック情報を解放するためである．
  *
- *  ret_int ���Ă΂ꂽ��� schedtsk �����������󋵂ŁC�^�X�N�X�C�b�`��
- *  �ԈႢ�Ȃ��s����悤�C�\���Ȕz�����K�v�ł���D���̂��߂Ɉȉ��̃��[
- *  �`���ł́Cctxtsk �� schedtsk �̔�r�̑O�̎��_�Ŋ����݂��֎~���Ă���D
- *  �����݋֎~�����̔�r�̌�ɂ����ꍇ�C��r�̒���Ɋ����݂������肻��
- *  ���Ń^�X�N�f�B�X�p�b�`���v�����ꂽ�ꍇ�ɁC�^�X�N�X�C�b�`���N�����
- *  �� (ret_int�����̒��ł������������݃n���h������� ret_int �ł́C��
- *  ��悪 IMASK != 15 �ł��邽�߂ɁC�^�X�N�X�C�b�`�͋N����Ȃ����Ƃɒ�
- *  ��)�D
+ *  ret_int が呼ばれた後に schedtsk が書きかわる状況で，タスクスイッチが
+ *  間違いなく行われるよう，十分な配慮が必要である．そのために以下のルー
+ *  チンでは，ctxtsk と schedtsk の比較の前の時点で割込みを禁止している．
+ *  割込み禁止をこの比較の後にした場合，比較の直後に割込みがかかりその
+ *  中でタスクディスパッチが要求された場合に，タスクスイッチが起こらな
+ *  い (ret_int処理の中でかかった割込みハンドラからの ret_int では，戻
+ *  り先が IMASK != 15 であるために，タスクスイッチは起こらないことに注
+ *  意)．
  */
 	.text
 	.align 1
@@ -172,32 +172,32 @@ dispatch_2:
 	.globl _i_ret_int
 	.globl __ret_int
 _z_ret_int:
-	add #16, sp			/* TRAPA �� EIT�����̂Ă� */
+	add #16, sp			/* TRAPA の EIT情報を捨てる */
 	bra __ret_int
 _i_ret_int:
-	add #4, sp			/* �߂�Ԓn���̂Ă� */
+	add #4, sp			/* 戻り番地を捨てる */
 __ret_int:
-	bfcmpu #15, #12,#4,@sp		/* EIT��񒆂� IMASK != 15 �Ȃ�I�� */
+	bfcmpu #15, #12,#4,@sp		/* EIT情報中の IMASK != 15 なら終了 */
 	bne ret_int_1
-	cmp #0, @_dispatch_disabled	/* �^�X�N�f�B�X�p�b�`�֎~�����H */
+	cmp #0, @_dispatch_disabled	/* タスクディスパッチ禁止中か？ */
 	bne ret_int_1
-	ldc #0, @IMASK			/* �����݂��֎~ */
-	cmp @_ctxtsk, @_schedtsk	/* �^�X�N�X�C�b�`���K�v���H */
+	ldc #0, @IMASK			/* 割込みを禁止 */
+	cmp @_ctxtsk, @_schedtsk	/* タスクスイッチが必要か？ */
 	beq ret_int_1
 
-	mov #1, @_dispatch_disabled	/* �^�X�N�f�B�X�p�b�`���֎~ */
+	mov #1, @_dispatch_disabled	/* タスクディスパッチを禁止 */
 	push r0
 	stc @SP0, r0
 	sub #76, r0
 	ldc r0, @SP0
-	mov #0, @(72,r0)		/* EXPC (�_�~�[) �̐ݒ� */
-	mov @(12,sp), @(68,r0)		/* �߂�Ԓn�̕ۑ� */
-	mov #TRAPA4_EITINF, @(64,r0)	/* EITINF �̐ݒ� */
-	mov @(4,sp), @(60,r0)		/* PSW �̕ۑ� */
-	stm (r1-r14), @(4,r0)		/* ���W�X�^�̕ۑ� */
+	mov #0, @(72,r0)		/* EXPC (ダミー) の設定 */
+	mov @(12,sp), @(68,r0)		/* 戻り番地の保存 */
+	mov #TRAPA4_EITINF, @(64,r0)	/* EITINF の設定 */
+	mov @(4,sp), @(60,r0)		/* PSW の保存 */
+	stm (r1-r14), @(4,r0)		/* レジスタの保存 */
 	pop @r0
-	stctx/ls			/* �R���e�L�X�g�̕ۑ� */
-	mov #dispatch_1, @(8,sp)	/* �߂��� dispatch_1 �� */
-	mov #DISPATCHER_PSW, @sp	/* PSW ��ύX */
+	stctx/ls			/* コンテキストの保存 */
+	mov #dispatch_1, @(8,sp)	/* 戻り先を dispatch_1 に */
+	mov #DISPATCHER_PSW, @sp	/* PSW を変更 */
 ret_int_1:
 	reit

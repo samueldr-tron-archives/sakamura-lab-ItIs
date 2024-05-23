@@ -35,18 +35,18 @@
 #define _SYS_CONF_
 
 /*
- *  �X�^�b�N�G���A�C�q�[�v�G���A�̒�`
+ *  スタックエリア，ヒープエリアの定義
  *
- *  _end �́C�v���O�����Ŏg�p����f�[�^�G���A�̍Ō�̎��̔Ԓn�D
+ *  _end は，プログラムで使用するデータエリアの最後の次の番地．
  */
-#define STACKTOP	0x100000	/* �^�X�N�Ɨ����p�X�^�b�N�̏����l */
-#define HEAPTOP		_end		/* �q�[�v�G���A�̐擪 */
-#define HEAPLIMIT	0x0fe000	/* �q�[�v�G���A�̏�� */
+#define STACKTOP	0x100000	/* タスク独立部用スタックの初期値 */
+#define HEAPTOP		_end		/* ヒープエリアの先頭 */
+#define HEAPLIMIT	0x0fe000	/* ヒープエリアの上限 */
 
 /*
- *  �V�X�e���^�X�N�Ɋւ����`
+ *  システムタスクに関する定義
  */
-#define	CONSOLE_PORT	2	/* �R���\�[���p�ɗp����V���A���|�[�g�ԍ� */
-#define	LOGTASK_PORT	2	/* �V�X�e�����O���o�͂���V���A���|�[�g�ԍ� */
+#define	CONSOLE_PORT	2	/* コンソール用に用いるシリアルポート番号 */
+#define	LOGTASK_PORT	2	/* システムログを出力するシリアルポート番号 */
 
 #endif /* _SYS_CONF_ */

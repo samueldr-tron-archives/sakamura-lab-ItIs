@@ -35,41 +35,41 @@
 #define _ITRON_ERRNO_
 
 /* 
- *  ITRON ‚ÌƒGƒ‰[ƒR[ƒh‚Ì’è‹`
+ *  ITRON ã®ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å®šç¾©
  */
 
-#define	E_OK		0		/* ³íI—¹ */
+#define	E_OK		0		/* æ­£å¸¸çµ‚äº† */
 
-#define E_SYS		(-5)		/* ƒVƒXƒeƒ€ƒGƒ‰[ */
-#define	E_NOMEM		(-10)		/* ƒƒ‚ƒŠ•s‘« */
-#define	E_NOSPT		(-17)		/* –¢ƒTƒ|[ƒg‹@”\ */
-#define	E_INOSPT	(-18)		/* ITRON/FILE ‚Å‚Ì–¢ƒTƒ|[ƒg‹@”\ */
-#define	E_RSFN		(-20)		/* —\–ñ‹@”\”Ô† */
-#define	E_RSATR		(-24)		/* —\–ñ‘®« */
-#define	E_PAR		(-33)		/* ƒpƒ‰ƒƒ^[ƒGƒ‰[ */
-#define	E_ID		(-35)		/* •s³ID”Ô† */
-#define	E_NOEXS		(-52)		/* ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ */
-#define	E_OBJ		(-63)		/* ƒIƒuƒWƒFƒNƒg‚Ìó‘Ô‚ª•s³ */
-#define	E_MACV		(-65)		/* ƒƒ‚ƒŠƒAƒNƒZƒX•s”\/ƒAƒNƒZƒXŒ ˆá”½ */
-#define	E_OACV		(-66)		/* ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ */
-#define	E_CTX		(-69)		/* ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[ */
-#define	E_QOVR		(-73)		/* ƒLƒ…[ƒCƒ“ƒO‚ÌƒI[ƒo[ƒtƒ[ */
-#define	E_DLT		(-81)		/* ‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ªíœ‚³‚ê‚½ */
-#define	E_TMOUT		(-85)		/* ƒ|[ƒŠƒ“ƒOŽ¸”s/ƒ^ƒCƒ€ƒAƒEƒg */
-#define	E_RLWAI		(-86)		/* ‘Ò‚¿ó‘Ô‹­§‰ðœ */
+#define E_SYS		(-5)		/* ã‚·ã‚¹ãƒ†ãƒ ã‚¨ãƒ©ãƒ¼ */
+#define	E_NOMEM		(-10)		/* ãƒ¡ãƒ¢ãƒªä¸è¶³ */
+#define	E_NOSPT		(-17)		/* æœªã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½ */
+#define	E_INOSPT	(-18)		/* ITRON/FILE ã§ã®æœªã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½ */
+#define	E_RSFN		(-20)		/* äºˆç´„æ©Ÿèƒ½ç•ªå· */
+#define	E_RSATR		(-24)		/* äºˆç´„å±žæ€§ */
+#define	E_PAR		(-33)		/* ãƒ‘ãƒ©ãƒ¡ã‚¿ãƒ¼ã‚¨ãƒ©ãƒ¼ */
+#define	E_ID		(-35)		/* ä¸æ­£IDç•ªå· */
+#define	E_NOEXS		(-52)		/* ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå­˜åœ¨ã—ã¦ã„ãªã„ */
+#define	E_OBJ		(-63)		/* ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®çŠ¶æ…‹ãŒä¸æ­£ */
+#define	E_MACV		(-65)		/* ãƒ¡ãƒ¢ãƒªã‚¢ã‚¯ã‚»ã‚¹ä¸èƒ½/ã‚¢ã‚¯ã‚»ã‚¹æ¨©é•å */
+#define	E_OACV		(-66)		/* ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¢ã‚¯ã‚»ã‚¹æ¨©é•å */
+#define	E_CTX		(-69)		/* ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ©ãƒ¼ */
+#define	E_QOVR		(-73)		/* ã‚­ãƒ¥ãƒ¼ã‚¤ãƒ³ã‚°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ */
+#define	E_DLT		(-81)		/* å¾…ã¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå‰Šé™¤ã•ã‚ŒãŸ */
+#define	E_TMOUT		(-85)		/* ãƒãƒ¼ãƒªãƒ³ã‚°å¤±æ•—/ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ */
+#define	E_RLWAI		(-86)		/* å¾…ã¡çŠ¶æ…‹å¼·åˆ¶è§£é™¤ */
 
-#define	EN_NOND		(-113)		/* ‘ÎÛƒm[ƒh‚ª‘¶Ý‚µ‚È‚¢ */
-#define	EN_OBJNO	(-114)		/* ƒAƒNƒZƒX‚Å‚«‚È‚¢ƒIƒuƒWƒFƒNƒg”Ô† */
-#define	EN_PROTO	(-115)		/* –¢ƒTƒ|[ƒgƒvƒƒgƒRƒ‹ */
-#define	EN_RSFN		(-116)		/* –¢ƒTƒ|[ƒgƒVƒXƒeƒ€ƒR[ƒ‹ */
-#define	EN_COMM		(-117)		/* ‘ÎÛƒm[ƒh‚©‚ç‚Ì‰ž“š‚ª‚È‚¢ */
-#define	EN_RLWAI	(-118)		/* Ú‘±‹@”\‚ÉŠÖ‚í‚é‘Ò‚¿ó‘Ô‹­§‰ðœ */
-#define	EN_PAR		(-119)		/* —v‹Žž‚Ìƒpƒ‰ƒ[ƒ^ƒGƒ‰[ */
-#define	EN_RPAR		(-120)		/* ƒŠƒ^[ƒ“Žž‚Ìƒpƒ‰ƒ[ƒ^ƒGƒ‰[ */
-#define	EN_CTXID	(-121)		/* Ú‘±‹@”\‚ðŽg‚¦‚È‚¢ƒRƒ“ƒeƒLƒXƒg */
-#define	EN_EXEC		(-122)		/* ‘ÎÛƒm[ƒh‚É‚¨‚¯‚éŽ‘Œ¹•s‘« */
-#define	EN_NOSPT	(-123)		/* –¢ƒTƒ|[ƒgÚ‘±‹@”\ */
+#define	EN_NOND		(-113)		/* å¯¾è±¡ãƒŽãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãªã„ */
+#define	EN_OBJNO	(-114)		/* ã‚¢ã‚¯ã‚»ã‚¹ã§ããªã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç•ªå· */
+#define	EN_PROTO	(-115)		/* æœªã‚µãƒãƒ¼ãƒˆãƒ—ãƒ­ãƒˆã‚³ãƒ« */
+#define	EN_RSFN		(-116)		/* æœªã‚µãƒãƒ¼ãƒˆã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« */
+#define	EN_COMM		(-117)		/* å¯¾è±¡ãƒŽãƒ¼ãƒ‰ã‹ã‚‰ã®å¿œç­”ãŒãªã„ */
+#define	EN_RLWAI	(-118)		/* æŽ¥ç¶šæ©Ÿèƒ½ã«é–¢ã‚ã‚‹å¾…ã¡çŠ¶æ…‹å¼·åˆ¶è§£é™¤ */
+#define	EN_PAR		(-119)		/* è¦æ±‚æ™‚ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚¨ãƒ©ãƒ¼ */
+#define	EN_RPAR		(-120)		/* ãƒªã‚¿ãƒ¼ãƒ³æ™‚ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚¨ãƒ©ãƒ¼ */
+#define	EN_CTXID	(-121)		/* æŽ¥ç¶šæ©Ÿèƒ½ã‚’ä½¿ãˆãªã„ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ */
+#define	EN_EXEC		(-122)		/* å¯¾è±¡ãƒŽãƒ¼ãƒ‰ã«ãŠã‘ã‚‹è³‡æºä¸è¶³ */
+#define	EN_NOSPT	(-123)		/* æœªã‚µãƒãƒ¼ãƒˆæŽ¥ç¶šæ©Ÿèƒ½ */
 
-#define EV_FULL		(-225)		/* ƒIƒuƒWƒFƒNƒgƒe[ƒuƒ‹ƒtƒ‹ */
+#define EV_FULL		(-225)		/* ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ†ãƒ¼ãƒ–ãƒ«ãƒ•ãƒ« */
 
 #endif /* _ITRON_ERRNO_ */

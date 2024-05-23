@@ -39,24 +39,24 @@
 #include "tron_defs.h"
 
 /*
- *  MCUBE—pƒXƒ^[ƒgƒAƒbƒvƒ‚ƒWƒ…[ƒ‹
+ *  MCUBEç”¨ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 	.text
 	.align 1
 	.globl ___sys_init
 ___sys_init:
 mcube_start:
-	mov r0, r13			/* –ß‚è”Ô’n‚ğ R13 ‚É•Û‘¶ */
+	mov r0, r13			/* æˆ»ã‚Šç•ªåœ°ã‚’ R13 ã«ä¿å­˜ */
 	stc @PSW, r0
-	and #0x1fffffff, r0		/* SMRNG ‚ğ 0 ‚Éİ’è */
+	and #0x1fffffff, r0		/* SMRNG ã‚’ 0 ã«è¨­å®š */
 	ldc r0, @PSW
-	mov #STACKTOP, sp		/* ƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^ (SPI) ‚Ì‰Šú‰» */
-	mov #0, fp			/* ƒtƒŒ[ƒ€ƒ|ƒCƒ“ƒ^‚Ì‰Šú‰» */
-	bsr ___rawio_init		/* ƒ‰ƒCƒuƒ‰ƒŠ‚Ì‰Šú‰» */
+	mov #STACKTOP, sp		/* ã‚¹ã‚¿ãƒƒã‚¯ãƒã‚¤ãƒ³ã‚¿ (SPI) ã®åˆæœŸåŒ– */
+	mov #0, fp			/* ãƒ•ãƒ¬ãƒ¼ãƒ ãƒã‚¤ãƒ³ã‚¿ã®åˆæœŸåŒ– */
+	bsr ___rawio_init		/* ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®åˆæœŸåŒ– */
 	jmp @r13
 
 /*
- *  ’áƒŒƒxƒ‹ƒƒ‚ƒŠƒGƒŠƒAŠm•Ûƒ‹[ƒ`ƒ“
+ *  ä½ãƒ¬ãƒ™ãƒ«ãƒ¡ãƒ¢ãƒªã‚¨ãƒªã‚¢ç¢ºä¿ãƒ«ãƒ¼ãƒãƒ³
  *
  *  void *sbrk(int size)
  */
@@ -64,16 +64,16 @@ mcube_start:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	mov @_break, r1			/* _break ‚ÌŒ»İ’l‚ğæ‚èo‚· */
+	mov @_break, r1			/* _break ã®ç¾åœ¨å€¤ã‚’å–ã‚Šå‡ºã™ */
 	add r1, r0
-	bxs sbrk_overflow		/* ƒƒ‚ƒŠƒtƒ‹‚Ìƒ`ƒFƒbƒN */
+	bxs sbrk_overflow		/* ãƒ¡ãƒ¢ãƒªãƒ•ãƒ«ã®ãƒã‚§ãƒƒã‚¯ */
 	cmpu #HEAPLIMIT, r0
 	bgt sbrk_overflow
-	mov r0, @_break			/* _break ‚ÌXV */
-	mov r1, r0			/* XV‘O‚Ì _break ‚ğ•Ô‚· */
+	mov r0, @_break			/* _break ã®æ›´æ–° */
+	mov r1, r0			/* æ›´æ–°å‰ã® _break ã‚’è¿”ã™ */
 	rts
 sbrk_overflow:
-	mov #-1, r0			/* ƒI[ƒo[ƒtƒ[‚Ìê‡‚Í NADR */
+	mov #-1, r0			/* ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã®å ´åˆã¯ NADR */
 	rts
 
 	.data

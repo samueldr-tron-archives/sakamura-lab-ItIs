@@ -38,41 +38,41 @@
 #include "cpu_task.h"
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`‹Ö~ó‘Ô
+ *  ã‚¿ã‚¹ã‚¯ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒç¦æ­¢çŠ¶æ…‹
  */
 #ifdef USE_DISPATCH_DISABLED
 BOOL	dispatch_disabled;
 #endif /* USE_DISPATCH_DISABLED */
 
 /*
- *  Às’†‚Ìƒ^ƒXƒN
+ *  å®Ÿè¡Œä¸­ã®ã‚¿ã‚¹ã‚¯
  */
 TCB	*ctxtsk;
 
 /*
- *  Às‚·‚×‚«ƒ^ƒXƒN
+ *  å®Ÿè¡Œã™ã¹ãã‚¿ã‚¹ã‚¯
  */
 TCB	*schedtsk;
 
 /*
- *  TCB ‚ÌƒGƒŠƒA
+ *  TCB ã®ã‚¨ãƒªã‚¢
  */
 TCB	tcb_table[NUM_TSKID];
 
 /*
- *  ƒŒƒfƒBƒLƒ…[
+ *  ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼
  */ 
 RDYQUE	ready_queue;
 
 /*
- *  –¢g—p‚Ì TCB ‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã® TCB ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vcre_tsk
 QUEUE	free_tcb;
 #endif /* _i_vcre_tsk */
 
 /*
- *  TCB ‚Ì‰Šú‰»
+ *  TCB ã®åˆæœŸåŒ–
  */
 void
 task_initialize(void)
@@ -106,13 +106,13 @@ task_initialize(void)
 }
 
 /*
- *  ƒ^ƒXƒN‚ÌÀs€”õ‚ğ‚·‚éD
+ *  ã‚¿ã‚¹ã‚¯ã®å®Ÿè¡Œæº–å‚™ã‚’ã™ã‚‹ï¼
  */
 void
 make_dormant(TCB *tcb)
 {
 	/*
-	 *  DORMANTó‘Ô‚Å‚ÍƒŠƒZƒbƒg‚³‚ê‚Ä‚¢‚é‚×‚«•Ï”‚ğ‰Šú‰»D
+	 *  DORMANTçŠ¶æ…‹ã§ã¯ãƒªã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹ã¹ãå¤‰æ•°ã‚’åˆæœŸåŒ–ï¼
 	 */
 	tcb->state = TS_DORMANT;
 	tcb->priority = tcb->ipriority;
@@ -129,15 +129,15 @@ make_dormant(TCB *tcb)
 #endif /* USE_TASK_MAILBOX */
 
 	/*
-	 *  ƒ^ƒXƒN‹N“®‚Ì‚½‚ß‚ÌƒRƒ“ƒeƒLƒXƒg‚Ìİ’èD
+	 *  ã‚¿ã‚¹ã‚¯èµ·å‹•ã®ãŸã‚ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®è¨­å®šï¼
 	 */
 	setup_context(tcb);
 }
 
 /*
- *  Às‚·‚×‚«ƒ^ƒXƒN‚ğ‘I‘ğ‚µ’¼‚·D
+ *  å®Ÿè¡Œã™ã¹ãã‚¿ã‚¹ã‚¯ã‚’é¸æŠã—ç›´ã™ï¼
  *
- *  schedtsk ‚ğƒŒƒfƒBƒLƒ…[‚Ìæ“ª‚Ìƒ^ƒXƒN‚Æˆê’v‚³‚¹‚éD
+ *  schedtsk ã‚’ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã®å…ˆé ­ã®ã‚¿ã‚¹ã‚¯ã¨ä¸€è‡´ã•ã›ã‚‹ï¼
  */
 Inline void
 reschedule(void)
@@ -151,10 +151,10 @@ reschedule(void)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğÀs‰Â”\ó‘Ô‚É‚·‚éD
+ *  ã‚¿ã‚¹ã‚¯ã‚’å®Ÿè¡Œå¯èƒ½çŠ¶æ…‹ã«ã™ã‚‹ï¼
  *
- *  ƒ^ƒXƒNó‘Ô‚ğXV‚µCƒŒƒfƒBƒLƒ…[‚É‘}“ü‚·‚éD•K—v‚È‚çCschedtsk ‚ğ
- *  XV‚µCƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‹N“®‚ğ—v‹‚·‚éD
+ *  ã‚¿ã‚¹ã‚¯çŠ¶æ…‹ã‚’æ›´æ–°ã—ï¼Œãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã«æŒ¿å…¥ã™ã‚‹ï¼å¿…è¦ãªã‚‰ï¼Œschedtsk ã‚’
+ *  æ›´æ–°ã—ï¼Œã‚¿ã‚¹ã‚¯ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã®èµ·å‹•ã‚’è¦æ±‚ã™ã‚‹ï¼
  */
 void
 make_ready(TCB *tcb)
@@ -167,10 +167,10 @@ make_ready(TCB *tcb)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğÀs‰Â”\ˆÈŠO‚Ìó‘Ô‚É‚·‚éD
+ *  ã‚¿ã‚¹ã‚¯ã‚’å®Ÿè¡Œå¯èƒ½ä»¥å¤–ã®çŠ¶æ…‹ã«ã™ã‚‹ï¼
  *
- *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚©‚çíœ‚·‚éDíœ‚µ‚½ƒ^ƒXƒN‚ª schedtsk ‚Å‚ ‚Á
- *  ‚½ê‡‚É‚ÍCschedtsk ‚ğƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“xƒ^ƒXƒN‚Éİ’è‚·‚éD
+ *  ã‚¿ã‚¹ã‚¯ã‚’ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã‹ã‚‰å‰Šé™¤ã™ã‚‹ï¼å‰Šé™¤ã—ãŸã‚¿ã‚¹ã‚¯ãŒ schedtsk ã§ã‚ã£
+ *  ãŸå ´åˆã«ã¯ï¼Œschedtsk ã‚’ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ä¸­ã®æœ€é«˜å„ªå…ˆåº¦ã‚¿ã‚¹ã‚¯ã«è¨­å®šã™ã‚‹ï¼
  */
 void
 make_non_ready(TCB *tcb)
@@ -184,7 +184,7 @@ make_non_ready(TCB *tcb)
 }
 
 /*
- *  ƒ^ƒXƒN‚Ì—Dæ“x‚ğ•ÏX‚·‚éD
+ *  ã‚¿ã‚¹ã‚¯ã®å„ªå…ˆåº¦ã‚’å¤‰æ›´ã™ã‚‹ï¼
  */
 void
 change_task_priority(TCB *tcb, INT priority)
@@ -193,10 +193,10 @@ change_task_priority(TCB *tcb, INT priority)
 
 	if (tcb->state == TS_READY) {
 		/*
-		 *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚©‚çíœ‚·‚éÛ‚É TCB ‚Ì
-		 *  priority ƒtƒB[ƒ‹ƒh‚Ì’l‚ª•K—v‚É‚È‚é‚½‚ßCƒŒ
-		 *  ƒfƒBƒLƒ…[‚©‚ç‚Ìíœ‚ÍCtcb->priority ‚ğ‘
-		 *  ‚«Š·‚¦‚é‘O‚És‚í‚È‚¯‚ê‚Î‚È‚ç‚È‚¢D
+		 *  ã‚¿ã‚¹ã‚¯ã‚’ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã‹ã‚‰å‰Šé™¤ã™ã‚‹éš›ã« TCB ã®
+		 *  priority ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å€¤ãŒå¿…è¦ã«ãªã‚‹ãŸã‚ï¼Œãƒ¬
+		 *  ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã‹ã‚‰ã®å‰Šé™¤ã¯ï¼Œtcb->priority ã‚’æ›¸
+		 *  ãæ›ãˆã‚‹å‰ã«è¡Œã‚ãªã‘ã‚Œã°ãªã‚‰ãªã„ï¼
 		 */
 		ready_queue_delete(&ready_queue, tcb);
 		tcb->priority = priority;
@@ -213,7 +213,7 @@ change_task_priority(TCB *tcb, INT priority)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚ğ‰ñ“]‚³‚¹‚éD
+ *  ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã‚’å›è»¢ã•ã›ã‚‹ï¼
  */
 void
 rotate_ready_queue(INT priority)
@@ -223,7 +223,7 @@ rotate_ready_queue(INT priority)
 }
 
 /*
- *  Å‚—Dæ“x‚Ìƒ^ƒXƒN‚ğŠÜ‚ŞƒŒƒfƒBƒLƒ…[‚ğ‰ñ“]‚³‚¹‚éD
+ *  æœ€é«˜å„ªå…ˆåº¦ã®ã‚¿ã‚¹ã‚¯ã‚’å«ã‚€ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã‚’å›è»¢ã•ã›ã‚‹ï¼
  */
 void
 rotate_ready_queue_run(void)

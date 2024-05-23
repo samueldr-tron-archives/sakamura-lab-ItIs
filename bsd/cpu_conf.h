@@ -35,12 +35,12 @@
 #define _CPU_CONF_
 
 /*
- *  get_ver ‚ÅQÆ‚³‚ê‚é CPUƒR[ƒh‚Ì’è‹`
+ *  get_ver ã§å‚ç…§ã•ã‚Œã‚‹ CPUã‚³ãƒ¼ãƒ‰ã®å®šç¾©
  */
-#define	CPU_CODE	0x0000		/* CPU ‚ğ“Á’è‚µ‚È‚¢ */
+#define	CPU_CODE	0x0000		/* CPU ã‚’ç‰¹å®šã—ãªã„ */
 
 /*
- *  CPUˆË‘¶‚ÌƒVƒXƒeƒ€ƒR[ƒ‹–¼/ƒpƒ‰ƒ[ƒ^–¼‚Ìİ’è
+ *  CPUä¾å­˜ã®ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å/ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åã®è¨­å®š
  */
 #define chg_iXX	chg_ims
 #define ref_iXX	ref_ims
@@ -48,48 +48,48 @@
 #define p_iXXXX	p_imask
 
 /*
- *  BSD UNIXã‚Å‚ÍƒTƒ|[ƒg‚³‚ê‚È‚¢‹@”\‚Ì’è‹`
+ *  BSD UNIXä¸Šã§ã¯ã‚µãƒãƒ¼ãƒˆã•ã‚Œãªã„æ©Ÿèƒ½ã®å®šç¾©
  */
-#undef NUM_SVC				/* Šg’£SVCƒnƒ“ƒhƒ‰ */
-#undef USE_QTSK_PORTION			/* €ƒ^ƒXƒN•” */
-#undef USE_VGET_TIM			/* «”\•]‰¿—pƒVƒXƒeƒ€QÆ‹@”\ */
+#undef NUM_SVC				/* æ‹¡å¼µSVCãƒãƒ³ãƒ‰ãƒ© */
+#undef USE_QTSK_PORTION			/* æº–ã‚¿ã‚¹ã‚¯éƒ¨ */
+#undef USE_VGET_TIM			/* æ€§èƒ½è©•ä¾¡ç”¨ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»å‚ç…§æ©Ÿèƒ½ */
 
-#define _i_dis_int	_no_support	/* dis_intƒVƒXƒeƒ€ƒR[ƒ‹ */
-#define _i_ena_int	_no_support	/* ena_intƒVƒXƒeƒ€ƒR[ƒ‹ */
-#define _i_def_int	_no_support	/* def_intƒVƒXƒeƒ€ƒR[ƒ‹ */
-#define _i_set_reg	_no_support	/* set_regƒVƒXƒeƒ€ƒR[ƒ‹ */
-#define _i_get_reg	_no_support	/* get_regƒVƒXƒeƒ€ƒR[ƒ‹ */
+#define _i_dis_int	_no_support	/* dis_intã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« */
+#define _i_ena_int	_no_support	/* ena_intã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« */
+#define _i_def_int	_no_support	/* def_intã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« */
+#define _i_set_reg	_no_support	/* set_regã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« */
+#define _i_get_reg	_no_support	/* get_regã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ« */
 
 /*
- *  ƒVƒXƒeƒ€ƒXƒ^ƒbƒN‚ÌÅ¬ƒTƒCƒY‚Ì’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã®æœ€å°ã‚µã‚¤ã‚ºã®å®šç¾©
  *
- *  cre_tsk ‚Åƒ^ƒXƒN–ˆ‚ÉƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ğİ’è‚·‚éê‡‚ÌÅ‰‚ÌƒV
- *  ƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒYD
+ *  cre_tsk ã§ã‚¿ã‚¹ã‚¯æ¯ã«ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºã‚’è¨­å®šã™ã‚‹å ´åˆã®æœ€åˆã®ã‚·
+ *  ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºï¼
  */
 #ifndef MIN_SYS_STACK_SIZE
 #define	MIN_SYS_STACK_SIZE	8192
 #endif /* MIN_SYS_STACK_SIZE */
 
 /*
- *  ƒfƒtƒHƒ‹ƒgƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚Ì’è‹`
+ *  ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºã®å®šç¾©
  *
- *  cre_tsk ‚Åƒ^ƒXƒN–ˆ‚ÉƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ğİ’è‚µ‚È‚¢ê‡‚ÌƒfƒtƒH
- *  ƒ‹ƒg‚ÌƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒYD
+ *  cre_tsk ã§ã‚¿ã‚¹ã‚¯æ¯ã«ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºã‚’è¨­å®šã—ãªã„å ´åˆã®ãƒ‡ãƒ•ã‚©
+ *  ãƒ«ãƒˆã®ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºï¼
  */
 #ifndef DEF_SYS_STACK_SIZE
 #define DEF_SYS_STACK_SIZE	8192
 #endif /* DEF_SYS_STACK_SIZE */
 
 /*
- *  Šg’£SVC ‚Ìo“üŒû‚Ìˆ—
+ *  æ‹¡å¼µSVC ã®å‡ºå…¥å£ã®å‡¦ç†
  */
 #define ENTER_EXTENDED_SVC	enter_extended_svc()
 #define EXIT_EXTENDED_SVC	exit_extended_svc()
 
 /*
- *  ƒVƒXƒeƒ€ƒ^ƒXƒN‚ÉŠÖ‚·‚é’è‹`
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ã«é–¢ã™ã‚‹å®šç¾©
  */
-#define	CONSOLE_PORT	1	/* ƒRƒ“ƒ\[ƒ‹—p‚É—p‚¢‚éƒVƒŠƒAƒ‹ƒ|[ƒg”Ô† */
-#define	LOGTASK_PORT	1	/* ƒVƒXƒeƒ€ƒƒO‚ğo—Í‚·‚éƒVƒŠƒAƒ‹ƒ|[ƒg”Ô† */
+#define	CONSOLE_PORT	1	/* ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ç”¨ã«ç”¨ã„ã‚‹ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆç•ªå· */
+#define	LOGTASK_PORT	1	/* ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ã‚’å‡ºåŠ›ã™ã‚‹ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆç•ªå· */
 
 #endif /* _CPU_CONF_ */

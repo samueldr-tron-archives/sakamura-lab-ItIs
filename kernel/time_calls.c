@@ -38,7 +38,7 @@
 #include "check.h"
 
 /*
- *  ŽžŠÔŠÇ—‹@”\
+ *  æ™‚é–“ç®¡ç†æ©Ÿèƒ½
  */
 
 #ifndef _i_set_tim
@@ -94,22 +94,22 @@ i_dly_tsk(DLYTIME dlytim)
 #endif /* _i_dly_tsk */
 
 /*
- *  ŽüŠú‹N“®ƒnƒ“ƒhƒ‰
+ *  å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©
  */
 
 #ifdef USE_CYC
 
 /*
- *  ŽüŠú‹N“®ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 
 typedef struct cyclic_handler_control_block {
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	cycatr;		/* ŽüŠú‹N“®ƒnƒ“ƒhƒ‰‘®« */
-	FP	cychdr;		/* ŽüŠú‹N“®ƒnƒ“ƒhƒ‰ƒAƒhƒŒƒX */
-	UINT	cycact;		/* ŽüŠú‹N“®ƒnƒ“ƒhƒ‰Šˆ«ó‘Ô */
-	CYCTIME	cyctim;		/* ŽüŠú‹N“®ŽžŠÔŠÔŠu */
-	TMEB	cyctmeb;	/* ƒ^ƒCƒ}ƒCƒxƒ“ƒgƒuƒƒbƒN */
+	VP	exinf;		/* æ‹¡å¼µæƒ…å ± */
+	ATR	cycatr;		/* å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©å±žæ€§ */
+	FP	cychdr;		/* å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	UINT	cycact;		/* å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©æ´»æ€§çŠ¶æ…‹ */
+	CYCTIME	cyctim;		/* å‘¨æœŸèµ·å‹•æ™‚é–“é–“éš” */
+	TMEB	cyctmeb;	/* ã‚¿ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆãƒ–ãƒ­ãƒƒã‚¯ */
 } CYCCB;
 
 CYCCB	cyccb_table[NUM_CYC];
@@ -117,14 +117,14 @@ CYCCB	cyccb_table[NUM_CYC];
 #define get_cyccb(no)	(&(cyccb_table[(no)-1]))
 
 /*
- *  –¢Žg—p‚ÌŽüŠú‹N“®ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã®å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vdef_cyc
 QUEUE	free_cyccb;
 #endif /* _i_vdef_cyc */
 
 /*
- *  ŽüŠú‹N“®ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void
 cyclichandler_initialize(void)
@@ -145,7 +145,7 @@ cyclichandler_initialize(void)
 }
 
 /*
- *  ŽüŠú‹N“®ƒnƒ“ƒhƒ‰‹N“®ƒ‹[ƒ`ƒ“
+ *  å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©èµ·å‹•ãƒ«ãƒ¼ãƒãƒ³
  */
 static void
 call_cychdr(CYCCB *cyccb)
@@ -291,20 +291,20 @@ i_ref_cyc(T_RCYC* pk_rcyc, HNO cycno)
 #endif /* USE_CYC */
 
 /*
- *  ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰
+ *  ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©
  */
 
 #ifdef USE_ALM
 
 /*
- *  ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 
 typedef struct alarm_handler_control_block {
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	almatr;		/* ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰‘®« */
-	FP	almhdr;		/* ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰ƒAƒhƒŒƒX */
-	TMEB	almtmeb;	/* ƒ^ƒCƒ}ƒCƒxƒ“ƒgƒuƒƒbƒN */
+	VP	exinf;		/* æ‹¡å¼µæƒ…å ± */
+	ATR	almatr;		/* ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©å±žæ€§ */
+	FP	almhdr;		/* ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	TMEB	almtmeb;	/* ã‚¿ã‚¤ãƒžã‚¤ãƒ™ãƒ³ãƒˆãƒ–ãƒ­ãƒƒã‚¯ */
 } ALMCB;
 
 ALMCB	almcb_table[NUM_ALM];
@@ -312,14 +312,14 @@ ALMCB	almcb_table[NUM_ALM];
 #define get_almcb(no)	(&(almcb_table[(no)-1]))
 
 /*
- *  –¢Žg—p‚ÌƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã®ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vdef_alm
 QUEUE	free_almcb;
 #endif /* _i_vdef_alm */
 
 /*
- *  ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void
 alarmhandler_initialize(void)
@@ -340,7 +340,7 @@ alarmhandler_initialize(void)
 }
 
 /*
- *  ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰‹N“®ƒ‹[ƒ`ƒ“
+ *  ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©èµ·å‹•ãƒ«ãƒ¼ãƒãƒ³
  */
 static void
 call_almhdr(ALMCB *almcb)

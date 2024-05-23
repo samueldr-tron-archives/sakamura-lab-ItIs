@@ -35,12 +35,12 @@
 #include "task.h"
 
 /*
- *  �^�X�N�f�B�X�p�b�`��
+ *  タスクディスパッチャ
  * 
- *  ���s���̃^�X�N (ctxtsk) �̃R���e�L�X�g�� TCB �ɕۑ����C���s���ׂ�
- *  �^�X�N (schedtsk) ��V�������s�^�X�N�Ƃ��āC���̃R���e�L�X�g�� TCB 
- *  ���畜�A����D�^�X�N�f�B�X�p�b�`������߂�ۂɁC�V�O�i���}�X�N�͈�
- *  �O�̏�Ԃɖ߂����D
+ *  実行中のタスク (ctxtsk) のコンテキストを TCB に保存し，実行すべき
+ *  タスク (schedtsk) を新しい実行タスクとして，そのコンテキストを TCB 
+ *  から復帰する．タスクディスパッチャから戻る際に，シグナルマスクは以
+ *  前の状態に戻される．
  */
 void
 dispatch_handler()
@@ -57,15 +57,15 @@ dispatch_handler()
 }
 
 /*
- *  �^�[�Q�b�gCPU�ˑ��̏��������[�`��
+ *  ターゲットCPU依存の初期化ルーチン
  */
 void
 cpu_initialize(void)
 {
 	/*
-	 *  �V�O�i���X�^�b�N���C�v���Z�X�X�^�b�N��Ɏ��D�V�O�i���X�^�b
-	 *  �N���g���Ă���Ɛݒ肷��̂́C�X�^�[�g�A�b�v���[�`�����^�X
-	 *  �N�Ɨ����Ɣ��肳���邽�߁D
+	 *  シグナルスタックを，プロセススタック上に取る．シグナルスタッ
+	 *  クを使っていると設定するのは，スタートアップルーチンをタス
+	 *  ク独立部と判定させるため．
 	 */
 	{
 #ifdef USE_SIGSTACK
@@ -86,7 +86,7 @@ cpu_initialize(void)
 	}
 
 	/*
-	 *  �f�B�X�p�b�`�p�̃V�O�i���n���h����ݒ�D
+	 *  ディスパッチ用のシグナルハンドラを設定．
 	 */
 	{
 		struct sigvec	vec;
@@ -99,7 +99,7 @@ cpu_initialize(void)
 }
 
 /*
- *  �^�[�Q�b�gCPU�ˑ��̏I���������[�`��
+ *  ターゲットCPU依存の終了処理ルーチン
  */
 void
 cpu_shutdown(void)
@@ -107,31 +107,31 @@ cpu_shutdown(void)
 }
 
 /*
- *  �^�X�N�N�����[�`��
+ *  タスク起動ルーチン
  *
- *  BSD UNIX��ł́C�J�[�l���ƃ^�X�N�������������x���œ��삷�邽�߁C�^
- *  �X�N�ւ̕���͊֐��Ăяo���Ŏ����ł���D
+ *  BSD UNIX上では，カーネルとタスクが同じ特権レベルで動作するため，タ
+ *  スクへの分岐は関数呼び出しで実現できる．
  */
 void
 task_start()
 {
 	/*
-	 *  �V�O�i���}�X�N��ݒ肵�āC�^�X�N���N������D
+	 *  シグナルマスクを設定して，タスクを起動する．
 	 */
 	sigsetmask(SIGMASK_TASK);
 	(*ctxtsk->task)(ctxtsk->tskctxb.stacd, ctxtsk->exinf);
 
 	/*
-	 *  �^�X�N�̏I������ ext_tsk ���ĂԂ̂ŁC�����ւ͖߂�Ȃ��D
+	 *  タスクの終了時に ext_tsk を呼ぶので，ここへは戻らない．
 	 */
 	assert(0);
 }
 
 /*
- *  �V�X�e���������v�[�����g��Ȃ��ꍇ
+ *  システムメモリプールを使わない場合
  *
- *  UNIX���C�u������ malloc �� free �ɃV�X�e���������v�[���̖�����C��
- *  ��D
+ *  UNIXライブラリの malloc と free にシステムメモリプールの役割を任せ
+ *  る．
  */
 
 #ifndef USE_TMPL_OS
@@ -159,9 +159,9 @@ sys_rel_blk(VP blk)
 #endif /* USE_TMPL_OS */
 
 /*
- *  �g��SVC �̏o�����̏���
+ *  拡張SVC の出入口の処理
  *
- *  �g��SVC ���ŃV�X�e���I�u�W�F�N�g���A�N�Z�X�ł���悤�ɂ��邽�߂̏����D
+ *  拡張SVC 内でシステムオブジェクトをアクセスできるようにするための処理．
  */
 
 void

@@ -32,7 +32,7 @@
  */
 
 /*
- *  ƒ^ƒXƒNŠÇ—‹@”\
+ *  ã‚¿ã‚¹ã‚¯ç®¡ç†æ©Ÿèƒ½
  */
 
 #include "itis_kernel.h"
@@ -42,11 +42,11 @@
 #include "cpu_task.h"
 
 /*
- *  ƒXƒ^ƒbƒNƒGƒŠƒA‚Ìæ“¾/•Ô‹p
+ *  ã‚¹ã‚¿ãƒƒã‚¯ã‚¨ãƒªã‚¢ã®å–å¾—/è¿”å´
  *
- *  ƒXƒ^ƒbƒNƒGƒŠƒA‚ğæ“¾/•Ô‹p‚·‚éÛ‚É“Áê‚È‘€ì‚ª•K—v‚Èê‡‚É‚ÍCƒVƒX
- *  ƒeƒ€ˆË‘¶•”‚Å USE_MPROTECT_STACK ‚¨‚æ‚Ñ sys_get_stack/sys_rel_stack
- *  ‚ğ’è‹`‚µCsys_get_blk/sys_rel_blk ‚É‘ã‚¦‚Ä—p‚¢‚éD
+ *  ã‚¹ã‚¿ãƒƒã‚¯ã‚¨ãƒªã‚¢ã‚’å–å¾—/è¿”å´ã™ã‚‹éš›ã«ç‰¹æ®Šãªæ“ä½œãŒå¿…è¦ãªå ´åˆã«ã¯ï¼Œã‚·ã‚¹
+ *  ãƒ†ãƒ ä¾å­˜éƒ¨ã§ USE_MPROTECT_STACK ãŠã‚ˆã³ sys_get_stack/sys_rel_stack
+ *  ã‚’å®šç¾©ã—ï¼Œsys_get_blk/sys_rel_blk ã«ä»£ãˆã¦ç”¨ã„ã‚‹ï¼
  */
 #ifdef USE_MPROTECT_STACK
 extern VP	sys_get_stack(INT size);
@@ -57,7 +57,7 @@ extern void	sys_rel_stack(VP blk);
 #endif /* USE_MPROTECT_STACK */
 
 /*
- *  ƒ^ƒXƒN‚Ì¶¬‚Æíœ
+ *  ã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆã¨å‰Šé™¤
  */
 
 #if !defined(_i_cre_tsk) || !defined(_i_vcre_tsk)
@@ -288,7 +288,7 @@ i_del_tsk(ID tskid)
 #endif /* _i_del_tsk */
 
 /*
- *  ƒ^ƒXƒN‚Ì‹N“®‚ÆI—¹
+ *  ã‚¿ã‚¹ã‚¯ã®èµ·å‹•ã¨çµ‚äº†
  */
 
 #ifndef _i_sta_tsk
@@ -348,14 +348,14 @@ i_ext_tsk(void)
 {
 #ifdef DORMANT_STACK_SIZE
 	/*
-	 *  make_dormant ‚ÅCg—p’†‚ÌƒXƒ^ƒbƒN‚ğ”j‰ó‚µ‚È‚¢‚æ‚¤‚ÉCƒXƒ^ƒb
-	 *  ƒNã‚Éƒ_ƒ~[ƒGƒŠƒA‚ğŠm•Û‚·‚éD
+	 *  make_dormant ã§ï¼Œä½¿ç”¨ä¸­ã®ã‚¹ã‚¿ãƒƒã‚¯ã‚’ç ´å£Šã—ãªã„ã‚ˆã†ã«ï¼Œã‚¹ã‚¿ãƒƒ
+	 *  ã‚¯ä¸Šã«ãƒ€ãƒŸãƒ¼ã‚¨ãƒªã‚¢ã‚’ç¢ºä¿ã™ã‚‹ï¼
 	 */
 	(void) alloca(DORMANT_STACK_SIZE);
 #endif /* DORMANT_STACK_SIZE */
 
 	/*
-	 *  ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[‚Ìˆ—D
+	 *  ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ©ãƒ¼ã®å‡¦ç†ï¼
 	 */
 #ifdef CHK_CTX2
 	if (in_indp()) {
@@ -383,7 +383,7 @@ SYSCALL void
 i_exd_tsk(void)
 {
 	/*
-	 *  ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[‚Ìˆ—D
+	 *  ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ©ãƒ¼ã®å‡¦ç†ï¼
 	 */
 #ifdef CHK_CTX2
 	if (in_indp()) {
@@ -401,9 +401,9 @@ i_exd_tsk(void)
 	_ter_tsk(ctxtsk);
 
 	/*
-	 *  ‚±‚±‚Å _del_tsk ‚ğŒÄ‚Ô•û–@‚ÍCƒ}ƒ‹ƒ`ƒvƒƒZƒbƒTƒVƒXƒeƒ€‚Ìê
-	 *  ‡‚ÅC‘¼‚ÌƒvƒƒZƒbƒT‚ÆƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚ğ‹¤—L‚µ‚Ä‚¢‚éê
-	 *  ‡‚É‚Í³‚µ‚­‚È‚¢D
+	 *  ã“ã“ã§ _del_tsk ã‚’å‘¼ã¶æ–¹æ³•ã¯ï¼Œãƒãƒ«ãƒãƒ—ãƒ­ã‚»ãƒƒã‚µã‚·ã‚¹ãƒ†ãƒ ã®å ´
+	 *  åˆã§ï¼Œä»–ã®ãƒ—ãƒ­ã‚»ãƒƒã‚µã¨ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã‚’å…±æœ‰ã—ã¦ã„ã‚‹å ´
+	 *  åˆã«ã¯æ­£ã—ããªã„ï¼
 	 */
 	_del_tsk(ctxtsk);
 
@@ -441,7 +441,7 @@ i_ter_tsk(ID tskid)
 #endif /* _i_ter_tsk */
 
 /*
- *  ƒ^ƒXƒN—Dæ“x‚Ì•ÏX
+ *  ã‚¿ã‚¹ã‚¯å„ªå…ˆåº¦ã®å¤‰æ›´
  */
 #ifndef _i_chg_pri
 
@@ -473,7 +473,7 @@ i_chg_pri(ID tskid, PRI tskpri)
 #endif /* _i_chg_pri */
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚Ì‰ñ“]
+ *  ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã®å›è»¢
  */
 #ifndef _i_rot_rdq
 
@@ -501,7 +501,7 @@ i_rot_rdq(PRI tskpri)
 #endif /* _i_rot_rdq */
 
 /*
- *  ‘¼ƒ^ƒXƒN‚Ì‘Ò‚¿ó‘Ô‰ğœ
+ *  ä»–ã‚¿ã‚¹ã‚¯ã®å¾…ã¡çŠ¶æ…‹è§£é™¤
  */
 #ifndef _i_rel_wai
 
@@ -536,7 +536,7 @@ i_rel_wai(ID tskid)
 #endif /* _i_rel_wai */
 
 /*
- *  ©ƒ^ƒXƒN‚Ìƒ^ƒXƒNIDQÆ
+ *  è‡ªã‚¿ã‚¹ã‚¯ã®ã‚¿ã‚¹ã‚¯IDå‚ç…§
  */
 #ifndef _i_get_tid
 
@@ -550,7 +550,7 @@ i_get_tid(ID* p_tskid)
 #endif /* _i_get_tid */
 
 /*
- *  ƒ^ƒXƒNó‘ÔQÆ
+ *  ã‚¿ã‚¹ã‚¯çŠ¶æ…‹å‚ç…§
  */
 #ifndef _i_ref_tsk
 

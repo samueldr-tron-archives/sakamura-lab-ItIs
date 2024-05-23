@@ -35,48 +35,48 @@
 #define _SYS_TIMER_
 
 /*
- *  �n�[�h�E�F�A�ˑ��^�C�}���W���[��
+ *  ハードウェア依存タイマモジュール
  *
- *  ���̃��W���[�����ŁC�ȉ��̒萔����ъ֐����`���Ȃ���΂Ȃ�Ȃ��D
+ *  このモジュール内で，以下の定数および関数を定義しなければならない．
  * 
- *  TIMER_PERIOD : �^�C�}�����݂̎��� (�P�ʂ� msec)�DItIs �ł̕W���l�� 
- *  1msec �ł��邪�C�^�C�}�����݂ɂ��I�[�o�w�b�h���������������ꍇ��
- *  �́C�����ƒ��������ɐݒ肵�Ă��悢�D�������C�^�C���A�E�g���ԂȂ�
- *  �̕���x�͑e���Ȃ� (�P�ʂ͕ς��Ȃ�)�D
+ *  TIMER_PERIOD : タイマ割込みの周期 (単位は msec)．ItIs での標準値は 
+ *  1msec であるが，タイマ割込みによるオーバヘッドを小さくしたい場合に
+ *  は，もっと長い周期に設定してもよい．もちろん，タイムアウト時間など
+ *  の分解度は粗くなる (単位は変わらない)．
  *
- *  void start_hw_timer() : �^�C�}�����������C�����I�ȃ^�C�}�����݂��J
- *  �n������D
+ *  void start_hw_timer() : タイマを初期化し，周期的なタイマ割込みを開
+ *  始させる．
  *
- *  void clear_hw_timer_interupt(void) : �^�C�}�����ݗv�����N���A����D
- *  �^�C�}�����݃n���h���̍ŏ��ŌĂ΂��D
+ *  void clear_hw_timer_interupt(void) : タイマ割込み要求をクリアする．
+ *  タイマ割込みハンドラの最初で呼ばれる．
  *
- *  void terminate_hw_timer(void) : �^�C�}�̓�����~������D�V�X�e��
- *  ��~���ɌĂ΂��D
+ *  void terminate_hw_timer(void) : タイマの動作を停止させる．システム
+ *  停止時に呼ばれる．
  */
 
 #include "mcube.h"
 
 /*
- *  �^�C�}�����݂̎��� (�P�ʂ� msec)
+ *  タイマ割込みの周期 (単位は msec)
  */
 #define TIMER_PERIOD	1
 
 /*
- *  �^�C�}�l�̓����\���̌^
+ *  タイマ値の内部表現の型
  */
 typedef unsigned int	TICK;
 
 /*
- *  �^�C�}�l�̓����\���� msec �P�ʂƂ̕ϊ�
+ *  タイマ値の内部表現と msec 単位との変換
  *
- *  MCUBE ��{�{�[�h�ł́C�^�C�} (�J�E���^2 ��p����) �� 1��sec ���ɃJ
- *  �E���g�A�b�v����D
+ *  MCUBE 基本ボードでは，タイマ (カウンタ2 を用いる) は 1μsec 毎にカ
+ *  ウントアップする．
  */
 #define TIMER_TICK	1000
 #define TO_TICK(msec)	((msec) * TIMER_TICK)
 
 /*
- *  �^�C�}�l�̓����\���ƃ�sec �P�ʂƂ̕ϊ�
+ *  タイマ値の内部表現とμsec 単位との変換
  */
 #if TIMER_TICK <= 1000
 #define TO_USEC(tick)	((tick) * (1000 / TIMER_TICK))
@@ -85,24 +85,24 @@ typedef unsigned int	TICK;
 #endif
 
 /*
- *  ���\�]���p�V�X�e�����������o���ۂ̏������Ԃ̌��ς�l (�P�ʂ͓����\��)
+ *  性能評価用システム時刻を取り出す際の処理時間の見積り値 (単位は内部表現)
  */
 #define GET_TOLERANCE	(TIMER_TICK / 10)
 
 /*
- *  �ݒ�ł���ő�̃^�C�}���� (�P�ʂ͓����\��)
+ *  設定できる最大のタイマ周期 (単位は内部表現)
  *
- *  �����\���� 0xffff �͖� 65msec�D
+ *  内部表現で 0xffff は約 65msec．
  */
 #define MAX_TICK	((TICK) 0xffff)
 
 /*
- *  �A�Z���u�����x���̃^�C�}�n���h��
+ *  アセンブラレベルのタイマハンドラ
  */
 extern void	timer_handler_startup(void);
 
 /*
- *  �^�C�}�̃X�^�[�g����
+ *  タイマのスタート処理
  */
 Inline void
 start_hw_timer()
@@ -110,60 +110,60 @@ start_hw_timer()
 	TICK	t = TO_TICK(TIMER_PERIOD);
 
 	/*
-	 *  �����݃n���h���̒�`
+	 *  割込みハンドラの定義
 	 */
 	define_eit(IRC1_VECTOR(1), EITATR(0, 15), timer_handler_startup);
 
 	/*
-	 *  IRC �̐ݒ�
+	 *  IRC の設定
 	 */
 	irc_assign(IRC1_LMR(1), LIR1_BIT);
-	irc_or_assign(IRC1_TMR, LIR1_BIT);	/* �G�b�W�g���K���[�h */
-	irc_and_assign(IRC1_IMR, ~LIR1_BIT);	/* �����݃}�X�N���� */
+	irc_or_assign(IRC1_TMR, LIR1_BIT);	/* エッジトリガモード */
+	irc_and_assign(IRC1_IMR, ~LIR1_BIT);	/* 割込みマスク解除 */
 
 	/*
-	 *  �^�C�}�̐ݒ�
+	 *  タイマの設定
 	 */
-	tmr_write(TMR_CNTL, 0xb4);		/* �^�C�}���[�h2 */
-	assert(t <= MAX_TICK);			/* �^�C�}����l�̃`�F�b�N */
+	tmr_write(TMR_CNTL, 0xb4);		/* タイマモード2 */
+	assert(t <= MAX_TICK);			/* タイマ上限値のチェック */
 	tmr_write(TMR_CNT2, t & 0xff);
 	tmr_write(TMR_CNT2, (t >> 8) & 0xff);
 
-	irc_assign(IRC1_IRR, LIR1_BIT);		/* �����ݗv�����N���A */
+	irc_assign(IRC1_IRR, LIR1_BIT);		/* 割込み要求をクリア */
 }
 
 /*
- *  �^�C�}�����݂̃N���A
+ *  タイマ割込みのクリア
  */
 Inline void
 clear_hw_timer_interrupt(void)
 {
-	irc_assign(IRC1_IRR, LIR1_BIT);		/* �����ݗv�����N���A */
+	irc_assign(IRC1_IRR, LIR1_BIT);		/* 割込み要求をクリア */
 }
 
 /*
- *  �^�C�}�̒�~����
+ *  タイマの停止処理
  */
 Inline void
 terminate_hw_timer(void)
 {
-	irc_or_assign(IRC1_IMR, LIR1_BIT);	/* �����݃}�X�N�ݒ� */
+	irc_or_assign(IRC1_IMR, LIR1_BIT);	/* 割込みマスク設定 */
 }
 
 /*
- *  �^�C�}�̌��ݒl�̓ǂݏo��
+ *  タイマの現在値の読み出し
  *
- *  �����݋֎~��Ԓ��ŌĂяo�����ƁD
+ *  割込み禁止区間中で呼び出すこと．
  *
- *  �{���C0 �` TO_TICK(TIMER_PERIOD)-1 �̒l���Ԃ�͂������C���ۂɂ͕p�x
- *  �͒Ⴂ�� TO_TICK(TIMER_PERIOD) ���Ԃ邱�Ƃ�����D
+ *  本来，0 〜 TO_TICK(TIMER_PERIOD)-1 の値が返るはずだが，実際には頻度
+ *  は低いが TO_TICK(TIMER_PERIOD) が返ることがある．
  */
 Inline TICK
 get_current_hw_time(void)
 {
 	TICK	t;
 
-	tmr_write(TMR_CNTL, 0x80);		/* �^�C�}�l�ǂݏo���J�n */
+	tmr_write(TMR_CNTL, 0x80);		/* タイマ値読み出し開始 */
 	t = tmr_read(TMR_CNT2);
 	t += tmr_read(TMR_CNT2) << 8;
 	return(TO_TICK(TIMER_PERIOD) - t);

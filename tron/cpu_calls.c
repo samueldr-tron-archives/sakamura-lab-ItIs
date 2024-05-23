@@ -32,7 +32,7 @@
  */
 
 /* 
- *  CPU ‚ÉˆË‘¶‚·‚éƒVƒXƒeƒ€ƒR[ƒ‹
+ *  CPU ã«ä¾å­˜ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
  */
 
 #include "itis_kernel.h"
@@ -40,7 +40,7 @@
 #include "check.h"
 
 /*
- *  ƒfƒBƒXƒpƒbƒ`‚Ì‹Ö~/‹–‰Â‹@”\
+ *  ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒã®ç¦æ­¢/è¨±å¯æ©Ÿèƒ½
  */
 
 #ifndef _i_dis_dsp
@@ -78,7 +78,7 @@ i_ena_dsp(void)
 #endif /* _i_ena_dsp */
 
 /*
- *  Š„‚İŠÇ—‹@”\
+ *  å‰²è¾¼ã¿ç®¡ç†æ©Ÿèƒ½
  */
 
 #ifndef _i_def_int
@@ -126,14 +126,14 @@ i_def_int(UINT dintno, T_DINT *pk_dint)
 }
 
 /*
- *  Š„‚İƒnƒ“ƒhƒ‰‹N“®‚Ì‚½‚ß‚Ì‚‹‰Œ¾Œê‘Î‰ƒ‹[ƒ`ƒ“
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©èµ·å‹•ã®ãŸã‚ã®é«˜ç´šè¨€èªå¯¾å¿œãƒ«ãƒ¼ãƒãƒ³
  */
 __asm__(".text				\n"
 "	.align 1			\n"
 "_inthdr_startup:			\n"
 "	stm (r0-r6), @-sp		\n"
-"	mova @(28,sp).w, r0.w		\n"	/* EITƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚Ìæ“ª */
-"	movu @(7,r0).b, r1.w		\n"	/* ƒxƒNƒ^”Ô†‚ğæ‚èo‚· */
+"	mova @(28,sp).w, r0.w		\n"	/* EITã‚¹ã‚¿ãƒƒã‚¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®å…ˆé ­ */
+"	movu @(7,r0).b, r1.w		\n"	/* ãƒ™ã‚¯ã‚¿ç•ªå·ã‚’å–ã‚Šå‡ºã™ */
 "	jsr @@(_hll_eit_table-4,r1*4)	\n"
 "	ldm @sp+, (r0-r6)		\n"
 #ifndef TRON_NO_DI
@@ -145,7 +145,7 @@ __asm__(".text				\n"
 #endif /* _i_def_int */
 
 /*
- *  Š„‚İ‚Ì‹Ö~/‹–‰Â‹@”\
+ *  å‰²è¾¼ã¿ã®ç¦æ­¢/è¨±å¯æ©Ÿèƒ½
  */
 
 #ifndef _i_loc_cpu
@@ -178,7 +178,7 @@ i_unl_cpu(void)
 #endif /* _i_unl_cpu */
 
 /*
- *  IMASK ‚Ìİ’è/QÆ‹@”\
+ *  IMASK ã®è¨­å®š/å‚ç…§æ©Ÿèƒ½
  */
 
 #ifndef _i_chg_ims
@@ -209,13 +209,13 @@ i_ref_ims(UINT *p_imask)
 #endif /* _i_ref_ims */
 
 /* 
- *  ƒfƒoƒbƒOƒTƒ|[ƒg‹@”\
+ *  ãƒ‡ãƒãƒƒã‚°ã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½
  */
 
 #ifdef USE_DEBUG_SUPPORT
 
 /*
- *  ƒ^ƒXƒN‚ÌƒŒƒWƒXƒ^“à—e‚Ìİ’èCQÆ
+ *  ã‚¿ã‚¹ã‚¯ã®ãƒ¬ã‚¸ã‚¹ã‚¿å†…å®¹ã®è¨­å®šï¼Œå‚ç…§
  */
 
 #ifndef _i_vset_reg

@@ -32,7 +32,7 @@
  */
 
 /*
- *  ItIsカーネル用 簡易版 vsprintfライブラリ
+ *  ItIs繧ｫ繝ｼ繝阪Ν逕ｨ 邁｡譏鍋沿 vsprintf繝ｩ繧､繝悶Λ繝ｪ
  */
 
 #include <stdarg.h>

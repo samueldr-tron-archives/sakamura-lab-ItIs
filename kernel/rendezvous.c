@@ -39,17 +39,17 @@
 #ifdef USE_POR
 
 /*
- *  �����f�u�p�|�[�g�Ǘ��u���b�N�̒�`
+ *  ランデブ用ポート管理ブロックの定義
  */
 
 typedef struct port_control_block {
-	QUEUE	call_queue;	/* �|�[�g�ďo�҂��L���[ */
-	ID	porid;		/* �|�[�gID */
-	VP	exinf;		/* �g����� */
-	ATR	poratr;		/* �|�[�g���� */
-	QUEUE	accept_queue;	/* �|�[�g��t�҂��L���[ */
-	INT	maxcmsz;	/* �ďo���b�Z�[�W�̍ő咷 */
-	INT	maxrmsz;	/* �ԓ����b�Z�[�W�̍ő咷 */
+	QUEUE	call_queue;	/* ポート呼出待ちキュー */
+	ID	porid;		/* ポートID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	poratr;		/* ポート属性 */
+	QUEUE	accept_queue;	/* ポート受付待ちキュー */
+	INT	maxcmsz;	/* 呼出メッセージの最大長 */
+	INT	maxrmsz;	/* 返答メッセージの最大長 */
 } PORCB;
 
 static PORCB	porcb_table[NUM_PORID];
@@ -57,14 +57,14 @@ static PORCB	porcb_table[NUM_PORID];
 #define get_porcb(id)	(&(porcb_table[INDEX_POR(id)]))
 
 /*
- *  ���g�p�̃|�[�g�Ǘ��u���b�N�̃��X�g
+ *  未使用のポート管理ブロックのリスト
  */
 #ifndef _i_vcre_por
 QUEUE	free_porcb;
 #endif /* _i_vcre_por */
 
 /* 
- *  �|�[�g�Ǘ��u���b�N�̏�����
+ *  ポート管理ブロックの初期化
  */
 void
 rendezvous_initialize()
@@ -90,7 +90,7 @@ rendezvous_initialize()
 }
 
 /*
- *  �����f�u�ԍ��Ǘ����[�`��
+ *  ランデブ番号管理ルーチン
  */
 #define RDVNO_SHIFT	16
 
@@ -117,14 +117,14 @@ get_tskid_rdvno(RNO rdvno)
 }
 
 /*
- *  �����f�u�҂��d�l�̒�`
+ *  ランデブ待ち仕様の定義
  */
 static WSPEC wspec_cal = { TTW_CAL, 0, 0 };
 static WSPEC wspec_acp = { TTW_ACP, 0, 0 };
 static WSPEC wspec_rdv = { TTW_RDV, 0, 0 };
 
 /*
- *  �����f�u�p�|�[�g�Ǘ��@�\
+ *  ランデブ用ポート管理機能
  */
 
 #if !defined(_i_cre_por) || !defined(_i_vcre_por)

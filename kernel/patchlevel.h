@@ -34,8 +34,8 @@
 #ifndef _PATCHLEVEL_
 #define _PATCHLEVEL_
 
-#define MAJOR_REL	1	/* メジャーリリース番号 */
-#define MINOR_REL	3	/* マイナーリリース番号 */
-#define PATCH_LEVEL	4	/* パッチレベル */
+#define MAJOR_REL	1	/* 繝｡繧ｸ繝｣繝ｼ繝ｪ繝ｪ繝ｼ繧ｹ逡ｪ蜿ｷ */
+#define MINOR_REL	3	/* 繝槭う繝翫�ｼ繝ｪ繝ｪ繝ｼ繧ｹ逡ｪ蜿ｷ */
+#define PATCH_LEVEL	4	/* 繝代ャ繝√Ξ繝吶Ν */
 
 #endif /* _PATCHLEVEL_ */

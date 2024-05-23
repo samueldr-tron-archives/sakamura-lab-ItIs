@@ -32,7 +32,7 @@
  */
 
 /* 
- *  CPU ‚ÉˆË‘¶‚·‚éƒVƒXƒeƒ€ƒR[ƒ‹
+ *  CPU ã«ä¾å­˜ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
  */
 
 #include "itis_kernel.h"
@@ -40,7 +40,7 @@
 #include "check.h"
 
 /*
- *  ƒfƒBƒXƒpƒbƒ`‚Ì‹Ö~/‹–‰Â‹@”\
+ *  ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒã®ç¦æ­¢/è¨±å¯æ©Ÿèƒ½
  */
 
 #ifndef _i_dis_dsp
@@ -67,7 +67,7 @@ i_ena_dsp(void)
 #endif /* _i_ena_dsp */
 
 /*
- *  Š„‚İ‚Ì‹Ö~/‹–‰Â‹@”\
+ *  å‰²è¾¼ã¿ã®ç¦æ­¢/è¨±å¯æ©Ÿèƒ½
  */
 
 #ifndef _i_loc_cpu
@@ -94,7 +94,7 @@ i_unl_cpu(void)
 #endif /* _i_unl_cpu */
 
 /*
- *  IMASK ‚Ìİ’è/QÆ‹@”\
+ *  IMASK ã®è¨­å®š/å‚ç…§æ©Ÿèƒ½
  */
 
 #ifndef _i_chg_ims

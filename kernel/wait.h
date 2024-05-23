@@ -35,7 +35,7 @@
 #define _WAIT_
 
 /*
- *  �^�X�N�ԓ����E�ʐM�I�u�W�F�N�g�ėp���[�`��
+ *  タスク間同期・通信オブジェクト汎用ルーチン
  */
 
 #include "queue.h"
@@ -43,22 +43,22 @@
 #include "task.h"
 
 /*
- *  �^�X�N�̑҂���Ԃ���������D
+ *  タスクの待ち状態を解除する．
  *
- *  �^�X�N���^�C�}�L���[����ё҂��L���[����͂����C�^�X�N��Ԃ��X�V��
- *  ��Dwait_release_ok �́C�҂��������ꂽ�^�X�N�� E_OK ��n���D
- *  wait_release_tmout �́C�^�C�}�L���[����͂������������Ȃ��D�^�C��
- *  �A�E�g�����̎��ɗp����D
+ *  タスクをタイマキューおよび待ちキューからはずし，タスク状態を更新す
+ *  る．wait_release_ok は，待ち解除されたタスクに E_OK を渡す．
+ *  wait_release_tmout は，タイマキューからはずす処理をしない．タイム
+ *  アウト処理の時に用いる．
  */
 extern void	wait_release(TCB *tcb);
 extern void	wait_release_ok(TCB *tcb);
 extern void	wait_release_tmout(TCB *tcb);
 
 /*
- *  �^�X�N�̑҂���Ԃ��L�����Z������D
+ *  タスクの待ち状態をキャンセルする．
  *
- *  �^�X�N���^�C�}�L���[����ё҂��L���[����͂����D�^�X�N��Ԃ͍X�V��
- *  �Ȃ��D
+ *  タスクをタイマキューおよび待ちキューからはずす．タスク状態は更新し
+ *  ない．
  */
 Inline void
 wait_cancel(TCB *tcb)
@@ -68,59 +68,59 @@ wait_cancel(TCB *tcb)
 }
 
 /*
- *  ���s���̃^�X�N��҂���ԂɈڍs�����C�^�C�}�C�x���g�L���[�ɂȂ��D
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューにつなぐ．
  */
 extern void	make_wait(TMO tmout);
 
 /*
- *  �҂��L���[�ɂȂ����Ă���^�X�N�̑҂���Ԃ����ׂĉ������CE_DLT�G���[
- *  �Ƃ���D
+ *  待ちキューにつながっているタスクの待ち状態をすべて解除し，E_DLTエラー
+ *  とする．
  *
- *  �^�X�N�ԓ����E�ʐM�I�u�W�F�N�g���폜���ꂽ���Ɏg���D
+ *  タスク間同期・通信オブジェクトが削除された時に使う．
  */
 extern void	wait_delete(QUEUE *wait_queue);
 
 /*
- *  �҂��L���[�̐擪�̃^�X�N�� ID �����o���D
+ *  待ちキューの先頭のタスクの ID を取り出す．
  */
 extern ID	wait_tskid(QUEUE *wait_queue);
 
 /*
- *  �R���g���[���u���b�N���ʕ������샋�[�`��
+ *  コントロールブロック共通部分操作ルーチン
  *
- *  �^�X�N�ԓ����E�ʐM�I�u�W�F�N�g�͂�������C�R���g���[���u���b�N�̐�
- *  �����������ʂɂȂ��Ă���D�ȉ��́C���̋��ʕ������������߂̔ėp���[
- *  �`���ł���D���ʕ������CGCB (�ėp�R���g���[���u���b�N) �Ƃ����^�ɂ�
- *  ��D�����̑҂��L���[�����I�u�W�F�N�g�̏ꍇ�C2�߈ȍ~�̑҂��L���[
- *  �𑀍삷��ꍇ�ɂ́C�����̃��[�`���͎g���Ȃ��D�܂��C�I�u�W�F�N�g
- *  ������ TA_TPRI�r�b�g���Q�Ƃ���̂ŁC���̃r�b�g�𑼂̖ړI�Ɏg���Ă�
- *  ��ꍇ���C�����̃��[�`���͎g���Ȃ��D�I�u�W�F�N�g����������Ă���
- *  ���ꍇ�ɂ́C�I�u�W�F�N�g������ OBJ_NONEXIST �ɂ��� (���̂��߁C�I�u
- *  �W�F�N�g�����̂��ׂẴr�b�g��Ɨ��Ɏg�����Ƃ��ł��Ȃ��Ƃ���������
- *  ����)�D
+ *  タスク間同期・通信オブジェクトはいずれも，コントロールブロックの先
+ *  頭部分が共通になっている．以下は，その共通部分を扱うための汎用ルー
+ *  チンである．共通部分を，GCB (汎用コントロールブロック) という型にす
+ *  る．複数の待ちキューを持つオブジェクトの場合，2つめ以降の待ちキュー
+ *  を操作する場合には，これらのルーチンは使えない．また，オブジェクト
+ *  属性の TA_TPRIビットを参照するので，このビットを他の目的に使ってい
+ *  る場合も，これらのルーチンは使えない．オブジェクトが生成されていな
+ *  い場合には，オブジェクト属性を OBJ_NONEXIST にする (そのため，オブ
+ *  ジェクト属性のすべてのビットを独立に使うことができないという制限が
+ *  ある)．
  */
 
 struct generic_control_block {
-	QUEUE	wait_queue;	/* �҂��L���[ */
-	ID	objid;		/* �I�u�W�F�N�gID */
-	VP	exinf;		/* �g����� */
-	ATR	objatr;		/* �I�u�W�F�N�g���� */
-	/*  ����ȍ~�ɑ��̃t�B�[���h�������Ă��悢���C */
-	/*  �ėp���샋�[�`���ł͈����Ȃ��D */
+	QUEUE	wait_queue;	/* 待ちキュー */
+	ID	objid;		/* オブジェクトID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	objatr;		/* オブジェクト属性 */
+	/*  これ以降に他のフィールドがあってもよいが， */
+	/*  汎用操作ルーチンでは扱われない． */
 };
 
 #define OBJ_NONEXIST	(-1)
 
 /*
- *  ���s���̃^�X�N��҂���ԂɈڍs�����C�^�C�}�C�x���g�L���[����уI�u
- *  �W�F�N�g�̑҂��L���[�ɂȂ��D�܂��Cctxtsk �� wid ��ݒ肷��D
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューおよびオブ
+ *  ジェクトの待ちキューにつなぐ．また，ctxtsk の wid を設定する．
  */
 extern void	gcb_make_wait(GCB *gcb, TMO tmout);
 
 /*
- *  �^�X�N�̗D��x���ς�����ۂɁC�҂��L���[�̒��ł̃^�X�N�̈ʒu���C��
- *  ����D�I�u�W�F�N�g������ TA_TPRI ���w�肳��Ă���ꍇ�ɂ̂݁C�Ăяo
- *  �����D
+ *  タスクの優先度が変わった際に，待ちキューの中でのタスクの位置を修正
+ *  する．オブジェクト属性に TA_TPRI が指定されている場合にのみ，呼び出
+ *  される．
  */
 extern void	gcb_change_priority(GCB *gcb, TCB *tcb);
 extern void	obj_chg_pri(TCB *tcb, INT oldpri);

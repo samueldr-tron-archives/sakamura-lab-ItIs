@@ -43,22 +43,22 @@ typedef struct prisem_control_block	PISCB;
 #include "winfo.h"
 
 /*
- *  �^�X�N��Ԃ̓����\���̒�`
+ *  タスク状態の内部表現の定義
  *
- *  �^�X�N���҂���Ԃ��ǂ����� (state & TS_WAIT) �Ń`�F�b�N�ł���.
- *  �^�X�N�������҂���Ԃ��ǂ����� (state & TS_SUSPEND) �Ń`�F�b�N�ł���.
+ *  タスクが待ち状態かどうかは (state & TS_WAIT) でチェックできる.
+ *  タスクが強制待ち状態かどうかは (state & TS_SUSPEND) でチェックできる.
  */
 typedef enum {
-	TS_NONEXIST = 0,	/* ���o�^��� */
-	TS_READY = 1,		/* ���s�܂��͎��s�\��� */
-	TS_WAIT = 2,		/* �҂���� */
-	TS_SUSPEND = 4,		/* �����҂���� */
-	TS_WAITSUS = 6,		/* ��d�҂���� */
-	TS_DORMANT = 8		/* �x�~��� */
+	TS_NONEXIST = 0,	/* 未登録状態 */
+	TS_READY = 1,		/* 実行または実行可能状態 */
+	TS_WAIT = 2,		/* 待ち状態 */
+	TS_SUSPEND = 4,		/* 強制待ち状態 */
+	TS_WAITSUS = 6,		/* 二重待ち状態 */
+	TS_DORMANT = 8		/* 休止状態 */
 } TSTAT;
 
 /*
- *  �^�X�N�������Ă��邩 (NON-EXISTENT�CDORMANT�ȊO��) �̃`�F�b�N
+ *  タスクが生きているか (NON-EXISTENT，DORMANT以外か) のチェック
  */
 Inline BOOL
 task_alive(TSTAT state)
@@ -67,144 +67,144 @@ task_alive(TSTAT state)
 }
 
 /*
- *  �^�X�N�D��x�̓���/�O���\���ϊ��}�N��
+ *  タスク優先度の内部/外部表現変換マクロ
  */
 #define int_priority(x)	((INT)((x) - MIN_PRI))
 #define ext_tskpri(x)	((PRI)((x) + MIN_PRI))
 
 /*
- *  �^�X�N�R���g���[���u���b�N (TCB) �̒�`
+ *  タスクコントロールブロック (TCB) の定義
  */
 struct task_control_block {
-	QUEUE	tskque;		/* �^�X�N�L���[ */
-	ID	tskid;		/* �^�X�NID */
-	VP	exinf;		/* �g����� */
-	ATR	tskatr;		/* �^�X�N���� */
-	FP	task;		/* �^�X�N�N���A�h���X */
-	INT	ipriority;	/* �^�X�N�N�����D��x */
+	QUEUE	tskque;		/* タスクキュー */
+	ID	tskid;		/* タスクID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	tskatr;		/* タスク属性 */
+	FP	task;		/* タスク起動アドレス */
+	INT	ipriority;	/* タスク起動時優先度 */
 #ifdef USE_SEPARATE_SSTACK
-	INT	stksz;		/* ���[�U�X�^�b�N�T�C�Y */
+	INT	stksz;		/* ユーザスタックサイズ */
 #endif /* USE_SEPARATE_SSTACK */
-	INT	sstksz;		/* �V�X�e���X�^�b�N�T�C�Y */
-	INT	priority;	/* ���݂̗D��x */
-	TSTAT	state;		/* �^�X�N��� (�����\��) */
-	WSPEC	*wspec;		/* �҂��d�l */
-	GCB	*wgcb;		/* �҂��I�u�W�F�N�g�̃R���g���[���u���b�N */
-	INT	wupcnt;		/* �N���v���L���[�C���O�� */
-	INT	suscnt;		/* SUSPEND�v���l�X�g�� */
-	INT	sysmode;	/* �^�X�N���샂�[�h�C���^�X�N���ďo�����x�� */
+	INT	sstksz;		/* システムスタックサイズ */
+	INT	priority;	/* 現在の優先度 */
+	TSTAT	state;		/* タスク状態 (内部表現) */
+	WSPEC	*wspec;		/* 待ち仕様 */
+	GCB	*wgcb;		/* 待ちオブジェクトのコントロールブロック */
+	INT	wupcnt;		/* 起床要求キューイング数 */
+	INT	suscnt;		/* SUSPEND要求ネスト数 */
+	INT	sysmode;	/* タスク動作モード，準タスク部呼出しレベル */
 #ifdef USE_QTSK_PORTION
-	INT	isysmode;	/* �^�X�N���샂�[�h�����l */
+	INT	isysmode;	/* タスク動作モード初期値 */
 #endif /* USE_QTSK_PORTION */
 
 #ifdef USE_POR
-	RNO	wrdvno;		/* �����f�u�ԍ������p */
+	RNO	wrdvno;		/* ランデブ番号生成用 */
 #endif /* USE_POR */
 #ifdef PRISEM_SPEC1
-	PISCB	*pislist;	/* �l���D��x�p���Z�}�t�H���X�g */
+	PISCB	*pislist;	/* 獲得優先度継承セマフォリスト */
 #endif /* PRISEM_SPEC1 */
 #ifdef USE_TASK_MAILBOX
-	T_MSG	*tmq_head;	/* �^�X�N�t�����b�Z�[�W�L���[�̐擪 */
-	T_MSG	*tmq_tail;	/* �^�X�N�t�����b�Z�[�W�L���[�̖��� */
+	T_MSG	*tmq_head;	/* タスク付属メッセージキューの先頭 */
+	T_MSG	*tmq_tail;	/* タスク付属メッセージキューの末尾 */
 #endif /* USE_TASK_MAILBOX */
-	ER	*wercd;		/* �҂��G���[�R�[�h�ݒ�G���A */
-	WINFO	winfo;		/* �҂���� */
-	TMEB	wtmeb;		/* �҂��^�C�}�C�x���g�u���b�N */
+	ER	*wercd;		/* 待ちエラーコード設定エリア */
+	WINFO	winfo;		/* 待ち情報 */
+	TMEB	wtmeb;		/* 待ちタイマイベントブロック */
 
 #ifdef USE_SEPARATE_SSTACK
-	VP	istack;		/* ���[�U�X�^�b�N�|�C���^�̏����l */
+	VP	istack;		/* ユーザスタックポインタの初期値 */
 #endif /* USE_SEPARATE_SSTACK */
-	VP	isstack;	/* �V�X�e���X�^�b�N�|�C���^�̏����l */
-	CTXB	tskctxb;	/* �^�X�N�R���e�L�X�g�u���b�N */
+	VP	isstack;	/* システムスタックポインタの初期値 */
+	CTXB	tskctxb;	/* タスクコンテキストブロック */
 };
 
 /*
- *  �^�X�N�f�B�X�p�b�`�֎~���
+ *  タスクディスパッチ禁止状態
  *
- *  dispatch_disabled �́C�^�X�N�f�B�X�p�b�`�֎~��Ԃ��L�����Ă�������
- *  �̕ϐ��D�x�������݂��g���ꍇ�Ȃǂɂ́C�K�v�Ȃ��D
+ *  dispatch_disabled は，タスクディスパッチ禁止状態を記憶しておくため
+ *  の変数．遅延割込みを使う場合などには，必要ない．
  */
 #ifdef USE_DISPATCH_DISABLED
 extern BOOL	dispatch_disabled;
 #endif /* USE_DISPATCH_DISABLED */
 
 /*
- *  ���s���̃^�X�N
+ *  実行中のタスク
  *
- *  ctxtsk �́C���s���̃^�X�N (= CPU ���R���e�L�X�g�������Ă���^�X�N) 
- *  �� TCB ���w���ϐ��D�V�X�e���R�[���̏������ŁC�V�X�e���R�[����v����
- *  ���^�X�N�Ɋւ�������Q�Ƃ���ꍇ�́Cctxtsk ���g���Dctxtsk ������
- *  ������̂́C�^�X�N�f�B�X�p�b�`���̂݁D
+ *  ctxtsk は，実行中のタスク (= CPU がコンテキストを持っているタスク) 
+ *  の TCB を指す変数．システムコールの処理中で，システムコールを要求し
+ *  たタスクに関する情報を参照する場合は，ctxtsk を使う．ctxtsk を書き
+ *  換えるのは，タスクディスパッチャのみ．
  */
 extern TCB	*ctxtsk;
 
 /*
- *  ���s���ׂ��^�X�N
+ *  実行すべきタスク
  *
- *  schedtsk �́C���s���ׂ��^�X�N�� TCB ���w���ϐ��D�x���f�B�X�p�b�`��
- *  �f�B�X�p�b�`�̋֎~�ɂ��f�B�X�p�b�`���x������Ă����Ԃł́C
- *  ctxtsk �ƈ�v���Ȃ��D
+ *  schedtsk は，実行すべきタスクの TCB を指す変数．遅延ディスパッチや
+ *  ディスパッチの禁止によりディスパッチが遅延されている状態では，
+ *  ctxtsk と一致しない．
  */
 extern TCB	*schedtsk;
 
 /*
- *  TCB �̃G���A
+ *  TCB のエリア
  *
- *  TCB �̃G���A�́C�V�X�e���������ɐÓI�Ɋ���t���Ă���D
+ *  TCB のエリアは，システム生成時に静的に割り付けている．
  */
 extern TCB	tcb_table[];
 
 /*
- *  ���g�p�� TCB �̃��X�g
+ *  未使用の TCB のリスト
  */
 #ifndef _i_vcre_tsk
 extern QUEUE	free_tcb;
 #endif /* _i_vcre_tsk */
 
 /*
- *  �^�X�NID ���� TCB �����o���D
+ *  タスクID から TCB を取り出す．
  */
 #define get_tcb(id)	 (&tcb_table[INDEX_TSK(id)])
 #define get_tcb_self(id) ((id)==TSK_SELF ? ctxtsk : &tcb_table[INDEX_TSK(id)])
 
 /*
- *  �^�X�N�̎��s����������D
+ *  タスクの実行準備をする．
  */
 extern void	make_dormant(TCB *tcb);
 
 /*
- *  �^�X�N�����s�\��Ԃɂ���D
+ *  タスクを実行可能状態にする．
  *
- *  tcb �Ŏ������^�X�N�̗D��x���C���ݎ��s���̃^�X�N�̗D��x������
- *  ���ꍇ�́C���s��Ԃɂ���D�����łȂ��ꍇ�́C�^�X�N�����f�B�L���[��
- *  �Ȃ��D
+ *  tcb で示されるタスクの優先度が，現在実行中のタスクの優先度よりも高
+ *  い場合は，実行状態にする．そうでない場合は，タスクをレディキューに
+ *  つなぐ．
  */
 extern void	make_ready(TCB *tcb);
 
 /*
- *  �^�X�N�����s�\�ȊO�̏�Ԃɂ���D
+ *  タスクを実行可能以外の状態にする．
  *
- *  tcb �Ŏ������^�X�N�����s�\�ȊO�̏�ԁC�܂�҂���ԁC�����҂�
- *  ��ԁC�x�~��Ԃֈڍs������D���̊֐����Ăяo���ۂɂ́C�^�X�N�����s
- *  �\��ԂɂȂ��Ă��邱�ƁDtcb->state �́C�Ăяo�������ŁC���̊֐���
- *  �烊�^�[����ɕύX����D
+ *  tcb で示されるタスクを実行可能以外の状態，つまり待ち状態，強制待ち
+ *  状態，休止状態へ移行させる．この関数を呼び出す際には，タスクが実行
+ *  可能状態になっていること．tcb->state は，呼び出した側で，この関数か
+ *  らリターン後に変更する．
  */
 extern void	make_non_ready(TCB *tcb);
 
 /*
- *  �^�X�N�̗D��x��ύX����D
+ *  タスクの優先度を変更する．
  *
- *  tcb �Ŏ������^�X�N�̗D��x�� priority �ɕύX����D����ɔ����ĕK
- *  �v�ƂȂ�^�X�N�̏�ԑJ�ڂ��N��������D
+ *  tcb で示されるタスクの優先度を priority に変更する．それに伴って必
+ *  要となるタスクの状態遷移を起こさせる．
  */
 extern void	change_task_priority(TCB *tcb, INT priority);
 
 /*
- *  ���f�B�L���[����]������D
+ *  レディキューを回転させる．
  *
- *  rotate_ready_queue �́Cpriority �Ŏw�肳�ꂽ�D��x�̃��f�B�L���[��
- *  ��]������Drotate_ready_queue_run �́C���f�B�L���[���̍ō��D��x
- *  �̃^�X�N���܂ރ��f�B�L���[����]������D
+ *  rotate_ready_queue は，priority で指定された優先度のレディキューを
+ *  回転させる．rotate_ready_queue_run は，レディキュー中の最高優先度
+ *  のタスクを含むレディキューを回転させる．
  */
 extern void	rotate_ready_queue(INT priority);
 extern void	rotate_ready_queue_run(void);

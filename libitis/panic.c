@@ -35,12 +35,12 @@
 #include <itis_syslog.h>
 
 /*
- *  ƒGƒ‰[ƒƒbƒZ[ƒW¶¬—p
+ *  ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç”Ÿæˆç”¨
  */
 extern char	*itron_strerror(ER);
 
 /*
- *  ƒGƒ‰[ƒƒbƒZ[ƒW‚ğo—Í‚µCƒ^ƒXƒN‚©‚ç”²‚¯‚é
+ *  ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã—ï¼Œã‚¿ã‚¹ã‚¯ã‹ã‚‰æŠœã‘ã‚‹
  */
 void
 panic(const char *prompt, ER ercd)

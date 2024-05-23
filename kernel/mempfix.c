@@ -39,7 +39,7 @@
 #ifdef USE_MPF
 
 /*
- *  �Œ蒷�������v�[���Ǘ��u���b�N�̒�`
+ *  固定長メモリプール管理ブロックの定義
  */
 
 typedef struct free_list {
@@ -47,17 +47,17 @@ typedef struct free_list {
 } FREEL;
 
 typedef struct fix_memorypool_control_block {
-	QUEUE	wait_queue;	/* �������v�[���҂��L���[ */
-	ID	mpfid;		/* �Œ蒷�������v�[��ID */
-	VP	exinf;		/* �g����� */
-	ATR	mpfatr;		/* �������v�[������ */
-	INT	mpfcnt;		/* �������v�[���S�̂̃u���b�N�� */
-	INT	blfsz;		/* �Œ蒷�������u���b�N�̃T�C�Y */
-	INT	mpfsz;		/* �������v�[���S�̂̃T�C�Y */
-	INT	frbcnt;		/* �󂫗̈�̃u���b�N�� */
-	VP	mempool;	/* �������v�[���̐擪�A�h���X */
-	VP	unused;		/* ���g�p�̈�̐擪 */
-	FREEL	*freelist;	/* �󂫃u���b�N�̃��X�g */
+	QUEUE	wait_queue;	/* メモリプール待ちキュー */
+	ID	mpfid;		/* 固定長メモリプールID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	mpfatr;		/* メモリプール属性 */
+	INT	mpfcnt;		/* メモリプール全体のブロック数 */
+	INT	blfsz;		/* 固定長メモリブロックのサイズ */
+	INT	mpfsz;		/* メモリプール全体のサイズ */
+	INT	frbcnt;		/* 空き領域のブロック数 */
+	VP	mempool;	/* メモリプールの先頭アドレス */
+	VP	unused;		/* 未使用領域の先頭 */
+	FREEL	*freelist;	/* 空きブロックのリスト */
 } MPFCB;
 
 static MPFCB	mpfcb_table[NUM_MPFID];
@@ -65,14 +65,14 @@ static MPFCB	mpfcb_table[NUM_MPFID];
 #define get_mpfcb(id)	(&(mpfcb_table[INDEX_MPF(id)]))
 
 /*
- *  ���g�p�̌Œ蒷�������v�[���Ǘ��u���b�N�̃��X�g
+ *  未使用の固定長メモリプール管理ブロックのリスト
  */
 #ifndef _i_vcre_mpf
 QUEUE	free_mpfcb;
 #endif /* _i_vcre_mpf */
 
 /* 
- *  �Œ蒷�������v�[���Ǘ��u���b�N�̏�����
+ *  固定長メモリプール管理ブロックの初期化
  */
 void
 fix_memorypool_initialize(void)
@@ -98,7 +98,7 @@ fix_memorypool_initialize(void)
 }
 
 /*
- *  �Œ蒷�������v�[���Ǘ��p���[�`��
+ *  固定長メモリプール管理用ルーチン
  */
 
 #define MINSIZE		(sizeof(FREEL))
@@ -111,13 +111,13 @@ mempool_end(MPFCB *mpfcb)
 }
 
 /*
- *  �Œ蒷�������v�[���҂��d�l�̒�`
+ *  固定長メモリプール待ち仕様の定義
  */
 static WSPEC wspec_mpf_tfifo = { TTW_MPF, 0, 0 };
 static WSPEC wspec_mpf_tpri = { TTW_MPF, obj_chg_pri, 0 };
 
 /*
- *  �Œ蒷�������v�[���Ǘ��@�\
+ *  固定長メモリプール管理機能
  */
 
 #if !defined(_i_cre_mpf) || !defined(_i_vcre_mpf)

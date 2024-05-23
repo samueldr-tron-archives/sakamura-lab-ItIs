@@ -35,48 +35,48 @@
 #define _SYS_TIMER_
 
 /*
- *  �n�[�h�E�F�A�ˑ��^�C�}���W���[��
+ *  ハードウェア依存タイマモジュール
  *
- *  ���̃��W���[�����ŁC�ȉ��̒萔����ъ֐����`���Ȃ���΂Ȃ�Ȃ��D
+ *  このモジュール内で，以下の定数および関数を定義しなければならない．
  * 
- *  TIMER_PERIOD : �^�C�}�����݂̎��� (�P�ʂ� msec)�DItIs �ł̕W���l�� 
- *  1msec �ł��邪�C�^�C�}�����݂ɂ��I�[�o�w�b�h���������������ꍇ��
- *  �́C�����ƒ��������ɐݒ肵�Ă��悢�D�������C�^�C���A�E�g���ԂȂ�
- *  �̕���x�͑e���Ȃ� (�P�ʂ͕ς��Ȃ�)�D
+ *  TIMER_PERIOD : タイマ割込みの周期 (単位は msec)．ItIs での標準値は 
+ *  1msec であるが，タイマ割込みによるオーバヘッドを小さくしたい場合に
+ *  は，もっと長い周期に設定してもよい．もちろん，タイムアウト時間など
+ *  の分解度は粗くなる (単位は変わらない)．
  *
- *  void start_hw_timer() : �^�C�}�����������C�����I�ȃ^�C�}�����݂��J
- *  �n������D
+ *  void start_hw_timer() : タイマを初期化し，周期的なタイマ割込みを開
+ *  始させる．
  *
- *  void clear_hw_timer_interupt(void) : �^�C�}�����ݗv�����N���A����D
- *  �^�C�}�����݃n���h���̍ŏ��ŌĂ΂��D
+ *  void clear_hw_timer_interupt(void) : タイマ割込み要求をクリアする．
+ *  タイマ割込みハンドラの最初で呼ばれる．
  *
- *  void terminate_hw_timer(void) : �^�C�}�̓�����~������D�V�X�e��
- *  ��~���ɌĂ΂��D
+ *  void terminate_hw_timer(void) : タイマの動作を停止させる．システム
+ *  停止時に呼ばれる．
  */
 
 #include "h32sbc.h"
 
 /*
- *  �^�C�}�����݂̎��� (�P�ʂ� msec)
+ *  タイマ割込みの周期 (単位は msec)
  */
 #define TIMER_PERIOD	1
 
 /*
- *  �^�C�}�l�̓����\���̌^
+ *  タイマ値の内部表現の型
  */
 typedef unsigned int	TICK;
 
 /*
- *  �^�C�}�l�̓����\���� msec �P�ʂƂ̕ϊ�
+ *  タイマ値の内部表現と msec 単位との変換
  *
- *  H32SBC�V�X�e�� CPU�{�[�h�ł́C�^�C�}�� 4��sec ���ɃJ�E���g�A�b�v��
- *  ��D
+ *  H32SBCシステム CPUボードでは，タイマは 4μsec 毎にカウントアップす
+ *  る．
  */
 #define TIMER_TICK	250
 #define TO_TICK(msec)	((msec) * TIMER_TICK)
 
 /*
- *  �^�C�}�l�̓����\���ƃ�sec �P�ʂƂ̕ϊ�
+ *  タイマ値の内部表現とμsec 単位との変換
  */
 #if TIMER_TICK <= 1000
 #define TO_USEC(tick)	((tick) * (1000 / TIMER_TICK))
@@ -85,29 +85,29 @@ typedef unsigned int	TICK;
 #endif
 
 /*
- *  ���\�]���p�V�X�e�����������o���ۂ̏������Ԃ̌��ς�l (�P�ʂ͓����\��)
+ *  性能評価用システム時刻を取り出す際の処理時間の見積り値 (単位は内部表現)
  */
 #define GET_TOLERANCE	(TIMER_TICK / 5)
 
 /*
- *  �ݒ�ł���ő�̃^�C�}���� (�P�ʂ͓����\��)
+ *  設定できる最大のタイマ周期 (単位は内部表現)
  *
- *  �����\���� 0xffffff �͖� 67�b�D
+ *  内部表現で 0xffffff は約 67秒．
  */
 #define MAX_TICK	((TICK) 0xffffff)
 
 /*
- *  PIT �^�C�}�J�E���^���W�X�^�̐ݒ�l
+ *  PIT タイマカウンタレジスタの設定値
  */
 #define PIT_CYCLIC	0xe0
 
 /*
- *  �A�Z���u�����x���̃^�C�}�n���h��
+ *  アセンブラレベルのタイマハンドラ
  */
 extern void	timer_handler_startup(void);
 
 /*
- *  �^�C�}�̃X�^�[�g����
+ *  タイマのスタート処理
  */
 Inline void
 start_hw_timer()
@@ -115,57 +115,57 @@ start_hw_timer()
 	TICK	t = TO_TICK(TIMER_PERIOD) - 1;
 
 	/*
-	 *  �����݃n���h���̒�`
+	 *  割込みハンドラの定義
 	 */
 	define_eit(INT_VECTOR(2), EITATR(0, 15), timer_handler_startup);
 
 	/*
-	 *  IRC �̐ݒ�
+	 *  IRC の設定
 	 */
 	irc_assign(IRC_LMR(2), LIR6_BIT);
 	irc_or_assign(IRC_VMR, LIR6_BIT);
-	irc_or_assign(IRC_TMR, LIR6_BIT);	/* �G�b�W�g���K���[�h */
-	irc_and_assign(IRC_IMR, ~LIR6_BIT);	/* �����݃}�X�N���� */
+	irc_or_assign(IRC_TMR, LIR6_BIT);	/* エッジトリガモード */
+	irc_and_assign(IRC_IMR, ~LIR6_BIT);	/* 割込みマスク解除 */
 
 	/*
-	 *  PIT �̐ݒ�
+	 *  PIT の設定
 	 */
 	io_assign(PIT_TCR, PIT_CYCLIC);
-	assert(t <= MAX_TICK);			/* �^�C�}����l�̃`�F�b�N */
+	assert(t <= MAX_TICK);			/* タイマ上限値のチェック */
 	io_assign(PIT_CPRH, (t >> 16) & 0xff);
 	io_assign(PIT_CPRM, (t >> 8) & 0xff);
 	io_assign(PIT_CPRL, t & 0xff);
-	io_assign(PIT_TSR, 0x01);		/* �[�����o���N���A */
-	io_or_assign(PIT_TCR, 0x01);		/* �^�C�}�[���X�^�[�g������ */
+	io_assign(PIT_TSR, 0x01);		/* ゼロ検出をクリア */
+	io_or_assign(PIT_TCR, 0x01);		/* タイマーをスタートさせる */
 
-	irc_assign(IRC_IRR, LIR6_BIT);		/* �����ݗv�����N���A */
+	irc_assign(IRC_IRR, LIR6_BIT);		/* 割込み要求をクリア */
 }
 
 /*
- *  �^�C�}�����݂̃N���A
+ *  タイマ割込みのクリア
  */
 Inline void
 clear_hw_timer_interrupt(void)
 {
-	irc_assign(IRC_IRR, LIR6_BIT);		/* �����ݗv�����N���A */
-	io_assign(PIT_TSR, 0x01);		/* �[�����o���N���A */
+	irc_assign(IRC_IRR, LIR6_BIT);		/* 割込み要求をクリア */
+	io_assign(PIT_TSR, 0x01);		/* ゼロ検出をクリア */
 }
 
 /*
- *  �^�C�}�̒�~����
+ *  タイマの停止処理
  */
 Inline void
 terminate_hw_timer(void)
 {
-	io_and_assign(PIT_TCR, ~0x01);		/* �^�C�}�[���~�߂� */
-	io_assign(PIT_TSR, 0x01);		/* �[�����o���N���A */
-	irc_or_assign(IRC_IMR, LIR6_BIT);	/* �����݂��}�X�N */
+	io_and_assign(PIT_TCR, ~0x01);		/* タイマーを止める */
+	io_assign(PIT_TSR, 0x01);		/* ゼロ検出をクリア */
+	irc_or_assign(IRC_IMR, LIR6_BIT);	/* 割込みをマスク */
 }
 
 /*
- *  �^�C�}�̌��ݒl�̓ǂ݂���
+ *  タイマの現在値の読みだし
  *
- *  �����݋֎~��Ԓ��ŌĂяo�����ƁD
+ *  割込み禁止区間中で呼び出すこと．
  */
 Inline TICK
 get_current_hw_time(void)

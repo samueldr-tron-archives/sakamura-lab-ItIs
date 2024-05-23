@@ -2,424 +2,424 @@
 Fri Jan 30 17:00:00 JST 1998	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, BSDUNIX,
-	kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* bsd/makeoffset.c: ‹ó‚Ìƒtƒ@ƒCƒ‹‚ğì‚é (makeoffset.c ‚ª tron ‚Ì‰º
-	‚ÖˆÚ“®‚µ‚½‚±‚Æ‚É”º‚¤‘[’u)D
+	* bsd/makeoffset.c: ç©ºã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‹ (makeoffset.c ãŒ tron ã®ä¸‹
+	ã¸ç§»å‹•ã—ãŸã“ã¨ã«ä¼´ã†æªç½®)ï¼
 
-	* Release1.3 (patchlevel=4) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_4")D
+	* Release1.3 (patchlevel=4) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_3_4")ï¼
 
 Fri Jan 30 16:14:47 JST 1998	Hiroaki Takada
 
-	* include/itron.h: TRONd—lƒ`ƒbƒvˆË‘¶‚Ì•”•ª‚ÉƒRƒƒ“ƒg‚ğ’Ç‰ÁDm68k 
-	ˆË‘¶‚Ì’è‹`‚ğ’Ç‰ÁD
+	* include/itron.h: TRONä»•æ§˜ãƒãƒƒãƒ—ä¾å­˜ã®éƒ¨åˆ†ã«ã‚³ãƒ¡ãƒ³ãƒˆã‚’è¿½åŠ ï¼m68k 
+	ä¾å­˜ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* include/itis_debug.h: TRONd—lƒ`ƒbƒvˆË‘¶‚Ì•”•ª‚ğ #ifdef tron ‚Å
-	ˆÍ‚İCm68k ˆË‘¶‚Ì’è‹`‚ğ’Ç‰ÁD
+	* include/itis_debug.h: TRONä»•æ§˜ãƒãƒƒãƒ—ä¾å­˜ã®éƒ¨åˆ†ã‚’ #ifdef tron ã§
+	å›²ã¿ï¼Œm68k ä¾å­˜ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* kernel/newversion: freebsd ‚Æ dve68k ‚ğ’Ç‰ÁD
+	* kernel/newversion: freebsd ã¨ dve68k ã‚’è¿½åŠ ï¼
 
-	* kernel/task_manage.c: ID ‚ª•‰‚Ìƒ^ƒXƒN‚ğ TA_RNG0 ˆÈŠO‚Å¶¬‚µ‚æ‚¤
-	‚Æ‚µ‚½ê‡‚ÉƒGƒ‰[‚ÉD
+	* kernel/task_manage.c: ID ãŒè² ã®ã‚¿ã‚¹ã‚¯ã‚’ TA_RNG0 ä»¥å¤–ã§ç”Ÿæˆã—ã‚ˆã†
+	ã¨ã—ãŸå ´åˆã«ã‚¨ãƒ©ãƒ¼ã«ï¼
 
-	* kernel/task_sync.c, genconfig, sample/config.def: ©ƒ^ƒXƒN‚É 
-	sus/rem_tsk ‚ğ‹–‚·ƒIƒvƒVƒ‡ƒ“‚Ì’Ç‰ÁD
+	* kernel/task_sync.c, genconfig, sample/config.def: è‡ªã‚¿ã‚¹ã‚¯ã« 
+	sus/rem_tsk ã‚’è¨±ã™ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®è¿½åŠ ï¼
 
-	* kernel/genisyscall, kernel/ptable.S: ˆø”‚ğÏ‚Şˆ—‚ğs‚¤‚½‚ß‚Ì
-	ƒWƒƒƒ“ƒvƒe[ƒuƒ‹‚à¶¬‚·‚é‚æ‚¤‚ÉC³D
+	* kernel/genisyscall, kernel/ptable.S: å¼•æ•°ã‚’ç©ã‚€å‡¦ç†ã‚’è¡Œã†ãŸã‚ã®
+	ã‚¸ãƒ£ãƒ³ãƒ—ãƒ†ãƒ¼ãƒ–ãƒ«ã‚‚ç”Ÿæˆã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼
 
 	* kernel/syscall.def, genisyscall, isyscall.h, itable.S,
 	include/itis_isyscall.h, itron_fncode.h, include/bsd/itis_scint.h,
 	include/tron/itis_scint.h, bsd/cpu_conf.h, tron/cpu_conf.h:
-	chg/ref_ims ‚ğ chg/ref_iXX ‚É•ÏXDdis/ena_int ‚ğƒTƒ|[ƒg‚Å‚«‚é‚æ
-	‚¤‚É‰ü‘¢D
+	chg/ref_ims ã‚’ chg/ref_iXX ã«å¤‰æ›´ï¼dis/ena_int ã‚’ã‚µãƒãƒ¼ãƒˆã§ãã‚‹ã‚ˆ
+	ã†ã«æ”¹é€ ï¼
 
-	* systask/inittask.c: ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ì’â~‚ğ #ifdef CONSOLE_PORT 
-	‚ÅˆÍ‚ŞD
+	* systask/inittask.c: ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã®åœæ­¢ã‚’ #ifdef CONSOLE_PORT 
+	ã§å›²ã‚€ï¼
 
-	* tron/cpu_status.h: ƒRƒƒ“ƒg‚Ìƒ~ƒX‚ÌC³D
+	* tron/cpu_status.h: ã‚³ãƒ¡ãƒ³ãƒˆã®ãƒŸã‚¹ã®ä¿®æ­£ï¼
 
 Sun Jan 19 16:06:41 JST 1997	Hiroaki Takada
 
-	* kernel/taskmbox.c: vref_tmb ‚Åæ“ªƒƒbƒZ[ƒW‚ğ³‚µ‚­•Ô‚ç‚È‚¢ƒoƒO
-	‚ğC³D
+	* kernel/taskmbox.c: vref_tmb ã§å…ˆé ­ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ­£ã—ãè¿”ã‚‰ãªã„ãƒã‚°
+	ã‚’ä¿®æ­£ï¼
 
 Mon Jan 13 12:55:36 JST 1997	Hiroaki Takada
 
-	* kernel/task_sync.c: ƒRƒƒ“ƒg‚Ì’Ç‰ÁD
+	* kernel/task_sync.c: ã‚³ãƒ¡ãƒ³ãƒˆã®è¿½åŠ ï¼
 
-	* kernel/genoffset: ƒtƒ@ƒCƒ‹‚Ìæ“ª‚Éo—Í‚·‚éƒRƒƒ“ƒg‚ğC³‚µC
-	utils ƒfƒBƒŒƒNƒgƒŠ‚ÖˆÚ“®D
+	* kernel/genoffset: ãƒ•ã‚¡ã‚¤ãƒ«ã®å…ˆé ­ã«å‡ºåŠ›ã™ã‚‹ã‚³ãƒ¡ãƒ³ãƒˆã‚’ä¿®æ­£ã—ï¼Œ
+	utils ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¸ç§»å‹•ï¼
 
-	* sample/Makefile.*: genoffset ‚ğ utils ‚ÖˆÚ“®‚µ‚½‚±‚Æ‚É‚æ‚éC³D
+	* sample/Makefile.*: genoffset ã‚’ utils ã¸ç§»å‹•ã—ãŸã“ã¨ã«ã‚ˆã‚‹ä¿®æ­£ï¼
 
-	* sample/Makefile.sunos4: offset.h ‚ğì‚é‚Ì‚ğ‚â‚ß‚éD
+	* sample/Makefile.sunos4: offset.h ã‚’ä½œã‚‹ã®ã‚’ã‚„ã‚ã‚‹ï¼
 
-	* kernel/makeoffset.c: tron ƒfƒBƒŒƒNƒgƒŠ‚ÖˆÚ“®D
+	* kernel/makeoffset.c: tron ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¸ç§»å‹•ï¼
 
-	* tron/cpu_support.S: NUM_SVC ¨ USE_SVCD
+	* tron/cpu_support.S: NUM_SVC â†’ USE_SVCï¼
 
 Fri Jan 10 22:36:39 JST 1997	Hiroaki Takada
 
 	* kernel/isysconf.h, winfo.h, startup.c, semaphore.c, eventflag.c,
 	mailbox.c, messagebuf.c, rendezvous.c, prisem.c, mempfix.c,
-	mempool.c, task.h, task.c, misc_calls.c, time_calls.c: ‹@”\ƒuƒƒb
-	ƒN’PˆÊ‚ÅŠO‚·‚±‚Æ‚ğ¯•Ê‚·‚éƒ}ƒNƒ‚Æ‚µ‚ÄCUSE_??? ‚ğ“±“üD
+	mempool.c, task.h, task.c, misc_calls.c, time_calls.c: æ©Ÿèƒ½ãƒ–ãƒ­ãƒƒ
+	ã‚¯å˜ä½ã§å¤–ã™ã“ã¨ã‚’è­˜åˆ¥ã™ã‚‹ãƒã‚¯ãƒ­ã¨ã—ã¦ï¼ŒUSE_??? ã‚’å°å…¥ï¼
 
 Fri Jan 10 22:16:02 JST 1997	Hiroaki Takada
 
 	* kernel/task.h, wait.h, wait.c, task_manage.c, task_sync.c,
 	semaphore.c, mailbox.c, messagebuf.c, rendezvous.c, mempool.c,
-	mempfix.c, time_call.c, prisem.c, taskmbox.c: WAITó‘Ô‚É‚¨‚¢‚Ä TCB 
-	’†‚É‚Â‚Ì‚ğC‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ÌID ‚©‚ç‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ÌƒRƒ“ƒgƒ[
-	ƒ‹ƒuƒƒbƒN‚É•ÏX‚·‚éD
+	mempfix.c, time_call.c, prisem.c, taskmbox.c: WAITçŠ¶æ…‹ã«ãŠã„ã¦ TCB 
+	ä¸­ã«æŒã¤ã®ã‚’ï¼Œå¾…ã¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ID ã‹ã‚‰å¾…ã¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼
+	ãƒ«ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´ã™ã‚‹ï¼
 
 Fri Jan 10 21:35:01 JST 1997	Hiroaki Takada
 
-	* tron/cpu_call.h, cpu_status.h, tron_defs.h, tron_insn.h: ×‚©‚È
-	ƒŠƒtƒ@ƒCƒ“ (/MP ‚É‚ ‚í‚¹‚é)D
+	* tron/cpu_call.h, cpu_status.h, tron_defs.h, tron_insn.h: ç´°ã‹ãª
+	ãƒªãƒ•ã‚¡ã‚¤ãƒ³ (/MP ã«ã‚ã‚ã›ã‚‹)ï¼
 
 Fri Jan 10 21:05:40 JST 1997	Hiroaki Takada
 
 	* kernel/task_sync.c, semaphore.c, eventflag.c, mailbox.c,
 	messagebuf.c, rendezvous.c, prisem.c, taskmbox.c, mempfix.c,
-	mempool.c: ercd ‚ğ E_TMOUT ‚É‰Šú‰»‚·‚éˆ—‚ğ‘O‚ÖˆÚ“® (/MP ‚É‚ ‚í
-	‚¹‚é)D
+	mempool.c: ercd ã‚’ E_TMOUT ã«åˆæœŸåŒ–ã™ã‚‹å‡¦ç†ã‚’å‰ã¸ç§»å‹• (/MP ã«ã‚ã‚
+	ã›ã‚‹)ï¼
 
-	* kernel/wait.c, task_manage.c: wercd Œo—R‚ÅƒGƒ‰[ƒR[ƒh‚ğİ’è‚·‚é
-	ˆ—‚ğCwait_release ‚æ‚è‚à‘O‚ÖˆÚ“® (/MP ‚É‚ ‚í‚¹‚é)D
+	* kernel/wait.c, task_manage.c: wercd çµŒç”±ã§ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹
+	å‡¦ç†ã‚’ï¼Œwait_release ã‚ˆã‚Šã‚‚å‰ã¸ç§»å‹• (/MP ã«ã‚ã‚ã›ã‚‹)ï¼
 
 Fri Jan 10 20:50:17 JST 1997	Hiroaki Takada
 
 	* kernel/wait.h, semaphore.c, eventflag.c, mailbox.c,
-	messagebuf.c, rendezvous.c, prisem.c, mempfix.c, mempool.c: ƒIƒuƒWƒF
-	ƒNƒg‚ª‘¶İ‚µ‚È‚¢ê‡‚Ìˆµ‚¢‚ğ•ÏXD
+	messagebuf.c, rendezvous.c, prisem.c, mempfix.c, mempool.c: ã‚ªãƒ–ã‚¸ã‚§
+	ã‚¯ãƒˆãŒå­˜åœ¨ã—ãªã„å ´åˆã®æ‰±ã„ã‚’å¤‰æ›´ï¼
 
-	* kernel/ready_queue.h: ƒRƒƒ“ƒg‚Ì•ÒWD
+	* kernel/ready_queue.h: ã‚³ãƒ¡ãƒ³ãƒˆã®ç·¨é›†ï¼
 
 Tue Aug 27 12:54:58 JST 1996	Hiroaki Takada
 
-	* tron/cpu_support.S: _dispatch ’†‚Ì trapa ‚ÌƒxƒNƒgƒ‹”Ô†‚ğC³D
-	‚±‚ÌŠÖ”‚ğ #ifdef TRON_NO_DI ‚ÅˆÍ‚ŞD
+	* tron/cpu_support.S: _dispatch ä¸­ã® trapa ã®ãƒ™ã‚¯ãƒˆãƒ«ç•ªå·ã‚’ä¿®æ­£ï¼
+	ã“ã®é–¢æ•°ã‚’ #ifdef TRON_NO_DI ã§å›²ã‚€ï¼
 
 Sun Jul 28 10:40:17 JST 1996	Hiroaki Takada
 
-	* kernel/taskmbox.c: ƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‹@”\ (V‹K)D
+	* kernel/taskmbox.c: ã‚¿ã‚¹ã‚¯ä»˜å±ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹æ©Ÿèƒ½ (æ–°è¦)ï¼
 
 	* include/itron.h, kernel/syscall.def, isysconf.h, genconfig,
-	task.h, task.c, winfo.h, sample/Makefile.*, config.def*: ƒ^ƒXƒN•t
-	‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‹@”\‚Ì‚½‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	task.h, task.c, winfo.h, sample/Makefile.*, config.def*: ã‚¿ã‚¹ã‚¯ä»˜
+	å±ãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹æ©Ÿèƒ½ã®ãŸã‚ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* systask/inittask.c: ‰Šú‰»ƒ^ƒXƒN‚É“n‚³‚ê‚é‹N“®ƒR[ƒh‚ğC‚»‚Ì‚Ü‚Ü
-	‰Šú‹N“®ƒ^ƒXƒN‚É“n‚·‚æ‚¤‚É‚·‚éD
+	* systask/inittask.c: åˆæœŸåŒ–ã‚¿ã‚¹ã‚¯ã«æ¸¡ã•ã‚Œã‚‹èµ·å‹•ã‚³ãƒ¼ãƒ‰ã‚’ï¼Œãã®ã¾ã¾
+	åˆæœŸèµ·å‹•ã‚¿ã‚¹ã‚¯ã«æ¸¡ã™ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Sun Jul 28 09:29:23 JST 1996	Hiroaki Takada
 
-	* kernel/task.c: ˆø”‚Ì‚È‚¢ŠÖ”‚ÌéŒ¾‚ğ (void) ‚ÉD
+	* kernel/task.c: å¼•æ•°ã®ãªã„é–¢æ•°ã®å®£è¨€ã‚’ (void) ã«ï¼
 
-	* tron/tvme/sys_support.S: ƒAƒZƒ“ƒuƒ‰‚Ì‹Lq‚ÌƒŠƒtƒ@ƒCƒ“D
+	* tron/tvme/sys_support.S: ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã®è¨˜è¿°ã®ãƒªãƒ•ã‚¡ã‚¤ãƒ³ï¼
 
 	* kernel/genisyscall, task.c, timer.c, tron/tvme/sys_conf.h,
-	sys_util.c: ƒRƒƒ“ƒg‚ğC³D
+	sys_util.c: ã‚³ãƒ¡ãƒ³ãƒˆã‚’ä¿®æ­£ï¼
 
-	* kernel/rendezvous.c: ref_por ‚ğƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ô‚±‚Æ‚ğ‹Ö~D
+	* kernel/rendezvous.c: ref_por ã‚’ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰å‘¼ã¶ã“ã¨ã‚’ç¦æ­¢ï¼
 
 Sun Jul 28 08:30:56 JST 1996	Hiroaki Takada
 
-	* sample/Makefile.*: ƒJ[ƒlƒ‹‚Ìƒ\[ƒX‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ‚ğ•Ï”‚É’u
-	‚­Doffset.h ‚ğ clean ‚ÅÁ‹D
+	* sample/Makefile.*: ã‚«ãƒ¼ãƒãƒ«ã®ã‚½ãƒ¼ã‚¹ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å¤‰æ•°ã«ç½®
+	ãï¼offset.h ã‚’ clean ã§æ¶ˆå»ï¼
 
 Sat Feb 17 19:00:15 JST 1996	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, kernel/patchlevel.h: 
-	‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* ‘Sƒtƒ@ƒCƒ‹: •¶Œ¾•\¦‚ğC4.4 BSD ‚Ì‚à‚Ì‚ğƒx[ƒX‚É‚µ‚½‚à‚Ì‚É•ÏX‚·
-	‚éD‚±‚Ì•û‚ªC•\Œ»‚ª‚í‚©‚è‚â‚·‚¢D
+	* å…¨ãƒ•ã‚¡ã‚¤ãƒ«: æ–‡è¨€è¡¨ç¤ºã‚’ï¼Œ4.4 BSD ã®ã‚‚ã®ã‚’ãƒ™ãƒ¼ã‚¹ã«ã—ãŸã‚‚ã®ã«å¤‰æ›´ã™
+	ã‚‹ï¼ã“ã®æ–¹ãŒï¼Œè¡¨ç¾ãŒã‚ã‹ã‚Šã‚„ã™ã„ï¼
 
-	* Release1.3 (patchlevel=3) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_3")D
+	* Release1.3 (patchlevel=3) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_3_3")ï¼
 
 Wed Feb  7 16:24:22 JST 1996	Hiroaki Takada
 
-	* doc/CONDITION: uItIs ‚Ì”z•tEg—pğŒ‚ÉŠÖ‚·‚é FAQv‚ğ’Ç‰ÁD
+	* doc/CONDITION: ã€ŒItIs ã®é…ä»˜ãƒ»ä½¿ç”¨æ¡ä»¶ã«é–¢ã™ã‚‹ FAQã€ã‚’è¿½åŠ ï¼
 
 Tue Jan  9 13:11:22 JST 1996	Hiroaki Takada
 
-	* libitis/bsd_nbio.c, bsd_nbeio.c, systask/bsd_serial.c: ƒmƒ“ƒuƒƒb
-	ƒLƒ“ƒOI/Oƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚é‚ÉCfcntl(fd, F_SETOWN, getpid()) 
-	‚·‚é‚æ‚¤‚ÉC³Dnb{e}_closeCnb{e}_socketCnb{e}_accept ‚ğ’Ç‰ÁD
+	* libitis/bsd_nbio.c, bsd_nbeio.c, systask/bsd_serial.c: ãƒãƒ³ãƒ–ãƒ­ãƒƒ
+	ã‚­ãƒ³ã‚°I/Oãƒ¢ãƒ¼ãƒ‰ã§ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹æ™‚ã«ï¼Œfcntl(fd, F_SETOWN, getpid()) 
+	ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼nb{e}_closeï¼Œnb{e}_socketï¼Œnb{e}_accept ã‚’è¿½åŠ ï¼
 
 Fri Sep  8 23:51:36 JST 1995	Hiroaki Takada
 
-	* MANIFEST: bsd/freebsd/sys_conf.h ‚ğ’Ç‰ÁD
+	* MANIFEST: bsd/freebsd/sys_conf.h ã‚’è¿½åŠ ï¼
 
-	* bsd/cpu_status.h: sigaltstack ‚ğ³‚µ‚­g‚Á‚Ä‚¢‚È‚©‚Á‚½–â‘è‚ğ
-	C³D
+	* bsd/cpu_status.h: sigaltstack ã‚’æ­£ã—ãä½¿ã£ã¦ã„ãªã‹ã£ãŸå•é¡Œã‚’
+	ä¿®æ­£ï¼
 
 Mon Jun 19 19:10:00 JST 1995	Hiroaki Takada
 
-	* include/itis_debug.h: TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é•”•ª‚ğ #ifdef tron
-	‚ÅˆÍ‚ñ‚¾C³‚ğ‚â‚ß‚é (ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠÂ‹«‚ÅƒGƒ‰[‚É‚È‚é)D
+	* include/itis_debug.h: TRONä»•æ§˜ãƒãƒƒãƒ—ã«ä¾å­˜ã™ã‚‹éƒ¨åˆ†ã‚’ #ifdef tron
+	ã§å›²ã‚“ã ä¿®æ­£ã‚’ã‚„ã‚ã‚‹ (ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç’°å¢ƒã§ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹)ï¼
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚Ì
-	C³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾ã§ã®
+	ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* ‘Sƒtƒ@ƒCƒ‹: •¶Œ¾•\¦‚ğ•ÏX‚·‚éD
+	* å…¨ãƒ•ã‚¡ã‚¤ãƒ«: æ–‡è¨€è¡¨ç¤ºã‚’å¤‰æ›´ã™ã‚‹ï¼
 
-	* Release1.3 (patchlevel=2) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_2")D
+	* Release1.3 (patchlevel=2) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_3_2")ï¼
 
 Mon Jun 19 17:28:27 JST 1995	Hiroaki Takada
 
-	* include/itis_debug.h: TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é•”•ª‚ğ #ifdef tron
-	‚ÅˆÍ‚ŞD
+	* include/itis_debug.h: TRONä»•æ§˜ãƒãƒƒãƒ—ã«ä¾å­˜ã™ã‚‹éƒ¨åˆ†ã‚’ #ifdef tron
+	ã§å›²ã‚€ï¼
 
-	* kernel/messagebuf.c: rcv_mbf ‚ÅCŠÔˆá‚Á‚½ƒƒbƒZ[ƒWƒTƒCƒY‚ª•Ô‚é
-	ê‡‚ª‚ ‚éƒoƒO‚ğC³D
+	* kernel/messagebuf.c: rcv_mbf ã§ï¼Œé–“é•ã£ãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚µã‚¤ã‚ºãŒè¿”ã‚‹
+	å ´åˆãŒã‚ã‚‹ãƒã‚°ã‚’ä¿®æ­£ï¼
 
-	* kernel/rendezvous.c: fwd_por ‚ÅC‘Šè‚ª‘Ò‚Á‚Ä‚¢‚È‚©‚Á‚½‚É•K‚¸ 
-	E_TMOUTƒGƒ‰[‚É‚È‚éƒoƒO‚ğC³D
+	* kernel/rendezvous.c: fwd_por ã§ï¼Œç›¸æ‰‹ãŒå¾…ã£ã¦ã„ãªã‹ã£ãŸæ™‚ã«å¿…ãš 
+	E_TMOUTã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ãƒã‚°ã‚’ä¿®æ­£ï¼
 
 Mon May 29 19:12:19 JST 1995	Hiroaki Takada
 
-	* kernel/timer.c: TIMER_PERIOD ‚ª 1 ‚Å‚È‚¢ê‡‚ÉCvget_tim ‚ª³‚µ
-	‚­‚È‚¢’l‚ğ•Ô‚·ƒoƒO‚ğC³D
+	* kernel/timer.c: TIMER_PERIOD ãŒ 1 ã§ãªã„å ´åˆã«ï¼Œvget_tim ãŒæ­£ã—
+	ããªã„å€¤ã‚’è¿”ã™ãƒã‚°ã‚’ä¿®æ­£ï¼
 
 Wed Mar 15 19:14:02 JST 1995	Hiroaki Takada
 
 	* ChangeLog, MANIFEST, README, doc/USER, BSDUNIX,
-	kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.3 (patchlevel=1) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_1")D
+	* Release1.3 (patchlevel=1) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_3_1")ï¼
 
 Mon Mar 13 12:13:08 JST 1995	Hiroaki Takada
 
-	* kernel/genconfig: ID ‚Ì max ‚ğw’è‚µ‚È‚¢ê‡‚ÌƒfƒtƒHƒ‹ƒg‚ğ 0 ‚É
-	C³D
+	* kernel/genconfig: ID ã® max ã‚’æŒ‡å®šã—ãªã„å ´åˆã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ 0 ã«
+	ä¿®æ­£ï¼
 
-	* sample/Makefile.sunos4: itis_panic.o, panic.o ‚ğ’Ç‰Á (ŒÃ‚¢ GCC 
-	‚Ö‚Ì‘Î‰)D
+	* sample/Makefile.sunos4: itis_panic.o, panic.o ã‚’è¿½åŠ  (å¤ã„ GCC 
+	ã¸ã®å¯¾å¿œ)ï¼
 
-	* sample/Makefile.tvme: SƒtƒH[ƒ}ƒbƒgƒtƒ@ƒCƒ‹‚ğì‚é‚æ‚¤‚ÉC³D
+	* sample/Makefile.tvme: Sãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼
 
 Mon Mar 13 12:09:08 JST 1995	Hiroaki Takada
 
-	* libitis/bsd_nbeio.c: V‹K (errno ‚ğ•Ô‚·ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/Oƒ‰ƒCƒu
-	ƒ‰ƒŠ)D
+	* libitis/bsd_nbeio.c: æ–°è¦ (errno ã‚’è¿”ã™ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/Oãƒ©ã‚¤ãƒ–
+	ãƒ©ãƒª)ï¼
 
 Fri Mar 10 12:31:16 JST 1995	Hiroaki Takada
 
-	* tron/tvme/sys_timer.h: start_hw_timer ‚Ì’è‹`‚ÌC³ (C³–Y‚ê)D
+	* tron/tvme/sys_timer.h: start_hw_timer ã®å®šç¾©ã®ä¿®æ­£ (ä¿®æ­£å¿˜ã‚Œ)ï¼
 
-	* tron/*/sys_timer.h: ƒRƒƒ“ƒg‚ÌC³D
+	* tron/*/sys_timer.h: ã‚³ãƒ¡ãƒ³ãƒˆã®ä¿®æ­£ï¼
 
 Thu Feb 23 18:27:11 JST 1995	Hiroaki Takada
 
-	* kernel/task.h, task.c, ready_queue.h, task_manage.c: RUNó‘Ô‚Ìƒ^
-	ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚É“ü‚ê‚Ä‚¨‚­•û®‚É•ÏXD
+	* kernel/task.h, task.c, ready_queue.h, task_manage.c: RUNçŠ¶æ…‹ã®ã‚¿
+	ã‚¹ã‚¯ã‚’ãƒ¬ãƒ‡ã‚£ã‚­ãƒ¥ãƒ¼ã«å…¥ã‚Œã¦ãŠãæ–¹å¼ã«å¤‰æ›´ï¼
 
 Thu Feb 23 14:44:48 JST 1995	Hiroaki Takada
 
 	* kernel/task_manage.c, bsd/cpu_conf.h, cpu_task.h, bsd/sunos4/
-	sys_conf.h: USE_SPECIAL_STACK ‚ğ USE_MPROTECT_STACK ‚ÆƒŠƒl[ƒ€‚µC
-	cpu_conf.h ‚Å‚Í‚È‚­ sys_conf.h ‚Å’è‹`‚·‚é‚æ‚¤‚É•ÏX‚·‚éD
+	sys_conf.h: USE_SPECIAL_STACK ã‚’ USE_MPROTECT_STACK ã¨ãƒªãƒãƒ¼ãƒ ã—ï¼Œ
+	cpu_conf.h ã§ã¯ãªã sys_conf.h ã§å®šç¾©ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´ã™ã‚‹ï¼
 
 	* bsd/cpu_status.h, cpu_util.c, bsd/sunos4/sys_conf.h: sigaltstack 
-	‚ğg‚¤ê‡‚É‘Î‰D
+	ã‚’ä½¿ã†å ´åˆã«å¯¾å¿œï¼
 
-	* bsd/cpu_task.h: jmp_buf \‘¢‘Ì‚Ì‘€ì‚Ì•”•ª‚ÅCjmp_buf ‚Ì’è‹`‚ÉˆË
-	‘¶‚µ‚È‚¢‚æ‚¤‚ÉC³‚µC#ifdef sunos4 ‚ğ‚â‚ß‚éD
+	* bsd/cpu_task.h: jmp_buf æ§‹é€ ä½“ã®æ“ä½œã®éƒ¨åˆ†ã§ï¼Œjmp_buf ã®å®šç¾©ã«ä¾
+	å­˜ã—ãªã„ã‚ˆã†ã«ä¿®æ­£ã—ï¼Œ#ifdef sunos4 ã‚’ã‚„ã‚ã‚‹ï¼
 
-	* bsd/cpu_task.h: sys/mman.h ‚Å PROT_NONE ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ƒP[ƒX
-	‚ğ‹~ÏDmprotect ‚Ì‘æˆêˆø”‚ğ caddr_t ‚ÉƒLƒƒƒXƒg‚·‚éD
+	* bsd/cpu_task.h: sys/mman.h ã§ PROT_NONE ãŒå®šç¾©ã•ã‚Œã¦ã„ãªã„ã‚±ãƒ¼ã‚¹
+	ã‚’æ•‘æ¸ˆï¼mprotect ã®ç¬¬ä¸€å¼•æ•°ã‚’ caddr_t ã«ã‚­ãƒ£ã‚¹ãƒˆã™ã‚‹ï¼
 
-	* bsd/sunos4/sys_conf.h, systask/bsd_serial.c: ’[––‚ğ RAWƒ‚[ƒh‚É
-	İ’è‚·‚é•û–@‚ğ OS “Æ—§‚ÉD
+	* bsd/sunos4/sys_conf.h, systask/bsd_serial.c: ç«¯æœ«ã‚’ RAWãƒ¢ãƒ¼ãƒ‰ã«
+	è¨­å®šã™ã‚‹æ–¹æ³•ã‚’ OS ç‹¬ç«‹ã«ï¼
 
-	* bsd/sunos4/sys_conf.h: #define ‚·‚éƒVƒ“ƒ{ƒ‹‚ğ‘å•¶š‚ÉD
+	* bsd/sunos4/sys_conf.h: #define ã™ã‚‹ã‚·ãƒ³ãƒœãƒ«ã‚’å¤§æ–‡å­—ã«ï¼
 
-	* bsd/freebsd/sys_conf.h: V‹KD
+	* bsd/freebsd/sys_conf.h: æ–°è¦ï¼
 
 Tue Feb 14 20:28:47 JST 1995	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, README, doc/USER, PRISEM, BSDUNIX: ‚±‚Ì“_
-	‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, MANIFEST, README, doc/USER, PRISEM, BSDUNIX: ã“ã®æ™‚ç‚¹
+	ã¾ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.3 (patchlevel=0) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3")D
+	* Release1.3 (patchlevel=0) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_3")ï¼
 
 Tue Feb 14 19:48:46 JST 1995	Hiroaki Takada
 
 	* bsd/cpu_conf.h, cpu_util.c, systask/systask.h, logtask.c,
-	serial.c, bsd_serial.c: BSD UNIX ã‚ÅCŠg’£SVC ‚ª‚È‚¢‚½‚ß‚ÉCƒ†[
-	ƒUƒ^ƒXƒN‚©‚çƒVƒXƒeƒ€ƒƒO—pƒƒbƒZ[ƒWƒoƒbƒtƒ@‚âƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒo‚ÉƒA
-	ƒNƒZƒX‚Å‚«‚È‚¢–â‘è‚É‘ÎˆD
+	serial.c, bsd_serial.c: BSD UNIX ä¸Šã§ï¼Œæ‹¡å¼µSVC ãŒãªã„ãŸã‚ã«ï¼Œãƒ¦ãƒ¼
+	ã‚¶ã‚¿ã‚¹ã‚¯ã‹ã‚‰ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã‚„ã‚·ãƒªã‚¢ãƒ«ãƒ‰ãƒ©ã‚¤ãƒã«ã‚¢
+	ã‚¯ã‚»ã‚¹ã§ããªã„å•é¡Œã«å¯¾å‡¦ï¼
 
 Tue Feb 14 19:14:59 JST 1995	Hiroaki Takada
 
-	* tron/h32/sys_serial.c: ƒ|[ƒg”Ô†‚ğ‹t‚É‚µ‚½‚ÉCŠ„‚İƒnƒ“ƒhƒ‰
-	‚ğ‹t‚É‚·‚é‚Ì‚ğ–Y‚ê‚Ä‚¢‚½ƒoƒO‚ğC³D
+	* tron/h32/sys_serial.c: ãƒãƒ¼ãƒˆç•ªå·ã‚’é€†ã«ã—ãŸæ™‚ã«ï¼Œå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©
+	ã‚’é€†ã«ã™ã‚‹ã®ã‚’å¿˜ã‚Œã¦ã„ãŸãƒã‚°ã‚’ä¿®æ­£ï¼
 
 Tue Feb 14 18:40:41 JST 1995	Hiroaki Takada
 
-	* util/makedep, sample/Makefile.*: makedep ‚ª CƒRƒ“ƒpƒCƒ‰‚Ìˆá‚¢‚É
-	‘Î‰‚Å‚«‚é‚æ‚¤‚É‰ü‘¢D".s" ƒtƒ@ƒCƒ‹ (ƒvƒŠƒvƒƒZƒbƒT‚ğ’Ê‚³‚È‚¢ƒAƒZ
-	ƒ“ƒuƒ‰ƒ\[ƒX) ‚É‘Î‰‚·‚é‚Ì‚ğ‚â‚ß‚éD‚Ü‚½CƒIƒvƒVƒ‡ƒ“‚Ì“n‚µ•û‚ğ®—D
-	ŠÖ˜A‚µ‚ÄCŠeƒVƒXƒeƒ€—p‚Ì Makefile ‚ğC³D
+	* util/makedep, sample/Makefile.*: makedep ãŒ Cã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®é•ã„ã«
+	å¯¾å¿œã§ãã‚‹ã‚ˆã†ã«æ”¹é€ ï¼".s" ãƒ•ã‚¡ã‚¤ãƒ« (ãƒ—ãƒªãƒ—ãƒ­ã‚»ãƒƒã‚µã‚’é€šã•ãªã„ã‚¢ã‚»
+	ãƒ³ãƒ–ãƒ©ã‚½ãƒ¼ã‚¹) ã«å¯¾å¿œã™ã‚‹ã®ã‚’ã‚„ã‚ã‚‹ï¼ã¾ãŸï¼Œã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®æ¸¡ã—æ–¹ã‚’æ•´ç†ï¼
+	é–¢é€£ã—ã¦ï¼Œå„ã‚·ã‚¹ãƒ†ãƒ ç”¨ã® Makefile ã‚’ä¿®æ­£ï¼
 
 Tue Feb 14 18:10:35 JST 1995	Hiroaki Takada
 
-	* sample/Makefile.sun4: ƒŠƒŠ[ƒX”Å‚ÉƒtƒBƒbƒNƒXD
+	* sample/Makefile.sun4: ãƒªãƒªãƒ¼ã‚¹ç‰ˆã«ãƒ•ã‚£ãƒƒã‚¯ã‚¹ï¼
 
 Tue Feb 14 18:05:02 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_conf.h: FLG_SIGIO ‚Ì’è‹`‚ğíœDƒVƒŠƒAƒ‹ƒ|[ƒg‚ÉŠÖ‚·‚é’è
-	‹`‚ğ’Ç‰ÁD
+	* bsd/cpu_conf.h: FLG_SIGIO ã®å®šç¾©ã‚’å‰Šé™¤ï¼ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã«é–¢ã™ã‚‹å®š
+	ç¾©ã‚’è¿½åŠ ï¼
 
-	* sample/config.def.bsd: V‹KDBSD UNIX—p ƒVƒXƒeƒ€\¬İ’èƒtƒ@ƒCƒ‹
-	‚ÌƒTƒ“ƒvƒ‹D
+	* sample/config.def.bsd: æ–°è¦ï¼BSD UNIXç”¨ ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
+	ã®ã‚µãƒ³ãƒ—ãƒ«ï¼
 
-	* systask/serial.c: CR ‚ğ CR+LF ‚É•ÏŠ·‚·‚éˆ—‚ğ serial_write_one 
-	‚ÉˆÚ“®D
+	* systask/serial.c: CR ã‚’ CR+LF ã«å¤‰æ›ã™ã‚‹å‡¦ç†ã‚’ serial_write_one 
+	ã«ç§»å‹•ï¼
 
-	* systask/systask.h: bsd_serial_task ‚Ì’è‹`‚ğC³D
+	* systask/systask.h: bsd_serial_task ã®å®šç¾©ã‚’ä¿®æ­£ï¼
 
-	* systask/bsd_serial.c: V‹KDBSD UNIX—p ‹^—ƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒoD
+	* systask/bsd_serial.c: æ–°è¦ï¼BSD UNIXç”¨ ç–‘ä¼¼ã‚·ãƒªã‚¢ãƒ«ãƒ‰ãƒ©ã‚¤ãƒï¼
 
-	* libitis/bsd_nbio.c: V‹KDBSD UNIX—p ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/Oƒ‰ƒCƒuƒ‰
-	ƒŠD
+	* libitis/bsd_nbio.c: æ–°è¦ï¼BSD UNIXç”¨ ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/Oãƒ©ã‚¤ãƒ–ãƒ©
+	ãƒªï¼
 
 Mon Feb 13 02:06:45 JST 1995	Hiroaki Takada
 
-	* kernel/itis_kernel.h, startup.c: ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹‚ğC³D
-	TSK_INIT_CTSK ‚ÌƒLƒƒƒXƒg‚ğíœD
+	* kernel/itis_kernel.h, startup.c: ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿®æ­£ï¼
+	TSK_INIT_CTSK ã®ã‚­ãƒ£ã‚¹ãƒˆã‚’å‰Šé™¤ï¼
 
-	* xscheme/itisstuff.c, itis3call.c: ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹‚ğC³D
-	SCHEME_MPL ‚ğ MPL_XSCHEME ‚ÉƒŠƒl[ƒ€D
+	* xscheme/itisstuff.c, itis3call.c: ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿®æ­£ï¼
+	SCHEME_MPL ã‚’ MPL_XSCHEME ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* systask/inittask.c: ŠeƒVƒXƒeƒ€ƒ^ƒXƒN/ƒhƒ‰ƒCƒo‚Ì‹N“®‚ğ ifdef ‚ÅˆÍ
-	‚ŞD
+	* systask/inittask.c: å„ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯/ãƒ‰ãƒ©ã‚¤ãƒã®èµ·å‹•ã‚’ ifdef ã§å›²
+	ã‚€ï¼
 
 	* systask/inittask.c, logtask.c, serial.c, sysio.c, bsd_sigio.c:
-	systask.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ‚¤‚ÉC³D•s—v‚É‚È‚Á‚½ƒLƒƒƒXƒg‚ğíœD
+	systask.h ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼ä¸è¦ã«ãªã£ãŸã‚­ãƒ£ã‚¹ãƒˆã‚’å‰Šé™¤ï¼
 
-	* systask/systask.h, serial.c, logtask.c: def_svc ‚ªƒTƒ|[ƒg‚³‚ê‚Ä
-	‚¢‚éê‡‚ÉCUSE_EXTENDED_SVC ‚ğ’è‹`DDSVC ‚Ì’è‹`‚ğ systask.h ‚ÉˆÚ
-	“®DUSE_EXTENDED_SVC ‚ª’è‹`‚³‚ê‚Ä‚¢‚éê‡‚Ì‚İCŠg’£SVC ‚ğ’è‹`‚·‚é
-	‚æ‚¤‚ÉC³DƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒo“à‚ÌŠÖ”‚Ìƒvƒƒgƒ^ƒCƒvéŒ¾‚ğ systsak.h 
-	‚ÉˆÚ“®D
+	* systask/systask.h, serial.c, logtask.c: def_svc ãŒã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦
+	ã„ã‚‹å ´åˆã«ï¼ŒUSE_EXTENDED_SVC ã‚’å®šç¾©ï¼DSVC ã®å®šç¾©ã‚’ systask.h ã«ç§»
+	å‹•ï¼USE_EXTENDED_SVC ãŒå®šç¾©ã•ã‚Œã¦ã„ã‚‹å ´åˆã®ã¿ï¼Œæ‹¡å¼µSVC ã‚’å®šç¾©ã™ã‚‹
+	ã‚ˆã†ã«ä¿®æ­£ï¼ã‚·ãƒªã‚¢ãƒ«ãƒ‰ãƒ©ã‚¤ãƒå†…ã®é–¢æ•°ã®ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€ã‚’ systsak.h 
+	ã«ç§»å‹•ï¼
 
-	* systask/logtask.c: port ‚ğ portid ‚ÉƒŠƒl[ƒ€D
+	* systask/logtask.c: port ã‚’ portid ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* systask/bsd_sigio.c: sigio ‚ğ bsd_sigio ‚ÉƒŠƒl[ƒ€D
+	* systask/bsd_sigio.c: sigio ã‚’ bsd_sigio ã«ãƒªãƒãƒ¼ãƒ ï¼
 
 Mon Feb 13 01:10:13 JST 1995	Hiroaki Takada
 
-	* kernel/genconfig, sample/config.def: ƒVƒXƒeƒ€ƒ^ƒXƒN‚ªg‚¤ƒIƒuƒWƒF
-	ƒNƒgID ‚Ì’è‹`‚ğ config.h ‚É“ü‚ê‚é‚æ‚¤‚É‰ü‘¢D
+	* kernel/genconfig, sample/config.def: ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ãŒä½¿ã†ã‚ªãƒ–ã‚¸ã‚§
+	ã‚¯ãƒˆID ã®å®šç¾©ã‚’ config.h ã«å…¥ã‚Œã‚‹ã‚ˆã†ã«æ”¹é€ ï¼
 
-	* include/itis_resouces.h: íœD“à—e‚Ìˆê•”‚Í config.h ‚É“ü‚éDc
-	‚è‚Í systask/systask.h ‚Æ include/svc_fncode.h ‚É•ª‚¯‚éD
+	* include/itis_resouces.h: å‰Šé™¤ï¼å†…å®¹ã®ä¸€éƒ¨ã¯ config.h ã«å…¥ã‚‹ï¼æ®‹
+	ã‚Šã¯ systask/systask.h ã¨ include/svc_fncode.h ã«åˆ†ã‘ã‚‹ï¼
 
-	* include/svc_serial.h, svc_syslog.h: itis_resources.h ‚ğ 
-	svc_fncode.h ‚ÉCitis_sysint.h ‚ğ itis_scint.h ‚ÉC³D
+	* include/svc_serial.h, svc_syslog.h: itis_resources.h ã‚’ 
+	svc_fncode.h ã«ï¼Œitis_sysint.h ã‚’ itis_scint.h ã«ä¿®æ­£ï¼
 
 	* include/itis_services.h, itis_isyscall.h, kernel/genisyscall:
-	itis_sysint.h ‚ğ itis_scint.h ‚ÉC³‚µCitis_isyscall.h “à‚ÅƒCƒ“ƒN
-	ƒ‹[ƒh‚·‚é‚æ‚¤‚É‚·‚éD
+	itis_sysint.h ã‚’ itis_scint.h ã«ä¿®æ­£ã—ï¼Œitis_isyscall.h å†…ã§ã‚¤ãƒ³ã‚¯
+	ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Mon Feb 13 00:52:11 JST 1995	Hiroaki Takada
 
-	* include/tron/itis_sysint.h: DOSã‚Å‘¼‚Ìƒtƒ@ƒCƒ‹‚Æ‹æ•Ê‚Å‚«‚È‚­‚È
-	‚é‚½‚ßCitis_scint.h ‚ÉƒŠƒl[ƒ€D
+	* include/tron/itis_sysint.h: DOSä¸Šã§ä»–ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¨åŒºåˆ¥ã§ããªããª
+	ã‚‹ãŸã‚ï¼Œitis_scint.h ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* include/bsd/itis_scint.h: ‹ó‚Ìƒtƒ@ƒCƒ‹‚Æ‚µ‚Ä¶¬D
+	* include/bsd/itis_scint.h: ç©ºã®ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦ç”Ÿæˆï¼
 
 Sat Feb 11 00:40:39 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_conf.h, systask/bsd_sigio.c: ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O ƒTƒ|[
-	ƒgƒ‚ƒWƒ…[ƒ‹‚Ì’Ç‰ÁD
+	* bsd/cpu_conf.h, systask/bsd_sigio.c: ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/O ã‚µãƒãƒ¼
+	ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®è¿½åŠ ï¼
 
-	* systask/inittask.c: ƒCƒ“ƒNƒ‹[ƒh‚·‚éƒtƒ@ƒCƒ‹‚ÌC³D
+	* systask/inittask.c: ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¿®æ­£ï¼
 
 Fri Feb 10 17:36:39 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_status.h, bsd/cpu_util.c: ƒ^ƒXƒN“Æ—§•”‚Ì”»’è‚É SIGUSR1 
-	‚Ìƒ}ƒXƒN‚ğg‚¤‚Ì‚ğ‚â‚ß‚ÄCƒVƒOƒiƒ‹ƒXƒ^ƒbƒN‚ğg‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğg
-	‚¤‚±‚Æ‚É‚·‚éD
+	* bsd/cpu_status.h, bsd/cpu_util.c: ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã®åˆ¤å®šã« SIGUSR1 
+	ã®ãƒã‚¹ã‚¯ã‚’ä½¿ã†ã®ã‚’ã‚„ã‚ã¦ï¼Œã‚·ã‚°ãƒŠãƒ«ã‚¹ã‚¿ãƒƒã‚¯ã‚’ä½¿ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ä½¿
+	ã†ã“ã¨ã«ã™ã‚‹ï¼
 
-	* bsd/cpu_task.h, cpu_util.c, sunos4/sys_conf.h: CPU ‚ÌƒXƒ^ƒbƒN‚Ì
-	g‚¢•û‚ÉˆË‘¶‚·‚é’è”‚ğ sys_conf.h ‚Å’è‹`‚·‚é‚±‚Æ‚É‚·‚éD
+	* bsd/cpu_task.h, cpu_util.c, sunos4/sys_conf.h: CPU ã®ã‚¹ã‚¿ãƒƒã‚¯ã®
+	ä½¿ã„æ–¹ã«ä¾å­˜ã™ã‚‹å®šæ•°ã‚’ sys_conf.h ã§å®šç¾©ã™ã‚‹ã“ã¨ã«ã™ã‚‹ï¼
 
 Thu Feb  9 18:51:14 JST 1995	Hiroaki Takada
 
 	* systask/inittask.c, tron/*/sys_conf.h: COLSOLE_PORT,
-	LOGTASK_PORT ‚Ì’è‹`‚ğ inittask.c ‚©‚ç sysconf.h ‚ÉˆÚ“®D
+	LOGTASK_PORT ã®å®šç¾©ã‚’ inittask.c ã‹ã‚‰ sysconf.h ã«ç§»å‹•ï¼
 
-	* tron/h32/sys_conf.h, sys_serial.c: ƒ|[ƒg1 ‚Æ 2 ‚ÌˆÓ–¡‚ğ‹t‚É‚·‚éD
+	* tron/h32/sys_conf.h, sys_serial.c: ãƒãƒ¼ãƒˆ1 ã¨ 2 ã®æ„å‘³ã‚’é€†ã«ã™ã‚‹ï¼
 
-	* tron/mcube/sys_serial.c, tron/tvme/sys_serial.c: initflag ‚Ì’è‹`
-	êŠ‚ğˆÚ“®D
+	* tron/mcube/sys_serial.c, tron/tvme/sys_serial.c: initflag ã®å®šç¾©
+	å ´æ‰€ã‚’ç§»å‹•ï¼
 
 Thu Feb  9 18:49:55 JST 1995	Hiroaki Takada
 
-	* kernel/newversion: BSD UNIXŠÂ‹«‚ÅCOS–¼‚Ü‚ÅŒ©‚é‚æ‚¤‚ÉC³D
+	* kernel/newversion: BSD UNIXç’°å¢ƒã§ï¼ŒOSåã¾ã§è¦‹ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼
 
 Thu Feb  9 15:20:43 JST 1995	Hiroaki Takada
 
-	* bsd/*, bsd/sunos4/*, sample/Makefile.sunos4: BSD UNIXã‚ÌƒVƒ~ƒ…
-	ƒŒ[ƒVƒ‡ƒ“ŠÂ‹«‚ğ’Ç‰ÁDMakefile.sunos4 ‚Íb’è”ÅD
+	* bsd/*, bsd/sunos4/*, sample/Makefile.sunos4: BSD UNIXä¸Šã®ã‚·ãƒŸãƒ¥
+	ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç’°å¢ƒã‚’è¿½åŠ ï¼Makefile.sunos4 ã¯æš«å®šç‰ˆï¼
 
 Thu Feb  9 14:55:30 JST 1995	Hiroaki Takada
 
 	* kernel/genconfig, task_manage.c, tron/cpu_task.h: SYS_STACK_SIZE 
-	‚ğ DEF_SYS_STACK_SIZE ‚ÉƒŠƒl[ƒ€D
+	ã‚’ DEF_SYS_STACK_SIZE ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* kernel/genconfig: min_sys_stack_size ‚ğ’Ç‰ÁD
+	* kernel/genconfig: min_sys_stack_size ã‚’è¿½åŠ ï¼
 
-	* sample/config.def: ƒfƒtƒHƒ‹ƒgƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ÆƒVƒXƒeƒ€ƒ
-	ƒ‚ƒŠƒv[ƒ‹‚ÌƒTƒCƒY‚Ì’è‹`‚ğŠO‚· (ƒ^[ƒQƒbƒg–ˆ‚ÌƒfƒtƒHƒ‹ƒg‚É”C‚¹‚é)D
+	* sample/config.def: ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºã¨ã‚·ã‚¹ãƒ†ãƒ ãƒ¡
+	ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã®ã‚µã‚¤ã‚ºã®å®šç¾©ã‚’å¤–ã™ (ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ¯ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«ä»»ã›ã‚‹)ï¼
 
 Thu Feb  9 14:22:22 JST 1995	Hiroaki Takada
 
-	* tron/tvme/sys_serial.h: MCUBE—p‚É‚ ‚í‚¹‚ÄƒfƒoƒbƒOD
+	* tron/tvme/sys_serial.h: MCUBEç”¨ã«ã‚ã‚ã›ã¦ãƒ‡ãƒãƒƒã‚°ï¼
 
 Wed Feb  8 12:19:04 JST 1995	Hiroaki Takada
 
-	* startup: tron ‚Ì‰º‚ÉˆÚ“®D
+	* startup: tron ã®ä¸‹ã«ç§»å‹•ï¼
 
-	* tron/h32/h32sbc.h, tron/mcube/mcube.h: Š¿šƒR[ƒh‚ğVJISƒR[ƒh‚É
-	•ÏŠ·D
+	* tron/h32/h32sbc.h, tron/mcube/mcube.h: æ¼¢å­—ã‚³ãƒ¼ãƒ‰ã‚’æ–°JISã‚³ãƒ¼ãƒ‰ã«
+	å¤‰æ›ï¼
 
 Sat Feb  4 02:26:27 JST 1995	Hiroaki Takada
 
-	* ƒfƒBƒŒƒNƒgƒŠ‚Ì\¬‚ğ•ÏX: tron ‚Æ‚¢‚¤ƒfƒBƒŒƒNƒgƒŠ‚ğì‚èC
-	TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é•”•ª‚ğ‚»‚Ì‰º‚ÉˆÚ“®‚·‚éDh32, tvme,
-	mcube ‚Ì 3‚Â‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÍCtron ‚Ì‰º‚ÉˆÚ“®‚·‚éDƒJ[ƒlƒ‹‚Ì
-	\¬‚ÉŠÖ‚·‚é CPUˆË‘¶‚Ì’è‹`‚ğ“ü‚ê‚é‚½‚ß‚Ìƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄC
-	tron/cpu_conf.h ‚ğVİD
+	* ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®æ§‹æˆã‚’å¤‰æ›´: tron ã¨ã„ã†ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä½œã‚Šï¼Œ
+	TRONä»•æ§˜ãƒãƒƒãƒ—ã«ä¾å­˜ã™ã‚‹éƒ¨åˆ†ã‚’ãã®ä¸‹ã«ç§»å‹•ã™ã‚‹ï¼h32, tvme,
+	mcube ã® 3ã¤ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯ï¼Œtron ã®ä¸‹ã«ç§»å‹•ã™ã‚‹ï¼ã‚«ãƒ¼ãƒãƒ«ã®
+	æ§‹æˆã«é–¢ã™ã‚‹ CPUä¾å­˜ã®å®šç¾©ã‚’å…¥ã‚Œã‚‹ãŸã‚ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦ï¼Œ
+	tron/cpu_conf.h ã‚’æ–°è¨­ï¼
 
-	* Makefile.conf: tron ‚Ì‰º‚ÉˆÚ“®D.s ‚©‚ç .o ‚ğì‚é’è‹`‚ğíœD
+	* Makefile.conf: tron ã®ä¸‹ã«ç§»å‹•ï¼.s ã‹ã‚‰ .o ã‚’ä½œã‚‹å®šç¾©ã‚’å‰Šé™¤ï¼
 
-	* kernel/common.h: ‚±‚Ìƒtƒ@ƒCƒ‹‚Í”p~Dtron/cpu_status.h ‚ğV
-	İ‚µCCPU ‚ÉˆË‘¶‚·‚é•”•ª‚ğˆÚ“®D‚»‚¤‚Å‚È‚¢•”•ª‚Í itis_kernel.h 
-	‚ÖˆÚ“®D
+	* kernel/common.h: ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯å»ƒæ­¢ï¼tron/cpu_status.h ã‚’æ–°
+	è¨­ã—ï¼ŒCPU ã«ä¾å­˜ã™ã‚‹éƒ¨åˆ†ã‚’ç§»å‹•ï¼ãã†ã§ãªã„éƒ¨åˆ†ã¯ itis_kernel.h 
+	ã¸ç§»å‹•ï¼
 
-	* kernel/cpu_inline.h: tron/tron_insn.h ‚ÉƒŠƒl[ƒ€D
+	* kernel/cpu_inline.h: tron/tron_insn.h ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* kernel/cregs.h: tron/tron_defs.h ‚ÉƒŠƒl[ƒ€D
+	* kernel/cregs.h: tron/tron_defs.h ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* kernel/ientry.S: tron/cpu_support.S ‚ÉƒŠƒl[ƒ€DƒAƒZƒ“ƒuƒ‰‚Å
-	‹Lq‚µ‚½ƒVƒXƒeƒ€ƒR[ƒ‹‚ÌƒGƒ“ƒgƒŠ‚ğCƒVƒXƒeƒ€ƒR[ƒ‹ƒGƒ“ƒgƒŠƒe[
-	ƒuƒ‹‚Å“à‚Å·‚µ‚©‚¦‚éİ’è‚ğ’Ç‰ÁDƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚µ‚½ƒVƒXƒeƒ€ƒR[
-	ƒ‹‚ªC’x‰„Š„‚İ‚ğg‚í‚È‚¢İ’è‚É‘Î‰‚µ‚Ä‚¢‚È‚©‚Á‚½–â‘è‚ğC³D
+	* kernel/ientry.S: tron/cpu_support.S ã«ãƒªãƒãƒ¼ãƒ ï¼ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã§
+	è¨˜è¿°ã—ãŸã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®ã‚¨ãƒ³ãƒˆãƒªã‚’ï¼Œã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚¨ãƒ³ãƒˆãƒªãƒ†ãƒ¼
+	ãƒ–ãƒ«ã§å†…ã§å·®ã—ã‹ãˆã‚‹è¨­å®šã‚’è¿½åŠ ï¼ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã§è¨˜è¿°ã—ãŸã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼
+	ãƒ«ãŒï¼Œé…å»¶å‰²è¾¼ã¿ã‚’ä½¿ã‚ãªã„è¨­å®šã«å¯¾å¿œã—ã¦ã„ãªã‹ã£ãŸå•é¡Œã‚’ä¿®æ­£ï¼
 
-	* kernel/dispatch.S, nd_dispatch.S: tron/ ‚Ì‰º‚ÉˆÚ“®D‚±‚ê‚ç‚Ì
-	ƒtƒ@ƒCƒ‹‚ÍCtron/cpu_support.S ‚©‚çƒCƒ“ƒNƒ‹[ƒh‚µ‚Äg‚¤‚±‚Æ‚É
-	‚·‚éDnd_dispatch.S ’†‚Ì’è”’è‹`‚ÍCtron/tron_defs.h ‚ÉˆÚ“®D
+	* kernel/dispatch.S, nd_dispatch.S: tron/ ã®ä¸‹ã«ç§»å‹•ï¼ã“ã‚Œã‚‰ã®
+	ãƒ•ã‚¡ã‚¤ãƒ«ã¯ï¼Œtron/cpu_support.S ã‹ã‚‰ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ã¦ä½¿ã†ã“ã¨ã«
+	ã™ã‚‹ï¼nd_dispatch.S ä¸­ã®å®šæ•°å®šç¾©ã¯ï¼Œtron/tron_defs.h ã«ç§»å‹•ï¼
 
-	* ƒ^[ƒQƒbƒgƒVƒXƒeƒ€ˆË‘¶ƒtƒ@ƒCƒ‹–¼‚Ì•ÏX: ]—ˆCƒ^[ƒQƒbƒgƒVƒX
-	ƒeƒ€–¼‚ğæ“ª‚É‚Â‚¯‚Ä‚¢‚½‚Ì‚ğCsys_ ‚ğæ“ª‚É‚Â‚¯‚éƒXƒ^ƒCƒ‹‚É‚·
-	‚éDtron/h32/sys_conf.h ‚Æ tron/tvme/sys_conf.h ‚ÍVİD‚Ü‚½C
-	ˆê•”‚Ì“à—e‚ğ‚±‚ê‚ç‚Ìƒtƒ@ƒCƒ‹‚ÌŠÔ‚ÅˆÚ“®D
+	* ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚·ã‚¹ãƒ†ãƒ ä¾å­˜ãƒ•ã‚¡ã‚¤ãƒ«åã®å¤‰æ›´: å¾“æ¥ï¼Œã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚·ã‚¹
+	ãƒ†ãƒ åã‚’å…ˆé ­ã«ã¤ã‘ã¦ã„ãŸã®ã‚’ï¼Œsys_ ã‚’å…ˆé ­ã«ã¤ã‘ã‚‹ã‚¹ã‚¿ã‚¤ãƒ«ã«ã™
+	ã‚‹ï¼tron/h32/sys_conf.h ã¨ tron/tvme/sys_conf.h ã¯æ–°è¨­ï¼ã¾ãŸï¼Œ
+	ä¸€éƒ¨ã®å†…å®¹ã‚’ã“ã‚Œã‚‰ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®é–“ã§ç§»å‹•ï¼
 
 		$(TARGET)conf.h --> sys_conf.h
 		$(TARGET)start.S --> sys_support.S
@@ -427,880 +427,880 @@ Sat Feb  4 02:26:27 JST 1995	Hiroaki Takada
 		$(TARGET)timer.h --> sys_timer.h
 		$(TARGET)serial.h --> sys_serial.h
 
-	* ƒXƒ^ƒbƒNƒGƒŠƒACƒq[ƒvƒGƒŠƒA‚Ì’è‹`‚ğ $(TARGET)start.S ‚©‚ç 
-	sys_conf.h ‚ÉˆÚ“®D
+	* ã‚¹ã‚¿ãƒƒã‚¯ã‚¨ãƒªã‚¢ï¼Œãƒ’ãƒ¼ãƒ—ã‚¨ãƒªã‚¢ã®å®šç¾©ã‚’ $(TARGET)start.S ã‹ã‚‰ 
+	sys_conf.h ã«ç§»å‹•ï¼
 
-	* tron/{h32,tvme,mcube}/sys_util.c: target_??? ‚ğ sys_??? ‚ÉƒŠ
-	ƒl[ƒ€D
+	* tron/{h32,tvme,mcube}/sys_util.c: target_??? ã‚’ sys_??? ã«ãƒª
+	ãƒãƒ¼ãƒ ï¼
 
-	* kernel/misc_calls.c: tron/cpu_calls.c ‚ğVİ‚µCCPU ‚ÉˆË‘¶‚·
-	‚éƒVƒXƒeƒ€ƒR[ƒ‹‚Ì’è‹`‚ğˆÚ“®Dget_ver ‚ÅCCPU ƒR[ƒh‚ğ“ü‚ê‚é‚Æ
-	‚±‚ë‚ÅCCPU_CODE ƒ}ƒNƒ‚ğQÆ‚·‚é‚æ‚¤‚ÉC³D
+	* kernel/misc_calls.c: tron/cpu_calls.c ã‚’æ–°è¨­ã—ï¼ŒCPU ã«ä¾å­˜ã™
+	ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®å®šç¾©ã‚’ç§»å‹•ï¼get_ver ã§ï¼ŒCPU ã‚³ãƒ¼ãƒ‰ã‚’å…¥ã‚Œã‚‹ã¨
+	ã“ã‚ã§ï¼ŒCPU_CODE ãƒã‚¯ãƒ­ã‚’å‚ç…§ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼
 
-	* kernel/debug_calls.c: vset_reg, vget_reg ‚ğ tron/cpu_calls.c 
-	‚ÉˆÚ“®D‚±‚Ì“_‚ÅCdebug_calls.c ‚Í‹ó‚É‚È‚Á‚½‚ªC«—ˆ‚ÌŠg’£‚Ì
-	‚½‚ß‚Éƒtƒ@ƒCƒ‹‚ÍÁ‚³‚¸‚É‚¨‚¢‚Ä‚¨‚­D
+	* kernel/debug_calls.c: vset_reg, vget_reg ã‚’ tron/cpu_calls.c 
+	ã«ç§»å‹•ï¼ã“ã®æ™‚ç‚¹ã§ï¼Œdebug_calls.c ã¯ç©ºã«ãªã£ãŸãŒï¼Œå°†æ¥ã®æ‹¡å¼µã®
+	ãŸã‚ã«ãƒ•ã‚¡ã‚¤ãƒ«ã¯æ¶ˆã•ãšã«ãŠã„ã¦ãŠãï¼
 
-	* kernel/task.h: ƒ^ƒXƒNƒRƒ“ƒeƒLƒXƒgƒuƒƒbƒN‚Ì’è‹`‚ğ tron/
-	cpu_status.h ‚ÉˆÚ“®Ddispatch_disabled •Ï”‚ğg‚¤‚©‚Ç‚¤‚©‚ğ§
-	Œä‚·‚éƒXƒCƒbƒ` (USE_DISPATCH_DISABLED) ‚ÆCƒVƒXƒeƒ€ƒXƒ^ƒbƒN‚ğ
-	ƒ†[ƒUƒXƒ^ƒbƒN‚Æ•Ê‚É‚Â‚©‚Ç‚¤‚©‚ğ§Œä‚·‚éƒXƒCƒbƒ` 
-	(USE_SEPARATE_SSTACK) ‚ğ’Ç‰ÁD
+	* kernel/task.h: ã‚¿ã‚¹ã‚¯ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©ã‚’ tron/
+	cpu_status.h ã«ç§»å‹•ï¼dispatch_disabled å¤‰æ•°ã‚’ä½¿ã†ã‹ã©ã†ã‹ã‚’åˆ¶
+	å¾¡ã™ã‚‹ã‚¹ã‚¤ãƒƒãƒ (USE_DISPATCH_DISABLED) ã¨ï¼Œã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚’
+	ãƒ¦ãƒ¼ã‚¶ã‚¹ã‚¿ãƒƒã‚¯ã¨åˆ¥ã«æŒã¤ã‹ã©ã†ã‹ã‚’åˆ¶å¾¡ã™ã‚‹ã‚¹ã‚¤ãƒƒãƒ 
+	(USE_SEPARATE_SSTACK) ã‚’è¿½åŠ ï¼
 
-	* kernel/task.c: TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é’è”‚Ì’è‹`‚ğCtron/
-	tron_defs.h ‚Æ tron/cpu_task.h ‚ÉˆÚ“®Dƒ^ƒXƒN‹N“®‚Ì‚½‚ß‚ÌƒRƒ“
-	ƒeƒLƒXƒg‚ğİ’è‚·‚é•”•ª‚ğCtron/cpu_task.h ’†‚Å’è‹`‚·‚é 
-	startup_context ŠÖ”‚Æ‚µ‚ÄØ‚è•ª‚¯‚éDdispatch ŠÖ”‚Ì’è‹`‚ÍC
-	tron/cpu_status.h ‚ÉˆÚ“®DVİ‚³‚ê‚½ USE_DISPATCH_DISABLE ‚Æ
-	USE_SEPARATE_SSTACK ‚É‘Î‰D
+	* kernel/task.c: TRONä»•æ§˜ãƒãƒƒãƒ—ã«ä¾å­˜ã™ã‚‹å®šæ•°ã®å®šç¾©ã‚’ï¼Œtron/
+	tron_defs.h ã¨ tron/cpu_task.h ã«ç§»å‹•ï¼ã‚¿ã‚¹ã‚¯èµ·å‹•ã®ãŸã‚ã®ã‚³ãƒ³
+	ãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®šã™ã‚‹éƒ¨åˆ†ã‚’ï¼Œtron/cpu_task.h ä¸­ã§å®šç¾©ã™ã‚‹ 
+	startup_context é–¢æ•°ã¨ã—ã¦åˆ‡ã‚Šåˆ†ã‘ã‚‹ï¼dispatch é–¢æ•°ã®å®šç¾©ã¯ï¼Œ
+	tron/cpu_status.h ã«ç§»å‹•ï¼æ–°è¨­ã•ã‚ŒãŸ USE_DISPATCH_DISABLE ã¨
+	USE_SEPARATE_SSTACK ã«å¯¾å¿œï¼
 
-	* kernel/task_manage.c: ƒ^ƒXƒN‹N“®ƒR[ƒh‚ğİ’è‚·‚é•”•ª‚ğC
-	tron/cpu_task.h ’†‚Å’è‹`‚·‚é startup_stacd ŠÖ”‚Æ‚µ‚ÄØ‚è•ª‚¯
-	‚éDEIT_FRAME_SIZE ‚ÍC“¯‚¶–Ú“I‚Ì DORMANT_STACK_SIZE ‚É‘ã‚¦C
-	‚»‚Ì’è‹`‚Í tron/cpu_task.h ‚Ì’†‚Ås‚¤DƒVƒXƒeƒ€ƒXƒ^ƒbƒN‚ÌÅ¬
-	ƒTƒCƒY‚Ì’è‹`‚ğ tron/cpu_conf.h ‚ÉˆÚ“®DVİ‚³‚ê‚½ 
-	USE_SEPARATE_SSTACK ‚É‘Î‰DƒXƒ^ƒbƒNƒGƒŠƒA‚ğæ“¾/•Ô‹p‚·‚éÛ‚É
-	“Áê‚È‘€ì‚ª•K—v‚Èê‡‚É‘Î‰D‚»‚Ì‚½‚ß‚ÌƒXƒCƒbƒ`‚Æ‚µ‚ÄC
-	USE_SPECIAL_STACK ‚ğVİD
+	* kernel/task_manage.c: ã‚¿ã‚¹ã‚¯èµ·å‹•ã‚³ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹éƒ¨åˆ†ã‚’ï¼Œ
+	tron/cpu_task.h ä¸­ã§å®šç¾©ã™ã‚‹ startup_stacd é–¢æ•°ã¨ã—ã¦åˆ‡ã‚Šåˆ†ã‘
+	ã‚‹ï¼EIT_FRAME_SIZE ã¯ï¼ŒåŒã˜ç›®çš„ã® DORMANT_STACK_SIZE ã«ä»£ãˆï¼Œ
+	ãã®å®šç¾©ã¯ tron/cpu_task.h ã®ä¸­ã§è¡Œã†ï¼ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã®æœ€å°
+	ã‚µã‚¤ã‚ºã®å®šç¾©ã‚’ tron/cpu_conf.h ã«ç§»å‹•ï¼æ–°è¨­ã•ã‚ŒãŸ 
+	USE_SEPARATE_SSTACK ã«å¯¾å¿œï¼ã‚¹ã‚¿ãƒƒã‚¯ã‚¨ãƒªã‚¢ã‚’å–å¾—/è¿”å´ã™ã‚‹éš›ã«
+	ç‰¹æ®Šãªæ“ä½œãŒå¿…è¦ãªå ´åˆã«å¯¾å¿œï¼ãã®ãŸã‚ã®ã‚¹ã‚¤ãƒƒãƒã¨ã—ã¦ï¼Œ
+	USE_SPECIAL_STACK ã‚’æ–°è¨­ï¼
 
-	* kernel/timer.c: start_hw_timer ‚Éƒ^ƒCƒ}ƒnƒ“ƒhƒ‰‚ÌƒAƒhƒŒƒX‚ğ
-	“n‚·‚Ì‚ğ‚â‚ß‚éDC_timer_handler ‚ğ timer_handler ‚ÉƒŠƒl[ƒ€D
-	ƒ^ƒCƒ}ƒnƒ“ƒhƒ‰‹N“®‚Ì‚½‚ß‚Ì‚‹‰Œ¾Œê‘Î‰ƒ‹[ƒ`ƒ“‚ğ 
-	tron/cpu_support.S ‚ÉˆÚ“®D
+	* kernel/timer.c: start_hw_timer ã«ã‚¿ã‚¤ãƒãƒãƒ³ãƒ‰ãƒ©ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’
+	æ¸¡ã™ã®ã‚’ã‚„ã‚ã‚‹ï¼C_timer_handler ã‚’ timer_handler ã«ãƒªãƒãƒ¼ãƒ ï¼
+	ã‚¿ã‚¤ãƒãƒãƒ³ãƒ‰ãƒ©èµ·å‹•ã®ãŸã‚ã®é«˜ç´šè¨€èªå¯¾å¿œãƒ«ãƒ¼ãƒãƒ³ã‚’ 
+	tron/cpu_support.S ã«ç§»å‹•ï¼
 
 	* kernel/genisyscall, syscall.def, itable.h: itis_isyscall.h 
-	‚ªƒ^[ƒQƒbƒg“Æ—§‚É‚È‚é‚æ‚¤‚ÉC’¼ÚƒCƒ“ƒ‰ƒCƒ“ƒAƒZƒ“ƒuƒ‰‚ğo‚·‚Ì
-	‚ğ‚â‚ß‚ÄCƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ—pƒ}ƒNƒ‚ğo‚·‚æ‚¤‚ÉC³DƒAƒZ
-	ƒ“ƒuƒ‰‚Å‹Lq‚µ‚½ƒVƒXƒeƒ€ƒR[ƒ‹‚ÉŠÖ‚·‚é“Áêˆ— (zƒIƒvƒVƒ‡ƒ“) 
-	‚ğ”p~Ditable.h ‚ğitable.S ‚ÉƒŠƒl[ƒ€D
+	ãŒã‚¿ãƒ¼ã‚²ãƒƒãƒˆç‹¬ç«‹ã«ãªã‚‹ã‚ˆã†ã«ï¼Œç›´æ¥ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã‚’å‡ºã™ã®
+	ã‚’ã‚„ã‚ã¦ï¼Œã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å‘¼ã³å‡ºã—ç”¨ãƒã‚¯ãƒ­ã‚’å‡ºã™ã‚ˆã†ã«ä¿®æ­£ï¼ã‚¢ã‚»
+	ãƒ³ãƒ–ãƒ©ã§è¨˜è¿°ã—ãŸã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã«é–¢ã™ã‚‹ç‰¹æ®Šå‡¦ç† (zã‚ªãƒ—ã‚·ãƒ§ãƒ³) 
+	ã‚’å»ƒæ­¢ï¼itable.h ã‚’itable.S ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* kernel/isysconf.h: ƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ÌƒfƒtƒHƒ‹ƒg’l‚Ì’è
-	‹`‚ğ tron/cpu_conf.h ‚ÉˆÚ“®DƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚³‚ê‚Ä‚¢‚éƒVƒXƒe
-	ƒ€ƒR[ƒ‹‚Ì‚½‚ß‚Ì’è‹`‚ğíœD
+	* kernel/isysconf.h: ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®å®š
+	ç¾©ã‚’ tron/cpu_conf.h ã«ç§»å‹•ï¼ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã§è¨˜è¿°ã•ã‚Œã¦ã„ã‚‹ã‚·ã‚¹ãƒ†
+	ãƒ ã‚³ãƒ¼ãƒ«ã®ãŸã‚ã®å®šç¾©ã‚’å‰Šé™¤ï¼
 
-	* kernel/startup.c: cpu_initialize, cpu_shutdown ‚Ì 2‚Â‚ÌŠÖ”
-	‚ğ cpu_util.c ’†‚Å’è‹`‚·‚é‚±‚Æ‚É‚µ‚ÄCCPUˆË‘¶‚Ì‰Šú‰»/I—¹ˆ—
-	‚¨‚æ‚ÑŠÖ˜A‚·‚é’è‹`‚ğ‚»‚ê‚ç‚ÌŠÖ”‚É”C‚¹‚éDcpu_util.c ‚ÍVİD
+	* kernel/startup.c: cpu_initialize, cpu_shutdown ã® 2ã¤ã®é–¢æ•°
+	ã‚’ cpu_util.c ä¸­ã§å®šç¾©ã™ã‚‹ã“ã¨ã«ã—ã¦ï¼ŒCPUä¾å­˜ã®åˆæœŸåŒ–/çµ‚äº†å‡¦ç†
+	ãŠã‚ˆã³é–¢é€£ã™ã‚‹å®šç¾©ã‚’ãã‚Œã‚‰ã®é–¢æ•°ã«ä»»ã›ã‚‹ï¼cpu_util.c ã¯æ–°è¨­ï¼
 
 	* kernel/itis_kernel.h, isyslog.h, startup.c, systask/logtask.c:
-	target_??? ‚ğ sys_??? ‚ÉC³D
+	target_??? ã‚’ sys_??? ã«ä¿®æ­£ï¼
 
-	* kernel/patchlevel.h: ƒŠƒŠ[ƒX”Ô†‚ğ 1.3.0 ‚ÉD
+	* kernel/patchlevel.h: ãƒªãƒªãƒ¼ã‚¹ç•ªå·ã‚’ 1.3.0 ã«ï¼
 
-	* kernel/newversion: ƒ^[ƒQƒbƒgCPU ‚ÆƒVƒXƒeƒ€‚Ì—¼•û‚©‚çCƒ^[
-	ƒQƒbƒg‚Ì–¼Ì‚ğŒˆ‚ß‚é‚æ‚¤‚ÉC³Dbsd ‚ğ’Ç‰ÁDCopyright ‚Ì“ú•t‚ğ
-	XVD
+	* kernel/newversion: ã‚¿ãƒ¼ã‚²ãƒƒãƒˆCPU ã¨ã‚·ã‚¹ãƒ†ãƒ ã®ä¸¡æ–¹ã‹ã‚‰ï¼Œã‚¿ãƒ¼
+	ã‚²ãƒƒãƒˆã®åç§°ã‚’æ±ºã‚ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼bsd ã‚’è¿½åŠ ï¼Copyright ã®æ—¥ä»˜ã‚’
+	æ›´æ–°ï¼
 
-	* include/svc_serial.h, svc_syslog.h: ƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ—p
-	ƒ}ƒNƒ‚ğg‚¤‚æ‚¤‚ÉC³D
+	* include/svc_serial.h, svc_syslog.h: ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å‘¼ã³å‡ºã—ç”¨
+	ãƒã‚¯ãƒ­ã‚’ä½¿ã†ã‚ˆã†ã«ä¿®æ­£ï¼
 
-	* include/tron/itis_sysint.h: TRONd—lƒ`ƒbƒv—p‚ÌƒVƒXƒeƒ€ƒR[ƒ‹
-	ŒÄ‚Ño‚µ—pƒ}ƒNƒ‚Ì’è‹`ƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄVİD
+	* include/tron/itis_sysint.h: TRONä»•æ§˜ãƒãƒƒãƒ—ç”¨ã®ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«
+	å‘¼ã³å‡ºã—ç”¨ãƒã‚¯ãƒ­ã®å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦æ–°è¨­ï¼
 
-	* include/itis_services.h: itis_sysint.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ
-	‚¤C³D
+	* include/itis_services.h: itis_sysint.h ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆ
+	ã†ä¿®æ­£ï¼
 
-	* include/itis_stddefs.h: REGISTER ‚Ì’è‹`‚ğ include/tron/
-	itis_sysint.h ‚ÉˆÚ“®D
+	* include/itis_stddefs.h: REGISTER ã®å®šç¾©ã‚’ include/tron/
+	itis_sysint.h ã«ç§»å‹•ï¼
 
-	* include/Makefile: include/tron/itis_sysint.h ‚ğƒRƒs[‚·‚é|
-	‚ÌƒƒbƒZ[ƒW‚ğ’Ç‰ÁD
+	* include/Makefile: include/tron/itis_sysint.h ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹æ—¨
+	ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¿½åŠ ï¼
 
-	* include/itis_resources.h: ‰Šú‰»ƒ^ƒXƒN‚ÆƒVƒXƒeƒ€ƒƒOƒ^ƒXƒN‚Ì
-	ƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ğCƒJ[ƒlƒ‹‚ÌƒfƒtƒHƒ‹ƒg‚É”C‚¹‚éD
+	* include/itis_resources.h: åˆæœŸåŒ–ã‚¿ã‚¹ã‚¯ã¨ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ã‚¿ã‚¹ã‚¯ã®
+	ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºã‚’ï¼Œã‚«ãƒ¼ãƒãƒ«ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«ä»»ã›ã‚‹ï¼
 
-	* ‘½‚­‚Ìƒtƒ@ƒCƒ‹: ƒRƒƒ“ƒg‚ğ®—DƒCƒ“ƒNƒ‹[ƒh‚ÌŠÖŒW‚ğ®—D
+	* å¤šãã®ãƒ•ã‚¡ã‚¤ãƒ«: ã‚³ãƒ¡ãƒ³ãƒˆã‚’æ•´ç†ï¼ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã®é–¢ä¿‚ã‚’æ•´ç†ï¼
 
-	* ‚Ù‚Ú‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹: Š¿šƒR[ƒh‚ğVJISƒR[ƒh‚É•ÏŠ·D
+	* ã»ã¼ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«: æ¼¢å­—ã‚³ãƒ¼ãƒ‰ã‚’æ–°JISã‚³ãƒ¼ãƒ‰ã«å¤‰æ›ï¼
 
 Fri Nov 11 11:29:24 JST 1994	Hiroaki Takada
 
-	* kernel/task_sync.c: #ifndef ‚Ì TYPO ‚ğC³ (by nobuo)D
+	* kernel/task_sync.c: #ifndef ã® TYPO ã‚’ä¿®æ­£ (by nobuo)ï¼
 
 Tue Sep 27 02:35:26 JST 1994	Hiroaki Takada
 
-	* kernel/prisem.c, doc/PRISEM: d—l2 ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚Ìd
-	—l‚ğ•ÏX‚·‚éD‹ï‘Ì“I‚É‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğ‰ğ•ú‚µ‚½Û‚ÉCŠl
-	“¾‘O‚Ì—Dæ“x‚Å‚Í‚È‚­Cƒ^ƒXƒN‚Ì‰Šú—Dæ“x‚É–ß‚·‚±‚Æ‚É‚·‚éD‚Ü‚½C
-	Šl“¾‚³‚ê‚Ä‚¢‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğíœ‚·‚é‚±‚Æ‚ğ‹–‚·‚±‚Æ‚É‚·‚éD
+	* kernel/prisem.c, doc/PRISEM: ä»•æ§˜2 ã®å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©ã®ä»•
+	æ§˜ã‚’å¤‰æ›´ã™ã‚‹ï¼å…·ä½“çš„ã«ã¯ï¼Œå„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©ã‚’è§£æ”¾ã—ãŸéš›ã«ï¼Œç²
+	å¾—å‰ã®å„ªå…ˆåº¦ã§ã¯ãªãï¼Œã‚¿ã‚¹ã‚¯ã®åˆæœŸå„ªå…ˆåº¦ã«æˆ»ã™ã“ã¨ã«ã™ã‚‹ï¼ã¾ãŸï¼Œ
+	ç²å¾—ã•ã‚Œã¦ã„ã‚‹å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©ã‚’å‰Šé™¤ã™ã‚‹ã“ã¨ã‚’è¨±ã™ã“ã¨ã«ã™ã‚‹ï¼
 
 Tue Sep 27 02:22:17 JST 1994	Hiroaki Takada
 
-	* kernel/winfo.h: WSPEC ‚Ì’è‹`‚É const éŒ¾‚ğ’Ç‰ÁD
+	* kernel/winfo.h: WSPEC ã®å®šç¾©ã« const å®£è¨€ã‚’è¿½åŠ ï¼
 
 Tue Sep 27 01:13:14 JST 1994	Hiroaki Takada
 
 	* h32/h32init.c, tvme/tvmeinit.c, mcube/mcubeinit.c:
-	cpu_inline.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚Ì‚ğ‚â‚ß‚éD
+	cpu_inline.h ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã®ã‚’ã‚„ã‚ã‚‹ï¼
 
-	* kernel/task_manage.c: MIN_SYS_STACK_SIZE ‚Ì’è‹`‚ğ ifndef ‚Å
-	ˆÍ‚ŞD
+	* kernel/task_manage.c: MIN_SYS_STACK_SIZE ã®å®šç¾©ã‚’ ifndef ã§
+	å›²ã‚€ï¼
 
-	* systask/inittask.c: ƒJ[ƒlƒ‹‚Ì’â~ƒƒbƒZ[ƒW‚ğo‚·‚Ì‚ğ‚â‚ß‚é 
-	(À‚ÍCƒƒbƒZ[ƒWƒoƒbƒtƒ@‚É“ü‚é‚¾‚¯‚ÅC•\¦‚Í‚³‚ê‚Ä‚¢‚È‚©‚Á‚½)D
+	* systask/inittask.c: ã‚«ãƒ¼ãƒãƒ«ã®åœæ­¢ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºã™ã®ã‚’ã‚„ã‚ã‚‹ 
+	(å®Ÿã¯ï¼Œãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚‹ã ã‘ã§ï¼Œè¡¨ç¤ºã¯ã•ã‚Œã¦ã„ãªã‹ã£ãŸ)ï¼
 
 Fri Sep  9 07:53:36 JST 1994	Hiroaki Takada
 
-	* sample/Makefile.*: target.h ‚ÉŠÖ‚·‚é’è‹`‚ğíœ‚µCtargetconf.h 
-	‚ÉŠÖ‚·‚é’è‹`‚ğ’Ç‰ÁDƒpƒX‚Ì’†‚ÅC../$(TARGET) ‚ğ‘O‚ÖˆÚ“®‚È‚¢‚µ
-	‚Í’Ç‰ÁD
+	* sample/Makefile.*: target.h ã«é–¢ã™ã‚‹å®šç¾©ã‚’å‰Šé™¤ã—ï¼Œtargetconf.h 
+	ã«é–¢ã™ã‚‹å®šç¾©ã‚’è¿½åŠ ï¼ãƒ‘ã‚¹ã®ä¸­ã§ï¼Œ../$(TARGET) ã‚’å‰ã¸ç§»å‹•ãªã„ã—
+	ã¯è¿½åŠ ï¼
 
-	* mcube/mcube.h, mcubeconf.h: mcubeconf.h ‚ğV‹K‚Éì‚èCEITVB 
-	‚ÉŠÖ‚·‚é’è‹`‚ğ mcube.h ‚©‚çˆÚ“®D
+	* mcube/mcube.h, mcubeconf.h: mcubeconf.h ã‚’æ–°è¦ã«ä½œã‚Šï¼ŒEITVB 
+	ã«é–¢ã™ã‚‹å®šç¾©ã‚’ mcube.h ã‹ã‚‰ç§»å‹•ï¼
 
-	* kernel/itis_kernel.h, startup.c: target.h ‚ğ‚â‚ß‚ÄC
-	targetconf.h ‚ğ itis_kernel.h ‚©‚çƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ‚¤‚É•ÏXD
+	* kernel/itis_kernel.h, startup.c: target.h ã‚’ã‚„ã‚ã¦ï¼Œ
+	targetconf.h ã‚’ itis_kernel.h ã‹ã‚‰ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´ï¼
 
 Fri Sep  9 02:05:54 JST 1994	Hiroaki Takada
 
-	* kernel/task.c: ctxtsk, schedtsk ‚Ì‰Šú‰»‚ğ’Ç‰ÁD
+	* kernel/task.c: ctxtsk, schedtsk ã®åˆæœŸåŒ–ã‚’è¿½åŠ ï¼
 
-	* kernel/startup.c: syslog ƒƒbƒZ[ƒW‚ÌC³D
+	* kernel/startup.c: syslog ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ä¿®æ­£ï¼
 
-	* kernel/misc_calls.c: #ifndef _i_def_int ‚ÅˆÍ‚Ş”ÍˆÍ‚ğL‚°‚éD
+	* kernel/misc_calls.c: #ifndef _i_def_int ã§å›²ã‚€ç¯„å›²ã‚’åºƒã’ã‚‹ï¼
 
-	* systask/logtask.c: perror ‚ÌŒÄ‚Ño‚µ•û–@‚ğC³D
+	* systask/logtask.c: perror ã®å‘¼ã³å‡ºã—æ–¹æ³•ã‚’ä¿®æ­£ï¼
 
 	* kernel/itis_kernel.h, common.h, ready_queue.h, startup.c,
 	task.c, task_manage.c, misc_calls.c, debug_calls.c:
-	cpu_inline.h ‚ğ itis_kernel.h ‚©‚çƒCƒ“ƒNƒ‹[ƒh‚·‚é‚±‚Æ‚É‚µ‚ÄC
-	‘¼‚Ìƒtƒ@ƒCƒ‹‚©‚çƒCƒ“ƒNƒ‹[ƒh‚µ‚È‚¢‚æ‚¤‚É‚·‚éD
+	cpu_inline.h ã‚’ itis_kernel.h ã‹ã‚‰ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã“ã¨ã«ã—ã¦ï¼Œ
+	ä»–ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ãªã„ã‚ˆã†ã«ã™ã‚‹ï¼
 
 	* kernel/common.h, cpu_inline.h, task.c: dispatch_request,
-	force_dispatch ‚ğ common.h ‚ÉˆÚ“®D
+	force_dispatch ã‚’ common.h ã«ç§»å‹•ï¼
 
-	* kernel/mailbox.c: ƒRƒƒ“ƒg‚ÌC³D
+	* kernel/mailbox.c: ã‚³ãƒ¡ãƒ³ãƒˆã®ä¿®æ­£ï¼
 
 Tue Sep  6 13:43:39 JST 1994	Hiroaki Takada
 
-	* include/itron.h, kernel/mailbox.c: ƒƒbƒZ[ƒWƒLƒ…[‚ÌŠÇ—•û
-	–@‚ğCƒVƒ“ƒOƒ‹ƒŠƒ“ƒN‚É’¼‚·D
+	* include/itron.h, kernel/mailbox.c: ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚­ãƒ¥ãƒ¼ã®ç®¡ç†æ–¹
+	æ³•ã‚’ï¼Œã‚·ãƒ³ã‚°ãƒ«ãƒªãƒ³ã‚¯ã«ç›´ã™ï¼
 
-	* kernel/queue.h: –¢g—p‚Ì queue_serach_ge ‚ğ–•ÁD
+	* kernel/queue.h: æœªä½¿ç”¨ã® queue_serach_ge ã‚’æŠ¹æ¶ˆï¼
 
 Fri Sep  2 19:05:08 JST 1994	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, doc/USER: ‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, MANIFEST, doc/USER: ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* doc/PRISEM: V‚½‚Éì¬D
+	* doc/PRISEM: æ–°ãŸã«ä½œæˆï¼
 
 Fri Sep  2 16:13:38 JST 1994	Hiroaki Takada
 
 	* kernel/task.h, task.c, wait.h, wait.c, winfo.h, task_manage.c,
 	task_sync.c, semaphore.c, eventflag.c, mailbox.c, messagebuf.c,
-	rendezvous.c, prisem.c, mempool.c, mempfix.c, time_call.c: ‘Ò
-	‚¿d—l‚ğ“±“ü‚µC—Dæ“x•ÏXC‘Ò‚¿ó‘Ô‰ğœ‚Ìˆ—‚ğƒtƒbƒNƒ‹[
-	ƒ`ƒ“‚Åˆ—‚·‚é‚æ‚¤‚É‰ü‘¢‚·‚éD
+	rendezvous.c, prisem.c, mempool.c, mempfix.c, time_call.c: å¾…
+	ã¡ä»•æ§˜ã‚’å°å…¥ã—ï¼Œå„ªå…ˆåº¦å¤‰æ›´æ™‚ï¼Œå¾…ã¡çŠ¶æ…‹è§£é™¤æ™‚ã®å‡¦ç†ã‚’ãƒ•ãƒƒã‚¯ãƒ«ãƒ¼
+	ãƒãƒ³ã§å‡¦ç†ã™ã‚‹ã‚ˆã†ã«æ”¹é€ ã™ã‚‹ï¼
 
 	* kernel/task_manage.c, task_sync.c, eventflag.c, mailbox.c,
-	messagebuf.c, mempool.c, mempfix.c: ƒVƒXƒeƒ€ƒR[ƒ‹–ˆ‚ÉŠO‚¹‚é‚æ
-	‚¤‚É‚·‚éD
+	messagebuf.c, mempool.c, mempfix.c: ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«æ¯ã«å¤–ã›ã‚‹ã‚ˆ
+	ã†ã«ã™ã‚‹ï¼
 
-	* kernel/isysconf.h, isyslog.c, messagebuf.c, mempool.c: ƒJ[
-	ƒlƒ‹‚ªg—p‚·‚éƒIƒuƒWƒFƒNƒg‚ª‚È‚¢ê‡‚É‘Î‰ (USE_TMBF_OS,
-	USE_TMPL_OS ‚ğ“±“ü)D
+	* kernel/isysconf.h, isyslog.c, messagebuf.c, mempool.c: ã‚«ãƒ¼
+	ãƒãƒ«ãŒä½¿ç”¨ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã„å ´åˆã«å¯¾å¿œ (USE_TMBF_OS,
+	USE_TMPL_OS ã‚’å°å…¥)ï¼
 
-	* kernel/itis_kernel.h: ƒwƒbƒ_ƒtƒ@ƒCƒ‹‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‡˜‚ğ
-	•ÏX (ã‚Ì•ÏX‚É”º‚Á‚Ä•K—v‚É)D
+	* kernel/itis_kernel.h: ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹é †åºã‚’
+	å¤‰æ›´ (ä¸Šã®å¤‰æ›´ã«ä¼´ã£ã¦å¿…è¦ã«)ï¼
 
-	* kernel/isysconf.h: SYS_OS_SIZE ‚ğ SYS_MPL_SIZE ‚ÉD
+	* kernel/isysconf.h: SYS_OS_SIZE ã‚’ SYS_MPL_SIZE ã«ï¼
 
 Fri Sep  2 15:43:17 JST 1994	Hiroaki Takada
 
-	* kernel/misc_calls.c: get_ver ‚ª•Ô‚· spver ‚ğƒo[ƒWƒ‡ƒ“ 3.02 
-	‚ğ•\‚·’l‚É•ÏXD
+	* kernel/misc_calls.c: get_ver ãŒè¿”ã™ spver ã‚’ãƒãƒ¼ã‚¸ãƒ§ãƒ³ 3.02 
+	ã‚’è¡¨ã™å€¤ã«å¤‰æ›´ï¼
 
-	* kernel/common.h: ƒRƒƒ“ƒg‚ÌC³D
+	* kernel/common.h: ã‚³ãƒ¡ãƒ³ãƒˆã®ä¿®æ­£ï¼
 
 Fri Aug 26 01:37:46 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c, prisem.c: d—l1 (‹Œ–¼: d—l2) ‚Ì—Dæ“x
-	Œp³ƒZƒ}ƒtƒH‹@”\‚ğƒ}[ƒWDd—l1 ‚Ìê‡‚ÉCƒ^ƒXƒNI—¹‚ÉŠl“¾‚µ
-	‚Ä‚¢‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğ©“®“I‚É‰ğ•ú‚·‚é‚æ‚¤‚É‚·‚éD
+	* kernel/task_manage.c, prisem.c: ä»•æ§˜1 (æ—§å: ä»•æ§˜2) ã®å„ªå…ˆåº¦
+	ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©æ©Ÿèƒ½ã‚’ãƒãƒ¼ã‚¸ï¼ä»•æ§˜1 ã®å ´åˆã«ï¼Œã‚¿ã‚¹ã‚¯çµ‚äº†æ™‚ã«ç²å¾—ã—
+	ã¦ã„ã‚‹å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©ã‚’è‡ªå‹•çš„ã«è§£æ”¾ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Mon Aug  8 18:40:33 JST 1994	Hiroaki Takada
 
 	* kernel/isysconf.h, task.h, task.c, wait.h, sample/config.def: 
-	—Dæ“xŒp³ƒZƒ}ƒtƒH‚Ìd—l1 ‚Æd—l2 ‚Ì–¼Ì‚ğ‹t‚É‚·‚éD
+	å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©ã®ä»•æ§˜1 ã¨ä»•æ§˜2 ã®åç§°ã‚’é€†ã«ã™ã‚‹ï¼
 
 Mon Aug  8 14:57:22 JST 1994	Hiroaki Takada
 
-	* kernel/isyslog.c: NDEBUG ‚Ì‚É‚ÍCi_assert_fail ‚ğŠO‚·D
+	* kernel/isyslog.c: NDEBUG ã®æ™‚ã«ã¯ï¼Œi_assert_fail ã‚’å¤–ã™ï¼
 
 Mon Aug  8 14:04:36 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h, startup.c, misc_call.c: def_int ‚ÅC‘O
-	‚Ì’è‹`‚ğ‰ğœ‚·‚é‹@”\‚ğ’Ç‰ÁD
+	* kernel/cpu_inline.h, startup.c, misc_call.c: def_int ã§ï¼Œå‰
+	ã®å®šç¾©ã‚’è§£é™¤ã™ã‚‹æ©Ÿèƒ½ã‚’è¿½åŠ ï¼
 
-	* sample/Makefile.*: target.h ‚ÉŠÖ‚·‚é’è‹`‚ğ’Ç‰ÁD
+	* sample/Makefile.*: target.h ã«é–¢ã™ã‚‹å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* mcube/mcube.h, mcubestart.S: EITVB ‚ÉŠÖ‚·‚é’è‹`‚ğˆÚ“®D
+	* mcube/mcube.h, mcubestart.S: EITVB ã«é–¢ã™ã‚‹å®šç¾©ã‚’ç§»å‹•ï¼
 
 Mon Aug  8 12:56:48 JST 1994	Hiroaki Takada
 
-	* kernel/genconfig: (-4)`0 ‚Ì—Dæ“x’l‚ğC—\–ñ’l‚Æ‚µ‚ÄƒGƒ‰[‚ğ
-	•Ô‚·‚æ‚¤‚É‚·‚éD
+	* kernel/genconfig: (-4)ã€œ0 ã®å„ªå…ˆåº¦å€¤ã‚’ï¼Œäºˆç´„å€¤ã¨ã—ã¦ã‚¨ãƒ©ãƒ¼ã‚’
+	è¿”ã™ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Sun Aug  7 23:19:06 JST 1994	Hiroaki Takada
 
 	* kernel/itis_kernel.h, isyslog.c, libitis/assert_fail.c:
-	assertƒ}ƒNƒ‚Ìˆ—ŠÖ”‚ğ GNU•W€Cƒ‰ƒCƒuƒ‰ƒŠ‚É‚ ‚í‚¹‚é/‹ß‚­‚·‚éD
+	assertãƒã‚¯ãƒ­ã®å‡¦ç†é–¢æ•°ã‚’ GNUæ¨™æº–Cãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«ã‚ã‚ã›ã‚‹/è¿‘ãã™ã‚‹ï¼
 
-	* sample/config.def: min_mplid ‚ÌƒfƒtƒHƒ‹ƒg‚ğ -5 ‚É–ß‚·D
+	* sample/config.def: min_mplid ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ -5 ã«æˆ»ã™ï¼
 
 Sun Aug  7 22:44:33 JST 1994	Hiroaki Takada
 
-	* kernel/isysconf.h, startup.c, winfo.h: ŠeƒIƒuƒWƒFƒNƒg‚Ìƒ‚ƒWƒ…[
-	ƒ‹‚ğŠO‚¹‚é‚æ‚¤‚É‚·‚é‚½‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	* kernel/isysconf.h, startup.c, winfo.h: å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¢ã‚¸ãƒ¥ãƒ¼
+	ãƒ«ã‚’å¤–ã›ã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
 Sun Aug  7 22:13:03 JST 1994	Hiroaki Takada
 
-	* sample/config.def: min_mplid ‚ÌƒfƒtƒHƒ‹ƒg‚ğ 1 ‚ÉD
+	* sample/config.def: min_mplid ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ 1 ã«ï¼
 
 Sun Aug  7 22:05:16 JST 1994	Hiroaki Takada
 
-	* kernel/isysconf.h: TMPL_OS_SIZE ‚ğ SYS_OS_SIZE ‚ÉD
+	* kernel/isysconf.h: TMPL_OS_SIZE ã‚’ SYS_OS_SIZE ã«ï¼
 
 Sun Aug  7 21:23:03 JST 1994	Hiroaki Takada
 
 	* kernel/semaphore.c, mailbox.c, messagebuf.c, mempool.c,
-	mempfix.c: ID ‚ğƒ`ƒFƒbƒN‚·‚é assert ‚ÌğŒ‚ğ‹­‚­‚·‚éD
+	mempfix.c: ID ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ assert ã®æ¡ä»¶ã‚’å¼·ãã™ã‚‹ï¼
 
 Thu Aug  4 23:55:04 JST 1994	Hiroaki Takada
 
-	* kernel/task.h, task.c, task_manage.c, prisem.c, wait.h: d—l2
-	‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğæ‚è‚Ş‚½‚ß‚ÌC³D
+	* kernel/task.h, task.c, task_manage.c, prisem.c, wait.h: ä»•æ§˜2
+	ã®å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©ã‚’å–ã‚Šè¾¼ã‚€ãŸã‚ã®ä¿®æ­£ï¼
 
 	* kernel/genconfig, isysconf.h, sample/config.def: prisem_spec 
-	‚Ì’è‹`‚Æ‚»‚ê‚ÉŠÖ˜A‚·‚éİ’è‚ğ’Ç‰ÁD
+	ã®å®šç¾©ã¨ãã‚Œã«é–¢é€£ã™ã‚‹è¨­å®šã‚’è¿½åŠ ï¼
 
-	* kernel/prisem.c: del_pis ‚Ìd—l‚ğ•ÏXDƒoƒOƒtƒBƒbƒNƒXD
+	* kernel/prisem.c: del_pis ã®ä»•æ§˜ã‚’å¤‰æ›´ï¼ãƒã‚°ãƒ•ã‚£ãƒƒã‚¯ã‚¹ï¼
 
-	* kernel/wait.c, wait.h, task_manage.c, rendezvous.c: ‘Ò‚¿‰ğœ
-	ˆ—‚Ì‚½‚ß‚Ìƒ‹[ƒ`ƒ“ŒQ‚ğ®—D
+	* kernel/wait.c, wait.h, task_manage.c, rendezvous.c: å¾…ã¡è§£é™¤
+	å‡¦ç†ã®ãŸã‚ã®ãƒ«ãƒ¼ãƒãƒ³ç¾¤ã‚’æ•´ç†ï¼
 
 Thu Aug  4 22:16:31 JST 1994	Hiroaki Takada
 
 	* include/itis_services.h, libitis/itis_panic.c, itis_perror.c,
-	panic.c, perror.c: itron_errno ‚ğ‚â‚ß‚é (ƒ^ƒXƒN‹¤’Ê‚É‚Â‚Ì‚Í
-	–³—)D
+	panic.c, perror.c: itron_errno ã‚’ã‚„ã‚ã‚‹ (ã‚¿ã‚¹ã‚¯å…±é€šã«æŒã¤ã®ã¯
+	ç„¡ç†)ï¼
 
-	* libitis/errno.c: íœD
+	* libitis/errno.c: å‰Šé™¤ï¼
 
-	* libitis/Makefile, sample/Makefile.*: errno.o ‚ğ–•ÁD
+	* libitis/Makefile, sample/Makefile.*: errno.o ã‚’æŠ¹æ¶ˆï¼
 
-	* xscheme/itisstuff.c: ƒƒ‚ƒŠ‚ª‚È‚¢ê‡‚ÌƒoƒO‚ğƒtƒBƒbƒNƒXD
+	* xscheme/itisstuff.c: ãƒ¡ãƒ¢ãƒªãŒãªã„å ´åˆã®ãƒã‚°ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ï¼
 
 Thu Aug  4 21:22:30 JST 1994	Hiroaki Takada
 
-	* systask/logtask.c: itron_errno ‚Ö‚Ì‘ã“ü‚ğ‚â‚ß‚é (ƒAƒvƒŠƒP[
-	ƒVƒ‡ƒ“‚©‚çŒ©‚é‚ÆCitron_errno ‚ªŸè‚É‘‚«‚©‚í‚é)D
+	* systask/logtask.c: itron_errno ã¸ã®ä»£å…¥ã‚’ã‚„ã‚ã‚‹ (ã‚¢ãƒ—ãƒªã‚±ãƒ¼
+	ã‚·ãƒ§ãƒ³ã‹ã‚‰è¦‹ã‚‹ã¨ï¼Œitron_errno ãŒå‹æ‰‹ã«æ›¸ãã‹ã‚ã‚‹)ï¼
 
 Tue Aug  2 21:51:52 JST 1994	Hiroaki Takada
 
-	* kernel/semaphore.c: ƒVƒXƒeƒ€ƒR[ƒ‹–ˆ‚ÉŠO‚¹‚é‚æ‚¤‚É‚·‚é 
-	(prisem.c ‚Æƒ\[ƒXƒR[ƒhƒTƒCƒY‚ğ”äŠr‚·‚é‚½‚ß)D
+	* kernel/semaphore.c: ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«æ¯ã«å¤–ã›ã‚‹ã‚ˆã†ã«ã™ã‚‹ 
+	(prisem.c ã¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚µã‚¤ã‚ºã‚’æ¯”è¼ƒã™ã‚‹ãŸã‚)ï¼
 
 Tue Aug  2 21:30:17 JST 1994	Hiroaki Takada
 
-	* Makefile.config: tgas ‚ğ tron-gasCtld ‚ğ tron-ld ‚ÉD
+	* Makefile.config: tgas ã‚’ tron-gasï¼Œtld ã‚’ tron-ld ã«ï¼
 
 Tue Aug  2 13:35:42 JST 1994	Hiroaki Takada
 
-	* h32/h32start.S, tvme/tvmestart.S: FPU ‚ÌŠÛ‚ßƒ‚[ƒh‚ğ RZ ‚É‚·
-	‚éˆ—‚ğŠO‚· (ƒRƒ“ƒpƒCƒ‰‚ª‘Î‰‚µ‚½‚½‚ß)D
+	* h32/h32start.S, tvme/tvmestart.S: FPU ã®ä¸¸ã‚ãƒ¢ãƒ¼ãƒ‰ã‚’ RZ ã«ã™
+	ã‚‹å‡¦ç†ã‚’å¤–ã™ (ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ãŒå¯¾å¿œã—ãŸãŸã‚)ï¼
 
 Sun Jul 31 21:45:48 JST 1994	Hiroaki Takada
 
-	* kernel/task.h, task.c, task_manage.c: change_running_task ‚ğ 
-	change_scheduled_task ‚ÉƒŠƒl[ƒ€D
+	* kernel/task.h, task.c, task_manage.c: change_running_task ã‚’ 
+	change_scheduled_task ã«ãƒªãƒãƒ¼ãƒ ï¼
 
 Sun Jul 31 14:40:33 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h: force_dispatch ‚Ì volatile éŒ¾‚ğÁ‚· 
-	(GCC 2.6 ‘Î‰‚ÌC³)D
+	* kernel/cpu_inline.h: force_dispatch ã® volatile å®£è¨€ã‚’æ¶ˆã™ 
+	(GCC 2.6 å¯¾å¿œã®ä¿®æ­£)ï¼
 
 Sun Jul 31 14:37:23 JST 1994	Hiroaki Takada
 
-	* tvme/tvmetimer.c, h32/h32timer.c: get_current_hw_time ’†‚ÅC
-	TIMER_TICK ‚ğQÆ‚µ‚Ä‚¢‚½‚Æ‚±‚ë‚ğ TO_TICK(TIMER_PERIOD) ‚ÉC³D
+	* tvme/tvmetimer.c, h32/h32timer.c: get_current_hw_time ä¸­ã§ï¼Œ
+	TIMER_TICK ã‚’å‚ç…§ã—ã¦ã„ãŸã¨ã“ã‚ã‚’ TO_TICK(TIMER_PERIOD) ã«ä¿®æ­£ï¼
 
 Mon Jul 18 17:25:24 JST 1994	Hiroaki Takada
 
 	* libitis/strerror.c, panic.c, perror.c, itis_panic.c,
-	itis_perror.c: itron_strerrorŠÖ”‚É‘Î‚·‚é const éŒ¾‚ğíœD
+	itis_perror.c: itron_strerroré–¢æ•°ã«å¯¾ã™ã‚‹ const å®£è¨€ã‚’å‰Šé™¤ï¼
 
 Fri Jun 24 20:43:13 JST 1994	Hiroaki Takada
 
-	* kernel/prisem.c: —Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ğŠÜ
-	‚Şƒ‚ƒWƒ…[ƒ‹‚Æ‚µ‚ÄV‹Kì¬D
+	* kernel/prisem.c: å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©é–¢ä¿‚ã®ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚’å«
+	ã‚€ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¨ã—ã¦æ–°è¦ä½œæˆï¼
 
 	* kernel/check.h, common.h, genconfig, isysconf.h, startup.c,
-	task.c, include/itron.h: —Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚Ìˆ—‚¨‚æ‚Ñ’è
-	‹`‚ğ’Ç‰ÁD
+	task.c, include/itron.h: å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©é–¢ä¿‚ã®å‡¦ç†ãŠã‚ˆã³å®š
+	ç¾©ã‚’è¿½åŠ ï¼
 
 	* kernel/syscall.def, isyscall.h, itable.h, include/itron_fncd.h,
-	itis_isyscall.h: —Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ğ’Ç‰ÁD
+	itis_isyscall.h: å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©é–¢ä¿‚ã®ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚’è¿½åŠ ï¼
 
 	* sample/config.def, Makefile.h32, Makefile.tvme, Makefile.mcube:
-	—Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚Ì‹Lq‚ğ’Ç‰ÁD
+	å„ªå…ˆåº¦ç¶™æ‰¿ã‚»ãƒãƒ•ã‚©é–¢ä¿‚ã®è¨˜è¿°ã‚’è¿½åŠ ï¼
 
-	* kernel/wait.h: Še“¯ŠúE’ÊMƒ‚ƒWƒ…[ƒ‹‚Ì—Dæ“x•ÏXˆ—ŠÖ”‚Ì
-	éŒ¾‚ğ’Ç‰ÁD
+	* kernel/wait.h: å„åŒæœŸãƒ»é€šä¿¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®å„ªå…ˆåº¦å¤‰æ›´å‡¦ç†é–¢æ•°ã®
+	å®£è¨€ã‚’è¿½åŠ ï¼
 
-	* kernel/semaphore.c: ç’·‚ÈğŒ®‚ğC³Dtypo ‚ÌC³D
+	* kernel/semaphore.c: å†—é•·ãªæ¡ä»¶å¼ã‚’ä¿®æ­£ï¼typo ã®ä¿®æ­£ï¼
 
 Tue Jun 21 19:30:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü
-	‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾
+	ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.2 (patchlevel=5) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_5")D
+	* Release1.2 (patchlevel=5) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_2_5")ï¼
 
 Tue Jun 21 19:21:17 JST 1994	Hiroaki Takada
 
-	* systask/serial.c: serial_init ‚ªƒGƒ‰[‚É‚È‚Á‚½ê‡‚É‚ÍC
-	init_flag ‚ğ 1 ‚É‚µ‚È‚¢‚æ‚¤C³D
+	* systask/serial.c: serial_init ãŒã‚¨ãƒ©ãƒ¼ã«ãªã£ãŸå ´åˆã«ã¯ï¼Œ
+	init_flag ã‚’ 1 ã«ã—ãªã„ã‚ˆã†ä¿®æ­£ï¼
 
 Tue Jun 21 15:14:30 JST 1994	Hiroaki Takada
 
-	* mcube/mcubeserial.c, tvme/tvmeserial.c: 2‚Â‚ß‚Ìƒ|[ƒg‚ğ‰Šú
-	‰»‚·‚é‚ÆCÅ‰‚Ìƒ|[ƒg‚àg‚¦‚È‚­‚È‚é–â‘è‚ğC³D
+	* mcube/mcubeserial.c, tvme/tvmeserial.c: 2ã¤ã‚ã®ãƒãƒ¼ãƒˆã‚’åˆæœŸ
+	åŒ–ã™ã‚‹ã¨ï¼Œæœ€åˆã®ãƒãƒ¼ãƒˆã‚‚ä½¿ãˆãªããªã‚‹å•é¡Œã‚’ä¿®æ­£ï¼
 
-	* mcube/mcubeserial.c: TRONd—lƒL[ƒ{[ƒh‚ÌÚ‘±‚ğƒTƒ|[ƒgD
+	* mcube/mcubeserial.c: TRONä»•æ§˜ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®æ¥ç¶šã‚’ã‚µãƒãƒ¼ãƒˆï¼
 
 Tue Jun 21 15:12:07 JST 1994	Hiroaki Takada
 
 	* systask/serial.c, include/svc_serial.h, itis_resources.h:
-	serial_init, serial_shutdown ‚ğŠg’£SVC ‚Æ‚µ‚Äƒ†[ƒUƒ^ƒXƒN‚©‚ç
-	ŒÄ‚Ño‚¹‚é‚æ‚¤‚É‚·‚éD
+	serial_init, serial_shutdown ã‚’æ‹¡å¼µSVC ã¨ã—ã¦ãƒ¦ãƒ¼ã‚¶ã‚¿ã‚¹ã‚¯ã‹ã‚‰
+	å‘¼ã³å‡ºã›ã‚‹ã‚ˆã†ã«ã™ã‚‹ï¼
 
-	* sample/config.def: ƒTƒ“ƒvƒ‹‚Å‚ÌŠg’£SVC ‚Ì’è‹`”‚ğ 50 ‚É•ÏXD
+	* sample/config.def: ã‚µãƒ³ãƒ—ãƒ«ã§ã®æ‹¡å¼µSVC ã®å®šç¾©æ•°ã‚’ 50 ã«å¤‰æ›´ï¼
 
 Thu Jun  9 19:03:59 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c: ƒVƒXƒeƒ€ƒ_ƒEƒ“‚·‚éÛ‚ÌƒƒO‚Ì priority 
-	‚ğ LOG_EMERG ‚É•ÏXD
+	* kernel/task_manage.c: ã‚·ã‚¹ãƒ†ãƒ ãƒ€ã‚¦ãƒ³ã™ã‚‹éš›ã®ãƒ­ã‚°ã® priority 
+	ã‚’ LOG_EMERG ã«å¤‰æ›´ï¼
 
-	* systask/inittask.c: serial_shutdown ŒÄ‚Ñ‚¾‚µ‚Ìˆø”‚ğ’Ç‰ÁD
+	* systask/inittask.c: serial_shutdown å‘¼ã³ã ã—æ™‚ã®å¼•æ•°ã‚’è¿½åŠ ï¼
 
-	* systask/serial.c: read ‚ªs––‚ÅI—¹‚·‚é‚Ì‚ÍCCANONICAL ‚Ì
-	‚Ì‚İ‚É‚·‚éD
+	* systask/serial.c: read ãŒè¡Œæœ«ã§çµ‚äº†ã™ã‚‹ã®ã¯ï¼ŒCANONICAL ã®æ™‚
+	ã®ã¿ã«ã™ã‚‹ï¼
 
 Thu Jun  9 16:18:40 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c, misc_calls.c: RUNó‘Ô‚Ìƒ^ƒXƒN‚Ì’è‹`‚ğ
-	•ÏX‚·‚éD
+	* kernel/task_manage.c, misc_calls.c: RUNçŠ¶æ…‹ã®ã‚¿ã‚¹ã‚¯ã®å®šç¾©ã‚’
+	å¤‰æ›´ã™ã‚‹ï¼
 
-	* kernel/dispatch.S, nd_dispatch.S: WAIT–½—ß‚ğ”­s‚·‚é’¼‘O‚ÉC
-	ctxtsk ‚ğ NULL ‚É‚·‚éD
+	* kernel/dispatch.S, nd_dispatch.S: WAITå‘½ä»¤ã‚’ç™ºè¡Œã™ã‚‹ç›´å‰ã«ï¼Œ
+	ctxtsk ã‚’ NULL ã«ã™ã‚‹ï¼
 
 Thu Jun  9 15:38:30 JST 1994	Hiroaki Takada
 
 	* kernel/check.h, task_manage.c, sample/config.def: CHK_CTX2 
-	‚ğ CHK_CTX ‚Æ‰ü–¼DV‚½‚È CHK_CTX2 ‚ğC’v–½“I‚ÈƒRƒ“ƒeƒLƒXƒgƒG
-	ƒ‰[‚Ì‚ÉƒVƒXƒeƒ€ƒ_ƒEƒ“‚³‚¹‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚Æ‚·‚éD
+	ã‚’ CHK_CTX ã¨æ”¹åï¼æ–°ãŸãª CHK_CTX2 ã‚’ï¼Œè‡´å‘½çš„ãªã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚¨
+	ãƒ©ãƒ¼ã®æ™‚ã«ã‚·ã‚¹ãƒ†ãƒ ãƒ€ã‚¦ãƒ³ã•ã›ã‚‹ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°ã¨ã™ã‚‹ï¼
 
-	* kernel/genconfig: CHK_CTX ‚ÌƒTƒ|[ƒg‚ğ’Ç‰ÁD
+	* kernel/genconfig: CHK_CTX ã®ã‚µãƒãƒ¼ãƒˆã‚’è¿½åŠ ï¼
 
 Fri Mar  4 23:04:46 JST 1994	Hiroaki Takada
 
-	* systask/logtask.c: logtask_alive ‚ğ 1 ‚É‚·‚é‚Ì‚ğCsys_log ‚Ì
-	Šg’£SVC’è‹`‚æ‚èŒã‚ÉˆÚ“®‚·‚é (–â‘è‚È‚¢‚Í‚¸‚¾‚ªC”O‚Ì‚½‚ß)D
+	* systask/logtask.c: logtask_alive ã‚’ 1 ã«ã™ã‚‹ã®ã‚’ï¼Œsys_log ã®
+	æ‹¡å¼µSVCå®šç¾©ã‚ˆã‚Šå¾Œã«ç§»å‹•ã™ã‚‹ (å•é¡Œãªã„ã¯ãšã ãŒï¼Œå¿µã®ãŸã‚)ï¼
 
 Tue Feb 15 12:59:00 JST 1994	Hiroaki Takada
 
-	* kernel/rendezvous.c: ƒ‰ƒ“ƒfƒu‚Ì‰“šƒƒbƒZ[ƒW‚ª‹ó (’·‚³‚ª 0) 
-	‚ğ‹–‚·‚±‚Æ‚É‚·‚éD
+	* kernel/rendezvous.c: ãƒ©ãƒ³ãƒ‡ãƒ–ã®å¿œç­”ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒç©º (é•·ã•ãŒ 0) 
+	ã‚’è¨±ã™ã“ã¨ã«ã™ã‚‹ï¼
 
 Tue Feb 15 12:40:30 JST 1994	Hiroaki Takada
 
-	* kernel/check.h, genconfig, sample/config.def: ƒGƒ‰[ƒ`ƒFƒbƒN
-	ƒIƒvƒVƒ‡ƒ“‚É CHK_SELF ‚ğ’Ç‰ÁD
+	* kernel/check.h, genconfig, sample/config.def: ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
+	ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã« CHK_SELF ã‚’è¿½åŠ ï¼
 
 Tue Feb 15 12:07:41 JST 1994	Hiroaki Takada
 
-	* kernel/check.h: CHK_PAR ‚Å‚È‚¢ê‡‚Ì CHECK_PRI_INI ‚Ì’è‹`‚Ì 
-	typo ‚ğC³D
+	* kernel/check.h: CHK_PAR ã§ãªã„å ´åˆã® CHECK_PRI_INI ã®å®šç¾©ã® 
+	typo ã‚’ä¿®æ­£ï¼
 
 Tue Feb 15 11:11:03 JST 1994	Hiroaki Takada
 
-	* kernel/task_sync.c: wup_tsk ‚ÅCE_QOVR ‚Ìƒ`ƒFƒbƒNêŠ‚ğŒã‚ë
-	‚ÉˆÚ“®‚·‚é («”\‚ª­‚µã‚é‚Í‚¸)D
+	* kernel/task_sync.c: wup_tsk ã§ï¼ŒE_QOVR ã®ãƒã‚§ãƒƒã‚¯å ´æ‰€ã‚’å¾Œã‚
+	ã«ç§»å‹•ã™ã‚‹ (æ€§èƒ½ãŒå°‘ã—ä¸Šã‚‹ã¯ãš)ï¼
 
 Thu Feb 10 19:00:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³
-	‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£
+	ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.2 (patchlevel=4) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_4")D
+	* Release1.2 (patchlevel=4) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_2_4")ï¼
 
 Thu Feb 10 04:27:11 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h: "memory" ‚Ìw’è‚ª—]Œv‚É‚³‚ê‚Ä‚¢‚½‚Ì‚ğí
-	œDŠÖ˜A‚µ‚ÄCƒRƒƒ“ƒg‚ğ’Ç‰ÁD
+	* kernel/cpu_inline.h: "memory" ã®æŒ‡å®šãŒä½™è¨ˆã«ã•ã‚Œã¦ã„ãŸã®ã‚’å‰Š
+	é™¤ï¼é–¢é€£ã—ã¦ï¼Œã‚³ãƒ¡ãƒ³ãƒˆã‚’è¿½åŠ ï¼
 
 Thu Feb 10 04:19:25 JST 1994	Hiroaki Takada
 
-	* kernel/messagebuf.c: del_mbf ‚ÅCƒoƒbƒtƒ@ƒTƒCƒY‚ª 0 ‚Ìê‡‚É
-	‚àCƒoƒbƒtƒ@—Ìˆæ‚ğ‰ğ•ú‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚½ƒoƒO‚ğC³D
+	* kernel/messagebuf.c: del_mbf ã§ï¼Œãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºãŒ 0 ã®å ´åˆã«
+	ã‚‚ï¼Œãƒãƒƒãƒ•ã‚¡é ˜åŸŸã‚’è§£æ”¾ã—ã‚ˆã†ã¨ã—ã¦ã„ãŸãƒã‚°ã‚’ä¿®æ­£ï¼
 
 Sat Feb  5 11:45:04 JST 1994	Hiroaki Takada
 
 	* kernel/cpu_inline.h, genisyscall, queue.h, ready_queue.h,
 	syscall.def, task.c, include/itis_isyscall.h, svc_serial.h:
-	ƒCƒ“ƒ‰ƒCƒ“ƒAƒZƒ“ƒuƒ‰‚Ì’†‚Ì clobber ƒŠƒXƒg‚É "memory" ‚ª‚È‚¢‚ÆC
-	³‚µ‚­‚È‚¢ƒR[ƒh‚ªo‚é‰Â”\«‚ª‚ ‚éD•K—v‚È‰ÓŠ‚É "memory" ‚ğ’Ç
-	‰ÁD
+	ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã®ä¸­ã® clobber ãƒªã‚¹ãƒˆã« "memory" ãŒãªã„ã¨ï¼Œ
+	æ­£ã—ããªã„ã‚³ãƒ¼ãƒ‰ãŒå‡ºã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ï¼å¿…è¦ãªç®‡æ‰€ã« "memory" ã‚’è¿½
+	åŠ ï¼
 
 Mon Jan 31 22:36:25 JST 1994	Hiroaki Takada
 
-	* kernel/newversion: ‹N“®‚ÌƒƒbƒZ[ƒW‚Ì 93 ‚ğ 94 ‚ÉC³D
+	* kernel/newversion: èµ·å‹•æ™‚ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã® 93 ã‚’ 94 ã«ä¿®æ­£ï¼
 
 Wed Jan 26 11:49:13 JST 1994	Hiroaki Takada
 
-	* README: ‚±‚Ìƒtƒ@ƒCƒ‹‚ğ’P“Æ‚ÅŒöŠJ‚Å‚«‚é—l‚É‘‚«’¼‚·D
+	* README: ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å˜ç‹¬ã§å…¬é–‹ã§ãã‚‹æ§˜ã«æ›¸ãç›´ã™ï¼
 
 Wed Jan 26 11:45:56 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h, nd_dispatch.S, startup.c task.c: ’x‰„Š„
-	‚İ‚ğg‚í‚È‚¢ê‡‚ÌƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‹N“®‚ğ TRAPA #14 ‚©‚ç #4 
-	‚É•ÏXD
+	* kernel/cpu_inline.h, nd_dispatch.S, startup.c task.c: é…å»¶å‰²
+	è¾¼ã¿ã‚’ä½¿ã‚ãªã„å ´åˆã®ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã®èµ·å‹•ã‚’ TRAPA #14 ã‹ã‚‰ #4 
+	ã«å¤‰æ›´ï¼
 
 Thu Jan 20 00:54:57 JST 1994	Hiroaki Takada
 
-	* kernel/mempfix.c: rel_blf ‚ÅCblf ‚ª³‚µ‚¢ƒAƒhƒŒƒX‚©ƒ`ƒFƒbƒN
-	‚·‚éğŒ‚ğŒµ‚µ‚­‚·‚éD
+	* kernel/mempfix.c: rel_blf ã§ï¼Œblf ãŒæ­£ã—ã„ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ãƒã‚§ãƒƒã‚¯
+	ã™ã‚‹æ¡ä»¶ã‚’å³ã—ãã™ã‚‹ï¼
 
 Thu Jan 20 00:46:16 JST 1994	Hiroaki Takada
 
-	* doc/USER: ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚ÌƒTƒCƒYw’è‚Ì•û–@‚ÉŠÖ‚·‚é‹Lq
-	‚ğC³D
+	* doc/USER: ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã®ã‚µã‚¤ã‚ºæŒ‡å®šã®æ–¹æ³•ã«é–¢ã™ã‚‹è¨˜è¿°
+	ã‚’ä¿®æ­£ï¼
 
 Wed Jan 19 18:55:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³
-	‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£
+	ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.2 (patchlevel=3) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_3")D
+	* Release1.2 (patchlevel=3) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_2_3")ï¼
 
 Wed Jan 19 18:37:07 JST 1994	Hiroaki Takada
 
-	* kernel/genconfig: sys_mpl_size ‚Ì’è‹`‚ğ’Ç‰ÁD16i”‚ğƒTƒ|[ƒgD
+	* kernel/genconfig: sys_mpl_size ã®å®šç¾©ã‚’è¿½åŠ ï¼16é€²æ•°ã‚’ã‚µãƒãƒ¼ãƒˆï¼
 
-	* sample/config.def: sys_mpl_size ‚Ì’è‹`‚ğ’Ç‰ÁD
+	* sample/config.def: sys_mpl_size ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* kernel/mempool.c: TMPL_OS_SIZE ‚ğ SYS_MPL_SIZE ‚ÉƒŠƒl[ƒ€D
+	* kernel/mempool.c: TMPL_OS_SIZE ã‚’ SYS_MPL_SIZE ã«ãƒªãƒãƒ¼ãƒ ï¼
 
 	* kernel/isysconf.h, task_manage.c, include/itis_resources.h:
-	SYS_STACK_SIZE, SYS_MPL_SIZE ‚ÌƒfƒtƒHƒ‹ƒg’l‚ğ isysconf.h ‚Å’è
-	‹`‚·‚é‚±‚Æ‚É‚·‚éD
+	SYS_STACK_SIZE, SYS_MPL_SIZE ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’ isysconf.h ã§å®š
+	ç¾©ã™ã‚‹ã“ã¨ã«ã™ã‚‹ï¼
 
 Wed Jan 19 17:27:32 JST 1994	Hiroaki Takada
 
-	* sample/Makefile.mcube, mcube/mcubestart.S: MCUBE ‚Ìê‡‚ÌƒJ[
-	ƒlƒ‹ƒR[ƒh‚Ìæ“ª”Ô’n‚ğ 0x80020000 ‚É•ÏXD
+	* sample/Makefile.mcube, mcube/mcubestart.S: MCUBE ã®å ´åˆã®ã‚«ãƒ¼
+	ãƒãƒ«ã‚³ãƒ¼ãƒ‰ã®å…ˆé ­ç•ªåœ°ã‚’ 0x80020000 ã«å¤‰æ›´ï¼
 
-	* mcube/mcube.h: mcube_getc ‚ÌƒCƒ“ƒ‰ƒCƒ“ƒAƒZƒ“ƒuƒ‰’†‚ÅCƒRƒ“ƒ}
-	‚ª”²‚¯‚Ä‚¢‚½“_‚ğC³D
+	* mcube/mcube.h: mcube_getc ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ä¸­ã§ï¼Œã‚³ãƒ³ãƒ
+	ãŒæŠœã‘ã¦ã„ãŸç‚¹ã‚’ä¿®æ­£ï¼
 
 Mon Jan 17 16:10:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü
-	‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾
+	ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.2 (patchlevel=2) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_2")D
-	‚±‚Ìƒo[ƒWƒ‡ƒ“‚©‚çCƒÀ”Å‚Æ‚·‚éD
+	* Release1.2 (patchlevel=2) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_2_2")ï¼
+	ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‹ã‚‰ï¼ŒÎ²ç‰ˆã¨ã™ã‚‹ï¼
 
 Mon Jan 17 15:58:37 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c: _ter_tsk ‚©‚ç make_dormant ‚ğŒÄ‚Ño‚µ
-	‚Ä‚¢‚é•”•ª‚ğCŒÄ‚Ño‚µ‘¤‚ÉˆÚ“®‚·‚éD
+	* kernel/task_manage.c: _ter_tsk ã‹ã‚‰ make_dormant ã‚’å‘¼ã³å‡ºã—
+	ã¦ã„ã‚‹éƒ¨åˆ†ã‚’ï¼Œå‘¼ã³å‡ºã—å´ã«ç§»å‹•ã™ã‚‹ï¼
 
-	* kernel/task.c, task_manage.c: ƒ^ƒXƒNŠg’£î•ñ‚ğ R1 ‚É“ü‚ê‚éˆ
-	—‚ğCsta_tsk ‚ÖˆÚ“®D
+	* kernel/task.c, task_manage.c: ã‚¿ã‚¹ã‚¯æ‹¡å¼µæƒ…å ±ã‚’ R1 ã«å…¥ã‚Œã‚‹å‡¦
+	ç†ã‚’ï¼Œsta_tsk ã¸ç§»å‹•ï¼
 
-	* kernel/task_manage.c: ext_tsk ‚ÅCmake_dormant ’†‚Åg—p’†‚Ì
-	ƒXƒ^ƒbƒN‚ª”j‰ó‚³‚ê‚é–â‘è‚ğC³D
+	* kernel/task_manage.c: ext_tsk ã§ï¼Œmake_dormant ä¸­ã§ä½¿ç”¨ä¸­ã®
+	ã‚¹ã‚¿ãƒƒã‚¯ãŒç ´å£Šã•ã‚Œã‚‹å•é¡Œã‚’ä¿®æ­£ï¼
 
 Wed Jan 12 21:58:15 JST 1994	Hiroaki Takada
 
-	* systask/serial.c: ƒRƒƒ“ƒg‚ÌC³D
+	* systask/serial.c: ã‚³ãƒ¡ãƒ³ãƒˆã®ä¿®æ­£ï¼
 
 Mon Jan 10 19:23:53 JST 1994	Hiroaki Takada
 
-	* mcube/mcubeinit.c: ƒJ[ƒlƒ‹‹N“®‚ÉCƒoƒXŠ„‚İ‚àƒ}ƒXƒN‚·‚é
-	‚æ‚¤‚ÉC³ (BMS ‚Ìİ’è‚É‚ ‚í‚¹‚é)D
+	* mcube/mcubeinit.c: ã‚«ãƒ¼ãƒãƒ«èµ·å‹•æ™‚ã«ï¼Œãƒã‚¹å‰²è¾¼ã¿ã‚‚ãƒã‚¹ã‚¯ã™ã‚‹
+	ã‚ˆã†ã«ä¿®æ­£ (BMS ã®è¨­å®šã«ã‚ã‚ã›ã‚‹)ï¼
 
 Mon Jan 10 19:19:09 JST 1994	Hiroaki Takada
 
-	* h32/h32sbc.h, mcube/mcube.h: Gmicro IRC ‚ÌƒoƒXŠ„‚İŠÖŒW‚Ì’è
-	‹` (BIR?_BIT) ‚ğ’Ç‰ÁD
+	* h32/h32sbc.h, mcube/mcube.h: Gmicro IRC ã®ãƒã‚¹å‰²è¾¼ã¿é–¢ä¿‚ã®å®š
+	ç¾© (BIR?_BIT) ã‚’è¿½åŠ ï¼
 
 Fri Jan  7 12:26:24 JST 1994	Hiroaki Takada
 
-	* kernel/messagebuf.c: ƒƒbƒZ[ƒWƒoƒbƒtƒ@‚Æ‚ÌŠÔ‚ÌƒƒbƒZ[ƒW“]
-	‘—ƒ‹[ƒ`ƒ“‚ÌƒoƒO‚ÌC³D
+	* kernel/messagebuf.c: ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒãƒƒãƒ•ã‚¡ã¨ã®é–“ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è»¢
+	é€ãƒ«ãƒ¼ãƒãƒ³ã®ãƒã‚°ã®ä¿®æ­£ï¼
 
-	* kernel/messagebuf.c: cre_mbf, vcre_mbf ‚ÅCbufsz ‚ª•‰‚Ìê‡
-	‚ğƒGƒ‰[‚Æ‚·‚éƒpƒ‰ƒ[ƒ^ƒ`ƒFƒbƒN‚ğ’Ç‰ÁD
+	* kernel/messagebuf.c: cre_mbf, vcre_mbf ã§ï¼Œbufsz ãŒè² ã®å ´åˆ
+	ã‚’ã‚¨ãƒ©ãƒ¼ã¨ã™ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ã‚’è¿½åŠ ï¼
 
 Thu Jan  6 13:54:23 JST 1994	Hiroaki Takada
 
-	* kernel/time_calls.c: i_def_alm ‚Å NADR w’è‚Ìƒpƒ‰ƒ[ƒ^ƒ`ƒFƒb
-	ƒN‚Ìƒ~ƒX‚ğC³D
+	* kernel/time_calls.c: i_def_alm ã§ NADR æŒ‡å®šæ™‚ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒã‚§ãƒƒ
+	ã‚¯ã®ãƒŸã‚¹ã‚’ä¿®æ­£ï¼
 
 Mon Dec 27 11:13:29 JST 1993	Hiroaki Takada
 
-	* kernel/mempfix.c: _cre_mpf ‚Å mpfid ‚Ì‰Šú‰»‚ª‚³‚ê‚Ä‚¢‚È‚©‚Á
-	‚½–â‘è‚ğC³D
+	* kernel/mempfix.c: _cre_mpf ã§ mpfid ã®åˆæœŸåŒ–ãŒã•ã‚Œã¦ã„ãªã‹ã£
+	ãŸå•é¡Œã‚’ä¿®æ­£ï¼
 
-	* kernel/time_calls.c: vdef_alm ‚Å ƒGƒ‰[ƒ`ƒFƒbƒN‚ª”²‚¯‚Ä‚¢‚½
-	–â‘è‚ğC³D
+	* kernel/time_calls.c: vdef_alm ã§ ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ãŒæŠœã‘ã¦ã„ãŸ
+	å•é¡Œã‚’ä¿®æ­£ï¼
 
 Fri Dec 24 12:26:22 JST 1993	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³
-	‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾ã§ã®ä¿®æ­£
+	ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.2 (patchlevel=1) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_1")D
+	* Release1.2 (patchlevel=1) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_2_1")ï¼
 
 Fri Dec 24 12:19:33 JST 1993	Hiroaki Takada
 
-	* kernel/rendezvous.c: cre_por, del_por ‚ğƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ñ
-	o‚·‚±‚Æ‚ğ‹Ö~‚·‚éD
+	* kernel/rendezvous.c: cre_por, del_por ã‚’ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰å‘¼ã³
+	å‡ºã™ã“ã¨ã‚’ç¦æ­¢ã™ã‚‹ï¼
 
 Mon Dec 20 22:42:12 JST 1993	Hiroaki Takada
 
-	* sample/Makefile.*, startup/start.S: V”Å‚Ì GNU LD ‘Î‰‚ÉC³
-	‚·‚éD-TromƒIƒvƒVƒ‡ƒ“‚ª‚È‚­‚È‚Á‚½‚½‚ßCextidata ‚ğg‚Á‚Äƒf[ƒ^
-	ƒZƒNƒVƒ‡ƒ“‚Ì‰Šú‰»‚ğs‚¤D
+	* sample/Makefile.*, startup/start.S: æ–°ç‰ˆã® GNU LD å¯¾å¿œã«ä¿®æ­£
+	ã™ã‚‹ï¼-Tromã‚ªãƒ—ã‚·ãƒ§ãƒ³ãŒãªããªã£ãŸãŸã‚ï¼Œextidata ã‚’ä½¿ã£ã¦ãƒ‡ãƒ¼ã‚¿
+	ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–ã‚’è¡Œã†ï¼
 
 Mon Dec 20 16:30:12 JST 1993	Hiroaki Takada
 
-	* kernel/cpu_inline.h, common.h, rendezvous.c: ƒ^ƒXƒN“Æ—§•”‚©
-	‚çƒ‰ƒ“ƒfƒu‹@”\‚ğg‚¤‚±‚Æ‹Ö~‚µ‚½C³‚ğŒ³‚É–ß‚·D‚à‚¤­‚µl@‚ª
-	•K—vD
+	* kernel/cpu_inline.h, common.h, rendezvous.c: ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹
+	ã‚‰ãƒ©ãƒ³ãƒ‡ãƒ–æ©Ÿèƒ½ã‚’ä½¿ã†ã“ã¨ç¦æ­¢ã—ãŸä¿®æ­£ã‚’å…ƒã«æˆ»ã™ï¼ã‚‚ã†å°‘ã—è€ƒå¯ŸãŒ
+	å¿…è¦ï¼
 
 Mon Dec 20 12:03:20 JST 1993	Hiroaki Takada
 
-	* kernel/time_calls.c: üŠú‹N“®ƒnƒ“ƒhƒ‰’†‚ÅC©•ª‚É‘Î‚·‚é 
-	def_cyc ‚ğŒÄ‚Ño‚µ‚½ê‡‚É‹N‚±‚é–â‘è‚ğC³D
+	* kernel/time_calls.c: å‘¨æœŸèµ·å‹•ãƒãƒ³ãƒ‰ãƒ©ä¸­ã§ï¼Œè‡ªåˆ†ã«å¯¾ã™ã‚‹ 
+	def_cyc ã‚’å‘¼ã³å‡ºã—ãŸå ´åˆã«èµ·ã“ã‚‹å•é¡Œã‚’ä¿®æ­£ï¼
 
 Tue Dec 14 22:25:11 JST 1993	Hiroaki Takada
 
 	* include/itis_services.h, libitis/errno.c, itis_panic.c,
-	itis_perror.c, panic.c, perror.c, strerror.c: ƒGƒ‰[”Ô† 
-	(errno)	‚ÌŒ^‚ğ ER ‚ÉC³D
+	itis_perror.c, panic.c, perror.c, strerror.c: ã‚¨ãƒ©ãƒ¼ç•ªå· 
+	(errno)	ã®å‹ã‚’ ER ã«ä¿®æ­£ï¼
 
 Fri Dec 10 18:45:00 JST 1993	Hiroaki Takada
 
-	* README, ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü
-	‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* README, ChangeLog, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹ã¾
+	ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* Release1.2 (patchlevel=0) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2")D
+	* Release1.2 (patchlevel=0) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_2")ï¼
 
 Fri Dec 10 15:00:16 JST 1993	Hiroaki Takada
 
-	* tvme/tvmetimer.h: vget_tim ‚Åg‚¤ƒ}ƒNƒ‚ğ’Ç‰ÁD
+	* tvme/tvmetimer.h: vget_tim ã§ä½¿ã†ãƒã‚¯ãƒ­ã‚’è¿½åŠ ï¼
 
 Fri Dec 10 14:31:23 JST 1993	Hiroaki Takada
 
-	* kernel/cpu_inline.h, common.h: ƒ^ƒXƒNŠÔƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡
-	ƒ“’è‹`—pƒ}ƒNƒ‚ğ’Ç‰Á‚·‚éD
+	* kernel/cpu_inline.h, common.h: ã‚¿ã‚¹ã‚¯é–“ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§
+	ãƒ³å®šç¾©ç”¨ãƒã‚¯ãƒ­ã‚’è¿½åŠ ã™ã‚‹ï¼
 
-	* kernel/rendezvous.c: ƒ^ƒXƒN“Æ—§•”‚©‚çƒ‰ƒ“ƒfƒu‹@”\‚ğg‚¤‚±‚Æ
-	‚ğ‹Ö~‚·‚éD
+	* kernel/rendezvous.c: ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰ãƒ©ãƒ³ãƒ‡ãƒ–æ©Ÿèƒ½ã‚’ä½¿ã†ã“ã¨
+	ã‚’ç¦æ­¢ã™ã‚‹ï¼
 
 Fri Dec 10 14:13:15 JST 1993	Hiroaki Takada
 
 	* kernel/check.h, task_manage.c, misc_calls.c, debug_calls.c:
-	ƒ^ƒXƒN•”Às’†‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é CHECK_INTSKƒ}ƒNƒ‚ğ’Ç‰ÁD
+	ã‚¿ã‚¹ã‚¯éƒ¨å®Ÿè¡Œä¸­ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ CHECK_INTSKãƒã‚¯ãƒ­ã‚’è¿½åŠ ï¼
 
 Fri Dec 10 13:23:05 JST 1993	Hiroaki Takada
 
-	* kernel/task_manage.c: chg_pri ‚ğCDORMANTó‘Ô‚Ìƒ^ƒXƒN‚É‘Î‚µ
-	‚Ä‚à”­s‰Â”\‚Æ‚·‚éD
+	* kernel/task_manage.c: chg_pri ã‚’ï¼ŒDORMANTçŠ¶æ…‹ã®ã‚¿ã‚¹ã‚¯ã«å¯¾ã—
+	ã¦ã‚‚ç™ºè¡Œå¯èƒ½ã¨ã™ã‚‹ï¼
 
 Thu Dec  9 20:25:29 JST 1993	Hiroaki Takada
 
-	* h32/h32timer.h: vget_tim ‚Åg‚¤ƒ}ƒNƒ‚ğ’Ç‰ÁDƒ^ƒCƒ}‚Ìİ’è’l
-	‚ğC³D
+	* h32/h32timer.h: vget_tim ã§ä½¿ã†ãƒã‚¯ãƒ­ã‚’è¿½åŠ ï¼ã‚¿ã‚¤ãƒã®è¨­å®šå€¤
+	ã‚’ä¿®æ­£ï¼
 
 Tue Dec  7 18:14:32 JST 1993	Hiroaki Takada
 
-	* kernel/timer.c: «”\•]‰¿—pƒVƒXƒeƒ€‚ğæ‚èo‚·‚½‚ß‚Ì
-	vget_tim ƒVƒXƒeƒ€ƒR[ƒ‹‚ğ’Ç‰ÁD
+	* kernel/timer.c: æ€§èƒ½è©•ä¾¡ç”¨ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»ã‚’å–ã‚Šå‡ºã™ãŸã‚ã®
+	vget_tim ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚’è¿½åŠ ï¼
 
-	* include/itron.h: SYSUTIMEŒ^‚ğ’Ç‰ÁD
+	* include/itron.h: SYSUTIMEå‹ã‚’è¿½åŠ ï¼
 
 	* kernel/syscall.def, isyscall.h, itable.h, include/itron_fncd.h,
-	itis_isyscall.h: vget_tim ƒVƒXƒeƒ€ƒR[ƒ‹‚ğ’Ç‰ÁD
+	itis_isyscall.h: vget_tim ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚’è¿½åŠ ï¼
 
-	* kernel/genconfig, isysconf.h: ƒVƒXƒeƒ€\¬İ’èƒtƒ@ƒCƒ‹‚ÅC
-	use_vget_tim ‚ğƒTƒ|[ƒg‚·‚éD
+	* kernel/genconfig, isysconf.h: ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã§ï¼Œ
+	use_vget_tim ã‚’ã‚µãƒãƒ¼ãƒˆã™ã‚‹ï¼
 
-	* mcube/mcubetimer.h: fetch_hw_timer_interrupt ‚ğì¬D
+	* mcube/mcubetimer.h: fetch_hw_timer_interrupt ã‚’ä½œæˆï¼
 
-	* include/itis_resources.h: ƒVƒXƒeƒ€ƒZƒ}ƒtƒH‚Ì ID ‚ğ‚¸‚ç‚·D
+	* include/itis_resources.h: ã‚·ã‚¹ãƒ†ãƒ ã‚»ãƒãƒ•ã‚©ã® ID ã‚’ãšã‚‰ã™ï¼
 
-	* sample/config.def: ˆÈã‚Ì•ÏX‚É‘Î‰‚µ‚ÄCƒVƒXƒeƒ€\¬İ’èƒtƒ@
-	ƒCƒ‹‚ğC³D
+	* sample/config.def: ä»¥ä¸Šã®å¤‰æ›´ã«å¯¾å¿œã—ã¦ï¼Œã‚·ã‚¹ãƒ†ãƒ æ§‹æˆè¨­å®šãƒ•ã‚¡
+	ã‚¤ãƒ«ã‚’ä¿®æ­£ï¼
 
 Mon Nov 22 23:36:14 JST 1993	Hiroaki Takada
 
-	* kernel/ientry.S: CHK_??? ‚ğŒ©‚ÄCƒGƒ‰[ƒ`ƒFƒbƒN‚ğ‚·‚é‚©‚Ç‚¤
-	‚©‚ğŒˆ‚ß‚é‚æ‚¤‚ÉC³ (.S ‚É‚µ‚½‚©‚ç‰Â”\‚É‚È‚Á‚½)D
+	* kernel/ientry.S: CHK_??? ã‚’è¦‹ã¦ï¼Œã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹ã‹ã©ã†
+	ã‹ã‚’æ±ºã‚ã‚‹ã‚ˆã†ã«ä¿®æ­£ (.S ã«ã—ãŸã‹ã‚‰å¯èƒ½ã«ãªã£ãŸ)ï¼
 
 Mon Nov 22 20:15:47 JST 1993	Hiroaki Takada
 
-	* kernel/task.c, task_manage.c, rendezvous.c: TCB ‚Ì wrdvnoƒtƒB[
-	ƒ‹ƒh‚ÍCtask_initialize ‚Å tskid ‚É‰Šú‰»‚·‚é‚±‚Æ‚É‚·‚éD
+	* kernel/task.c, task_manage.c, rendezvous.c: TCB ã® wrdvnoãƒ•ã‚£ãƒ¼
+	ãƒ«ãƒ‰ã¯ï¼Œtask_initialize ã§ tskid ã«åˆæœŸåŒ–ã™ã‚‹ã“ã¨ã«ã™ã‚‹ï¼
 
 Mon Nov 22 19:44:30 JST 1993	Hiroaki Takada
 
-	* h32/h32start.S: ‘O‚ÉCGmicro/300 ‚Ìê‡‚ÉƒLƒƒƒbƒVƒ…‚ğ‚·‚×‚Ä
-	OFF ‚É‚µ‚½‚Ì‚ğCŒ³‚É–ß‚· (Gmicro/300 ‚ğV‚µ‚¢”Å‚ÉŒğŠ·‚µ‚½)D
+	* h32/h32start.S: å‰ã«ï¼ŒGmicro/300 ã®å ´åˆã«ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã™ã¹ã¦
+	OFF ã«ã—ãŸã®ã‚’ï¼Œå…ƒã«æˆ»ã™ (Gmicro/300 ã‚’æ–°ã—ã„ç‰ˆã«äº¤æ›ã—ãŸ)ï¼
 
 Fri Nov 19 18:20:12 JST 1993	Hiroaki Takada
 
 	* kernel/task_manage.c, semaphore.c, eventflag.c, mailbox.c,
 	messagebuf.c, rendezvous.c, mempool.c, mempfix.c,
-	time_calls.c: ID©“®Š„“–‹@”\‚ÅCID ‚ªŠ„‚è“–‚Ä‚ç‚ê‚È‚¢ê‡‚ÌƒG
-	ƒ‰[‚ğ EV_FULL ‚É•ÏXD
+	time_calls.c: IDè‡ªå‹•å‰²å½“æ©Ÿèƒ½ã§ï¼ŒID ãŒå‰²ã‚Šå½“ã¦ã‚‰ã‚Œãªã„å ´åˆã®ã‚¨
+	ãƒ©ãƒ¼ã‚’ EV_FULL ã«å¤‰æ›´ï¼
 
-	* include/itron_errno.h, libitis/strerror.c: EV_FULL ‚ğ’Ç‰ÁD
+	* include/itron_errno.h, libitis/strerror.c: EV_FULL ã‚’è¿½åŠ ï¼
 
 Fri Nov 19 16:56:15 JST 1993	Hiroaki Takada
 
-	* kernel/ready_queue.h: CŒ¾Œê‚Å‹Lq‚µ‚½ _ffs ‚ÌƒoƒO‚ğC³D
+	* kernel/ready_queue.h: Cè¨€èªã§è¨˜è¿°ã—ãŸ _ffs ã®ãƒã‚°ã‚’ä¿®æ­£ï¼
 
-	* kernel/mempool.c: sys_rel_blk ’†‚ÅCassert() “à‚É•›ì—p‚Ì‚ 
-	‚é®‚ª‘‚©‚ê‚Ä‚¢‚½D
+	* kernel/mempool.c: sys_rel_blk ä¸­ã§ï¼Œassert() å†…ã«å‰¯ä½œç”¨ã®ã‚
+	ã‚‹å¼ãŒæ›¸ã‹ã‚Œã¦ã„ãŸï¼
 
-	* kernel/rendezvous.c: get_tskid_rdvno ‚ÅCtskid •”•ª‚ª•‰‚Ìê
-	‡‚Ìˆµ‚¢‚É–â‘è‚ª‚ ‚Á‚½‚Ì‚ğC³D
+	* kernel/rendezvous.c: get_tskid_rdvno ã§ï¼Œtskid éƒ¨åˆ†ãŒè² ã®å ´
+	åˆã®æ‰±ã„ã«å•é¡ŒãŒã‚ã£ãŸã®ã‚’ä¿®æ­£ï¼
 
 Fri Nov 19 15:16:50 JST 1993	Hiroaki Takada
 
-	* kernel/misc_calls.c: CŒ¾Œê‚Å‹Lq‚µ‚½Š„‚İƒnƒ“ƒhƒ‰‚ÉCEITƒX
-	ƒ^ƒbƒNƒtƒŒ[ƒ€‚Ìæ“ª”Ô’n‚ğ“n‚·‚æ‚¤‚É‚·‚éD
+	* kernel/misc_calls.c: Cè¨€èªã§è¨˜è¿°ã—ãŸå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã«ï¼ŒEITã‚¹
+	ã‚¿ãƒƒã‚¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®å…ˆé ­ç•ªåœ°ã‚’æ¸¡ã™ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Fri Nov 19 14:22:36 JST 1993	Hiroaki Takada
 
-	* kernel/time_call.c: ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰‹N“®‚ÉC‰ğ•ú‚³‚ê‚½ƒAƒ‰[
-	ƒ€ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚ğƒtƒŠ[ƒŠƒXƒg‚É‚Â‚È‚®‚æ‚¤‚ÉC³D
+	* kernel/time_call.c: ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©èµ·å‹•æ™‚ã«ï¼Œè§£æ”¾ã•ã‚ŒãŸã‚¢ãƒ©ãƒ¼
+	ãƒ ãƒãƒ³ãƒ‰ãƒ©ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã‚’ãƒ•ãƒªãƒ¼ãƒªã‚¹ãƒˆã«ã¤ãªãã‚ˆã†ã«ä¿®æ­£ï¼
 
 Fri Nov 19 13:30:14 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, task.c, task_manage.c, debug_calls.c:
-	vset_reg ‚Æ vget_reg ‚ğ DORMANTó‘Ô‚Ìƒ^ƒXƒN‚É‘Î‚µ‚Ä‚à”­s‚Å‚«
-	‚é‚æ‚¤‚É‚·‚éD
+	vset_reg ã¨ vget_reg ã‚’ DORMANTçŠ¶æ…‹ã®ã‚¿ã‚¹ã‚¯ã«å¯¾ã—ã¦ã‚‚ç™ºè¡Œã§ã
+	ã‚‹ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Thu Nov 18 23:35:57 JST 1993	Hiroaki Takada
 
-	* kernel/debug_calls.c: (V‹K) ƒfƒoƒbƒOƒTƒ|[ƒg‹@”\ (vset_reg
-	‚Æ vget_reg) ‚ğƒTƒ|[ƒgD
+	* kernel/debug_calls.c: (æ–°è¦) ãƒ‡ãƒãƒƒã‚°ã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½ (vset_reg
+	ã¨ vget_reg) ã‚’ã‚µãƒãƒ¼ãƒˆï¼
 
 	* kernel/itis_kernel.h, include/itis_services.h, include/
-	itis_debug.h: itis_debug.h ‚Ìˆµ‚¢‚ğC³D
+	itis_debug.h: itis_debug.h ã®æ‰±ã„ã‚’ä¿®æ­£ï¼
 
-	* sample/Makefile.*: debug_calls.c ‚ğ’Ç‰ÁD
+	* sample/Makefile.*: debug_calls.c ã‚’è¿½åŠ ï¼
 
-	* Ÿ‚Ì Release ‚ÅƒTƒ|[ƒg—\’è‚Ì‹@”\‚Ìì‚è‚İ‚ğŠ®—¹D
+	* æ¬¡ã® Release ã§ã‚µãƒãƒ¼ãƒˆäºˆå®šã®æ©Ÿèƒ½ã®ä½œã‚Šè¾¼ã¿ã‚’å®Œäº†ï¼
 
 Thu Nov 18 21:36:52 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, task.c, task_manage.c, semaphore.c,
 	eventflag.c, mailbox.c, messagebuf.c, rendezvous.c,
-	mempool.c, mempfix.c, time_calls.c: ID©“®Š„“–‹@”\‚ğƒTƒ|[ƒgD
+	mempool.c, mempfix.c, time_calls.c: IDè‡ªå‹•å‰²å½“æ©Ÿèƒ½ã‚’ã‚µãƒãƒ¼ãƒˆï¼
 
 Thu Nov 18 21:30:53 JST 1993	Hiroaki Takada
 
-	* kernel/syscall.def: ID©“®Š„“–‹@”\CƒfƒoƒbƒOƒTƒ|[ƒg‹@”\‚Ì‚½
-	‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	* kernel/syscall.def: IDè‡ªå‹•å‰²å½“æ©Ÿèƒ½ï¼Œãƒ‡ãƒãƒƒã‚°ã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½ã®ãŸ
+	ã‚ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* include/itis_debug.h: (V‹K) ƒfƒoƒbƒOƒTƒ|[ƒg‹@”\‚Ì‚½‚ß‚Ì’è
-	‹`ƒtƒ@ƒCƒ‹D
+	* include/itis_debug.h: (æ–°è¦) ãƒ‡ãƒãƒƒã‚°ã‚µãƒãƒ¼ãƒˆæ©Ÿèƒ½ã®ãŸã‚ã®å®š
+	ç¾©ãƒ•ã‚¡ã‚¤ãƒ«ï¼
 
-	* kernel/itis_kernel.h: itis_debug.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ‚¤‚É
-	C³D
+	* kernel/itis_kernel.h: itis_debug.h ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆã†ã«
+	ä¿®æ­£ï¼
 
 Thu Nov 18 17:57:03 JST 1993	Hiroaki Takada
 
-	* kernel/genconfig: ƒRƒ“ƒgƒ[ƒ‹ƒuƒƒbƒN‚ÌƒCƒ“ƒfƒbƒNƒX‚©‚ç ID 
-	‚ğ‹‚ß‚é ID_???(index) ƒ}ƒNƒ‚ğ¶¬‚·‚é‚æ‚¤‚É‚·‚éD
+	* kernel/genconfig: ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‹ã‚‰ ID 
+	ã‚’æ±‚ã‚ã‚‹ ID_???(index) ãƒã‚¯ãƒ­ã‚’ç”Ÿæˆã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ï¼
 
 Thu Nov 18 17:54:51 JST 1993	Hiroaki Takada
 
-	* sample/Makefile.*: FTASK_CFLAGS ‚©‚çC-I$(ITISINCDIR) ‚ğíœD
+	* sample/Makefile.*: FTASK_CFLAGS ã‹ã‚‰ï¼Œ-I$(ITISINCDIR) ã‚’å‰Šé™¤ï¼
 
 Thu Nov 18 17:51:21 JST 1993	Hiroaki Takada
 
-	* h32/h32start.S: Gmicro/300 ‚Ìê‡‚ÉCƒLƒƒƒbƒVƒ…‚ğ‚·‚×‚Ä OFF 
-	‚É‚·‚é (IRC ‚Ìİ’è‚ª‚¤‚Ü‚­‚¢‚©‚È‚¢ê‡‚ª‚ ‚é)D
+	* h32/h32start.S: Gmicro/300 ã®å ´åˆã«ï¼Œã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã™ã¹ã¦ OFF 
+	ã«ã™ã‚‹ (IRC ã®è¨­å®šãŒã†ã¾ãã„ã‹ãªã„å ´åˆãŒã‚ã‚‹)ï¼
 
 Sat Nov 13 01:35:34 JST 1993	Hiroaki Takada
 
 	* kernel/ientry.S, kernel/isysconf.h, kernel/misc_calls.c,
-	kernel/rendezvous.c, kernel/time_calls.c: ƒVƒXƒeƒ€ƒR[ƒ‹‚ğƒTƒ|[
-	ƒg‚µ‚È‚¢ê‡‚Ìƒ_ƒ~[’è‹`‚ğíœDˆê•”CƒVƒXƒeƒ€ƒR[ƒ‹–ˆ‚Éæ‚èŠO
-	‚µ‰Â”\‚É‚·‚éD
+	kernel/rendezvous.c, kernel/time_calls.c: ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã‚’ã‚µãƒãƒ¼
+	ãƒˆã—ãªã„å ´åˆã®ãƒ€ãƒŸãƒ¼å®šç¾©ã‚’å‰Šé™¤ï¼ä¸€éƒ¨ï¼Œã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«æ¯ã«å–ã‚Šå¤–
+	ã—å¯èƒ½ã«ã™ã‚‹ï¼
 
 Sat Nov 13 01:04:46 JST 1993	Hiroaki Takada
 
-	* ƒAƒZƒ“ƒuƒ‰ƒ\[ƒX‚àƒvƒŠƒvƒƒZƒbƒT‚ğ’Ê‚·‚æ‚¤‚ÉC³D
+	* ã‚¢ã‚»ãƒ³ãƒ–ãƒ©ã‚½ãƒ¼ã‚¹ã‚‚ãƒ—ãƒªãƒ—ãƒ­ã‚»ãƒƒã‚µã‚’é€šã™ã‚ˆã†ã«ä¿®æ­£ï¼
 
-	* kernel/isysconf.h: ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì\¬’è‹`ƒtƒ@ƒCƒ‹‚ğ’Ç‰ÁD
+	* kernel/isysconf.h: ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®æ§‹æˆå®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¿½åŠ ï¼
 
-	* sample/config.def: ‚±‚ÌŒã‚ÌŠg’£‚Ì‚½‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	* sample/config.def: ã“ã®å¾Œã®æ‹¡å¼µã®ãŸã‚ã®å®šç¾©ã‚’è¿½åŠ ï¼
 
-	* h32/h32serial.h: ‘O‰ñ‚ÌC³–Y‚ê‰ÓŠ‚ğC³D
+	* h32/h32serial.h: å‰å›ã®ä¿®æ­£å¿˜ã‚Œç®‡æ‰€ã‚’ä¿®æ­£ï¼
 
 Sat Nov 13 00:01:05 JST 1993	Hiroaki Takada
 
-	* kernel/rendezvous.c: ƒRƒƒ“ƒg‚ÌC³D
+	* kernel/rendezvous.c: ã‚³ãƒ¡ãƒ³ãƒˆã®ä¿®æ­£ï¼
 
-	* kernel/time_calls.c: NUM_CYC, NUM_ALM ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡
-	‚Ìƒ_ƒ~[ŠÖ”‚Ì–¼Ì‚ğC³D
+	* kernel/time_calls.c: NUM_CYC, NUM_ALM ãŒå®šç¾©ã•ã‚Œã¦ã„ãªã„å ´åˆ
+	ã®ãƒ€ãƒŸãƒ¼é–¢æ•°ã®åç§°ã‚’ä¿®æ­£ï¼
 
 Wed Nov 10 16:20:29 JST 1993	Hiroaki Takada
 
 	* include/itron.h, kernel/task.h, kernel/task.c, kernel/
-	misc_calls.c: ref_sys ‚ğ runtskid ‚Æ schedtskid ‚ğ•Ô‚·‚æ‚¤‚É
-	Šg’£D
+	misc_calls.c: ref_sys ã‚’ runtskid ã¨ schedtskid ã‚’è¿”ã™ã‚ˆã†ã«
+	æ‹¡å¼µï¼
 
 Wed Nov 10 12:26:23 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, kernel/task.c, kernel/task_manage.c: task.c 
-	’†‚É SCHEDULED ‚Æ‚¢‚¤ƒ}ƒNƒ‚ğ“±“ü‚·‚é‚±‚Æ‚É‚æ‚Á‚ÄCTCB ‚Ì 
-	runflagƒtƒB[ƒ‹ƒh‚ğ”p~‚·‚éDƒ}ƒ‹ƒ`ƒvƒƒZƒbƒT‰»‚·‚é‚É‚ÍC•œ
-	Šˆ‚³‚¹‚éD
+	ä¸­ã« SCHEDULED ã¨ã„ã†ãƒã‚¯ãƒ­ã‚’å°å…¥ã™ã‚‹ã“ã¨ã«ã‚ˆã£ã¦ï¼ŒTCB ã® 
+	runflagãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’å»ƒæ­¢ã™ã‚‹ï¼ãƒãƒ«ãƒãƒ—ãƒ­ã‚»ãƒƒã‚µåŒ–ã™ã‚‹æ™‚ã«ã¯ï¼Œå¾©
+	æ´»ã•ã›ã‚‹ï¼
 
 	* kernel/cpu_inline.h, kernel/dispatch.s, kernel/nd_dispach.s,
-	kernel/task.c: runtsk ‚Æ‚¢‚¤•Ï”–¼‚Í•´‚ç‚í‚µ‚¢‚½‚ßCschedtsk
-	(scheduled task ‚Ì—ª) ‚É•ÏX‚·‚éD
+	kernel/task.c: runtsk ã¨ã„ã†å¤‰æ•°åã¯ç´›ã‚‰ã‚ã—ã„ãŸã‚ï¼Œschedtsk
+	(scheduled task ã®ç•¥) ã«å¤‰æ›´ã™ã‚‹ï¼
 
 Wed Nov 10 11:56:03 JST 1993	Hiroaki Takada
 
-	* kernel/task.h, kernel/task_manage.c: ref_tsk ‚Å•Ô‚é tskstat
-	(ƒ^ƒXƒNó‘Ô) ‚Ì TTS_RUN ‚Ì‰ğß‚ğ•ÏX‚·‚éD]—ˆ‚ÍCruntsk ‚ª 
-	TTS_RUN ‚Å‚ ‚é‚Æ‚µ‚Ä‚¢‚½‚ªCctxtsk ‚ª TTS_RUN ‚Å‚ ‚é‚Æ‚·‚éD
+	* kernel/task.h, kernel/task_manage.c: ref_tsk ã§è¿”ã‚‹ tskstat
+	(ã‚¿ã‚¹ã‚¯çŠ¶æ…‹) ã® TTS_RUN ã®è§£é‡ˆã‚’å¤‰æ›´ã™ã‚‹ï¼å¾“æ¥ã¯ï¼Œruntsk ãŒ 
+	TTS_RUN ã§ã‚ã‚‹ã¨ã—ã¦ã„ãŸãŒï¼Œctxtsk ãŒ TTS_RUN ã§ã‚ã‚‹ã¨ã™ã‚‹ï¼
 
 Tue Nov  9 23:08:01 JST 1993	Hiroaki Takada
 
 	* kernel/task_manage.c, kernel/dispatch.s, kernel/nd_dispatch.s:
-	ƒ^ƒXƒN“Æ—§•”‚©‚ç ter_tsk ‚ğŒÄ‚Ño‚·‚±‚Æ‚ğ‹Ö~‚µ‚½D‚±‚ê‚É‚æ‚èC
-	ctxtsk ‚ª NULL ‚É‚È‚é‚±‚Æ‚Í‚È‚­‚È‚éD
+	ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰ ter_tsk ã‚’å‘¼ã³å‡ºã™ã“ã¨ã‚’ç¦æ­¢ã—ãŸï¼ã“ã‚Œã«ã‚ˆã‚Šï¼Œ
+	ctxtsk ãŒ NULL ã«ãªã‚‹ã“ã¨ã¯ãªããªã‚‹ï¼
 
 	* kernel/common.h, kernel/genconfig, kernel/task.h, kernel/
-	misc_calls.c: ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ªƒAƒNƒZƒX‚Å‚«‚é‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒb
-	ƒN‚ğŒø—¦‚æ‚­s‚¤‚½‚ß‚ÉCTCB ‚É sysmodeƒtƒB[ƒ‹ƒh‚ğ’Ç‰Á‚µ‚½D
-	sysmodeƒtƒB[ƒ‹ƒh‚ÍCqtsklev ƒtƒB[ƒ‹ƒh‚Ì–ğŠ„‚à‰Ê‚½‚·‚½‚ßC
-	qtsklevƒtƒB[ƒ‹ƒh‚Í•s—v‚É‚È‚Á‚½‚ªC€ƒ^ƒXƒN•”‚ğg‚¤ê‡‚É‚Í 
-	sysmodeƒtƒB[ƒ‹ƒh‚Ì‰Šú’l‚ğ“ü‚ê‚Ä‚¨‚­ isysmodeƒtƒB[ƒ‹ƒh‚ª•K
-	—v‚É‚È‚éD
+	misc_calls.c: ã‚·ã‚¹ãƒ†ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒ
+	ã‚¯ã‚’åŠ¹ç‡ã‚ˆãè¡Œã†ãŸã‚ã«ï¼ŒTCB ã« sysmodeãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¿½åŠ ã—ãŸï¼
+	sysmodeãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ï¼Œqtsklev ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å½¹å‰²ã‚‚æœãŸã™ãŸã‚ï¼Œ
+	qtsklevãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ä¸è¦ã«ãªã£ãŸãŒï¼Œæº–ã‚¿ã‚¹ã‚¯éƒ¨ã‚’ä½¿ã†å ´åˆã«ã¯ 
+	sysmodeãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®åˆæœŸå€¤ã‚’å…¥ã‚Œã¦ãŠã isysmodeãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒå¿…
+	è¦ã«ãªã‚‹ï¼
 
-	* kernel/ientry.s, kernel/misc_calls.c: ƒ^ƒXƒN“Æ—§•”‚©‚ç 
-	chg_ims ‚ğŒÄ‚Ño‚µ‚½ê‡‚ÉCIMASK ‚Æ‚µ‚Ä 7 ‚æ‚è‘å‚«‚¢’l‚ğw’è
-	‚Å‚«‚È‚¢‚æ‚¤‚ÉC³D
+	* kernel/ientry.s, kernel/misc_calls.c: ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰ 
+	chg_ims ã‚’å‘¼ã³å‡ºã—ãŸå ´åˆã«ï¼ŒIMASK ã¨ã—ã¦ 7 ã‚ˆã‚Šå¤§ãã„å€¤ã‚’æŒ‡å®š
+	ã§ããªã„ã‚ˆã†ã«ä¿®æ­£ï¼
 
 Tue Nov  9 22:19:25 JST 1993	Hiroaki Takada
 
-	* kernel/mailbox.c: i_trcv_msg ‚ÅCƒGƒ‰[ƒ`ƒFƒbƒN‚ª•s\•ª‚¾‚Á
-	‚½‚Ì‚ğC³D
+	* kernel/mailbox.c: i_trcv_msg ã§ï¼Œã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ãŒä¸ååˆ†ã ã£
+	ãŸã®ã‚’ä¿®æ­£ï¼
 
 Tue Nov  9 17:29:40 JST 1993	Hiroaki Takada
 
 	* systask/serial.c, h32/h32serial.h, tvme/tvmeserial.h,
-	mcube/mcubeserial.h: ƒ^ƒXƒN“Æ—§•”‚©‚ç serial_ioctl ‚ğŒÄ‚Ño‚·
-	‚±‚Æ‚ğ‹Ö~‚µCƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒXŠ„‚İƒnƒ“ƒhƒ‰‚Ì’†‚ÅC‘¼‚Ì
-	Š„‚İ‚ğ‹Ö~‚·‚é‚Ì‚ğ‚â‚ß‚éD‚±‚ê‚ÍCƒVƒŠƒAƒ‹I/O ‚ğ‘€ì‚·‚éŠg’£
-	SVC‚Í‚¢‚¸‚ê‚àƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ô‚±‚Æ‚ª‚Å‚«‚È‚¢‚½‚ßCƒVƒŠƒAƒ‹
-	I/O ‚Ì‹£‡‚ª‹N‚±‚ç‚È‚¢‚½‚ß‚Å‚ ‚éD
+	mcube/mcubeserial.h: ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰ serial_ioctl ã‚’å‘¼ã³å‡ºã™
+	ã“ã¨ã‚’ç¦æ­¢ã—ï¼Œã‚·ãƒªã‚¢ãƒ«ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®ä¸­ã§ï¼Œä»–ã®
+	å‰²è¾¼ã¿ã‚’ç¦æ­¢ã™ã‚‹ã®ã‚’ã‚„ã‚ã‚‹ï¼ã“ã‚Œã¯ï¼Œã‚·ãƒªã‚¢ãƒ«I/O ã‚’æ“ä½œã™ã‚‹æ‹¡å¼µ
+	SVCã¯ã„ãšã‚Œã‚‚ã‚¿ã‚¹ã‚¯ç‹¬ç«‹éƒ¨ã‹ã‚‰å‘¼ã¶ã“ã¨ãŒã§ããªã„ãŸã‚ï¼Œã‚·ãƒªã‚¢ãƒ«
+	I/O ã®ç«¶åˆãŒèµ·ã“ã‚‰ãªã„ãŸã‚ã§ã‚ã‚‹ï¼
 
 Mon Nov  8 12:30:00 JST 1993	Hiroaki Takada
 
-	* ChangeLog: ‚±‚Ì“_‚ÅCpatchlevel=1 ‚Æ‚µ‚ÄƒŠƒŠ[ƒX‚·‚é (TAG
-	= "ItIs3-1_1_1")D
+	* ChangeLog: ã“ã®æ™‚ç‚¹ã§ï¼Œpatchlevel=1 ã¨ã—ã¦ãƒªãƒªãƒ¼ã‚¹ã™ã‚‹ (TAG
+	= "ItIs3-1_1_1")ï¼
 
-	* kernel/task.c: change_running_task ‚ÅCruntsk ‚ª NULL ‚Ìê‡
-	‚ğl—¶‚·‚éD‚»‚Ì‘¼Cruntsk ‰ñ‚è‚ğ®—‚·‚éD
+	* kernel/task.c: change_running_task ã§ï¼Œruntsk ãŒ NULL ã®å ´åˆ
+	ã‚’è€ƒæ…®ã™ã‚‹ï¼ãã®ä»–ï¼Œruntsk å›ã‚Šã‚’æ•´ç†ã™ã‚‹ï¼
 
 Sat Nov  6 00:40:46 JST 1993	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_
-	‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, MANIFEST, doc/USER, kernel/patchlevel.h: ã“ã®æ™‚ç‚¹
+	ã¾ã§ã®ä¿®æ­£ã‚’ã¾ã¨ã‚ã‚‹ï¼
 
-	* kernel/task.c: rotate_ready_queue ‚ÅCruntsk ‚ª NULL ‚Ìê‡
-	‚ğl—¶‚·‚éD
+	* kernel/task.c: rotate_ready_queue ã§ï¼Œruntsk ãŒ NULL ã®å ´åˆ
+	ã‚’è€ƒæ…®ã™ã‚‹ï¼
 
-	* libitis/syslog.c: syslog ŠÖ”‚ª priority ‚ğƒ`ƒFƒbƒN‚·‚é‚æ‚¤
-	‚ÉC³D
+	* libitis/syslog.c: syslog é–¢æ•°ãŒ priority ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚ˆã†
+	ã«ä¿®æ­£ï¼
 
-	* mcube/mcubeinit.c: ƒJ[ƒlƒ‹‹N“®‚ÉCABORTƒXƒCƒbƒ`ˆÈŠO‚Ì‚·‚×
-	‚Ä‚ÌŠ„‚İ‚ğƒ}ƒXƒN‚·‚é‚æ‚¤‚ÉC³D
+	* mcube/mcubeinit.c: ã‚«ãƒ¼ãƒãƒ«èµ·å‹•æ™‚ã«ï¼ŒABORTã‚¹ã‚¤ãƒƒãƒä»¥å¤–ã®ã™ã¹
+	ã¦ã®å‰²è¾¼ã¿ã‚’ãƒã‚¹ã‚¯ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ï¼
 
 Fri Nov  5 19:30:06 JST 1993	Hiroaki Takada
 
-	* kernel/task.c: make_ready ‚Ì“üŒû‚ÅCassert(tcb->state !=
-	TS_READY) ‚µ‚Ä‚¢‚½‚Ì‚ğíœ‚·‚éDchange_task_priority ‚Ì’†‚©‚ç
-	ŒÄ‚Î‚ê‚½ê‡‚É‚ÍC‚±‚Ì assertion ‚Í¬—§‚µ‚È‚¢D
+	* kernel/task.c: make_ready ã®å…¥å£ã§ï¼Œassert(tcb->state !=
+	TS_READY) ã—ã¦ã„ãŸã®ã‚’å‰Šé™¤ã™ã‚‹ï¼change_task_priority ã®ä¸­ã‹ã‚‰
+	å‘¼ã°ã‚ŒãŸå ´åˆã«ã¯ï¼Œã“ã® assertion ã¯æˆç«‹ã—ãªã„ï¼
 
 Thu Nov  4 17:30:33 JST 1993	Hiroaki Takada
 
-	* kernel/task_manage.c: cre_tsk ‚Å pk_ctsk->stksz ‚ª 0 ‚Ìê‡
-	‚ğ‹–‚·D‚±‚Ìê‡Cƒ†[ƒUƒXƒ^ƒbƒN‚ÍŠm•Û‚³‚ê‚È‚¢D
+	* kernel/task_manage.c: cre_tsk ã§ pk_ctsk->stksz ãŒ 0 ã®å ´åˆ
+	ã‚’è¨±ã™ï¼ã“ã®å ´åˆï¼Œãƒ¦ãƒ¼ã‚¶ã‚¹ã‚¿ãƒƒã‚¯ã¯ç¢ºä¿ã•ã‚Œãªã„ï¼
 
 Thu Nov  4 17:22:23 JST 1993	Hiroaki Takada
 
-	* include/itis_resources.h, testtask/*.c: ƒ†[ƒUƒXƒ^ƒbƒNƒTƒCƒY
-	‚Ì•W€’l‚ğ 4096 ‚©‚ç 8192 ‚É•ÏX‚·‚éD‚±‚ê‚ÍCGNU C ƒ‰ƒCƒuƒ‰ƒŠ
-	‚Ì vsprintf ‚ªƒXƒ^ƒbƒNƒGƒŠƒA‚ğ­‚È‚­‚Æ‚à 3KB g‚¢ (vfprinf ‚Å 
-	2KBCprintf_unknown ‚Å 1KB g‚¤D‚»‚ê‚ç‚©‚çŒÄ‚Î‚ê‚éŠÖ”‚Ü‚Å‚Í
-	’²‚×‚Ä‚¢‚È‚¢)C‚±‚ê‚É syslog ‚ªg‚¤ 1KB ‚ğ‰Á‚¦‚é‚Æ 4KB ‚Å‚Í•s
-	‘«‚·‚é‚½‚ß‚Å‚ ‚éD
+	* include/itis_resources.h, testtask/*.c: ãƒ¦ãƒ¼ã‚¶ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚º
+	ã®æ¨™æº–å€¤ã‚’ 4096 ã‹ã‚‰ 8192 ã«å¤‰æ›´ã™ã‚‹ï¼ã“ã‚Œã¯ï¼ŒGNU C ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+	ã® vsprintf ãŒã‚¹ã‚¿ãƒƒã‚¯ã‚¨ãƒªã‚¢ã‚’å°‘ãªãã¨ã‚‚ 3KB ä½¿ã„ (vfprinf ã§ 
+	2KBï¼Œprintf_unknown ã§ 1KB ä½¿ã†ï¼ãã‚Œã‚‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹é–¢æ•°ã¾ã§ã¯
+	èª¿ã¹ã¦ã„ãªã„)ï¼Œã“ã‚Œã« syslog ãŒä½¿ã† 1KB ã‚’åŠ ãˆã‚‹ã¨ 4KB ã§ã¯ä¸
+	è¶³ã™ã‚‹ãŸã‚ã§ã‚ã‚‹ï¼
 	
 Tue Nov  2 16:17:20 JST 1993	Hiroaki Takada
 
-	* kernel/misc_calls.c: i_get_ver ‚ÅCprver (»•iƒo[ƒWƒ‡ƒ“) ‚É
-	“ü‚ê‚é’l‚ğC³‚·‚é (ƒVƒtƒg‚·‚é”‚ªŠÔˆá‚Á‚Ä‚¢‚½)D
+	* kernel/misc_calls.c: i_get_ver ã§ï¼Œprver (è£½å“ãƒãƒ¼ã‚¸ãƒ§ãƒ³) ã«
+	å…¥ã‚Œã‚‹å€¤ã‚’ä¿®æ­£ã™ã‚‹ (ã‚·ãƒ•ãƒˆã™ã‚‹æ•°ãŒé–“é•ã£ã¦ã„ãŸ)ï¼
 
 Tue Nov  2 00:55:05 JST 1993	Hiroaki Takada
 
-	* kernel/vsprintf.c: long long Œ^‚Ì‚½‚ß‚Ìƒ‚ƒfƒBƒtƒ@ƒCƒ„‚ğCGNU
-	C ƒ‰ƒCƒuƒ‰ƒŠ‚É‚ ‚í‚¹‚é‚½‚ß‚É 'L' ‚É•ÏXD
+	* kernel/vsprintf.c: long long å‹ã®ãŸã‚ã®ãƒ¢ãƒ‡ã‚£ãƒ•ã‚¡ã‚¤ãƒ¤ã‚’ï¼ŒGNU
+	C ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«ã‚ã‚ã›ã‚‹ãŸã‚ã« 'L' ã«å¤‰æ›´ï¼
 
 Mon Nov  1 23:48:51 JST 1993	Hiroaki Takada
 
-	* GNU C ƒ‰ƒCƒuƒ‰ƒŠ (GLIBC) ‚ğg‚¤‚æ‚¤‚É•ÏXD
+	* GNU C ãƒ©ã‚¤ãƒ–ãƒ©ãƒª (GLIBC) ã‚’ä½¿ã†ã‚ˆã†ã«å¤‰æ›´ï¼
 
 	* Makefile.config, h32/h32start.s, tvme/tvmestart.s,
-	mcube/mcubestart.s: GNU C ƒ‰ƒCƒuƒ‰ƒŠ‚Ì‰Šú‰»ƒR[ƒh‚ğŒÄ‚Ô‚æ‚¤‚É
-	C³D
+	mcube/mcubestart.s: GNU C ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®åˆæœŸåŒ–ã‚³ãƒ¼ãƒ‰ã‚’å‘¼ã¶ã‚ˆã†ã«
+	ä¿®æ­£ï¼
 
-	* systask/sysio.c: ƒRƒ“ƒ\[ƒ‹“üo—ÍŠÖ”‚Ì–¼‘O‚ğ GNU C ƒ‰ƒCƒuƒ‰
-	ƒŠ‚É‚ ‚í‚¹‚ÄC³D
+	* systask/sysio.c: ã‚³ãƒ³ã‚½ãƒ¼ãƒ«å…¥å‡ºåŠ›é–¢æ•°ã®åå‰ã‚’ GNU C ãƒ©ã‚¤ãƒ–ãƒ©
+	ãƒªã«ã‚ã‚ã›ã¦ä¿®æ­£ï¼
 
-	* startup/Makefile, startup/startup.s, startup/start.S: ƒXƒ^[
-	ƒgƒAƒbƒvƒ‚ƒWƒ…[ƒ‹‚ğC]—ˆ‚Ìƒ‰ƒCƒuƒ‰ƒŠ—p‚Ì‚à‚Ì‚©‚ç GNU C ƒ‰ƒC
-	ƒuƒ‰ƒŠ—p‚Ì‚à‚Ì‚ÉŒğŠ·D
+	* startup/Makefile, startup/startup.s, startup/start.S: ã‚¹ã‚¿ãƒ¼
+	ãƒˆã‚¢ãƒƒãƒ—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ï¼Œå¾“æ¥ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç”¨ã®ã‚‚ã®ã‹ã‚‰ GNU C ãƒ©ã‚¤
+	ãƒ–ãƒ©ãƒªç”¨ã®ã‚‚ã®ã«äº¤æ›ï¼
 
 Mon Nov  1 23:10:39 JST 1993	Hiroaki Takada
 
-	* ‚·‚×‚Ä‚Ìƒ^[ƒQƒbƒg‚ÅCxscheme ‚Å•‚“®­”“_”‚ğƒTƒ|[ƒg‚·‚é‚Ì
-	‚ğ‚â‚ß‚éD‚Ü‚½Cxscheme “à‚ÌŒÃ‚¢ ItIs ‚Ì‚½‚ß‚ÌƒR[ƒh‚ğ–•ÁD
+	* ã™ã¹ã¦ã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã§ï¼Œxscheme ã§æµ®å‹•å°‘æ•°ç‚¹æ•°ã‚’ã‚µãƒãƒ¼ãƒˆã™ã‚‹ã®
+	ã‚’ã‚„ã‚ã‚‹ï¼ã¾ãŸï¼Œxscheme å†…ã®å¤ã„ ItIs ã®ãŸã‚ã®ã‚³ãƒ¼ãƒ‰ã‚’æŠ¹æ¶ˆï¼
 
-	* xscheme/tronstuff.c ‚ğ xscheme/itisstuff.c ‚ÉƒŠƒl[ƒ€D
+	* xscheme/tronstuff.c ã‚’ xscheme/itisstuff.c ã«ãƒªãƒãƒ¼ãƒ ï¼
 
-	* sample/Makefile.*, libitis/Makefile: ã‚Ì•ÏX‚É”º‚¤C³D‚Ü
-	‚½C‚±‚ê‚É”º‚Á‚½Cƒ‰ƒCƒuƒ‰ƒŠ‚ğì‚éÛ‚É‚à -msoft-float ‚·‚é‚±‚Æ
-	‚É‚µ‚ÄC2í—Ş‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ğ—pˆÓ‚·‚é‚Ì‚ğ‚â‚ß‚éD
+	* sample/Makefile.*, libitis/Makefile: ä¸Šã®å¤‰æ›´ã«ä¼´ã†ä¿®æ­£ï¼ã¾
+	ãŸï¼Œã“ã‚Œã«ä¼´ã£ãŸï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ä½œã‚‹éš›ã«ã‚‚ -msoft-float ã™ã‚‹ã“ã¨
+	ã«ã—ã¦ï¼Œ2ç¨®é¡ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ç”¨æ„ã™ã‚‹ã®ã‚’ã‚„ã‚ã‚‹ï¼
 
 Mon Nov  1 15:00:26 JST 1993	Hiroaki Takada
 
-	* include/sys/ioctl.h ‚ğ include/itis_ioctl.h ‚ÉˆÚ“®/ƒŠƒl[ƒ€D
+	* include/sys/ioctl.h ã‚’ include/itis_ioctl.h ã«ç§»å‹•/ãƒªãƒãƒ¼ãƒ ï¼
 
 Wed Oct 20 18:05:28 JST 1993	Hiroaki Takada
 
-	* Release1.1 (patchlevel=0) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_1")D
+	* Release1.1 (patchlevel=0) ã‚’ãƒ•ã‚£ãƒƒã‚¯ã‚¹ (TAG = "ItIs3-1_1")ï¼

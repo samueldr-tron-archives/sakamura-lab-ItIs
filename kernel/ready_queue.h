@@ -35,53 +35,53 @@
 #define _READY_QUEUE_
 
 /*
- *  ���f�B�L���[���샋�[�`��
+ *  レディキュー操作ルーチン
  */
 
 #include "queue.h"
 
 /*
- *  ���f�B�L���[�̍\���̒�`
+ *  レディキューの構造の定義
  *
- *  ���f�B�L���[���ɂ́C�D��x���Ƃ̃^�X�N�L���[ tskque ���p�ӂ���Ă�
- *  ��C�^�X�N�� TCB �́C�Y������D��x�̃L���[�ɓo�^�����D
- *  ���f�B�L���[�̃T�[�`�������悭�s�����߂ɁC�D��x���Ƃ̃^�X�N�L���[
- *  �Ƀ^�X�N�������Ă��邩�ǂ����������r�b�g�}�b�v�̈� bitmap ��p�ӂ�
- *  �Ă���D���̗̈���g�����ƂŁC���[�h�P�ʂ̃T�[�`���\�ɂȂ�C����
- *  ���A�N�Z�X�̉񐔂����炷���Ƃ��ł���D�������C�D��x�̃��x��������
- *  �Ȃ��C�r�b�g���얽�߂��[�����Ă��Ȃ� CPU �̏ꍇ�ɂ́C�r�b�g�}�b�v��
- *  ��̃I�[�o�[�w�b�h�̂��߂ɁC�t�Ɍ�����������\��������DTRON�d�l
- *  �`�b�v�p�̃R�[�h�Ɣėp�R�[�h�ŁC���[�h���̃r�b�g�̔ԍ��t�����t�ɂ�
- *  ���Ă���̂Œ��ӂ���D
- *  �܂��C���f�B�L���[���̍ō��D��x�̃^�X�N���Q�Ƃ��鑀��������悭�s
- *  �����߂ɁC���f�B�L���[���̍ō��D��x�̃^�X�N�̗D��x�� top_priority
- *  �t�B�[���h�ɓ���Ă����D���f�B�L���[����̏ꍇ�ɂ́C���̃t�B�[���h
- *  �̒l�� NUM_PRI �ɂ���D���̎��� tskque[top_priority] ���Q�Ƃ���� 
- *  NULL ��Ԃ��������߁C��� NULL �������Ă��� null�t�B�[���h��p�ӂ�
- *  �Ă���D
+ *  レディキュー中には，優先度ごとのタスクキュー tskque が用意されてお
+ *  り，タスクの TCB は，該当する優先度のキューに登録される．
+ *  レディキューのサーチを効率よく行うために，優先度ごとのタスクキュー
+ *  にタスクが入っているかどうかを示すビットマップ領域 bitmap を用意し
+ *  ている．この領域を使うことで，ワード単位のサーチが可能になり，メモ
+ *  リアクセスの回数を減らすことができる．ただし，優先度のレベル数が少
+ *  なく，ビット操作命令が充実していない CPU の場合には，ビットマップ操
+ *  作のオーバーヘッドのために，逆に効率が落ちる可能性もある．TRON仕様
+ *  チップ用のコードと汎用コードで，ワード内のビットの番号付けが逆にな
+ *  っているので注意せよ．
+ *  また，レディキュー中の最高優先度のタスクを参照する操作を効率よく行
+ *  うために，レディキュー中の最高優先度のタスクの優先度を top_priority
+ *  フィールドに入れておく．レディキューが空の場合には，このフィールド
+ *  の値を NUM_PRI にする．この時に tskque[top_priority] を参照すると 
+ *  NULL を返したいため，常に NULL が入っている nullフィールドを用意し
+ *  ている．
  */
 
 #define BITMAPSZ	(sizeof(UINT) * 8)
 #define NUM_BITMAP	((NUM_PRI + BITMAPSZ - 1) / BITMAPSZ)
 
 typedef	struct ready_queue {
-	INT	top_priority;		/* ���f�B�L���[���̍ō��D��x */
-	QUEUE	tskque[NUM_PRI];	/* �D��x���Ƃ̃^�X�N�L���[ */
-	TCB	*null;			/* ���f�B�L���[����ɂȂ������̂��� */
-	UINT	bitmap[NUM_BITMAP];	/* �D��x���Ƃ̃r�b�g�}�b�v�̈� */
+	INT	top_priority;		/* レディキュー中の最高優先度 */
+	QUEUE	tskque[NUM_PRI];	/* 優先度ごとのタスクキュー */
+	TCB	*null;			/* レディキューが空になった時のため */
+	UINT	bitmap[NUM_BITMAP];	/* 優先度ごとのビットマップ領域 */
 } RDYQUE;
 
 /*
- *  �r�b�g�}�b�v�̈摀�색�C�u����
+ *  ビットマップ領域操作ライブラリ
  *
- *  �ėp�R�[�h�� (1 << xxx) �Ƃ��Ă��镔���́C�e�[�u����p�ӂ���������
- *  �����悢�Ǝv���邪�C�e�[�u���̍����� CPU �̃��[�h���Ɉˑ����Ă�
- *  �܂��̂ŁC(1 << xxx) �̌`�ɂ��Ă���D
+ *  汎用コードで (1 << xxx) としている部分は，テーブルを用意した方が効
+ *  率がよいと思われるが，テーブルの作り方が CPU のワード長に依存してし
+ *  まうので，(1 << xxx) の形にしている．
  */
 
 /*
- *  ���f�B�L���[ rq �̃r�b�g�}�b�v�̈撆�́C�D��x priority �ɑΉ�����
- *  �r�b�g���Z�b�g����D
+ *  レディキュー rq のビットマップ領域中の，優先度 priority に対応する
+ *  ビットをセットする．
  */
 Inline void
 bitmap_set(RDYQUE *rq, INT priority)
@@ -94,8 +94,8 @@ bitmap_set(RDYQUE *rq, INT priority)
 }
 
 /*
- *  ���f�B�L���[ rq �̃r�b�g�}�b�v�̈撆�́C�D��x priority �ɑΉ�����
- *  �r�b�g���N���A����D
+ *  レディキュー rq のビットマップ領域中の，優先度 priority に対応する
+ *  ビットをクリアする．
  */
 Inline void
 bitmap_clear(RDYQUE *rq, INT priority)
@@ -108,16 +108,16 @@ bitmap_clear(RDYQUE *rq, INT priority)
 }
 
 /*
- *  �ȉ��� _ffs�֐��́C�W���� ffs�֐��ƈႢ�Ci �� 0 �̏ꍇ�͍l�����Ă�
- *  �炸�C�Ԃ��l�� 0 ���x�[�X�ɂ��Ă���D�܂��CTRON�d�l�`�b�v�p�̃R�[�h
- *  �ł́C�T�[�`����������t�ɂȂ��Ă���D
+ *  以下の _ffs関数は，標準の ffs関数と違い，i が 0 の場合は考慮してお
+ *  らず，返す値も 0 をベースにしている．また，TRON仕様チップ用のコード
+ *  では，サーチする方向が逆になっている．
  *
- *  �W�����C�u������ ffs ������Ȃ�C���̂悤�ɒ�`���āC�W�����C�u����
- *  ���g���������������ǂ��\���������D
+ *  標準ライブラリに ffs があるなら，次のように定義して，標準ライブラリ
+ *  を使った方が効率が良い可能性が高い．
  *	#define _ffs(i) (ffs(i) - 1)
- *  TRON�d�l�`�b�v�̕W���ݒ�ł́C�C�Ӓ��r�b�g�t�B�[���h���얽�߂��g��
- *  �̂� _ffs�֐��͎g���Ȃ����Cbvsch ���߂��Ȃ��ꍇ�ɂ͂��̊֐����g��
- *  �K�v������D
+ *  TRON仕様チップの標準設定では，任意長ビットフィールド操作命令を使う
+ *  ので _ffs関数は使われないが，bvsch 命令がない場合にはこの関数を使う
+ *  必要がある．
  */
 Inline INT
 _ffs(INT i)
@@ -138,7 +138,7 @@ _ffs(INT i)
 }
 
 /*
- *  ���f�B�L���[�̏�����
+ *  レディキューの初期化
  */
 Inline void
 ready_queue_initialize(RDYQUE *rq)
@@ -154,9 +154,9 @@ ready_queue_initialize(RDYQUE *rq)
 }
 
 /*
- *  ���f�B�L���[���̍ō��D��x�̃^�X�N���Q�Ƃ���D
+ *  レディキュー中の最高優先度のタスクを参照する．
  *
- *  ���f�B�L���[����̎��� NULL ��Ԃ��D
+ *  レディキューが空の時は NULL を返す．
  */
 Inline TCB *
 ready_queue_top(RDYQUE *rq)
@@ -165,9 +165,9 @@ ready_queue_top(RDYQUE *rq)
 }
 
 /*
- *  ���f�B�L���[���̍ō��D��x�̃^�X�N�̗D��x���Q�Ƃ���D
+ *  レディキュー中の最高優先度のタスクの優先度を参照する．
  *
- *  ���f�B�L���[����̎��ɂ͌Ă΂�Ȃ��D
+ *  レディキューが空の時には呼ばれない．
  */
 Inline INT
 ready_queue_top_priority(RDYQUE *rq)
@@ -176,14 +176,14 @@ ready_queue_top_priority(RDYQUE *rq)
 }
 
 /*
- *  �^�X�N�����f�B�L���[�ɑ}������D
+ *  タスクをレディキューに挿入する．
  *
- *  tcb �Ŏw���^�X�N�̗D��x�Ɠ����D��x�����^�X�N�̒��ł̍Ō�ɓ���
- *  ��D
- *  �r�b�g�}�b�v�̈�̊Y������r�b�g���Z�b�g���C�K�v�Ȃ� top_priority 
- *  ���X�V����Dtop_priority ���X�V�������� 1�C�����łȂ��ꍇ�� 0 ���
- *  �� (�C�����C���֐��Ȃ̂ŁC�Ԃ�l���s�v�ȏꍇ�ł����ʂȃR�[�h�͏o��
- *  ��)�D
+ *  tcb で指すタスクの優先度と同じ優先度を持つタスクの中での最後に入れ
+ *  る．
+ *  ビットマップ領域の該当するビットをセットし，必要なら top_priority 
+ *  を更新する．top_priority を更新した時は 1，そうでない場合は 0 を返
+ *  す (インライン関数なので，返り値が不要な場合でも無駄なコードは出な
+ *  い)．
  */
 Inline BOOL
 ready_queue_insert(RDYQUE *rq, TCB *tcb)
@@ -200,13 +200,13 @@ ready_queue_insert(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  �^�X�N�����f�B�L���[�ɑ}������D
+ *  タスクをレディキューに挿入する．
  *
- *  tcb �Ŏw���^�X�N�̗D��x�Ɠ����D��x�����^�X�N�̒��ł̐擪�ɓ���
- *  ��DRUN��Ԃ̃^�X�N�����f�B�L���[����O���Ă��������ŁC�^�X�N���v
- *  ���G���v�g���ꂽ�ꍇ�Ɏg���D
- *  �r�b�g�}�b�v�̈�̊Y������r�b�g���Z�b�g���C�K�v�Ȃ� top_priority 
- *  ���X�V����D
+ *  tcb で指すタスクの優先度と同じ優先度を持つタスクの中での先頭に入れ
+ *  る．RUN状態のタスクをレディキューから外しておく実装で，タスクがプ
+ *  リエンプトされた場合に使う．
+ *  ビットマップ領域の該当するビットをセットし，必要なら top_priority 
+ *  を更新する．
  */
 Inline void
 ready_queue_insert_top(RDYQUE *rq, TCB *tcb)
@@ -221,29 +221,29 @@ ready_queue_insert_top(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  �^�X�N�����f�B�L���[����폜����D
+ *  タスクをレディキューから削除する．
  *
- *  TCB ���Y������D��x�̃^�X�N�L���[����͂����C����ɂ���ă^�X�N�L���[
- *  ����ɂȂ����ꍇ�ɂ́C�r�b�g�}�b�v�̈�̊Y������r�b�g���N���A����D
- *  ����ɁC�폜�����^�X�N���ō��D��x�ł��������́Ctop_priority ���X�V
- *  ����D���̍ۂɁC���ɗD��x�̍����^�X�N���T�[�`���邽�߂ɁC�r�b�g�}�b
- *  �v�̈���g���D
+ *  TCB を該当する優先度のタスクキューからはずし，それによってタスクキュー
+ *  が空になった場合には，ビットマップ領域の該当するビットをクリアする．
+ *  さらに，削除したタスクが最高優先度であった時は，top_priority を更新
+ *  する．この際に，次に優先度の高いタスクをサーチするために，ビットマッ
+ *  プ領域を使う．
  */
 Inline void
 ready_queue_delete(RDYQUE *rq, TCB *tcb)
 {
 #if defined(tron) && !defined(TRON_LEVEL1)
-   Asm("qdel %a1, r0	\n"	/* �^�X�N�L���[����̍폜 */
-"	bne 1f		\n"	/* �L���[����ɂȂ�Ȃ����͂���ŏI�� */
+   Asm("qdel %a1, r0	\n"	/* タスクキューからの削除 */
+"	bne 1f		\n"	/* キューが空にならない時はこれで終了 */
 "	mov %2 ,r0	\n"
 "	mov %3, r1	\n"
-"	bclr r1, @r0	\n"	/* �Y���r�b�g�̃N���A */
+"	bclr r1, @r0	\n"	/* 該当ビットのクリア */
 "	cmp %4, r1	\n"
-"	bne 1f		\n"	/* ��荂�D��x�̃^�X�N�����鎞�͏I�� */
+"	bne 1f		\n"	/* より高優先度のタスクがある時は終了 */
 "	mov %5, r2	\n"
-"	sub r1, r2	\n"	/* �r�b�g�T�[�`����r�b�g�����v�Z */
+"	sub r1, r2	\n"	/* ビットサーチするビット幅を計算 */
 "	bvsch/1/f	\n"
-"	mov r1, %0	\n"	/* top_priority ���X�V */
+"	mov r1, %0	\n"	/* top_priority を更新 */
 "1:			"
 :	"=g"(rq->top_priority)
 :	"g"(tcb->tskque.prev), "g"(rq->bitmap), "g"(tcb->priority),
@@ -272,12 +272,12 @@ ready_queue_delete(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  ���f�B�L���[�̗D��x���x�� priority �̃L���[�̐擪�̃^�X�N���C�L���[
- *  �Ō�ֈړ�����D�L���[����̏ꍇ�́C�������Ȃ��D
+ *  レディキューの優先度レベル priority のキューの先頭のタスクを，キュー
+ *  最後へ移動する．キューが空の場合は，何もしない．
  *
- *  ready_queue_delete �� ready_queue_insert �𑱂��ČĂ�ł��������Ƃ�
- *  �����ł��邪�Cready_queue_rotate �̏ꍇ�̓r�b�g�}�b�v�̈�̑���͕K
- *  �v�Ȃ����߁C�������悭���邽�߂ɕʂ̊֐��ɂ��Ă���D
+ *  ready_queue_delete と ready_queue_insert を続けて呼んでも同じことが
+ *  実現できるが，ready_queue_rotate の場合はビットマップ領域の操作は必
+ *  要ないため，効率をよくするために別の関数にしている．
  */
 Inline void
 ready_queue_rotate(RDYQUE *rq, INT priority)

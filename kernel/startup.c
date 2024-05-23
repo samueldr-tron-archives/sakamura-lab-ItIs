@@ -38,12 +38,12 @@
 #include "../systask/systask.h"
 
 /*
- *  ƒo[ƒWƒ‡ƒ“î•ñ (version.c)
+ *  ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ± (version.c)
  */
 extern char	version[];
 
 /*
- *  ItIsƒJ[ƒlƒ‹‚Ì‰Šú‰»‚Æ‰Šú‰»ƒ^ƒXƒN‚Ì¶¬E‹N“®
+ *  ItIsã‚«ãƒ¼ãƒãƒ«ã®åˆæœŸåŒ–ã¨åˆæœŸåŒ–ã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆãƒ»èµ·å‹•
  */
 void
 main()
@@ -55,13 +55,13 @@ main()
 		version, MAJOR_REL, MINOR_REL, PATCH_LEVEL);
 
 	/*
-	 *  ƒ^[ƒQƒbƒgˆË‘¶‚Ì‰Šú‰»
+	 *  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä¾å­˜ã®åˆæœŸåŒ–
 	 */
 	cpu_initialize();
 	sys_initialize();
 
 	/*
-	 *  Šeƒ‚ƒWƒ…[ƒ‹‚Ì‰Šú‰»
+	 *  å„ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®åˆæœŸåŒ–
 	 */
 	task_initialize();
 #ifdef USE_SEM
@@ -100,7 +100,7 @@ main()
 	timer_initialize();
 
 	/*
-	 *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚Ì¶¬
+	 *  ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«ã®ç”Ÿæˆ
 	 */
 	if ((ercd = sys_cre_mpl()) < 0) {
 		i_syslog(LOG_KERN|LOG_EMERG,
@@ -109,7 +109,7 @@ main()
 	}
 
 	/*
-	 *  ‰Šú‰»ƒ^ƒXƒN‚Ì¶¬E‹N“®
+	 *  åˆæœŸåŒ–ã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆãƒ»èµ·å‹•
 	 */
 	if ((ercd = i_cre_tsk(TSK_INIT, &TSK_INIT_CTSK)) < 0) {
 		i_syslog(LOG_KERN|LOG_EMERG,
@@ -123,13 +123,13 @@ main()
 	}
 
 	/*
-	 *  ƒJ[ƒlƒ‹‚Ì“®ì‚ğŠJn‚·‚éD
+	 *  ã‚«ãƒ¼ãƒãƒ«ã®å‹•ä½œã‚’é–‹å§‹ã™ã‚‹ï¼
 	 */
 	force_dispatch();
 }
 
 /*
- *  ItIs I—¹ˆ—
+ *  ItIs çµ‚äº†å‡¦ç†
  */
 void
 itis_exit()

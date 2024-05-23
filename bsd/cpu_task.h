@@ -35,15 +35,15 @@
 #define _CPU_TASK_
 
 /*
- *  �^�X�N�N�����[�`��
+ *  タスク起動ルーチン
  */
 extern void	task_start(void);
 
 /*
- *  CPU�ˑ��̃^�X�N�N������
+ *  CPU依存のタスク起動処理
  *
- *  �V�X�e���X�^�b�N��ɁCEIT�X�^�b�N�t���[�������Dmake_dormant ����
- *  �Ă΂��D
+ *  システムスタック上に，EITスタックフレームを作る．make_dormant から
+ *  呼ばれる．
  */
 Inline void
 setup_context(TCB *tcb)
@@ -54,9 +54,9 @@ setup_context(TCB *tcb)
 }
 
 /*
- *  �^�X�N�N���R�[�h���̐ݒ�
+ *  タスク起動コード等の設定
  *
- *  sta_tsk �̏�������Ă΂��D
+ *  sta_tsk の処理から呼ばれる．
  */
 Inline void
 setup_stacd(TCB *tcb, INT stacd)
@@ -65,11 +65,11 @@ setup_stacd(TCB *tcb, INT stacd)
 }
 
 /*
- *  �X�^�b�N�G���A�̎擾/�ԋp
+ *  スタックエリアの取得/返却
  *
- *  USE_MPROTECT_STACK ����`����Ă���ꍇ�ɂ́C�X�^�b�N�G���A�� 2�y�[
- *  �W�����߂Ɋm�ۂ��C���̕��� 1�y�[�W�� mprotect �ŃA�N�Z�X�s�ɂ���D
- *  �ň��ł��C�m�ۂ��悤�Ƃ������̃G���A�͎g����D
+ *  USE_MPROTECT_STACK が定義されている場合には，スタックエリアを 2ペー
+ *  ジ分多めに確保し，下の方の 1ページを mprotect でアクセス不可にする．
+ *  最悪でも，確保しようとした分のエリアは使える．
  */
 
 #ifdef USE_MPROTECT_STACK
@@ -77,11 +77,11 @@ setup_stacd(TCB *tcb, INT stacd)
 #include <sys/mman.h>
 
 #ifndef PROT_NONE
-#define PROT_NONE	0x00		/* �y�[�W���A�N�Z�X�ł��Ȃ����� */
+#define PROT_NONE	0x00		/* ページをアクセスできなくする */
 #endif
 
 #define PROT_ORIG	(PROT_READ|PROT_WRITE)
-					/* �y�[�W�̏�Ԃ����ɖ߂� */
+					/* ページの状態を元に戻す */
 
 #define ALIGN(addr, unit)	((((INT)(addr)) + (unit) - 1) & ~((unit) - 1))
 

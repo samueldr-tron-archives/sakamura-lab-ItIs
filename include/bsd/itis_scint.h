@@ -35,7 +35,7 @@
 #define	_ITIS_SCINT_
 
 /*
- *  CPUˆË‘¶‚ÌƒVƒXƒeƒ€ƒR[ƒ‹–¼/ƒpƒ‰ƒ[ƒ^–¼‚Ìİ’è
+ *  CPUä¾å­˜ã®ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«å/ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åã®è¨­å®š
  */
 #define chg_iXX	chg_ims
 #define ref_iXX	ref_ims

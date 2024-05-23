@@ -34,7 +34,7 @@
 #include "itis_kernel.h"
 
 /*
- *  EITƒnƒ“ƒhƒ‰‚Ì’è‹`
+ *  EITãƒãƒ³ãƒ‰ãƒ©ã®å®šç¾©
  */
 extern void	trapa_ientry(void);
 #ifndef TRON_NO_DI
@@ -45,13 +45,13 @@ extern void	z_ret_int(void);
 #endif /* TRON_NO_DI */
 
 /*
- *  ƒ^[ƒQƒbƒgCPUˆË‘¶‚Ì‰Šú‰»ƒ‹[ƒ`ƒ“
+ *  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆCPUä¾å­˜ã®åˆæœŸåŒ–ãƒ«ãƒ¼ãƒãƒ³
  */
 void
 cpu_initialize(void)
 {
 	/*
-	 *  EITƒxƒNƒ^ƒe[ƒuƒ‹‚Ì‰Šú‰»
+	 *  EITãƒ™ã‚¯ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆæœŸåŒ–
 	 */
 #ifdef EITVB_ITIS
 	memcpy(EITVB_ITIS, EITVB_ORIG, EITVT_LEN);
@@ -59,7 +59,7 @@ cpu_initialize(void)
 #endif /* EITVB_ITIS */
 
 	/*
-	 *  EITƒnƒ“ƒhƒ‰‚Ì’è‹`
+	 *  EITãƒãƒ³ãƒ‰ãƒ©ã®å®šç¾©
 	 */
 	define_eit(EITVEC_TRAPA1, EITATR(1, 15), trapa_ientry);
 #ifndef TRON_NO_DI
@@ -71,7 +71,7 @@ cpu_initialize(void)
 }
 
 /*
- *  ƒ^[ƒQƒbƒgCPUˆË‘¶‚ÌI—¹ˆ—ƒ‹[ƒ`ƒ“
+ *  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆCPUä¾å­˜ã®çµ‚äº†å‡¦ç†ãƒ«ãƒ¼ãƒãƒ³
  */
 void
 cpu_shutdown(void)

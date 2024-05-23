@@ -35,12 +35,12 @@
 #define _CPU_CONF_
 
 /*
- *  get_ver �ŎQ�Ƃ���� CPU�R�[�h�̒�`
+ *  get_ver で参照される CPUコードの定義
  */
-#define	CPU_CODE	0x0001		/* TRON�d�l�`�b�v��� */
+#define	CPU_CODE	0x0001		/* TRON仕様チップ一般 */
 
 /*
- *  CPU�ˑ��̃V�X�e���R�[����/�p�����[�^���̐ݒ�
+ *  CPU依存のシステムコール名/パラメータ名の設定
  */
 #define chg_iXX	chg_ims
 #define ref_iXX	ref_ims
@@ -48,38 +48,38 @@
 #define p_iXXXX	p_imask
 
 /*
- *  TRON�d�l�`�b�v�ł̓T�|�[�g����Ȃ��@�\�̒�`
+ *  TRON仕様チップではサポートされない機能の定義
  */
-#define _i_dis_int	_no_support	/* dis_int�V�X�e���R�[�� */
-#define _i_ena_int	_no_support	/* ena_int�V�X�e���R�[�� */
+#define _i_dis_int	_no_support	/* dis_intシステムコール */
+#define _i_ena_int	_no_support	/* ena_intシステムコール */
 
 /*
- *  �V�X�e���X�^�b�N�ƃ��[�U�X�^�b�N��ʁX�Ɏ���
+ *  システムスタックとユーザスタックを別々に持つ
  */
 #define	USE_SEPARATE_SSTACK
 
 /*
- *  dispatch_disabled �́C�x�������݂��g��Ȃ��ꍇ�ɂ̂ݕK�v
+ *  dispatch_disabled は，遅延割込みを使わない場合にのみ必要
  */
 #ifdef TRON_NO_DI
 #define USE_DISPATCH_DISABLED
 #endif /* TRON_NO_DI */
 
 /*
- *  �V�X�e���X�^�b�N�̍ŏ��T�C�Y�̒�`
+ *  システムスタックの最小サイズの定義
  *
- *  cre_tsk �Ń^�X�N���ɃV�X�e���X�^�b�N�T�C�Y��ݒ肷��ꍇ�̍ŏ��̃V
- *  �X�e���X�^�b�N�T�C�Y�D
+ *  cre_tsk でタスク毎にシステムスタックサイズを設定する場合の最初のシ
+ *  ステムスタックサイズ．
  */
 #ifndef MIN_SYS_STACK_SIZE
 #define	MIN_SYS_STACK_SIZE	256
 #endif /* MIN_SYS_STACK_SIZE */
 
 /*
- *  �f�t�H���g�V�X�e���X�^�b�N�T�C�Y�̒�`
+ *  デフォルトシステムスタックサイズの定義
  *
- *  cre_tsk �Ń^�X�N���ɃV�X�e���X�^�b�N�T�C�Y��ݒ肵�Ȃ��ꍇ�̃f�t�H
- *  ���g�̃V�X�e���X�^�b�N�T�C�Y�D
+ *  cre_tsk でタスク毎にシステムスタックサイズを設定しない場合のデフォ
+ *  ルトのシステムスタックサイズ．
  */
 #ifndef DEF_SYS_STACK_SIZE
 #define DEF_SYS_STACK_SIZE	1024

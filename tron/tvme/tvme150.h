@@ -35,14 +35,14 @@
 #define _TVME150_
 
 /*
- *  TVME-150 CPUƒ{[ƒh‚Ìƒn[ƒhƒEƒFƒA‘Œ¹‚Ì’è‹`
+ *  TVME-150 CPUãƒœãƒ¼ãƒ‰ã®ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢è³‡æºã®å®šç¾©
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/OƒŒƒWƒXƒ^‚ÌŒ^ */
+typedef volatile byte	IOREG;		/* I/Oãƒ¬ã‚¸ã‚¹ã‚¿ã®å‹ */
 
 /*
- *  ’á‘¬‚Ì I/OƒfƒoƒCƒX‚ğ‘€ì‚·‚é‚½‚ß‚ÌŠÖ”
+ *  ä½é€Ÿã® I/Oãƒ‡ãƒã‚¤ã‚¹ã‚’æ“ä½œã™ã‚‹ãŸã‚ã®é–¢æ•°
  */
 
 Inline void
@@ -71,7 +71,7 @@ io_write(IOREG *addr, byte val)
 }
 
 /*
- *  Interrupt Handler (SCB68155) ‚ÌƒŒƒWƒXƒ^
+ *  Interrupt Handler (SCB68155) ã®ãƒ¬ã‚¸ã‚¹ã‚¿
  */
 #define	SCB_R0		((IOREG *) 0xfffb0043)
 #define	SCB_R1		((IOREG *) 0xfffb0047)
@@ -82,14 +82,14 @@ io_write(IOREG *addr, byte val)
 #define	SCB_R6		((IOREG *) 0xfffb005b)
 #define	SCB_R7		((IOREG *) 0xfffb005f)
 
-#define	LRQ1_BIT	0x40		/* ƒ[ƒJƒ‹Š„‚İ 1 */
-#define	LRQ2_BIT	0x20		/* ƒ[ƒJƒ‹Š„‚İ 2 */
-#define	LRQ3_BIT	0x10		/* ƒ[ƒJƒ‹Š„‚İ 3 */
-#define	LRQ4_BIT	0x08		/* ƒ[ƒJƒ‹Š„‚İ 4 */
-#define	LRQ5_BIT	0x04		/* ƒ[ƒJƒ‹Š„‚İ 5 */
-#define	LRQ6_BIT	0x02		/* ƒ[ƒJƒ‹Š„‚İ 6 */
+#define	LRQ1_BIT	0x40		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 1 */
+#define	LRQ2_BIT	0x20		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 2 */
+#define	LRQ3_BIT	0x10		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 3 */
+#define	LRQ4_BIT	0x08		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 4 */
+#define	LRQ5_BIT	0x04		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 5 */
+#define	LRQ6_BIT	0x02		/* ãƒ­ãƒ¼ã‚«ãƒ«å‰²è¾¼ã¿ 6 */
 
-#define INT_VECTOR_BASE	0x80		/* Š„‚İ‚ÌƒxƒNƒgƒ‹”Ô† */
+#define INT_VECTOR_BASE	0x80		/* å‰²è¾¼ã¿ã®ãƒ™ã‚¯ãƒˆãƒ«ç•ªå· */
 #define	INT_VECTOR(n)	(INT_VECTOR_BASE + 7 - (n))
 
 Inline void
@@ -128,17 +128,17 @@ scb_and_assign(IOREG *addr, byte val)
 }
 
 /*
- *  CIO (Z8536A) ‚ÌƒŒƒWƒXƒ^
+ *  CIO (Z8536A) ã®ãƒ¬ã‚¸ã‚¹ã‚¿
  */
 #define	CIO_PORTC	((IOREG *) 0xfffb0000)
 #define	CIO_PORTB	((IOREG *) 0xfffb0004)
 #define	CIO_PORTA	((IOREG *) 0xfffb0008)
 #define	CIO_CNTRL	((IOREG *) 0xfffb000c)
 
-#define	CIOA_MICR	0x00		/* ƒ}ƒXƒ^§ŒäƒŒƒWƒXƒ^ */
+#define	CIOA_MICR	0x00		/* ãƒã‚¹ã‚¿åˆ¶å¾¡ãƒ¬ã‚¸ã‚¹ã‚¿ */
 #define	CIOA_MCCR	0x01
 
-#define	CIOA_CTCSR1	0x0a		/* ƒNƒƒbƒN/ƒ^ƒCƒ}1 ‚Ì§ŒäƒŒƒWƒXƒ^ */
+#define	CIOA_CTCSR1	0x0a		/* ã‚¯ãƒ­ãƒƒã‚¯/ã‚¿ã‚¤ãƒ1 ã®åˆ¶å¾¡ãƒ¬ã‚¸ã‚¹ã‚¿ */
 #define	CIOA_CTCCR1H	0x10
 #define	CIOA_CTCCR1L	0x11
 #define	CIOA_CTTCR1H	0x16
@@ -160,14 +160,14 @@ cio_write(int reg, int val)
 }
 
 /*
- *  SCC (Z8530) ‚ÌƒŒƒWƒXƒ^
+ *  SCC (Z8530) ã®ãƒ¬ã‚¸ã‚¹ã‚¿
  */
 #define	SCC_CNTRLB	((IOREG *) 0xfffb0010)
 #define	SCC_DATAB	((IOREG *) 0xfffb0014)
 #define	SCC_CNTRLA	((IOREG *) 0xfffb0018)
 #define	SCC_DATAA	((IOREG *) 0xfffb001c)
 
-#define	SCC_WR0		0x00		/* SCC ‘‚«‚İƒŒƒWƒXƒ^ */
+#define	SCC_WR0		0x00		/* SCC æ›¸ãè¾¼ã¿ãƒ¬ã‚¸ã‚¹ã‚¿ */
 #define	SCC_WR1		0x01
 #define	SCC_WR2		0x02
 #define	SCC_WR3		0x03
@@ -181,7 +181,7 @@ cio_write(int reg, int val)
 #define	SCC_WR14	0x0e
 #define	SCC_WR15	0x0f
 
-#define	SCC_RR0		0x00		/* SCC “Ç‚İo‚µƒŒƒWƒXƒ^ */
+#define	SCC_RR0		0x00		/* SCC èª­ã¿å‡ºã—ãƒ¬ã‚¸ã‚¹ã‚¿ */
 
 Inline byte
 scc_read(IOREG *addr, int reg)
@@ -198,7 +198,7 @@ scc_write(IOREG *addr, int reg, int val)
 }
 
 /*
- *  ƒ‚ƒjƒ^ŒÄ‚Ño‚µƒ‹[ƒ`ƒ“
+ *  ãƒ¢ãƒ‹ã‚¿å‘¼ã³å‡ºã—ãƒ«ãƒ¼ãƒãƒ³
  */
 
 Inline void

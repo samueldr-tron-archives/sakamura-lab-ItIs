@@ -1,10 +1,10 @@
 
-		�� �D��x�p���Z�}�t�H�@�\�̎d�l ��
+		＝ 優先度継承セマフォ機能の仕様 ＝
 
-	     (Release 1.3���Ή��C�ŏI�X�V: 17-Feb-1995)
+	     (Release 1.3β対応，最終更新: 17-Feb-1995)
 
-    * TRON �� The Real-time Operating system Nucleus �̗��̂ł��D
-    * ITRON �� Industrial TRON �̗��̂ł��D
+    * TRON は The Real-time Operating system Nucleus の略称です．
+    * ITRON は Industrial TRON の略称です．
 
 ------------------------------------------------------------------------ 
 	    ItIs - ITRON Implementation by Sakamura Lab
@@ -37,35 +37,35 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ------------------------------------------------------------------------
 
 
-�P�D�D��x�p���Z�}�t�H�ɂ���
+１．優先度継承セマフォについて
 
-�D��x�p���Ƃ́C�D��x�t�]������Ȃ��������� (unbounded priority
-inversion) ��h�����߂̎d�g�݂ł���D�D��x�t�]�Ƃ́C�D��x�̍����^�X
-�N�����s���ׂ��ł���ɂ�������炸�C���炩�̗��R�ɂ��D��x�̒Ⴂ�^�X
-�N�����s����Ă����Ԃ������D�D��x�t�]�́C�u�{�����s���ׂ��^�X�N����
-�s����Ȃ��v�Ƃ����Ӗ��ōD�܂����Ȃ���Ԃł��邪�C���\�[�X����̖���
-���C�ꎞ�I�ɋN���邱�Ƃ͔������Ȃ��D�����ŁC�D��x�t�]��Z�����Ԃ�
-������d�g�݂ł���D��x�p�����d�v�ɂȂ�D
+優先度継承とは，優先度逆転が上限なく続くこと (unbounded priority
+inversion) を防ぐための仕組みである．優先度逆転とは，優先度の高いタス
+クを実行すべきであるにもかかわらず，何らかの理由により優先度の低いタス
+クが実行されている状態をいう．優先度逆転は，「本来実行すべきタスクが実
+行されない」という意味で好ましくない状態であるが，リソース制約の問題に
+より，一時的に起こることは避けられない．そこで，優先度逆転を短い時間に
+押える仕組みである優先度継承が重要になる．
 
-�D��x�p���̃R���Z�v�g���ꌾ�ł����ƁC�u���̃^�X�N��҂����Ă���^�X�N
-�́C�҂�����Ă���^�X�N�̗D��x���p������v�Ƃ������ƂɂȂ�D���̂��߁C
-�{���́C�҂��𔺂��^�X�N�ԓ����E�ʐM�@�\���ׂĂɊ֘A���邱�ƂɂȂ�D
+優先度継承のコンセプトを一言でいうと，「他のタスクを待たせているタスク
+は，待たされているタスクの優先度を継承する」ということになる．そのため，
+本来は，待ちを伴うタスク間同期・通信機能すべてに関連することになる．
 
-ITRON�d�l�ɗD��x�p������荞�ޕ��@�͂������l�����邪�CItIs �ł͂�
-�̌����̈�тƂ��āC�D��x�p���@�\���������Z�}�t�H���T�|�[�g���Ă���D
-�����D��x�p���Z�}�t�H�ƌĂԁD�D��x�p���Z�}�t�H�@�\�̎d�l����������
-�����ƁC���z�I�����������ׂ��傫�� (���s����������, �J�[�l���T�C�Y����
-����) �d�l�ƁC�������ׂ͌y�����g�p�ɂ������Đ��񂪂���d�l���l������D
-�ǂ���̎d�l���ǂ����́C�A�v���P�[�V�����ɂ�����T�ɂ͌��߂��Ȃ���
-�߁CItIs �̌��o�[�W�����ł͂��̗����̎d�l���T�|�[�g���Ă���D
+ITRON仕様に優先度継承を取り込む方法はいくつか考えられるが，ItIs ではそ
+の検討の一貫として，優先度継承機能を持ったセマフォをサポートしている．
+これを優先度継承セマフォと呼ぶ．優先度継承セマフォ機能の仕様を検討して
+いくと，理想的だが実装負荷が大きい (実行効率が悪い, カーネルサイズが大
+きい) 仕様と，実装負荷は軽いが使用にあたって制約がある仕様が考えられる．
+どちらの仕様が良いかは，アプリケーションにもより一概には決められないた
+め，ItIs の現バージョンではその両方の仕様をサポートしている．
 
-ItIs �ł́C�O�҂� (���z�I������������������) �d�l���d�l1�C��҂� (����
-�͗ǂ������񂪂������) �d�l���d�l2 �ƌĂԁD�ǂ���̎d�l��p���邩�́C
-�V�X�e���\���ݒ�t�@�C������ prisem_spec �Ŏw�肷��D�f�t�H���g�́C�d
-�l1 �ł���D
+ItIs では，前者の (理想的だが効率が悪い方の) 仕様を仕様1，後者の (効率
+は良いが制約がある方の) 仕様を仕様2 と呼ぶ．どちらの仕様を用いるかは，
+システム構成設定ファイル中の prisem_spec で指定する．デフォルトは，仕
+様1 である．
 
-�D��x�p���Z�}�t�H�Ɋւ���ڂ����c�_�ɂ��ẮC�ȉ��̎Q�l�������Q�Ƃ�
-�ꂽ���D
+優先度継承セマフォに関する詳しい議論については，以下の参考文献を参照さ
+れたい．
 
 [1] L. Sha, R. Rajkumar, and J. P. Lehoczky, "Priority Inheritance
 Protocols: An Approach to Real-Time Synchronization," IEEE Trans. 
@@ -77,551 +77,551 @@ Proc. 11th TRON Project International Symposium, pp. 106-113, IEEE CS
 Press, Dec. 1994.
 
 
-�Q�D�d�l1 �ɂ�����D��x�p���Z�}�t�H�@�\�̎d�l
+２．仕様1 における優先度継承セマフォ機能の仕様
 
-�d�l1 �ɂ�����D��x�p���Z�}�t�H�@�\�ł́Cchg_pri ���g��Ȃ��ꍇ�̃^�X
-�N�̗D��x�́C���̃^�X�N�̏����D��x�ƁC���̃^�X�N���l�����Ă���D��x
-�p���Z�}�t�H��҂��Ă��钆�ōō��D��x�̃^�X�N�̗D��x�Ƃ́C���� (�l��
-������) ���ɐݒ肳���D���̂��߂� OS �́C�^�X�N���l�����Ă���D��x�p
-���Z�}�t�H�̃��X�g���Ǘ����Ă���D
+仕様1 における優先度継承セマフォ機能では，chg_pri を使わない場合のタス
+クの優先度は，そのタスクの初期優先度と，そのタスクが獲得している優先度
+継承セマフォを待っている中で最高優先度のタスクの優先度との，高い (値が
+小さい) 方に設定される．そのために OS は，タスクが獲得している優先度継
+承セマフォのリストを管理している．
 
-�D��x�p���Z�}�t�H���l��/�������^�X�N�̗D��x�� chg_pri �ɂ���ĕύX
-���Ă��C�D��x�p���Z�}�t�H�̋@�\�ɂ���ėD��x���ύX�����ƁCchg_pri 
-�Őݒ肵���D��x�͖����ɂȂ�D�܂�Cchg_pri �̓^�X�N�̌��ݗD��x����
-���I�ɕύX������̂Ƃ������ƂɂȂ�D�D��x�p���Z�}�t�H�@�\�̎����� 
-chg_pri ���g���Ă���ƍl����킩��₷����������Ȃ��D
+優先度継承セマフォを獲得/解放するタスクの優先度を chg_pri によって変更
+しても，優先度継承セマフォの機能によって優先度が変更されると，chg_pri 
+で設定した優先度は無効になる．つまり，chg_pri はタスクの現在優先度を一
+時的に変更するものということになる．優先度継承セマフォ機能の実装に 
+chg_pri が使われていると考えるわかりやすいかもしれない．
 
-�D��x�p���Z�}�t�H��҂��Ă���^�X�N�̗D��x�� chg_pri �ɂ���ĕύX��
-���ꍇ�C���̗D��x�p���Z�}�t�H���l�����Ă���^�X�N�̗D��x���Čv�Z�E��
-�X�����ꍇ������D��̓I�ɂ́C���� 2�̃P�[�X�ŁC�D��x�̕ύX���s��
-���D(1) �D��x��ύX���ꂽ�^�X�N�̕ύX��̗D��x���C�D��x�p���Z�}�t�H
-���l�����Ă���^�X�N�̌��ݗD��x�������� (�l��������) �ꍇ�D(2) �D��
-�x���ύX���ꂽ�^�X�N�̕ύX�O�̗D��x���C�D��x�p���Z�}�t�H���l�����Ă�
-��^�X�N�̗D��x�ɓ������ꍇ�ɁC���̃^�X�N�̗D��x���Čv�Z����C���̌�
-�ʓ���ꂽ�l�����ݗD��x�Ɠ������Ȃ��ꍇ�D
+優先度継承セマフォを待っているタスクの優先度を chg_pri によって変更し
+た場合，その優先度継承セマフォを獲得しているタスクの優先度が再計算・変
+更される場合がある．具体的には，次の 2つのケースで，優先度の変更が行わ
+れる．(1) 優先度を変更されたタスクの変更後の優先度が，優先度継承セマフォ
+を獲得しているタスクの現在優先度よりも高い (値が小さい) 場合．(2) 優先
+度が変更されたタスクの変更前の優先度が，優先度継承セマフォを獲得してい
+るタスクの優先度に等しい場合に，そのタスクの優先度が再計算され，その結
+果得られた値が現在優先度と等しくない場合．
 
-�d�l1 �ł́Cext_tsk, exd_tsk, ter_tsk �ɂ��^�X�N���I������ꍇ�C�^�X
-�N���l�����Ă����D��x�p���Z�}�t�H�́COS �ɂ���Ď����I�ɉ�������D
+仕様1 では，ext_tsk, exd_tsk, ter_tsk によりタスクが終了する場合，タス
+クが獲得していた優先度継承セマフォは，OS によって自動的に解放される．
 
-(1) vcre_pis	�D��x�p���Z�}�t�H����			    (�@�\�R�[�h: -257)
+(1) vcre_pis	優先度継承セマフォ生成			    (機能コード: -257)
 
     vcre_pis: Create Priority Inheritance Semaphore
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
-    T_CPIS*	pk_cpis		�D��x�p���Z�}�t�H�������
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
 
-�y����z
-vcre_pis �ł́Cpisid �Ŏw�肳�ꂽ ID�ԍ������D��x�p���Z�}�t�H�𐶐�
-����D��̓I�ɂ́C��������Z�}�t�H�ɑ΂��ĊǗ��u���b�N������t���C�Z�}
-�t�H�̏����l�� 1 �ɏ���������D
+【解説】
+vcre_pis では，pisid で指定された ID番号を持つ優先度継承セマフォを生成
+する．具体的には，生成するセマフォに対して管理ブロックを割り付け，セマ
+フォの初期値を 1 に初期化する．
 
-ID�ԍ��̐����̈�����g�p�ł��Ȃ��͈́C�����̏ꍇ�̃G���[�R�[�h�C�g��
-��� (exinf) �̈����ɂ��ẮC���̓����E�ʐM�I�u�W�F�N�g�Ɠ��l�ł���D
+ID番号の正負の扱いや使用できない範囲，それらの場合のエラーコード，拡張
+情報 (exinf) の扱いについては，他の同期・通信オブジェクトと同様である．
 
-pisatr �́C���ʑ����V�X�e��������\���C��ʑ����C���v�������g�ˑ�����
-��\���Dpisatr �̃V�X�e�������̕����ł́C���̂悤�Ȏw����s���D
+pisatr は，下位側がシステム属性を表し，上位側がインプリメント依存属性
+を表す．pisatr のシステム属性の部分では，次のような指定を行う．
 
 	sematr := TA_TPRI
 
-	    TA_TPRI	�҂��^�X�N�̃L���[�C���O�͗D��x��
+	    TA_TPRI	待ちタスクのキューイングは優先度順
 
-�D��x�p���Z�}�t�H�ł́C�҂��^�X�N�̃L���[�C���O�͗D��x���łȂ��ƈӖ�
-���Ȃ����߁CFIFO �L���[�C���O�͗p�ӂ��Ă��Ȃ��D���̂��߁CTA_TPRI ���w
-�肵�Ȃ��Ă��D��x���̃L���[�C���O�ɂȂ邪�C���̓����E�ʐM�I�u�W�F�N�g
-�Ƃ̓��ꐫ�̂��߂ɁCTA_TPRI ���w�肵�Ă��悢���Ƃɂ��Ă���D
+優先度継承セマフォでは，待ちタスクのキューイングは優先度順でないと意味
+がないため，FIFO キューイングは用意していない．そのため，TA_TPRI を指
+定しなくても優先度順のキューイングになるが，他の同期・通信オブジェクト
+との統一性のために，TA_TPRI を指定してもよいことにしている．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_RSATR	�\�񑮐� (pisatr ���s�����邢�͗��p�ł��Ȃ�)
-    E_OBJ	�I�u�W�F�N�g�̏�Ԃ��s�� (����ID�ԍ��̗D��x�p���Z�}�t�H
-		�����ɑ���)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_RSATR	予約属性 (pisatr が不正あるいは利用できない)
+    E_OBJ	オブジェクトの状態が不正 (同一ID番号の優先度継承セマフォ
+		が既に存在)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
 
-(2) vvcre_pis	�D��x�p���Z�}�t�H���� (ID��������)	    (�@�\�R�[�h: -259)
+(2) vvcre_pis	優先度継承セマフォ生成 (ID自動割当)	    (機能コード: -259)
 
     vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
 
-�y�p�����[�^�z
-    T_CPIS*	pk_cpis		�D��x�p���Z�}�t�H�������
+【パラメータ】
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-�y���^�[���p�����[�^�z
-    ER		ercd		���������D��x�p���Z�}�t�H��ID, �G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		生成した優先度継承セマフォのID, エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vvcre_pis(T_CPIS *pk_cpis);
 
-�y����z
-ID�ԍ����w�肹���ɗD��x�p���Z�}�t�H�𐶐����C���������D��x�p���Z�}�t�H
-�� ID (�K�����̒l) �� ercd �ɕԂ��Dercd �����̏ꍇ�́C�G���[�R�[�h��\
-���D���蓖�ĉ\�� ID ���Ȃ��ꍇ�CEV_FULL�G���[�ƂȂ�D���̑��ɂ���
-�́Cvcre_pis �Ɠ����D
+【解説】
+ID番号を指定せずに優先度継承セマフォを生成し，生成した優先度継承セマフォ
+の ID (必ず正の値) を ercd に返す．ercd が負の場合は，エラーコードを表
+す．割り当て可能な ID がない場合，EV_FULLエラーとなる．その他について
+は，vcre_pis と同じ．
 
-(3) vdel_pis	�D��x�p���Z�}�t�H�폜			    (�@�\�R�[�h: -258)
+(3) vdel_pis	優先度継承セマフォ削除			    (機能コード: -258)
 
     vdel_pis: Delete Priority Inheritance Semaphore
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vdel_pis(ID pisid);
 
-�y����z
-pisid �Ŏ����ꂽ�D��x�p���Z�}�t�H���폜����D
+【解説】
+pisid で示された優先度継承セマフォを削除する．
 
-�{�V�X�e���R�[���̔��s�ɂ��C�ΏۗD��x�p���Z�}�t�H�̊Ǘ��u���b�N�p��
-�̈�͉�������D�܂��C���̃V�X�e���R�[�����I��������́C���� ID�ԍ�
-�̗D��x�p���Z�}�t�H���Ăѐ������邱�Ƃ��ł���D
+本システムコールの発行により，対象優先度継承セマフォの管理ブロック用の
+領域は解放される．また，このシステムコールが終了した後は，同じ ID番号
+の優先度継承セマフォを再び生成することができる．
 
-�ΏۗD��x�p���Z�}�t�H���l�����Ă���^�X�N���������ꍇ�C���̃^�X�N�̗D
-��x���Čv�Z�E�ύX�����ꍇ������D��̓I�ɂ́C���̃^�X�N�̌��ݗD��x
-���C�D��x�p���Z�}�t�H��҂��Ă��钆�ōō��D��x�̃^�X�N�̗D��x�ɓ���
-���ꍇ�ɁC�D��x�p���Z�}�t�H���l�����Ă����^�X�N�̗D��x���Čv�Z����C
-���̌��ʓ���ꂽ�l�����̃^�X�N�̌��ݗD��x�����Ⴂ (�l���傫��) �ꍇ
-�ɁC�D��x�̕ύX���s����D
+対象優先度継承セマフォを獲得しているタスクがあった場合，そのタスクの優
+先度が再計算・変更される場合がある．具体的には，そのタスクの現在優先度
+が，優先度継承セマフォを待っている中で最高優先度のタスクの優先度に等し
+い場合に，優先度継承セマフォを獲得していたタスクの優先度が再計算され，
+その結果得られた値がそのタスクの現在優先度よりも低い (値が大きい) 場合
+に，優先度の変更が行われる．
 
-�ΏۗD��x�p���Z�}�t�H�ɂ����ď���������҂��Ă���^�X�N���������ꍇ��
-���C�{�V�X�e���R�[���͐���I�����邪�C�҂���Ԃɂ������^�X�N�ɂ̓G���[ 
-E_DLT ���Ԃ����D
+対象優先度継承セマフォにおいて条件成立を待っているタスクがあった場合に
+も，本システムコールは正常終了するが，待ち状態にあったタスクにはエラー 
+E_DLT が返される．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
 
-(4) vsig_pis	�D��x�p���Z�}�t�H�������		    (�@�\�R�[�h: -264)
+(4) vsig_pis	優先度継承セマフォ資源解放		    (機能コード: -264)
 
     vsig_pis: Signal Priority Inheritance Semaphore
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vsig_pis(ID pisid);
 
-�y����z
-pisid �Ŏ����ꂽ�D��x�p���Z�}�t�H�ɑ΂��āC������������鑀����s���D
-��̓I�ɂ́C�ΏۗD��x�p���Z�}�t�H�ɑ΂��Ċ��ɑ҂��Ă���^�X�N������΁C
-�҂��s��̐擪�̃^�X�N�� READY��ԂɈڂ��D���̏ꍇ�C���̗D��x�p���Z�}
-�t�H�͊l�����ꂽ��Ԃ̂܂܂ł���D����C�ΏۗD��x�p���Z�}�t�H�ɑ΂���
-�҂��Ă���^�X�N��������΁C���̗D��x�p���Z�}�t�H����������D
+【解説】
+pisid で示された優先度継承セマフォに対して，資源を解放する操作を行う．
+具体的には，対象優先度継承セマフォに対して既に待っているタスクがあれば，
+待ち行列の先頭のタスクを READY状態に移す．この場合，その優先度継承セマ
+フォは獲得された状態のままである．一方，対象優先度継承セマフォに対して
+待っているタスクが無ければ，その優先度継承セマフォが解放される．
 
-���̃V�X�e���R�[�����^�X�N�Ɨ�������Ăяo�����Ƃ͂ł��Ȃ��D�Ăяo����
-�ꍇ�CE_CTX�G���[�ƂȂ�D�܂��C�l������Ă��Ȃ��C�Ȃ����́C���^�X�N��
-�l������Ă���D��x�p���Z�}�t�H��������悤�Ƃ����ꍇ�CE_OBJ�G���[��
-�Ȃ�D
+このシステムコールをタスク独立部から呼び出すことはできない．呼び出した
+場合，E_CTXエラーとなる．また，獲得されていない，ないしは，他タスクに
+獲得されている優先度継承セマフォを解放しようとした場合，E_OBJエラーと
+なる．
 
-�D��x�p���Z�}�t�H��������邱�Ƃɂ��C�{�V�X�e���R�[���̔��s�^�X�N��
-�D��x���Čv�Z�E�ύX�����ꍇ������D��̓I�ɂ́C���s�^�X�N�̌��ݗD��
-�x���C��������D��x�p���Z�}�t�H��҂��Ă������ōō��D��x�̃^�X�N�̗D
-��x�ɓ������ꍇ�ɁC���s�^�X�N�̗D��x���Čv�Z����C���̌��ʓ���ꂽ�l
-�����̃^�X�N�̌��ݗD��x�����Ⴂ (�l���傫��) �ꍇ�ɁC�D��x�̕ύX��
-�s����D
+優先度継承セマフォを解放することにより，本システムコールの発行タスクの
+優先度が再計算・変更される場合がある．具体的には，発行タスクの現在優先
+度が，解放した優先度継承セマフォを待っていた中で最高優先度のタスクの優
+先度に等しい場合に，発行タスクの優先度が再計算され，その結果得られた値
+がそのタスクの現在優先度よりも低い (値が大きい) 場合に，優先度の変更が
+行われる．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
-    E_CTX	�R���e�L�X�g�G���[ (�^�X�N�Ɨ�������̔��s)
-    E_OBJ	�I�u�W�F�N�g�̏�Ԃ��s�� (pisid �̗D��x�p���Z�}�t�H��
-		�l������Ă��Ȃ��D�܂��́C���̃^�X�N���l�����Ă���)
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_CTX	コンテキストエラー (タスク独立部からの発行)
+    E_OBJ	オブジェクトの状態が不正 (pisid の優先度継承セマフォが
+		獲得されていない．または，他のタスクが獲得している)
 
-(5) vwai_pis	�D��x�p���Z�}�t�H�����l��		    (�@�\�R�[�h: -261)
-(6) vpreq_pis	�D��x�p���Z�}�t�H�����l�� (�|�[�����O)	    (�@�\�R�[�h: -262)
-(7) vtwai_pis	�D��x�p���Z�}�t�H�����l�� (�^�C���A�E�g�L) (�@�\�R�[�h: -263)
+(5) vwai_pis	優先度継承セマフォ資源獲得		    (機能コード: -261)
+(6) vpreq_pis	優先度継承セマフォ資源獲得 (ポーリング)	    (機能コード: -262)
+(7) vtwai_pis	優先度継承セマフォ資源獲得 (タイムアウト有) (機能コード: -263)
 
     vwai_pis: Wait on Priority Inheritance Semaphore
    vpreq_pis: Poll and Request Priority Inheritance Semaphore
    vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
 
-�y�p�����[�^ (vwai_pis, vpreq_pis �̏ꍇ) �z
-    ID		pisid		�D��x�p���Z�}�t�HID
+【パラメータ (vwai_pis, vpreq_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
 
-�y�p�����[�^ (vtwai_pis �̏ꍇ) �z
-    ID		pisid		�D��x�p���Z�}�t�HID
-    TMO		tmout		�^�C���A�E�g�w��
+【パラメータ (vtwai_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
+    TMO		tmout		タイムアウト指定
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd = vwai_pis(ID pisid);
     ER ercd =vpreq_pis(ID pisid);
     ER ercd =vtwai_pis(ID pisid, TMO tmout);
 
-�y����z
-vwai_pis �ł́Cpisid �Ŏ����ꂽ�D��x�p���Z�}�t�H����C�������l������
-������s���D��̓I�ɂ́C�ΏۗD��x�p���Z�}�t�H���l������Ă��Ȃ��ꍇ��
-�́C�D��x�p���Z�}�t�H�̊l���ɐ�������D���̏ꍇ�C�{�V�X�e���R�[���̔�
-�s�^�X�N�͑҂���Ԃɓ��炸�C���s���p������D����A�ΏۗD��x�p���Z�}�t�H
-���l������Ă���ꍇ�ɂ́C�{�V�X�e���R�[���𔭍s�����^�X�N�͑҂���Ԃ�
-����D���Ȃ킿�C���̗D��x�p���Z�}�t�H�ɑ΂���҂��s��ɂȂ����D
+【解説】
+vwai_pis では，pisid で示された優先度継承セマフォから，資源を獲得する
+操作を行う．具体的には，対象優先度継承セマフォが獲得されていない場合に
+は，優先度継承セマフォの獲得に成功する．この場合，本システムコールの発
+行タスクは待ち状態に入らず，実行を継続する．一方、対象優先度継承セマフォ
+が獲得されている場合には，本システムコールを発行したタスクは待ち状態に
+入る．すなわち，その優先度継承セマフォに対する待ち行列につながれる．
 
-�{�V�X�e���R�[���𔭍s�����^�X�N���҂���Ԃɓ���ꍇ�C�ΏۗD��x�p���Z
-�}�t�H���l�����Ă���^�X�N���C���s�^�X�N�̗D��x���p������ꍇ������D
-��̓I�ɂ́C�D��x�p���Z�}�t�H���l�����Ă���^�X�N�̌��ݗD��x���C���s
-�^�X�N�̌��ݗD��x�����Ⴂ (�l���傫��) �ꍇ�ɁC�D��x�̌p�����s���
-��D
+本システムコールを発行したタスクが待ち状態に入る場合，対象優先度継承セ
+マフォを獲得しているタスクが，発行タスクの優先度を継承する場合がある．
+具体的には，優先度継承セマフォを獲得しているタスクの現在優先度が，発行
+タスクの現在優先度よりも低い (値が大きい) 場合に，優先度の継承が行われ
+る．
 
-vpreq_pis �́Cwai_pis ����҂���Ԃɓ���@�\����菜�����V�X�e���R�[��
-�ł���D����Cvtwai_pis �́Cwai_pis �Ƀ^�C���A�E�g�̋@�\��t���������V
-�X�e���R�[���ł���Ctmout �ɂ��҂����Ԃ̍ő�l (�^�C���A�E�g�l) ���w
-�肷�邱�Ƃ��ł���D�|�[�����O��^�C���A�E�g�̈����ɂ��ẮC���̓����E
-�ʐM�I�u�W�F�N�g�Ɠ��l�ł���D
+vpreq_pis は，wai_pis から待ち状態に入る機能を取り除いたシステムコール
+である．一方，vtwai_pis は，wai_pis にタイムアウトの機能を付け加えたシ
+ステムコールであり，tmout により待ち時間の最大値 (タイムアウト値) を指
+定することができる．ポーリングやタイムアウトの扱いについては，他の同期・
+通信オブジェクトと同様である．
 
-twai_pis �܂��� vtwai_pis �ɂ���ėD��x�p���Z�}�t�H�҂���Ԃɓ������^
-�X�N���Crel_wai �̔��s�C�^�C���A�E�g (vtwai_pis �̂�)�C�Ȃ����͑ΏۗD
-��x�p���Z�}�t�H�̍폜�ɂ���đ҂����������ꍇ�ɁC���̗D��x�p���Z�}
-�t�H���l�����Ă���^�X�N�̗D��x���Čv�Z�E�ύX�����ꍇ������D��̓I
-�ɂ́C���̃^�X�N�̌��ݗD��x���C�҂��������ꂽ�^�X�N�̗D��x�ɓ�������
-���ɁC�D��x�p���Z�}�t�H���l�����Ă���^�X�N�̗D��x���Čv�Z����C����
-���ʓ���ꂽ�l�����̃^�X�N�̌��ݗD��x�Ɠ������Ȃ��ꍇ�ɁC�D��x�̕ύX
-���s����D
+twai_pis または vtwai_pis によって優先度継承セマフォ待ち状態に入ったタ
+スクが，rel_wai の発行，タイムアウト (vtwai_pis のみ)，ないしは対象優
+先度継承セマフォの削除によって待ち解除される場合に，その優先度継承セマ
+フォを獲得しているタスクの優先度が再計算・変更される場合がある．具体的
+には，そのタスクの現在優先度が，待ち解除されたタスクの優先度に等しい場
+合に，優先度継承セマフォを獲得しているタスクの優先度が再計算され，その
+結果得られた値がそのタスクの現在優先度と等しくない場合に，優先度の変更
+が行われる．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
-    E_PAR	�p�����[�^�G���[ (tmout <= (-2))
-    E_DLT	�҂��I�u�W�F�N�g���폜���ꂽ (�҂��̊ԂɑΏۗD��x�p��
-		�Z�}�t�H���폜)
-    E_RLWAI	�҂���ԋ������� (�҂��̊Ԃ� rel_wai ���󂯕t��)
-    E_TMOUT	�|�[�����O���s�܂��̓^�C���A�E�g
-    E_CTX	�R���e�L�X�g�G���[ (�^�X�N�Ɨ����܂��̓f�B�X�p�b�`�֎~
-		��ԂŎ��s)
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_PAR	パラメータエラー (tmout <= (-2))
+    E_DLT	待ちオブジェクトが削除された (待ちの間に対象優先度継承
+		セマフォが削除)
+    E_RLWAI	待ち状態強制解除 (待ちの間に rel_wai を受け付け)
+    E_TMOUT	ポーリング失敗またはタイムアウト
+    E_CTX	コンテキストエラー (タスク独立部またはディスパッチ禁止
+		状態で実行)
 
-(8) vref_pis	�D��x�p���Z�}�t�H��ԎQ��		    (�@�\�R�[�h: -260)
+(8) vref_pis	優先度継承セマフォ状態参照		    (機能コード: -260)
 
     vref_pis: Refer Priority Inheritance Semaphore Status
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
-    T_RPIS*	pk_rpis		�D��x�p���Z�}�t�H��Ԃ�Ԃ��p�P�b�g�A�h���X
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_RPIS*	pk_rpis		優先度継承セマフォ状態を返すパケットアドレス
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-  pk_rpis �̓��e
-    VP		exinf		�g�����
-    BOOL_ID	wtsk		�҂��^�X�N�̗L��
-    BOOL_ID	pistsk		�l���^�X�N�̗L��
+  pk_rpis の内容
+    VP		exinf		拡張情報
+    BOOL_ID	wtsk		待ちタスクの有無
+    BOOL_ID	pistsk		獲得タスクの有無
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
 
-�y����z
-pisid �Ŏ����ꂽ�D��x�p���Z�}�t�H�̊e��̏�Ԃ��Q�Ƃ��C���^�[���p�����[
-�^�Ƃ��đ҂��^�X�N�̗L�� (wtsk)�C�l���^�X�N�̗L�� (pistsk)�C�g����� 
-(exinf) ��Ԃ��D
+【解説】
+pisid で示された優先度継承セマフォの各種の状態を参照し，リターンパラメー
+タとして待ちタスクの有無 (wtsk)，獲得タスクの有無 (pistsk)，拡張情報 
+(exinf) を返す．
 
-wtsk �́C���̗D��x�p���Z�}�t�H�ő҂��Ă���^�X�N�̗L���������D�҂��^
-�X�N�������ꍇ�� wtsk = FALSE = 0 �ƂȂ�D�҂��^�X�N������ꍇ�Cwtsk 
-�ɂ͑҂��s��̐擪�̃^�X�N�� ID ��Ԃ��D
+wtsk は，この優先度継承セマフォで待っているタスクの有無を示す．待ちタ
+スクが無い場合は wtsk = FALSE = 0 となる．待ちタスクがある場合，wtsk 
+には待ち行列の先頭のタスクの ID を返す．
 
-pistsk �́C���̗D��x�p���Z�}�t�H���l�����Ă���^�X�N�̗L���������D�l
-���^�X�N�������ꍇ�� pistsk = FALSE = 0 �ƂȂ�D�l���^�X�N������ꍇ�C
-pistsk �ɂ͊l���^�X�N�� ID ��Ԃ��D
+pistsk は，この優先度継承セマフォを獲得しているタスクの有無を示す．獲
+得タスクが無い場合は pistsk = FALSE = 0 となる．獲得タスクがある場合，
+pistsk には獲得タスクの ID を返す．
 
-vref_pis �őΏۗD��x�p���Z�}�t�H�����݂��Ȃ��ꍇ�ɂ́CE_NOEXS�G���[��
-�Ȃ�D
+vref_pis で対象優先度継承セマフォが存在しない場合には，E_NOEXSエラーと
+なる．
 
-�ǂ�ȏꍇ�ł��Cwtsk = FALSE �� pistsk != FALSE �̏��Ȃ��Ƃ�����͐���
-���D
+どんな場合でも，wtsk = FALSE と pistsk != FALSE の少なくとも一方は成り
+立つ．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
 
 
-�R�D�d�l2 �ɂ�����D��x�p���Z�}�t�H�@�\�̎d�l
+３．仕様2 における優先度継承セマフォ機能の仕様
 
-�d�l2 �ɂ�����D��x�p���Z�}�t�H�@�\�ł́C�D��x�p���Z�}�t�H���������
-�ꍇ�ɁC�^�X�N�̗D��x�������D��x�ɖ߂��D����́C���̗D��x�p���Z�}�t�H
-���l�����Ă���ꍇ�ɂ��ꗥ�ɍs����̂ŁC�����̗D��x�p���Z�}�t�H���l
-�����Ă���ꍇ�ɐ�����������s�킹��ɂ́C�l�����Ă��邷�ׂĂ̗D��x�p
-���Z�}�t�H���f�B�X�p�b�`�֎~��Ԃň�x�ɉ������K�v������D
+仕様2 における優先度継承セマフォ機能では，優先度継承セマフォを解放した
+場合に，タスクの優先度を初期優先度に戻す．これは，他の優先度継承セマフォ
+を獲得している場合にも一律に行われるので，複数の優先度継承セマフォを獲
+得している場合に正しい動作を行わせるには，獲得しているすべての優先度継
+承セマフォをディスパッチ禁止状態で一度に解放する必要がある．
 
-�D��x�p���Z�}�t�H���l��/�������^�X�N�̗D��x�� chg_pri �ɂ���ĕύX
-���Ă��C�D��x�p���Z�}�t�H�̋@�\�ɂ���ėD��x���ύX�����ƁCchg_pri 
-�Őݒ肵���D��x�͖����ɂȂ�D�܂�Cchg_pri �̓^�X�N�̌��ݗD��x����
-���I�ɕύX������̂Ƃ������ƂɂȂ�D�D��x�p���Z�}�t�H�@�\�̎����� 
-chg_pri ���g���Ă���ƍl����킩��₷����������Ȃ��D
+優先度継承セマフォを獲得/解放するタスクの優先度を chg_pri によって変更
+しても，優先度継承セマフォの機能によって優先度が変更されると，chg_pri 
+で設定した優先度は無効になる．つまり，chg_pri はタスクの現在優先度を一
+時的に変更するものということになる．優先度継承セマフォ機能の実装に 
+chg_pri が使われていると考えるわかりやすいかもしれない．
 
-�D��x�p���Z�}�t�H��҂��Ă���^�X�N�̗D��x�� chg_pri �ɂ���ĕύX��
-���ꍇ�C���̗D��x�p���Z�}�t�H���l�����Ă���^�X�N�̗D��x���Čv�Z�E��
-�X�����ꍇ������D��̓I�ɂ́C�D��x��ύX���ꂽ�^�X�N�̕ύX��̗D��
-�x���C�D��x�p���Z�}�t�H���l�����Ă���^�X�N�̌��ݗD��x�������� (�l
-��������) �ꍇ�ɁC�D��x�̕ύX���s����D
+優先度継承セマフォを待っているタスクの優先度を chg_pri によって変更し
+た場合，その優先度継承セマフォを獲得しているタスクの優先度が再計算・変
+更される場合がある．具体的には，優先度を変更されたタスクの変更後の優先
+度が，優先度継承セマフォを獲得しているタスクの現在優先度よりも高い (値
+が小さい) 場合に，優先度の変更が行われる．
 
-(1) vcre_pis	�D��x�p���Z�}�t�H����			    (�@�\�R�[�h: -257)
+(1) vcre_pis	優先度継承セマフォ生成			    (機能コード: -257)
 
     vcre_pis: Create Priority Inheritance Semaphore
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
-    T_CPIS*	pk_cpis		�D��x�p���Z�}�t�H�������
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
 
-�y����z
-vcre_pis �ł́Cpisid �Ŏw�肳�ꂽ ID�ԍ������D��x�p���Z�}�t�H�𐶐�
-����D��̓I�ɂ́C��������Z�}�t�H�ɑ΂��ĊǗ��u���b�N������t���C�Z�}
-�t�H�̏����l�� 1 �ɏ���������D
+【解説】
+vcre_pis では，pisid で指定された ID番号を持つ優先度継承セマフォを生成
+する．具体的には，生成するセマフォに対して管理ブロックを割り付け，セマ
+フォの初期値を 1 に初期化する．
 
-ID�ԍ��̐����̈�����g�p�ł��Ȃ��͈́C�����̏ꍇ�̃G���[�R�[�h�C�g��
-��� (exinf) �̈����ɂ��ẮC���̓����E�ʐM�I�u�W�F�N�g�Ɠ��l�ł���D
+ID番号の正負の扱いや使用できない範囲，それらの場合のエラーコード，拡張
+情報 (exinf) の扱いについては，他の同期・通信オブジェクトと同様である．
 
-pisatr �́C���ʑ����V�X�e��������\���C��ʑ����C���v�������g�ˑ�����
-��\���Dpisatr �̃V�X�e�������̕����ł́C���̂悤�Ȏw����s���D
+pisatr は，下位側がシステム属性を表し，上位側がインプリメント依存属性
+を表す．pisatr のシステム属性の部分では，次のような指定を行う．
 
 	sematr := TA_TPRI
 
-	    TA_TPRI	�҂��^�X�N�̃L���[�C���O�͗D��x��
+	    TA_TPRI	待ちタスクのキューイングは優先度順
 
-�D��x�p���Z�}�t�H�ł́C�҂��^�X�N�̃L���[�C���O�͗D��x���łȂ��ƈӖ�
-���Ȃ����߁CFIFO �L���[�C���O�͗p�ӂ��Ă��Ȃ��D���̂��߁CTA_TPRI ���w
-�肵�Ȃ��Ă��D��x���̃L���[�C���O�ɂȂ邪�C���̓����E�ʐM�I�u�W�F�N�g
-�Ƃ̓��ꐫ�̂��߂ɁCTA_TPRI ���w�肵�Ă��悢���Ƃɂ��Ă���D
+優先度継承セマフォでは，待ちタスクのキューイングは優先度順でないと意味
+がないため，FIFO キューイングは用意していない．そのため，TA_TPRI を指
+定しなくても優先度順のキューイングになるが，他の同期・通信オブジェクト
+との統一性のために，TA_TPRI を指定してもよいことにしている．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_RSATR	�\�񑮐� (pisatr ���s�����邢�͗��p�ł��Ȃ�)
-    E_OBJ	�I�u�W�F�N�g�̏�Ԃ��s�� (����ID�ԍ��̗D��x�p���Z�}�t�H
-		�����ɑ���)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_RSATR	予約属性 (pisatr が不正あるいは利用できない)
+    E_OBJ	オブジェクトの状態が不正 (同一ID番号の優先度継承セマフォ
+		が既に存在)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
 
-(2) vvcre_pis	�D��x�p���Z�}�t�H���� (ID��������)	    (�@�\�R�[�h: -259)
+(2) vvcre_pis	優先度継承セマフォ生成 (ID自動割当)	    (機能コード: -259)
 
     vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
 
-�y�p�����[�^�z
-    T_CPIS*	pk_cpis		�D��x�p���Z�}�t�H�������
+【パラメータ】
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-�y���^�[���p�����[�^�z
-    ER		ercd		���������D��x�p���Z�}�t�H��ID, �G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		生成した優先度継承セマフォのID, エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vvcre_pis(T_CPIS *pk_cpis);
 
-�y����z
-ID�ԍ����w�肹���ɗD��x�p���Z�}�t�H�𐶐����C���������D��x�p���Z�}�t�H
-�� ID (�K�����̒l) �� ercd �ɕԂ��Dercd �����̏ꍇ�́C�G���[�R�[�h��\
-���D���蓖�ĉ\�� ID ���Ȃ��ꍇ�CEV_FULL�G���[�ƂȂ�D���̑��ɂ���
-�́Cvcre_pis �Ɠ����D
+【解説】
+ID番号を指定せずに優先度継承セマフォを生成し，生成した優先度継承セマフォ
+の ID (必ず正の値) を ercd に返す．ercd が負の場合は，エラーコードを表
+す．割り当て可能な ID がない場合，EV_FULLエラーとなる．その他について
+は，vcre_pis と同じ．
 
-(3) vdel_pis	�D��x�p���Z�}�t�H�폜			    (�@�\�R�[�h: -258)
+(3) vdel_pis	優先度継承セマフォ削除			    (機能コード: -258)
 
     vdel_pis: Delete Priority Inheritance Semaphore
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vdel_pis(ID pisid);
 
-�y����z
-pisid �Ŏ����ꂽ�D��x�p���Z�}�t�H���폜����D
+【解説】
+pisid で示された優先度継承セマフォを削除する．
 
-�{�V�X�e���R�[���̔��s�ɂ��C�ΏۗD��x�p���Z�}�t�H�̊Ǘ��u���b�N�p��
-�̈�͉�������D�܂��C���̃V�X�e���R�[�����I��������́C���� ID�ԍ�
-�̗D��x�p���Z�}�t�H���Ăѐ������邱�Ƃ��ł���D
+本システムコールの発行により，対象優先度継承セマフォの管理ブロック用の
+領域は解放される．また，このシステムコールが終了した後は，同じ ID番号
+の優先度継承セマフォを再び生成することができる．
 
-�ΏۗD��x�p���Z�}�t�H�ɂ����ď���������҂��Ă���^�X�N���������ꍇ��
-���C�{�V�X�e���R�[���͐���I�����邪�C�҂���Ԃɂ������^�X�N�ɂ̓G���[ 
-E_DLT ���Ԃ����D
+対象優先度継承セマフォにおいて条件成立を待っているタスクがあった場合に
+も，本システムコールは正常終了するが，待ち状態にあったタスクにはエラー 
+E_DLT が返される．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
 
-(4) vsig_pis	�D��x�p���Z�}�t�H�����ԋp		    (�@�\�R�[�h: -264)
+(4) vsig_pis	優先度継承セマフォ資源返却		    (機能コード: -264)
 
     vsig_pis: Signal Priority Inheritance Semaphore
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vsig_pis(ID pisid);
 
-�y����z
-pisid �Ŏ����ꂽ�D��x�p���Z�}�t�H�ɑ΂��āC������������鑀����s���D
-��̓I�ɂ́C�ΏۗD��x�p���Z�}�t�H�ɑ΂��Ċ��ɑ҂��Ă���^�X�N������΁C
-�҂��s��̐擪�̃^�X�N�� READY��ԂɈڂ��D���̏ꍇ�C���̗D��x�p���Z�}
-�t�H�͊l�����ꂽ��Ԃ̂܂܂ł���D����C�ΏۗD��x�p���Z�}�t�H�ɑ΂���
-�҂��Ă���^�X�N��������΁C���̗D��x�p���Z�}�t�H����������D
+【解説】
+pisid で示された優先度継承セマフォに対して，資源を解放する操作を行う．
+具体的には，対象優先度継承セマフォに対して既に待っているタスクがあれば，
+待ち行列の先頭のタスクを READY状態に移す．この場合，その優先度継承セマ
+フォは獲得された状態のままである．一方，対象優先度継承セマフォに対して
+待っているタスクが無ければ，その優先度継承セマフォが解放される．
 
-���̃V�X�e���R�[�����^�X�N�Ɨ�������Ăяo�����Ƃ͂ł��Ȃ��D�Ăяo����
-�ꍇ�CE_CTX�G���[�ƂȂ�D�܂��C�l������Ă��Ȃ��C�Ȃ����́C���^�X�N��
-�l������Ă���D��x�p���Z�}�t�H��������悤�Ƃ����ꍇ�CE_OBJ�G���[��
-�Ȃ�D
+このシステムコールをタスク独立部から呼び出すことはできない．呼び出した
+場合，E_CTXエラーとなる．また，獲得されていない，ないしは，他タスクに
+獲得されている優先度継承セマフォを解放しようとした場合，E_OBJエラーと
+なる．
 
-�D��x�p���Z�}�t�H��������邱�Ƃɂ��C�^�X�N�̗D��x�́C�K�v�ȏꍇ��
-�����D��x�ɖ߂����D��̓I�ɂ́C�^�X�N�̗D��x�������D��x��������
-�ꍇ�ɂ̂݁C�����D��x�ɖ߂��������s����D
+優先度継承セマフォを解放することにより，タスクの優先度は，必要な場合に
+初期優先度に戻される．具体的には，タスクの優先度が初期優先度よりも高い
+場合にのみ，初期優先度に戻す処理が行われる．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
-    E_CTX	�R���e�L�X�g�G���[ (�^�X�N�Ɨ�������̔��s)
-    E_OBJ	�I�u�W�F�N�g�̏�Ԃ��s�� (pisid �̗D��x�p���Z�}�t�H��
-		�l������Ă��Ȃ��D�܂��́C���̃^�X�N���l�����Ă���)
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_CTX	コンテキストエラー (タスク独立部からの発行)
+    E_OBJ	オブジェクトの状態が不正 (pisid の優先度継承セマフォが
+		獲得されていない．または，他のタスクが獲得している)
 
-(5) vwai_pis	�D��x�p���Z�}�t�H�����l��		    (�@�\�R�[�h: -261)
-(6) vpreq_pis	�D��x�p���Z�}�t�H�����l�� (�|�[�����O)	    (�@�\�R�[�h: -262)
-(7) vtwai_pis	�D��x�p���Z�}�t�H�����l�� (�^�C���A�E�g�L) (�@�\�R�[�h: -263)
+(5) vwai_pis	優先度継承セマフォ資源獲得		    (機能コード: -261)
+(6) vpreq_pis	優先度継承セマフォ資源獲得 (ポーリング)	    (機能コード: -262)
+(7) vtwai_pis	優先度継承セマフォ資源獲得 (タイムアウト有) (機能コード: -263)
 
     vwai_pis: Wait on Priority Inheritance Semaphore
    vpreq_pis: Poll and Request Priority Inheritance Semaphore
    vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
 
-�y�p�����[�^ (vwai_pis, vpreq_pis �̏ꍇ) �z
-    ID		pisid		�D��x�p���Z�}�t�HID
+【パラメータ (vwai_pis, vpreq_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
 
-�y�p�����[�^ (vtwai_pis �̏ꍇ) �z
-    ID		pisid		�D��x�p���Z�}�t�HID
-    TMO		tmout		�^�C���A�E�g�w��
+【パラメータ (vtwai_pis の場合) 】
+    ID		pisid		優先度継承セマフォID
+    TMO		tmout		タイムアウト指定
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd = vwai_pis(ID pisid);
     ER ercd =vpreq_pis(ID pisid);
     ER ercd =vtwai_pis(ID pisid, TMO tmout);
 
-�y����z
-vwai_pis �ł́Cpisid �Ŏ����ꂽ�D��x�p���Z�}�t�H����C�������l������
-������s���D��̓I�ɂ́C�ΏۗD��x�p���Z�}�t�H���l������Ă��Ȃ��ꍇ��
-�́C�D��x�p���Z�}�t�H�̊l���ɐ�������D���̏ꍇ�C�{�V�X�e���R�[���̔�
-�s�^�X�N�͑҂���Ԃɓ��炸�C���s���p������D����A�ΏۗD��x�p���Z�}�t�H
-���l������Ă���ꍇ�ɂ́C�{�V�X�e���R�[���𔭍s�����^�X�N�͑҂���Ԃ�
-����D���Ȃ킿�C���̗D��x�p���Z�}�t�H�ɑ΂���҂��s��ɂȂ����D
+【解説】
+vwai_pis では，pisid で示された優先度継承セマフォから，資源を獲得する
+操作を行う．具体的には，対象優先度継承セマフォが獲得されていない場合に
+は，優先度継承セマフォの獲得に成功する．この場合，本システムコールの発
+行タスクは待ち状態に入らず，実行を継続する．一方、対象優先度継承セマフォ
+が獲得されている場合には，本システムコールを発行したタスクは待ち状態に
+入る．すなわち，その優先度継承セマフォに対する待ち行列につながれる．
 
-�{�V�X�e���R�[���𔭍s�����^�X�N���҂���Ԃɓ���ꍇ�C�ΏۗD��x�p���Z
-�}�t�H���l�����Ă���^�X�N���C���s�^�X�N�̗D��x���p������ꍇ������D
-��̓I�ɂ́C�D��x�p���Z�}�t�H���l�����Ă���^�X�N�̌��ݗD��x���C���s
-�^�X�N�̌��ݗD��x�����Ⴂ (�l���傫��) �ꍇ�ɁC�D��x�̌p�����s���
-��D
+本システムコールを発行したタスクが待ち状態に入る場合，対象優先度継承セ
+マフォを獲得しているタスクが，発行タスクの優先度を継承する場合がある．
+具体的には，優先度継承セマフォを獲得しているタスクの現在優先度が，発行
+タスクの現在優先度よりも低い (値が大きい) 場合に，優先度の継承が行われ
+る．
 
-vpreq_pis �́Cwai_pis ����҂���Ԃɓ���@�\����菜�����V�X�e���R�[��
-�ł���D����Cvtwai_pis �́Cwai_pis �Ƀ^�C���A�E�g�̋@�\��t���������V
-�X�e���R�[���ł���Ctmout �ɂ��҂����Ԃ̍ő�l (�^�C���A�E�g�l) ���w
-�肷�邱�Ƃ��ł���D�|�[�����O��^�C���A�E�g�̈����ɂ��ẮC���̓����E
-�ʐM�I�u�W�F�N�g�Ɠ��l�ł���D
+vpreq_pis は，wai_pis から待ち状態に入る機能を取り除いたシステムコール
+である．一方，vtwai_pis は，wai_pis にタイムアウトの機能を付け加えたシ
+ステムコールであり，tmout により待ち時間の最大値 (タイムアウト値) を指
+定することができる．ポーリングやタイムアウトの扱いについては，他の同期・
+通信オブジェクトと同様である．
 
-twai_pis �܂��� vtwai_pis �ɂ���ėD��x�p���Z�}�t�H�҂���Ԃɓ������^
-�X�N���Crel_wai �̔��s�C�^�C���A�E�g (vtwai_pis �̂�)�C�Ȃ����͑ΏۗD
-��x�p���Z�}�t�H�̍폜�ɂ���đ҂��������ꂽ�ꍇ�ł��C���̗D��x�p���Z
-�}�t�H���l�����Ă���^�X�N�̗D��x�͕ύX����Ȃ��D���̂��߁C�D��x�p��
-�Z�}�t�H���l�����Ă���^�X�N�̗D��x����������l�ɐݒ肳��C���̌��ʁC
-�҂��������ꂽ�^�X�N�̎��s���x���ꍇ������D
+twai_pis または vtwai_pis によって優先度継承セマフォ待ち状態に入ったタ
+スクが，rel_wai の発行，タイムアウト (vtwai_pis のみ)，ないしは対象優
+先度継承セマフォの削除によって待ち解除された場合でも，その優先度継承セ
+マフォを獲得しているタスクの優先度は変更されない．そのため，優先度継承
+セマフォを獲得しているタスクの優先度が高すぎる値に設定され，その結果，
+待ち解除されたタスクの実行が遅れる場合がある．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
-    E_PAR	�p�����[�^�G���[ (tmout <= (-2))
-    E_DLT	�҂��I�u�W�F�N�g���폜���ꂽ (�҂��̊ԂɑΏۗD��x�p��
-		�Z�}�t�H���폜)
-    E_RLWAI	�҂���ԋ������� (�҂��̊Ԃ� rel_wai ���󂯕t��)
-    E_TMOUT	�|�[�����O���s�܂��̓^�C���A�E�g
-    E_CTX	�R���e�L�X�g�G���[ (�^�X�N�Ɨ����܂��̓f�B�X�p�b�`�֎~
-		��ԂŎ��s)
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))
+    E_PAR	パラメータエラー (tmout <= (-2))
+    E_DLT	待ちオブジェクトが削除された (待ちの間に対象優先度継承
+		セマフォが削除)
+    E_RLWAI	待ち状態強制解除 (待ちの間に rel_wai を受け付け)
+    E_TMOUT	ポーリング失敗またはタイムアウト
+    E_CTX	コンテキストエラー (タスク独立部またはディスパッチ禁止
+		状態で実行)
 
-(8) vref_pis	�D��x�p���Z�}�t�H��ԎQ��		    (�@�\�R�[�h: -260)
+(8) vref_pis	優先度継承セマフォ状態参照		    (機能コード: -260)
 
     vref_pis: Refer Priority Inheritance Semaphore Status
 
-�y�p�����[�^�z
-    ID		pisid		�D��x�p���Z�}�t�HID
-    T_RPIS*	pk_rpis		�D��x�p���Z�}�t�H��Ԃ�Ԃ��p�P�b�g�A�h���X
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_RPIS*	pk_rpis		優先度継承セマフォ状態を返すパケットアドレス
 
-�y���^�[���p�����[�^�z
-    ER		ercd		�G���[�R�[�h
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-  pk_rpis �̓��e
-    VP		exinf		�g�����
-    BOOL_ID	wtsk		�҂��^�X�N�̗L��
-    BOOL_ID	pistsk		�l���^�X�N�̗L��
+  pk_rpis の内容
+    VP		exinf		拡張情報
+    BOOL_ID	wtsk		待ちタスクの有無
+    BOOL_ID	pistsk		獲得タスクの有無
 
-�yC����C���^�t�F�[�X�z
+【C言語インタフェース】
     ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
 
-�y����z
-pisid �Ŏ����ꂽ�D��x�p���Z�}�t�H�̊e��̏�Ԃ��Q�Ƃ��C���^�[���p�����[
-�^�Ƃ��đ҂��^�X�N�̗L�� (wtsk)�C�l���^�X�N�̗L�� (pistsk)�C�g����� 
-(exinf) ��Ԃ��D
+【解説】
+pisid で示された優先度継承セマフォの各種の状態を参照し，リターンパラメー
+タとして待ちタスクの有無 (wtsk)，獲得タスクの有無 (pistsk)，拡張情報 
+(exinf) を返す．
 
-wtsk �́C���̗D��x�p���Z�}�t�H�ő҂��Ă���^�X�N�̗L���������D�҂��^
-�X�N�������ꍇ�� wtsk = FALSE = 0 �ƂȂ�D�҂��^�X�N������ꍇ�Cwtsk 
-�ɂ͑҂��s��̐擪�̃^�X�N�� ID ��Ԃ��D
+wtsk は，この優先度継承セマフォで待っているタスクの有無を示す．待ちタ
+スクが無い場合は wtsk = FALSE = 0 となる．待ちタスクがある場合，wtsk 
+には待ち行列の先頭のタスクの ID を返す．
 
-pistsk �́C���̗D��x�p���Z�}�t�H���l�����Ă���^�X�N�̗L���������D�l
-���^�X�N�������ꍇ�� pistsk = FALSE = 0 �ƂȂ�D�l���^�X�N������ꍇ�C
-pistsk �ɂ͊l���^�X�N�� ID ��Ԃ��D
+pistsk は，この優先度継承セマフォを獲得しているタスクの有無を示す．獲
+得タスクが無い場合は pistsk = FALSE = 0 となる．獲得タスクがある場合，
+pistsk には獲得タスクの ID を返す．
 
-vref_pis �őΏۗD��x�p���Z�}�t�H�����݂��Ȃ��ꍇ�ɂ́CE_NOEXS�G���[��
-�Ȃ�D
+vref_pis で対象優先度継承セマフォが存在しない場合には，E_NOEXSエラーと
+なる．
 
-�ǂ�ȏꍇ�ł��Cwtsk = FALSE �� pistsk != FALSE �̏��Ȃ��Ƃ�����͐���
-���D
+どんな場合でも，wtsk = FALSE と pistsk != FALSE の少なくとも一方は成り
+立つ．
 
-�y�G���[�R�[�h(ercd)�z
-    E_OK	����I��
-    E_ID	�s��ID�ԍ� (pisid ���s�����邢�͗��p�ł��Ȃ�)
-    E_NOEXS	�I�u�W�F�N�g�����݂��Ă��Ȃ� (pisid �̗D��x�p���Z�}�t�H
-		�����݂��Ă��Ȃ�)
-    E_OACV	�I�u�W�F�N�g�A�N�Z�X���ᔽ (�V�X�e���I�u�W�F�N�g���A�N
-		�Z�X���錠���������Ȃ�������̔��s�� pisid < (-4))
+【エラーコード(ercd)】
+    E_OK	正常終了
+    E_ID	不正ID番号 (pisid が不正あるいは利用できない)
+    E_NOEXS	オブジェクトが存在していない (pisid の優先度継承セマフォ
+		が存在していない)
+    E_OACV	オブジェクトアクセス権違反 (システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4))

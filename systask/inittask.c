@@ -32,16 +32,16 @@
  */
 
 /*
- *  ‰Šú‰»ƒ^ƒXƒN
+ *  åˆæœŸåŒ–ã‚¿ã‚¹ã‚¯
  */
 
 #include "systask.h"
 
 /*
- *  •K—v‚ÈƒVƒXƒeƒ€ƒ^ƒXƒN‚¨‚æ‚Ñ‰Šú‹N“®ƒ^ƒXƒN‚ð‹N“®‚·‚éD‹ï‘Ì“I‚É‚ÍC‘g
- *  ‚Ýž‚Þ‚×‚«ƒVƒXƒeƒ€ƒ^ƒXƒN‚¨‚æ‚Ñƒhƒ‰ƒCƒo‚ÆC‰Šú‹N“®ƒ^ƒXƒN‚ð‹N“®‚·‚éD
- *  ˆÈã‚Ìˆ—‚ðI‚¦‚é‚ÆCslp_tsk ‚É‚æ‚è‘Ò‚¿ó‘Ô‚É“ü‚éDƒVƒXƒeƒ€‘S‘Ì‚ð
- *  ˆÀ‘S‚É’âŽ~‚³‚¹‚éê‡‚É‚ÍC‰Šú‰»ƒ^ƒXƒN‚ð wup_tsk ‚Å‹N°‚³‚¹‚éD
+ *  å¿…è¦ãªã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ãŠã‚ˆã³åˆæœŸèµ·å‹•ã‚¿ã‚¹ã‚¯ã‚’èµ·å‹•ã™ã‚‹ï¼Žå…·ä½“çš„ã«ã¯ï¼Œçµ„
+ *  ã¿è¾¼ã‚€ã¹ãã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ãŠã‚ˆã³ãƒ‰ãƒ©ã‚¤ãƒã¨ï¼ŒåˆæœŸèµ·å‹•ã‚¿ã‚¹ã‚¯ã‚’èµ·å‹•ã™ã‚‹ï¼Ž
+ *  ä»¥ä¸Šã®å‡¦ç†ã‚’çµ‚ãˆã‚‹ã¨ï¼Œslp_tsk ã«ã‚ˆã‚Šå¾…ã¡çŠ¶æ…‹ã«å…¥ã‚‹ï¼Žã‚·ã‚¹ãƒ†ãƒ å…¨ä½“ã‚’
+ *  å®‰å…¨ã«åœæ­¢ã•ã›ã‚‹å ´åˆã«ã¯ï¼ŒåˆæœŸåŒ–ã‚¿ã‚¹ã‚¯ã‚’ wup_tsk ã§èµ·åºŠã•ã›ã‚‹ï¼Ž
  */
 void
 init_task(INT stacd)
@@ -49,30 +49,30 @@ init_task(INT stacd)
 	syslog(LOG_NOTICE, "init: I'm now starting up some tasks.....");
 
 	/*
-	 *  BSD UNIX—p ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O ƒTƒ|[ƒgƒ‚ƒWƒ…[ƒ‹‚Ì‹N“®
+	 *  BSD UNIXç”¨ ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/O ã‚µãƒãƒ¼ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®èµ·å‹•
 	 *
-	 *  ƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒX‚æ‚èæ‚É‹N“®‚·‚é‚×‚«D
+	 *  ã‚·ãƒªã‚¢ãƒ«ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã‚ˆã‚Šå…ˆã«èµ·å‹•ã™ã‚‹ã¹ãï¼Ž
 	 */
 #ifdef FLG_BSD_SIGIO
 	bsd_sigio_startup();
 #endif
 
 	/*
-	 *  ƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒXƒhƒ‰ƒCƒo‚Ì‹N“®
+	 *  ã‚·ãƒªã‚¢ãƒ«ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ãƒ‰ãƒ©ã‚¤ãƒã®èµ·å‹•
 	 */
 #ifdef CONSOLE_PORT
 	serial_startup(CONSOLE_PORT);
 #endif
 
 	/*
-	 *  ƒVƒXƒeƒ€ƒƒOƒ^ƒXƒN‚Ì‹N“®
+	 *  ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°ã‚¿ã‚¹ã‚¯ã®èµ·å‹•
 	 */
 #ifdef LOGTASK_PORT
 	logtask_startup(LOGTASK_PORT);
 #endif
 
 	/*
-	 *  ‰Šú‹N“®ƒ^ƒXƒN‚Ì‹N“®
+	 *  åˆæœŸèµ·å‹•ã‚¿ã‚¹ã‚¯ã®èµ·å‹•
 	 */
 #ifdef TSK_FIRST
 	syscall(cre_tsk(TSK_FIRST, &TSK_FIRST_CTSK));
@@ -80,13 +80,13 @@ init_task(INT stacd)
 #endif
 
 	/*
-	 *  ‰Šú‰»ˆ—Š®—¹
+	 *  åˆæœŸåŒ–å‡¦ç†å®Œäº†
 	 */
 	syslog(LOG_NOTICE, "init: initialize OK.");
 	syscall(slp_tsk());
 
 	/*
-	 *  ƒVƒXƒeƒ€’âŽ~ˆ—
+	 *  ã‚·ã‚¹ãƒ†ãƒ åœæ­¢å‡¦ç†
 	 */
 #ifdef CONSOLE_PORT
 	serial_shutdown(CONSOLE_PORT, 1);

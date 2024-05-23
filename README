@@ -1,108 +1,108 @@
 
 	ItIs - ITRON Implementation by Sakamura Lab
-	(Phase3 Release1.3��)
+	(Phase3 Release1.3β)
 
-ItIs (ITRON Implementation by Sakamura Lab) �́C������w���w���⑺����
-���Ō����E����p�ɊJ�����ꂽ�C��ITRON3.0�d�l�ɏ����������A���^�C���J�[
-�l���ł��D���o�[�W�����ŁC���x��E �܂ł̂��ׂĂ̋@�\ (�ڑ��@�\������) 
-���������Ă���C�������̓Ǝ��̊g���@�\�������Ă��܂��D
+ItIs (ITRON Implementation by Sakamura Lab) は，東京大学理学部坂村研究
+室で研究・教育用に開発された，μITRON3.0仕様に準拠したリアルタイムカー
+ネルです．現バージョンで，レベルE までのすべての機能 (接続機能を除く) 
+を実現しており，いくつかの独自の拡張機能も持っています．
 
-�^�[�Q�b�gCPU �Ƃ��āC�����_�ł́CTRON�d�l�`�b�v (Gmicro/200 �� 
-Gmicro/300 �œ���m�F) �݂̂��T�|�[�g���Ă��܂��DCPU�ˑ��̕����𕪗���
-��ȂǁC���� CPU �ւ̈ڐA�ɂ��Ă��l�����Ă��܂����C�ǂ̒��x�̎�Ԃ�
-�����邩�͈ڐA��� CPU �̃A�[�L�e�N�`���ɑ傫���ˑ����܂��D�܂��C�@�\
-�Ɍ���͂���܂����CBSD UNIX (���o�[�W�����ł́CSunOS4.X �� FreeBSD ��
-�݃T�|�[�g) ��œ��삷��V�~�����[�V��������p�ӂ��Ă��܂��D
+ターゲットCPU として，現時点では，TRON仕様チップ (Gmicro/200 と 
+Gmicro/300 で動作確認) のみをサポートしています．CPU依存の部分を分離す
+るなど，他の CPU への移植についても考慮していますが，どの程度の手間が
+かかるかは移植先の CPU のアーキテクチャに大きく依存します．また，機能
+に限定はありますが，BSD UNIX (現バージョンでは，SunOS4.X と FreeBSD の
+みサポート) 上で動作するシミュレーション環境を用意しています．
 
-ItIs �́C�t���[�\�t�g�E�F�A�ł���C�z�z���R�ł��DItIs �̔z�t�L�b�g�̍�
-�V�ł́C�ȉ��̃f�B���N�g������ anonymous ftp �Ŏ擾���邱�Ƃ��ł��܂��D
+ItIs は，フリーソフトウェアであり，配布自由です．ItIs の配付キットの最
+新版は，以下のディレクトリから anonymous ftp で取得することができます．
 
 	ftp://tron.um.u-tokyo.ac.jp/TRON/ItIs/
 
-���̃f�B���N�g���ɂ́C�W���z�t�L�b�g (ItIs3-1.3.?.tar.Z) �� DOS�p�z�t
-�L�b�g (ItIs3-1.3.?.lzh) ������܂��D���҂̓��e�͓����ł��D
+このディレクトリには，標準配付キット (ItIs3-1.3.?.tar.Z) と DOS用配付
+キット (ItIs3-1.3.?.lzh) があります．両者の内容は同じです．
 
-�܂��CWWW ��� ItIs �̃y�[�W���C�ȉ��̃A�h���X�ɂ���܂��D
+また，WWW 上の ItIs のページが，以下のアドレスにあります．
 
 	http://tron.um.u-tokyo.ac.jp/TRON/ItIs/
 
-Release1.3���̔z�z�L�b�g�ɂ́CItIs�J�[�l���̑S�\�[�X���X�g���܂܂�Ă�
-�܂����C�ꕔ�̃V�X�e���^�X�N�̃\�[�X�R�[�h��J�[�l���𓮍삳���邽�߂�
-�K�v�ȃc�[�����͊܂܂�Ă��܂���D����炪�K�v�ȏꍇ��o�C�i���ł̔z�z
-����]�����ꍇ�́C�ʓr�����k�������D
+Release1.3βの配布キットには，ItIsカーネルの全ソースリストが含まれてい
+ますが，一部のシステムタスクのソースコードやカーネルを動作させるために
+必要なツール等は含まれていません．これらが必要な場合やバイナリ版の配布
+を希望される場合は，別途ご相談下さい．
 
-	�z�t��]��:	itis@tron.um.u-tokyo.ac.jp
+	配付希望等:	itis@tron.um.u-tokyo.ac.jp
 
-�����o�O���|�[�g�͂ł������d�q���C���ł��肢���܂��D�d�q���C���A�h
-���X�́C�ȉ��̒ʂ�ł� (NIFTY �� PC-VAN ���������܂�)�D�������C�S��
-�҂̓s���Őv���ȕԓ����ł��Ȃ��ꍇ�����邩�Ǝv���܂����C�������������D
-�܂��C�d�b�ɂ��A���͂������������D
+質問やバグレポートはできる限り電子メイルでお願いします．電子メイルアド
+レスは，以下の通りです (NIFTY や PC-VAN からも送れます)．ただし，担当
+者の都合で迅速な返答ができない場合があるかと思いますが，ご了承下さい．
+また，電話による連絡はご遠慮下さい．
 
-	����:		itis-users@tron.um.u-tokyo.ac.jp
-	�o�O���|�[�g:	itis-bug@tron.um.u-tokyo.ac.jp
+	質問:		itis-users@tron.um.u-tokyo.ac.jp
+	バグレポート:	itis-bug@tron.um.u-tokyo.ac.jp
 
-���̓��Citis-users �́CItIs �ɋ����̂�����̂��߂̃��C�����O���X�g�ł��D
-ItIs �ɋ����̂�����ł���΂ǂȂ��ł��Q���ł��܂��D���C�y�ɎQ���������D
-�܂��C�d���E�׋��E����킸 ITRON �ɋ��������l�̂��߂̏������E
-�c�_�̏�Ƃ��āCITRON Club ���C�����O���X�g��p�ӂ��Ă��܂��D�������
-���C���C�y�ɎQ���������D���C�����O���X�g�ւ̎Q�����@�ɂ��ẮC���[�U
-�Y�}�j���A���� 7�͂��Q�Ɖ������D
-
-
-�� DOS�p�z�t�L�b�g�Ɋւ��钍��
-
-�EDOS�p�z�t�L�b�g�́CLHA �ɂ��A�[�J�C�u/���k���č���Ă��܂��D
-
-�EItIs �̃\�[�X�ł́C�ꕔ�����t�@�C�������g���Ă��邽�߁CDOS �̃t�@�C
-���V�X�e���ɓW�J����ƃt�@�C�������r���Ő؂�Ă��܂��܂��D�܂��C�啶��
-/�������̋�ʂ��Ȃ��Ȃ�܂��D�������C�����̃t�@�C�����������O�ɂȂ邱
-�Ƃ͂Ȃ��悤���O�����Ă���܂��̂ŁCMINIFEST �t�@�C�����Q�Ƃ��āC�K
-�X�ǂ݊����ĉ������D
-
-�E���s�R�[�h�C�����R�[�h�� DOS �̕W���ɕϊ����Ă���܂��D
+この内，itis-users は，ItIs に興味のある方のためのメイリングリストです．
+ItIs に興味のある方であればどなたでも参加できます．お気軽に参加下さい．
+また，仕事・勉強・趣味を問わず ITRON に興味を持つ人のための情報交換・
+議論の場として，ITRON Club メイリングリストを用意しています．こちらに
+も，お気軽に参加下さい．メイリングリストへの参加方法については，ユーザ
+ズマニュアルの 7章を参照下さい．
 
 
-�� Release1.3 �� Release1.3.4 �̎�ȕύX�_
+＊ DOS用配付キットに関する注意
 
-�E�^�X�N�t�����C���{�b�N�X�@�\��ǉ��D
+・DOS用配付キットは，LHA によりアーカイブ/圧縮して作られています．
 
-�EFreeBSD (x86) �̃T�|�[�g��ǉ��D
+・ItIs のソースでは，一部長いファイル名を使っているため，DOS のファイ
+ルシステムに展開するとファイル名が途中で切れてしまいます．また，大文字
+/小文字の区別もなくなります．ただし，複数のファイルが同じ名前になるこ
+とはないよう名前がつけてありますので，MINIFEST ファイルを参照して，適
+宜読み換えて下さい．
 
-�E�o�O�t�B�b�N�X�D
-
-
-�� Release1.2 �� Release1.3 �̎�ȕύX�_
-
-�E�^�[�Q�b�gCPU �Ɉˑ����镔���𕪗��D����ɔ����āC�f�B���N�g���\���C
-�t�@�C���\����啝�ɕύX�D
-
-�EBSD UNIX��ł̃V�~�����[�V��������ǉ��D
-
-�E�D��x�p���Z�}�t�H�@�\��ǉ��D
-
-�E���C���{�b�N�X�@�\�Ń��b�Z�[�W�L���[�̊Ǘ����@���V���O�������N�ɕύX�D
-����ɂ��C���b�Z�[�W�D��x������t�B�[���h���ړ��������߁C�D��x��
-�̃��b�Z�[�W�L���[�C���O���g���Ă���v���O�����́C�ăR���p�C�����K�v�D
-
-�Eref_tsk ���Ԃ� RUN��Ԃ̉��߂̕ύX�D
-
-�E�����݃n���h���̒�`�������T�|�[�g (�f�t�H���g�̐ݒ�ł� MCUBE �̂�)�D
-
-�Eitron_errno ��p�~�D����ɔ����Csyscall �}�N���̒�`��CItIs �^�X�N
-�T�|�[�g���C�u�������̃G���[���\���֐��̎d�l��ύX�����D
-
-�EMCUBE �ŁCTRON�d�l�L�[�{�[�h�̐ڑ����T�|�[�g�D
-
-�E�o�O�t�B�b�N�X�D
+・改行コード，漢字コードは DOS の標準に変換してあります．
 
 
-�� Release1.1 �� Release1.2 �̎�ȕύX�_
+＊ Release1.3 → Release1.3.4 の主な変更点
 
-�EID���������@�\�C�f�o�b�O�T�|�[�g�@�\�̈ꕔ (vset_reg, vget_reg)�C��
-�\�]���p�V�X�e�������Q�Ƌ@�\��ǉ��D
+・タスク付属メイルボックス機能を追加．
 
-�Eref_tsk ���Ԃ� RUN��Ԃ̉��߂̕ύX (�^�X�N�Ɨ�������Ă΂ꂽ�ꍇ)�D
+・FreeBSD (x86) のサポートを追加．
 
-�Eref_sys ���Ԃ����� runtskid, schedtskid ��ǉ��D
+・バグフィックス．
 
-�E�o�O�t�B�b�N�X�D
+
+＊ Release1.2 → Release1.3 の主な変更点
+
+・ターゲットCPU に依存する部分を分離．これに伴って，ディレクトリ構成，
+ファイル構成を大幅に変更．
+
+・BSD UNIX上でのシミュレーション環境を追加．
+
+・優先度継承セマフォ機能を追加．
+
+・メイルボックス機能でメッセージキューの管理方法をシングルリンクに変更．
+これにより，メッセージ優先度を入れるフィールドが移動したため，優先度順
+のメッセージキューイングを使っているプログラムは，再コンパイルが必要．
+
+・ref_tsk が返す RUN状態の解釈の変更．
+
+・割込みハンドラの定義解除をサポート (デフォルトの設定では MCUBE のみ)．
+
+・itron_errno を廃止．これに伴い，syscall マクロの定義や，ItIs タスク
+サポートライブラリ中のエラー情報表示関数の仕様を変更した．
+
+・MCUBE で，TRON仕様キーボードの接続をサポート．
+
+・バグフィックス．
+
+
+＊ Release1.1 → Release1.2 の主な変更点
+
+・ID自動割当機能，デバッグサポート機能の一部 (vset_reg, vget_reg)，性
+能評価用システム時刻参照機能を追加．
+
+・ref_tsk が返す RUN状態の解釈の変更 (タスク独立部から呼ばれた場合)．
+
+・ref_sys が返す情報に runtskid, schedtskid を追加．
+
+・バグフィックス．

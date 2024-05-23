@@ -39,14 +39,14 @@
 #ifdef USE_FLG
 
 /*
- *  ƒCƒxƒ“ƒgƒtƒ‰ƒOŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®å®šç¾©
  */
 typedef struct eventflag_control_block {
-	QUEUE	wait_queue;	/* ƒCƒxƒ“ƒgƒtƒ‰ƒO‘Ò‚¿ƒLƒ…[ */
-	ID	flgid;		/* ƒCƒxƒ“ƒgƒtƒ‰ƒOID */
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	flgatr;		/* ƒCƒxƒ“ƒgƒtƒ‰ƒO‘®« */
-	UINT	flgptn;		/* ƒCƒxƒ“ƒgƒtƒ‰ƒOŒ»İƒpƒ^[ƒ“ */
+	QUEUE	wait_queue;	/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°å¾…ã¡ã‚­ãƒ¥ãƒ¼ */
+	ID	flgid;		/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ID */
+	VP	exinf;		/* æ‹¡å¼µæƒ…å ± */
+	ATR	flgatr;		/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°å±æ€§ */
+	UINT	flgptn;		/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ç¾åœ¨ãƒ‘ã‚¿ãƒ¼ãƒ³ */
 } FLGCB;
 
 static FLGCB	flgcb_table[NUM_FLGID];
@@ -54,14 +54,14 @@ static FLGCB	flgcb_table[NUM_FLGID];
 #define get_flgcb(id)	(&(flgcb_table[INDEX_FLG(id)]))
     
 /*
- *  –¢g—p‚ÌƒCƒxƒ“ƒgƒtƒ‰ƒOŠÇŠÇ—ƒuƒƒbƒN‚ÌƒŠƒXƒg
+ *  æœªä½¿ç”¨ã®ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ç®¡ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒªã‚¹ãƒˆ
  */
 #ifndef _i_vcre_flg
 QUEUE	free_flgcb;
 #endif /* _i_vcre_flg */
 
 /* 
- *  ƒCƒxƒ“ƒgƒtƒ‰ƒOŠÇ—ƒuƒƒbƒN‚Ì‰Šú‰»
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ç®¡ç†ãƒ–ãƒ­ãƒƒã‚¯ã®åˆæœŸåŒ–
  */
 void
 eventflag_initialize(void)
@@ -87,7 +87,7 @@ eventflag_initialize(void)
 }
 
 /*
- *  ƒCƒxƒ“ƒgƒtƒ‰ƒO‘Ò‚¿‰ğœğŒ‚Ìƒ`ƒFƒbƒN
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°å¾…ã¡è§£é™¤æ¡ä»¶ã®ãƒã‚§ãƒƒã‚¯
  */
 Inline BOOL
 eventflag_cond(FLGCB *flgcb, UINT waiptn, UINT wfmode)
@@ -101,12 +101,12 @@ eventflag_cond(FLGCB *flgcb, UINT waiptn, UINT wfmode)
 }
 
 /*
- *  ƒCƒxƒ“ƒgƒtƒ‰ƒO‘Ò‚¿d—l‚Ì’è‹`
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°å¾…ã¡ä»•æ§˜ã®å®šç¾©
  */
 static WSPEC wspec_flg = { TTW_FLG, 0, 0 };
 
 /*
- *  ƒCƒxƒ“ƒgƒtƒ‰ƒOŠÇ—‹@”\
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°ç®¡ç†æ©Ÿèƒ½
  */
 
 #if !defined(_i_cre_flg) || !defined(_i_vcre_flg)

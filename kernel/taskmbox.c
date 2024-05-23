@@ -39,17 +39,17 @@
 #ifdef USE_TASK_MAILBOX
 
 /*
- *  ƒƒbƒZ[ƒW‘€ì—pƒ}ƒNƒ
+ *  ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ“ä½œç”¨ãƒžã‚¯ãƒ­
  */
 #define nextmsg(msg)	*((T_MSG **) &((msg)->msgque[0]))
 
 /*
- *  ƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‘Ò‚¿Žd—l‚Ì’è‹`
+ *  ã‚¿ã‚¹ã‚¯ä»˜å±žãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹å¾…ã¡ä»•æ§˜ã®å®šç¾©
  */
 static WSPEC wspec_tmb_tfifo = { TTW_TMB, 0, 0 };
 
 /*
- *  ƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒXŠÇ—‹@”\
+ *  ã‚¿ã‚¹ã‚¯ä»˜å±žãƒ¡ã‚¤ãƒ«ãƒœãƒƒã‚¯ã‚¹ç®¡ç†æ©Ÿèƒ½
  */
 
 #ifndef _i_vsnd_tmb

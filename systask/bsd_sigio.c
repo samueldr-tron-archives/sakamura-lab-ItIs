@@ -32,14 +32,14 @@
  */
 
 /*
- *  BSD UNIX—p ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O ƒTƒ|[ƒgƒ‚ƒWƒ…[ƒ‹
+ *  BSD UNIXç”¨ ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/O ã‚µãƒãƒ¼ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 
 #include "systask.h"
 #include <signal.h>
 
 /*
- *  SIGIO ’Ê’mƒnƒ“ƒhƒ‰
+ *  SIGIO é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©
  */
 static void
 bsd_sigio_handler(void)
@@ -49,13 +49,13 @@ bsd_sigio_handler(void)
 }
 
 /*
- *  ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O ƒ‚ƒWƒ…[ƒ‹‹N“®ƒ‹[ƒ`ƒ“
+ *  ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/O ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«èµ·å‹•ãƒ«ãƒ¼ãƒãƒ³
  *
- *  ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O—p‚Ì SIGIO ’Ê’mƒnƒ“ƒhƒ‰‚ðÝ’èDSIGIO ’Ê’mƒCƒxƒ“
- *  ƒgƒtƒ‰ƒO‚ð¶¬D
+ *  ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°I/Oç”¨ã® SIGIO é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ã‚’è¨­å®šï¼ŽSIGIO é€šçŸ¥ã‚¤ãƒ™ãƒ³
+ *  ãƒˆãƒ•ãƒ©ã‚°ã‚’ç”Ÿæˆï¼Ž
  */
 
-static int	initflag = 0;		/* ‰Šú‰»Ïƒtƒ‰ƒO */
+static int	initflag = 0;		/* åˆæœŸåŒ–æ¸ˆãƒ•ãƒ©ã‚° */
 
 void
 bsd_sigio_startup(void)
