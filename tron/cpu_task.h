@@ -37,39 +37,39 @@
 #define _CPU_TASK_
 
 /*
- *  $B%?%9%/5/F0$N$?$a$NDj?t$NDj5A(B
+ *  タスク起動のための定数の定義
  */
-#define INI_PSW_RNG0	0x800f6000	/* PSW $B$N=i4|CM(B ($B%j%s%0%l%Y%k(B0) */
-#define INI_PSW_RNG1	0xa00f6000	/* PSW $B$N=i4|CM(B ($B%j%s%0%l%Y%k(B1) */
-#define INI_PSW_RNG2	0xc00f6000	/* PSW $B$N=i4|CM(B ($B%j%s%0%l%Y%k(B2) */
-#define INI_PSW_RNG3	0xe00f6000	/* PSW $B$N=i4|CM(B ($B%j%s%0%l%Y%k(B3) */
+#define INI_PSW_RNG0	0x800f6000	/* PSW の初期値 (リングレベル0) */
+#define INI_PSW_RNG1	0xa00f6000	/* PSW の初期値 (リングレベル1) */
+#define INI_PSW_RNG2	0xc00f6000	/* PSW の初期値 (リングレベル2) */
+#define INI_PSW_RNG3	0xe00f6000	/* PSW の初期値 (リングレベル3) */
 
-#define INI_CSW		0x00070000	/* CSW $B$N=i4|CM(B */
+#define INI_CSW		0x00070000	/* CSW の初期値 */
 
 /*
- *  CPU$B0MB8$N%?%9%/5/F0=hM}(B
+ *  CPU依存のタスク起動処理
  *
- *  $B%7%9%F%`%9%?%C%/>e$K!$(BEIT$B%9%?%C%/%U%l!<%`$r:n$k!%(Bmake_dormant $B$+$i(B
- *  $B8F$P$l$k!%(B
+ *  システムスタック上に，EITスタックフレームを作る．make_dormant から
+ *  呼ばれる．
  */
 Inline void
 setup_context(TCB *tcb)
 {
 	VW	*ssp;
 
-	ssp = (VW *)(tcb->isstack);	/* $B=i4|%7%9%F%`%9%?%C%/%]%$%s%?(B */
+	ssp = (VW *)(tcb->isstack);	/* 初期システムスタックポインタ */
 #ifndef TRON_NO_DI
-	*--ssp = (VW)(tcb->task);	/* $B%?%9%/5/F0%"%I%l%9$r@Q$`(B */
-	*--ssp = DI14_EITINF;		/* EIT$B>pJs$r@Q$`(B */
+	*--ssp = (VW)(tcb->task);	/* タスク起動アドレスを積む */
+	*--ssp = DI14_EITINF;		/* EIT情報を積む */
 #else /* TRON_NO_DI */
-	*--ssp = 0;			/* EXPC ($B%@%_!<(B) $B$r@Q$`(B */
-	*--ssp = (VW)(tcb->task);	/* $B%?%9%/5/F0%"%I%l%9$r@Q$`(B */
-	*--ssp = TRAPA4_EITINF;		/* EIT$B>pJs$r@Q$`(B */
+	*--ssp = 0;			/* EXPC (ダミー) を積む */
+	*--ssp = (VW)(tcb->task);	/* タスク起動アドレスを積む */
+	*--ssp = TRAPA4_EITINF;		/* EIT情報を積む */
 #endif /* TRON_NO_DI */
 
 	/*
-	 *  PSW $B$N=i4|CM$r%7%9%F%`%9%?%C%/$K@Q$_!$%f!<%6%9%?%C%/%]%$%s(B
-	 *  $B%?$r=i4|2=$9$k!%(B
+	 *  PSW の初期値をシステムスタックに積み，ユーザスタックポイン
+	 *  タを初期化する．
 	 */
 	switch (tcb->tskatr & TA_RNG3) {
 	case TA_RNG0:
@@ -88,16 +88,16 @@ setup_context(TCB *tcb)
 		*--ssp = INI_PSW_RNG3;
 		break;
 	}
-	ssp -= 15;			/* R14$B!A(BR0 $B$NJ,$N%(%j%"$r<h$k(B */
+	ssp -= 15;			/* R14〜R0 の分のエリアを取る */
 
 	tcb->tskctxb.sp0 = ssp;
 	tcb->tskctxb.csw = INI_CSW;
 }
 
 /*
- *  make_dormant $B$G2u$5$l$k%9%?%C%/NN0h$N%5%$%:$NDj5A(B
+ *  make_dormant で壊されるスタック領域のサイズの定義
  *
- *  ext_tsk $B$N=hM}Cf$G;H$o$l$k!%(B
+ *  ext_tsk の処理中で使われる．
  */
 #ifndef TRON_NO_DI
 #define DORMANT_STACK_SIZE	(sizeof(VW) * 3)
@@ -106,9 +106,9 @@ setup_context(TCB *tcb)
 #endif /* TRON_NO_DI */
 
 /*
- *  $B%?%9%/5/F0%3!<%IEy$N@_Dj(B
+ *  タスク起動コード等の設定
  *
- *  sta_tsk $B$N=hM}$+$i8F$P$l$k!%(B
+ *  sta_tsk の処理から呼ばれる．
  */
 Inline void
 setup_stacd(TCB *tcb, INT stacd)
@@ -116,8 +116,8 @@ setup_stacd(TCB *tcb, INT stacd)
 	VW	*ssp;
 
 	ssp = tcb->tskctxb.sp0;
-	*ssp = stacd;			/* $B5/F0%3!<%I$r@Q$`(B (R0) */
-	*(ssp+1) = (VW)(tcb->exinf);	/* $B%?%9%/3HD%>pJs$r@Q$`(B (R1) */
+	*ssp = stacd;			/* 起動コードを積む (R0) */
+	*(ssp+1) = (VW)(tcb->exinf);	/* タスク拡張情報を積む (R1) */
 }
 
 #endif /* _CPU_TASK_ */

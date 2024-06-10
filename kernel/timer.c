@@ -39,17 +39,17 @@
 #include "sys_timer.h"
 
 /*
- *  $B8=:_;~9o(B ($B%=%U%H%&%'%"%/%m%C%/(B)
+ *  現在時刻 (ソフトウェアクロック)
  */
 SYSTIME	current_time;
 
 /* 
- *  $B%?%$%^%-%e!<(B
+ *  タイマキュー
  */
 static QUEUE	timer_queue;
 
 /*
- *  $B%?%$%^%b%8%e!<%k$N=i4|2=(B
+ *  タイマモジュールの初期化
  */
 void
 timer_initialize(void)
@@ -60,7 +60,7 @@ timer_initialize(void)
 }
 
 /*
- *  $B%?%$%^$NDd;_(B
+ *  タイマの停止
  */
 void
 timer_shutdown(void)
@@ -69,7 +69,7 @@ timer_shutdown(void)
 }
 
 /*
- *  $B%?%$%^%$%Y%s%H$r%?%$%^%-%e!<$XA^F~(B
+ *  タイマイベントをタイマキューへ挿入
  */
 static void
 enqueue_tmeb(TMEB *event)
@@ -85,11 +85,11 @@ enqueue_tmeb(TMEB *event)
 }
 
 /*
- *  $B%?%$%^%$%Y%s%H(B event $B$r!$%?%$%`%"%&%H;~4V(B tmout $B8e$K5/F0$5$l$k$h$&(B
- *  $B$K%?%$%^%-%e!<$XEPO?$9$k!%%?%$%`%"%&%H;~4V$,Mh$k$H!$%3!<%k%P%C%/4X(B 
- *  $B?t(B callback $B$K0z?t(B arg $B$rM?$($F5/F0$9$k!%(Btmout $B$,(B TMO_FEVR $B$N;~$O!$(B
- *  $B%?%$%^%-%e!<$K$OEPO?$7$J$$$,!$8e$G(B timer_delete $B$,8F$P$l$F$b$h$$$h(B
- *  $B$&$K!$%-%e!<$N%(%j%"$r=i4|2=$9$k!%(B
+ *  タイマイベント event を，タイムアウト時間 tmout 後に起動されるよう
+ *  にタイマキューへ登録する．タイムアウト時間が来ると，コールバック関 
+ *  数 callback に引数 arg を与えて起動する．tmout が TMO_FEVR の時は，
+ *  タイマキューには登録しないが，後で timer_delete が呼ばれてもよいよ
+ *  うに，キューのエリアを初期化する．
  */
 void
 timer_insert(TMEB *event, TMO tmout, CBACK callback, VP arg)
@@ -108,8 +108,8 @@ timer_insert(TMEB *event, TMO tmout, CBACK callback, VP arg)
 }
 
 /*
- *  $B%?%$%^%$%Y%s%H(B event $B$r!$(B($B@dBP(B) $B;~9o(B time $B$K5/F0$5$l$k$h$&$K%?%$%^(B
- *  $B%-%e!<$XEPO?$9$k!%(B
+ *  タイマイベント event を，(絶対) 時刻 time に起動されるようにタイマ
+ *  キューへ登録する．
  */
 void
 timer_insert_abs(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
@@ -122,8 +122,8 @@ timer_insert_abs(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
 }
 
 /*
- *  $B%?%$%^%$%Y%s%H(B event $B$r!$(Btime $B;~4V8e$K5/F0$5$l$k$h$&$K$K%?%$%^%-%e!<(B
- *  $B$XEPO?$9$k!%(B
+ *  タイマイベント event を，time 時間後に起動されるようににタイマキュー
+ *  へ登録する．
  */
 void
 timer_insert_rel(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
@@ -136,18 +136,18 @@ timer_insert_rel(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
 }
 
 /*
- *  $B%?%$%^3d9~$_%O%s%I%i(B
+ *  タイマ割込みハンドラ
  *
- *  $B%?%$%^3d9~$_%O%s%I%i$O!$%O!<%I%&%'%"%?%$%^$K$h$j(B TIMER_PERIOD$B%_%jIC(B
- *  $B$N<~4|$G5/F0$5$l$k!%%=%U%H%&%'%"%/%m%C%/$r99?7$7!$5/F0;~4V$NMh$?%?(B
- *  $B%$%^%$%Y%s%H$N5/F0$r9T$&!%(B
+ *  タイマ割込みハンドラは，ハードウェアタイマにより TIMER_PERIODミリ秒
+ *  の周期で起動される．ソフトウェアクロックを更新し，起動時間の来たタ
+ *  イマイベントの起動を行う．
  */
 void
 timer_handler(void)
 {
 	TMEB	*event;
 
-	clear_hw_timer_interrupt();		/* $B%?%$%^3d9~$_$N%/%j%"(B */
+	clear_hw_timer_interrupt();		/* タイマ割込みのクリア */
 
 	BEGIN_CRITICAL_SECTION;
 	current_time += TIMER_PERIOD;
@@ -168,7 +168,7 @@ timer_handler(void)
 }
 
 /*
- *  $B@-G=I>2AMQ%7%9%F%`;~9o;2>H5!G=(B
+ *  性能評価用システム時刻参照機能
  */
 
 #ifndef _i_vget_tim

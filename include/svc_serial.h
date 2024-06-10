@@ -40,7 +40,7 @@
 #include <itis_scint.h>
 #include <svc_fncode.h>
 
-#define CONSOLE_PORT	0	/* $B%3%s%=!<%k$N(B I/O$B%]!<%H$N;XDj(B */
+#define CONSOLE_PORT	0	/* コンソールの I/Oポートの指定 */
 
 Inline int
 serial_init(int portid)

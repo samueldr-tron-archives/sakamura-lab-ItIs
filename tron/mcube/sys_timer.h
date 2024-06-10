@@ -37,48 +37,48 @@
 #define _SYS_TIMER_
 
 /*
- *  $B%O!<%I%&%'%"0MB8%?%$%^%b%8%e!<%k(B
+ *  ハードウェア依存タイマモジュール
  *
- *  $B$3$N%b%8%e!<%kFb$G!$0J2<$NDj?t$*$h$S4X?t$rDj5A$7$J$1$l$P$J$i$J$$!%(B
+ *  このモジュール内で，以下の定数および関数を定義しなければならない．
  * 
- *  TIMER_PERIOD : $B%?%$%^3d9~$_$N<~4|(B ($BC10L$O(B msec)$B!%(BItIs $B$G$NI8=`CM$O(B 
- *  1msec $B$G$"$k$,!$%?%$%^3d9~$_$K$h$k%*!<%P%X%C%I$r>.$5$/$7$?$$>l9g$K(B
- *  $B$O!$$b$C$HD9$$<~4|$K@_Dj$7$F$b$h$$!%$b$A$m$s!$%?%$%`%"%&%H;~4V$J$I(B
- *  $B$NJ,2rEY$OAF$/$J$k(B ($BC10L$OJQ$o$i$J$$(B)$B!%(B
+ *  TIMER_PERIOD : タイマ割込みの周期 (単位は msec)．ItIs での標準値は 
+ *  1msec であるが，タイマ割込みによるオーバヘッドを小さくしたい場合に
+ *  は，もっと長い周期に設定してもよい．もちろん，タイムアウト時間など
+ *  の分解度は粗くなる (単位は変わらない)．
  *
- *  void start_hw_timer() : $B%?%$%^$r=i4|2=$7!$<~4|E*$J%?%$%^3d9~$_$r3+(B
- *  $B;O$5$;$k!%(B
+ *  void start_hw_timer() : タイマを初期化し，周期的なタイマ割込みを開
+ *  始させる．
  *
- *  void clear_hw_timer_interupt(void) : $B%?%$%^3d9~$_MW5a$r%/%j%"$9$k!%(B
- *  $B%?%$%^3d9~$_%O%s%I%i$N:G=i$G8F$P$l$k!%(B
+ *  void clear_hw_timer_interupt(void) : タイマ割込み要求をクリアする．
+ *  タイマ割込みハンドラの最初で呼ばれる．
  *
- *  void terminate_hw_timer(void) : $B%?%$%^$NF0:n$rDd;_$5$;$k!%%7%9%F%`(B
- *  $BDd;_;~$K8F$P$l$k!%(B
+ *  void terminate_hw_timer(void) : タイマの動作を停止させる．システム
+ *  停止時に呼ばれる．
  */
 
 #include "mcube.h"
 
 /*
- *  $B%?%$%^3d9~$_$N<~4|(B ($BC10L$O(B msec)
+ *  タイマ割込みの周期 (単位は msec)
  */
 #define TIMER_PERIOD	1
 
 /*
- *  $B%?%$%^CM$NFbItI=8=$N7?(B
+ *  タイマ値の内部表現の型
  */
 typedef unsigned int	TICK;
 
 /*
- *  $B%?%$%^CM$NFbItI=8=$H(B msec $BC10L$H$NJQ49(B
+ *  タイマ値の内部表現と msec 単位との変換
  *
- *  MCUBE $B4pK\%\!<%I$G$O!$%?%$%^(B ($B%+%&%s%?(B2 $B$rMQ$$$k(B) $B$O(B 1$B&L(Bsec $BKh$K%+(B
- *  $B%&%s%H%"%C%W$9$k!%(B
+ *  MCUBE 基本ボードでは，タイマ (カウンタ2 を用いる) は 1μsec 毎にカ
+ *  ウントアップする．
  */
 #define TIMER_TICK	1000
 #define TO_TICK(msec)	((msec) * TIMER_TICK)
 
 /*
- *  $B%?%$%^CM$NFbItI=8=$H&L(Bsec $BC10L$H$NJQ49(B
+ *  タイマ値の内部表現とμsec 単位との変換
  */
 #if TIMER_TICK <= 1000
 #define TO_USEC(tick)	((tick) * (1000 / TIMER_TICK))
@@ -87,24 +87,24 @@ typedef unsigned int	TICK;
 #endif
 
 /*
- *  $B@-G=I>2AMQ%7%9%F%`;~9o$r<h$j=P$9:]$N=hM};~4V$N8+@Q$jCM(B ($BC10L$OFbItI=8=(B)
+ *  性能評価用システム時刻を取り出す際の処理時間の見積り値 (単位は内部表現)
  */
 #define GET_TOLERANCE	(TIMER_TICK / 10)
 
 /*
- *  $B@_Dj$G$-$k:GBg$N%?%$%^<~4|(B ($BC10L$OFbItI=8=(B)
+ *  設定できる最大のタイマ周期 (単位は内部表現)
  *
- *  $BFbItI=8=$G(B 0xffff $B$OLs(B 65msec$B!%(B
+ *  内部表現で 0xffff は約 65msec．
  */
 #define MAX_TICK	((TICK) 0xffff)
 
 /*
- *  $B%"%;%s%V%i%l%Y%k$N%?%$%^%O%s%I%i(B
+ *  アセンブラレベルのタイマハンドラ
  */
 extern void	timer_handler_startup(void);
 
 /*
- *  $B%?%$%^$N%9%?!<%H=hM}(B
+ *  タイマのスタート処理
  */
 Inline void
 start_hw_timer()
@@ -112,60 +112,60 @@ start_hw_timer()
 	TICK	t = TO_TICK(TIMER_PERIOD);
 
 	/*
-	 *  $B3d9~$_%O%s%I%i$NDj5A(B
+	 *  割込みハンドラの定義
 	 */
 	define_eit(IRC1_VECTOR(1), EITATR(0, 15), timer_handler_startup);
 
 	/*
-	 *  IRC $B$N@_Dj(B
+	 *  IRC の設定
 	 */
 	irc_assign(IRC1_LMR(1), LIR1_BIT);
-	irc_or_assign(IRC1_TMR, LIR1_BIT);	/* $B%(%C%8%H%j%,%b!<%I(B */
-	irc_and_assign(IRC1_IMR, ~LIR1_BIT);	/* $B3d9~$_%^%9%/2r=|(B */
+	irc_or_assign(IRC1_TMR, LIR1_BIT);	/* エッジトリガモード */
+	irc_and_assign(IRC1_IMR, ~LIR1_BIT);	/* 割込みマスク解除 */
 
 	/*
-	 *  $B%?%$%^$N@_Dj(B
+	 *  タイマの設定
 	 */
-	tmr_write(TMR_CNTL, 0xb4);		/* $B%?%$%^%b!<%I(B2 */
-	assert(t <= MAX_TICK);			/* $B%?%$%^>e8BCM$N%A%'%C%/(B */
+	tmr_write(TMR_CNTL, 0xb4);		/* タイマモード2 */
+	assert(t <= MAX_TICK);			/* タイマ上限値のチェック */
 	tmr_write(TMR_CNT2, t & 0xff);
 	tmr_write(TMR_CNT2, (t >> 8) & 0xff);
 
-	irc_assign(IRC1_IRR, LIR1_BIT);		/* $B3d9~$_MW5a$r%/%j%"(B */
+	irc_assign(IRC1_IRR, LIR1_BIT);		/* 割込み要求をクリア */
 }
 
 /*
- *  $B%?%$%^3d9~$_$N%/%j%"(B
+ *  タイマ割込みのクリア
  */
 Inline void
 clear_hw_timer_interrupt(void)
 {
-	irc_assign(IRC1_IRR, LIR1_BIT);		/* $B3d9~$_MW5a$r%/%j%"(B */
+	irc_assign(IRC1_IRR, LIR1_BIT);		/* 割込み要求をクリア */
 }
 
 /*
- *  $B%?%$%^$NDd;_=hM}(B
+ *  タイマの停止処理
  */
 Inline void
 terminate_hw_timer(void)
 {
-	irc_or_assign(IRC1_IMR, LIR1_BIT);	/* $B3d9~$_%^%9%/@_Dj(B */
+	irc_or_assign(IRC1_IMR, LIR1_BIT);	/* 割込みマスク設定 */
 }
 
 /*
- *  $B%?%$%^$N8=:_CM$NFI$_=P$7(B
+ *  タイマの現在値の読み出し
  *
- *  $B3d9~$_6X;_6h4VCf$G8F$S=P$9$3$H!%(B
+ *  割込み禁止区間中で呼び出すこと．
  *
- *  $BK\Mh!$(B0 $B!A(B TO_TICK(TIMER_PERIOD)-1 $B$NCM$,JV$k$O$:$@$,!$<B:]$K$OIQEY(B
- *  $B$ODc$$$,(B TO_TICK(TIMER_PERIOD) $B$,JV$k$3$H$,$"$k!%(B
+ *  本来，0 〜 TO_TICK(TIMER_PERIOD)-1 の値が返るはずだが，実際には頻度
+ *  は低いが TO_TICK(TIMER_PERIOD) が返ることがある．
  */
 Inline TICK
 get_current_hw_time(void)
 {
 	TICK	t;
 
-	tmr_write(TMR_CNTL, 0x80);		/* $B%?%$%^CMFI$_=P$73+;O(B */
+	tmr_write(TMR_CNTL, 0x80);		/* タイマ値読み出し開始 */
 	t = tmr_read(TMR_CNT2);
 	t += tmr_read(TMR_CNT2) << 8;
 	return(TO_TICK(TIMER_PERIOD) - t);

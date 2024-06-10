@@ -37,53 +37,53 @@
 #define _READY_QUEUE_
 
 /*
- *  $B%l%G%#%-%e!<A`:n%k!<%A%s(B
+ *  レディキュー操作ルーチン
  */
 
 #include "queue.h"
 
 /*
- *  $B%l%G%#%-%e!<$N9=B$$NDj5A(B
+ *  レディキューの構造の定義
  *
- *  $B%l%G%#%-%e!<Cf$K$O!$M%@hEY$4$H$N%?%9%/%-%e!<(B tskque $B$,MQ0U$5$l$F$*(B
- *  $B$j!$%?%9%/$N(B TCB $B$O!$3:Ev$9$kM%@hEY$N%-%e!<$KEPO?$5$l$k!%(B
- *  $B%l%G%#%-%e!<$N%5!<%A$r8zN($h$/9T$&$?$a$K!$M%@hEY$4$H$N%?%9%/%-%e!<(B
- *  $B$K%?%9%/$,F~$C$F$$$k$+$I$&$+$r<($9%S%C%H%^%C%WNN0h(B bitmap $B$rMQ0U$7(B
- *  $B$F$$$k!%$3$NNN0h$r;H$&$3$H$G!$%o!<%IC10L$N%5!<%A$,2DG=$K$J$j!$%a%b(B
- *  $B%j%"%/%;%9$N2s?t$r8:$i$9$3$H$,$G$-$k!%$?$@$7!$M%@hEY$N%l%Y%k?t$,>/(B
- *  $B$J$/!$%S%C%HA`:nL?Na$,=<<B$7$F$$$J$$(B CPU $B$N>l9g$K$O!$%S%C%H%^%C%WA`(B
- *  $B:n$N%*!<%P!<%X%C%I$N$?$a$K!$5U$K8zN($,Mn$A$k2DG=@-$b$"$k!%(BTRON$B;EMM(B
- *  $B%A%C%WMQ$N%3!<%I$HHFMQ%3!<%I$G!$%o!<%IFb$N%S%C%H$NHV9fIU$1$,5U$K$J(B
- *  $B$C$F$$$k$N$GCm0U$;$h!%(B
- *  $B$^$?!$%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$r;2>H$9$kA`:n$r8zN($h$/9T(B
- *  $B$&$?$a$K!$%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$NM%@hEY$r(B top_priority
- *  $B%U%#!<%k%I$KF~$l$F$*$/!%%l%G%#%-%e!<$,6u$N>l9g$K$O!$$3$N%U%#!<%k%I(B
- *  $B$NCM$r(B NUM_PRI $B$K$9$k!%$3$N;~$K(B tskque[top_priority] $B$r;2>H$9$k$H(B 
- *  NULL $B$rJV$7$?$$$?$a!$>o$K(B NULL $B$,F~$C$F$$$k(B null$B%U%#!<%k%I$rMQ0U$7(B
- *  $B$F$$$k!%(B
+ *  レディキュー中には，優先度ごとのタスクキュー tskque が用意されてお
+ *  り，タスクの TCB は，該当する優先度のキューに登録される．
+ *  レディキューのサーチを効率よく行うために，優先度ごとのタスクキュー
+ *  にタスクが入っているかどうかを示すビットマップ領域 bitmap を用意し
+ *  ている．この領域を使うことで，ワード単位のサーチが可能になり，メモ
+ *  リアクセスの回数を減らすことができる．ただし，優先度のレベル数が少
+ *  なく，ビット操作命令が充実していない CPU の場合には，ビットマップ操
+ *  作のオーバーヘッドのために，逆に効率が落ちる可能性もある．TRON仕様
+ *  チップ用のコードと汎用コードで，ワード内のビットの番号付けが逆にな
+ *  っているので注意せよ．
+ *  また，レディキュー中の最高優先度のタスクを参照する操作を効率よく行
+ *  うために，レディキュー中の最高優先度のタスクの優先度を top_priority
+ *  フィールドに入れておく．レディキューが空の場合には，このフィールド
+ *  の値を NUM_PRI にする．この時に tskque[top_priority] を参照すると 
+ *  NULL を返したいため，常に NULL が入っている nullフィールドを用意し
+ *  ている．
  */
 
 #define BITMAPSZ	(sizeof(UINT) * 8)
 #define NUM_BITMAP	((NUM_PRI + BITMAPSZ - 1) / BITMAPSZ)
 
 typedef	struct ready_queue {
-	INT	top_priority;		/* $B%l%G%#%-%e!<Cf$N:G9bM%@hEY(B */
-	QUEUE	tskque[NUM_PRI];	/* $BM%@hEY$4$H$N%?%9%/%-%e!<(B */
-	TCB	*null;			/* $B%l%G%#%-%e!<$,6u$K$J$C$?;~$N$?$a(B */
-	UINT	bitmap[NUM_BITMAP];	/* $BM%@hEY$4$H$N%S%C%H%^%C%WNN0h(B */
+	INT	top_priority;		/* レディキュー中の最高優先度 */
+	QUEUE	tskque[NUM_PRI];	/* 優先度ごとのタスクキュー */
+	TCB	*null;			/* レディキューが空になった時のため */
+	UINT	bitmap[NUM_BITMAP];	/* 優先度ごとのビットマップ領域 */
 } RDYQUE;
 
 /*
- *  $B%S%C%H%^%C%WNN0hA`:n%i%$%V%i%j(B
+ *  ビットマップ領域操作ライブラリ
  *
- *  $BHFMQ%3!<%I$G(B (1 << xxx) $B$H$7$F$$$kItJ,$O!$%F!<%V%k$rMQ0U$7$?J}$,8z(B
- *  $BN($,$h$$$H;W$o$l$k$,!$%F!<%V%k$N:n$jJ}$,(B CPU $B$N%o!<%ID9$K0MB8$7$F$7(B
- *  $B$^$&$N$G!$(B(1 << xxx) $B$N7A$K$7$F$$$k!%(B
+ *  汎用コードで (1 << xxx) としている部分は，テーブルを用意した方が効
+ *  率がよいと思われるが，テーブルの作り方が CPU のワード長に依存してし
+ *  まうので，(1 << xxx) の形にしている．
  */
 
 /*
- *  $B%l%G%#%-%e!<(B rq $B$N%S%C%H%^%C%WNN0hCf$N!$M%@hEY(B priority $B$KBP1~$9$k(B
- *  $B%S%C%H$r%;%C%H$9$k!%(B
+ *  レディキュー rq のビットマップ領域中の，優先度 priority に対応する
+ *  ビットをセットする．
  */
 Inline void
 bitmap_set(RDYQUE *rq, INT priority)
@@ -96,8 +96,8 @@ bitmap_set(RDYQUE *rq, INT priority)
 }
 
 /*
- *  $B%l%G%#%-%e!<(B rq $B$N%S%C%H%^%C%WNN0hCf$N!$M%@hEY(B priority $B$KBP1~$9$k(B
- *  $B%S%C%H$r%/%j%"$9$k!%(B
+ *  レディキュー rq のビットマップ領域中の，優先度 priority に対応する
+ *  ビットをクリアする．
  */
 Inline void
 bitmap_clear(RDYQUE *rq, INT priority)
@@ -110,16 +110,16 @@ bitmap_clear(RDYQUE *rq, INT priority)
 }
 
 /*
- *  $B0J2<$N(B _ffs$B4X?t$O!$I8=`$N(B ffs$B4X?t$H0c$$!$(Bi $B$,(B 0 $B$N>l9g$O9MN8$7$F$*(B
- *  $B$i$:!$JV$9CM$b(B 0 $B$r%Y!<%9$K$7$F$$$k!%$^$?!$(BTRON$B;EMM%A%C%WMQ$N%3!<%I(B
- *  $B$G$O!$%5!<%A$9$kJ}8~$,5U$K$J$C$F$$$k!%(B
+ *  以下の _ffs関数は，標準の ffs関数と違い，i が 0 の場合は考慮してお
+ *  らず，返す値も 0 をベースにしている．また，TRON仕様チップ用のコード
+ *  では，サーチする方向が逆になっている．
  *
- *  $BI8=`%i%$%V%i%j$K(B ffs $B$,$"$k$J$i!$<!$N$h$&$KDj5A$7$F!$I8=`%i%$%V%i%j(B
- *  $B$r;H$C$?J}$,8zN($,NI$$2DG=@-$,9b$$!%(B
+ *  標準ライブラリに ffs があるなら，次のように定義して，標準ライブラリ
+ *  を使った方が効率が良い可能性が高い．
  *	#define _ffs(i) (ffs(i) - 1)
- *  TRON$B;EMM%A%C%W$NI8=`@_Dj$G$O!$G$0UD9%S%C%H%U%#!<%k%IA`:nL?Na$r;H$&(B
- *  $B$N$G(B _ffs$B4X?t$O;H$o$l$J$$$,!$(Bbvsch $BL?Na$,$J$$>l9g$K$O$3$N4X?t$r;H$&(B
- *  $BI,MW$,$"$k!%(B
+ *  TRON仕様チップの標準設定では，任意長ビットフィールド操作命令を使う
+ *  ので _ffs関数は使われないが，bvsch 命令がない場合にはこの関数を使う
+ *  必要がある．
  */
 Inline INT
 _ffs(INT i)
@@ -140,7 +140,7 @@ _ffs(INT i)
 }
 
 /*
- *  $B%l%G%#%-%e!<$N=i4|2=(B
+ *  レディキューの初期化
  */
 Inline void
 ready_queue_initialize(RDYQUE *rq)
@@ -156,9 +156,9 @@ ready_queue_initialize(RDYQUE *rq)
 }
 
 /*
- *  $B%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$r;2>H$9$k!%(B
+ *  レディキュー中の最高優先度のタスクを参照する．
  *
- *  $B%l%G%#%-%e!<$,6u$N;~$O(B NULL $B$rJV$9!%(B
+ *  レディキューが空の時は NULL を返す．
  */
 Inline TCB *
 ready_queue_top(RDYQUE *rq)
@@ -167,9 +167,9 @@ ready_queue_top(RDYQUE *rq)
 }
 
 /*
- *  $B%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$NM%@hEY$r;2>H$9$k!%(B
+ *  レディキュー中の最高優先度のタスクの優先度を参照する．
  *
- *  $B%l%G%#%-%e!<$,6u$N;~$K$O8F$P$l$J$$!%(B
+ *  レディキューが空の時には呼ばれない．
  */
 Inline INT
 ready_queue_top_priority(RDYQUE *rq)
@@ -178,14 +178,14 @@ ready_queue_top_priority(RDYQUE *rq)
 }
 
 /*
- *  $B%?%9%/$r%l%G%#%-%e!<$KA^F~$9$k!%(B
+ *  タスクをレディキューに挿入する．
  *
- *  tcb $B$G;X$9%?%9%/$NM%@hEY$HF1$8M%@hEY$r;}$D%?%9%/$NCf$G$N:G8e$KF~$l(B
- *  $B$k!%(B
- *  $B%S%C%H%^%C%WNN0h$N3:Ev$9$k%S%C%H$r%;%C%H$7!$I,MW$J$i(B top_priority 
- *  $B$r99?7$9$k!%(Btop_priority $B$r99?7$7$?;~$O(B 1$B!$$=$&$G$J$$>l9g$O(B 0 $B$rJV(B
- *  $B$9(B ($B%$%s%i%$%s4X?t$J$N$G!$JV$jCM$,ITMW$J>l9g$G$bL5BL$J%3!<%I$O=P$J(B
- *  $B$$(B)$B!%(B
+ *  tcb で指すタスクの優先度と同じ優先度を持つタスクの中での最後に入れ
+ *  る．
+ *  ビットマップ領域の該当するビットをセットし，必要なら top_priority 
+ *  を更新する．top_priority を更新した時は 1，そうでない場合は 0 を返
+ *  す (インライン関数なので，返り値が不要な場合でも無駄なコードは出な
+ *  い)．
  */
 Inline BOOL
 ready_queue_insert(RDYQUE *rq, TCB *tcb)
@@ -202,13 +202,13 @@ ready_queue_insert(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  $B%?%9%/$r%l%G%#%-%e!<$KA^F~$9$k!%(B
+ *  タスクをレディキューに挿入する．
  *
- *  tcb $B$G;X$9%?%9%/$NM%@hEY$HF1$8M%@hEY$r;}$D%?%9%/$NCf$G$N@hF,$KF~$l(B
- *  $B$k!%(BRUN$B>uBV$N%?%9%/$r%l%G%#%-%e!<$+$i30$7$F$*$/<BAu$G!$%?%9%/$,%W(B
- *  $B%j%(%s%W%H$5$l$?>l9g$K;H$&!%(B
- *  $B%S%C%H%^%C%WNN0h$N3:Ev$9$k%S%C%H$r%;%C%H$7!$I,MW$J$i(B top_priority 
- *  $B$r99?7$9$k!%(B
+ *  tcb で指すタスクの優先度と同じ優先度を持つタスクの中での先頭に入れ
+ *  る．RUN状態のタスクをレディキューから外しておく実装で，タスクがプ
+ *  リエンプトされた場合に使う．
+ *  ビットマップ領域の該当するビットをセットし，必要なら top_priority 
+ *  を更新する．
  */
 Inline void
 ready_queue_insert_top(RDYQUE *rq, TCB *tcb)
@@ -223,29 +223,29 @@ ready_queue_insert_top(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  $B%?%9%/$r%l%G%#%-%e!<$+$i:o=|$9$k!%(B
+ *  タスクをレディキューから削除する．
  *
- *  TCB $B$r3:Ev$9$kM%@hEY$N%?%9%/%-%e!<$+$i$O$:$7!$$=$l$K$h$C$F%?%9%/%-%e!<(B
- *  $B$,6u$K$J$C$?>l9g$K$O!$%S%C%H%^%C%WNN0h$N3:Ev$9$k%S%C%H$r%/%j%"$9$k!%(B
- *  $B$5$i$K!$:o=|$7$?%?%9%/$,:G9bM%@hEY$G$"$C$?;~$O!$(Btop_priority $B$r99?7(B
- *  $B$9$k!%$3$N:]$K!$<!$KM%@hEY$N9b$$%?%9%/$r%5!<%A$9$k$?$a$K!$%S%C%H%^%C(B
- *  $B%WNN0h$r;H$&!%(B
+ *  TCB を該当する優先度のタスクキューからはずし，それによってタスクキュー
+ *  が空になった場合には，ビットマップ領域の該当するビットをクリアする．
+ *  さらに，削除したタスクが最高優先度であった時は，top_priority を更新
+ *  する．この際に，次に優先度の高いタスクをサーチするために，ビットマッ
+ *  プ領域を使う．
  */
 Inline void
 ready_queue_delete(RDYQUE *rq, TCB *tcb)
 {
 #if defined(tron) && !defined(TRON_LEVEL1)
-   Asm("qdel %a1, r0	\n"	/* $B%?%9%/%-%e!<$+$i$N:o=|(B */
-"	bne 1f		\n"	/* $B%-%e!<$,6u$K$J$i$J$$;~$O$3$l$G=*N;(B */
+   Asm("qdel %a1, r0	\n"	/* タスクキューからの削除 */
+"	bne 1f		\n"	/* キューが空にならない時はこれで終了 */
 "	mov %2 ,r0	\n"
 "	mov %3, r1	\n"
-"	bclr r1, @r0	\n"	/* $B3:Ev%S%C%H$N%/%j%"(B */
+"	bclr r1, @r0	\n"	/* 該当ビットのクリア */
 "	cmp %4, r1	\n"
-"	bne 1f		\n"	/* $B$h$j9bM%@hEY$N%?%9%/$,$"$k;~$O=*N;(B */
+"	bne 1f		\n"	/* より高優先度のタスクがある時は終了 */
 "	mov %5, r2	\n"
-"	sub r1, r2	\n"	/* $B%S%C%H%5!<%A$9$k%S%C%HI}$r7W;;(B */
+"	sub r1, r2	\n"	/* ビットサーチするビット幅を計算 */
 "	bvsch/1/f	\n"
-"	mov r1, %0	\n"	/* top_priority $B$r99?7(B */
+"	mov r1, %0	\n"	/* top_priority を更新 */
 "1:			"
 :	"=g"(rq->top_priority)
 :	"g"(tcb->tskque.prev), "g"(rq->bitmap), "g"(tcb->priority),
@@ -274,12 +274,12 @@ ready_queue_delete(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  $B%l%G%#%-%e!<$NM%@hEY%l%Y%k(B priority $B$N%-%e!<$N@hF,$N%?%9%/$r!$%-%e!<(B
- *  $B:G8e$X0\F0$9$k!%%-%e!<$,6u$N>l9g$O!$2?$b$7$J$$!%(B
+ *  レディキューの優先度レベル priority のキューの先頭のタスクを，キュー
+ *  最後へ移動する．キューが空の場合は，何もしない．
  *
- *  ready_queue_delete $B$H(B ready_queue_insert $B$rB3$1$F8F$s$G$bF1$8$3$H$,(B
- *  $B<B8=$G$-$k$,!$(Bready_queue_rotate $B$N>l9g$O%S%C%H%^%C%WNN0h$NA`:n$OI,(B
- *  $BMW$J$$$?$a!$8zN($r$h$/$9$k$?$a$KJL$N4X?t$K$7$F$$$k!%(B
+ *  ready_queue_delete と ready_queue_insert を続けて呼んでも同じことが
+ *  実現できるが，ready_queue_rotate の場合はビットマップ領域の操作は必
+ *  要ないため，効率をよくするために別の関数にしている．
  */
 Inline void
 ready_queue_rotate(RDYQUE *rq, INT priority)

@@ -37,7 +37,7 @@
 #define _WAIT_
 
 /*
- *  $B%?%9%/4VF14|!&DL?.%*%V%8%'%/%HHFMQ%k!<%A%s(B
+ *  タスク間同期・通信オブジェクト汎用ルーチン
  */
 
 #include "queue.h"
@@ -45,22 +45,22 @@
 #include "task.h"
 
 /*
- *  $B%?%9%/$NBT$A>uBV$r2r=|$9$k!%(B
+ *  タスクの待ち状態を解除する．
  *
- *  $B%?%9%/$r%?%$%^%-%e!<$*$h$SBT$A%-%e!<$+$i$O$:$7!$%?%9%/>uBV$r99?7$9(B
- *  $B$k!%(Bwait_release_ok $B$O!$BT$A2r=|$5$l$?%?%9%/$K(B E_OK $B$rEO$9!%(B
- *  wait_release_tmout $B$O!$%?%$%^%-%e!<$+$i$O$:$9=hM}$r$7$J$$!%%?%$%`(B
- *  $B%"%&%H=hM}$N;~$KMQ$$$k!%(B
+ *  タスクをタイマキューおよび待ちキューからはずし，タスク状態を更新す
+ *  る．wait_release_ok は，待ち解除されたタスクに E_OK を渡す．
+ *  wait_release_tmout は，タイマキューからはずす処理をしない．タイム
+ *  アウト処理の時に用いる．
  */
 extern void	wait_release(TCB *tcb);
 extern void	wait_release_ok(TCB *tcb);
 extern void	wait_release_tmout(TCB *tcb);
 
 /*
- *  $B%?%9%/$NBT$A>uBV$r%-%c%s%;%k$9$k!%(B
+ *  タスクの待ち状態をキャンセルする．
  *
- *  $B%?%9%/$r%?%$%^%-%e!<$*$h$SBT$A%-%e!<$+$i$O$:$9!%%?%9%/>uBV$O99?7$7(B
- *  $B$J$$!%(B
+ *  タスクをタイマキューおよび待ちキューからはずす．タスク状態は更新し
+ *  ない．
  */
 Inline void
 wait_cancel(TCB *tcb)
@@ -70,59 +70,59 @@ wait_cancel(TCB *tcb)
 }
 
 /*
- *  $B<B9TCf$N%?%9%/$rBT$A>uBV$K0\9T$5$;!$%?%$%^%$%Y%s%H%-%e!<$K$D$J$0!%(B
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューにつなぐ．
  */
 extern void	make_wait(TMO tmout);
 
 /*
- *  $BBT$A%-%e!<$K$D$J$,$C$F$$$k%?%9%/$NBT$A>uBV$r$9$Y$F2r=|$7!$(BE_DLT$B%(%i!<(B
- *  $B$H$9$k!%(B
+ *  待ちキューにつながっているタスクの待ち状態をすべて解除し，E_DLTエラー
+ *  とする．
  *
- *  $B%?%9%/4VF14|!&DL?.%*%V%8%'%/%H$,:o=|$5$l$?;~$K;H$&!%(B
+ *  タスク間同期・通信オブジェクトが削除された時に使う．
  */
 extern void	wait_delete(QUEUE *wait_queue);
 
 /*
- *  $BBT$A%-%e!<$N@hF,$N%?%9%/$N(B ID $B$r<h$j=P$9!%(B
+ *  待ちキューの先頭のタスクの ID を取り出す．
  */
 extern ID	wait_tskid(QUEUE *wait_queue);
 
 /*
- *  $B%3%s%H%m!<%k%V%m%C%/6&DLItJ,A`:n%k!<%A%s(B
+ *  コントロールブロック共通部分操作ルーチン
  *
- *  $B%?%9%/4VF14|!&DL?.%*%V%8%'%/%H$O$$$:$l$b!$%3%s%H%m!<%k%V%m%C%/$N@h(B
- *  $BF,ItJ,$,6&DL$K$J$C$F$$$k!%0J2<$O!$$=$N6&DLItJ,$r07$&$?$a$NHFMQ%k!<(B
- *  $B%A%s$G$"$k!%6&DLItJ,$r!$(BGCB ($BHFMQ%3%s%H%m!<%k%V%m%C%/(B) $B$H$$$&7?$K$9(B
- *  $B$k!%J#?t$NBT$A%-%e!<$r;}$D%*%V%8%'%/%H$N>l9g!$(B2$B$D$a0J9_$NBT$A%-%e!<(B
- *  $B$rA`:n$9$k>l9g$K$O!$$3$l$i$N%k!<%A%s$O;H$($J$$!%$^$?!$%*%V%8%'%/%H(B
- *  $BB0@-$N(B TA_TPRI$B%S%C%H$r;2>H$9$k$N$G!$$3$N%S%C%H$rB>$NL\E*$K;H$C$F$$(B
- *  $B$k>l9g$b!$$3$l$i$N%k!<%A%s$O;H$($J$$!%%*%V%8%'%/%H$,@8@.$5$l$F$$$J(B
- *  $B$$>l9g$K$O!$%*%V%8%'%/%HB0@-$r(B OBJ_NONEXIST $B$K$9$k(B ($B$=$N$?$a!$%*%V(B
- *  $B%8%'%/%HB0@-$N$9$Y$F$N%S%C%H$rFHN)$K;H$&$3$H$,$G$-$J$$$H$$$&@)8B$,(B
- *  $B$"$k(B)$B!%(B
+ *  タスク間同期・通信オブジェクトはいずれも，コントロールブロックの先
+ *  頭部分が共通になっている．以下は，その共通部分を扱うための汎用ルー
+ *  チンである．共通部分を，GCB (汎用コントロールブロック) という型にす
+ *  る．複数の待ちキューを持つオブジェクトの場合，2つめ以降の待ちキュー
+ *  を操作する場合には，これらのルーチンは使えない．また，オブジェクト
+ *  属性の TA_TPRIビットを参照するので，このビットを他の目的に使ってい
+ *  る場合も，これらのルーチンは使えない．オブジェクトが生成されていな
+ *  い場合には，オブジェクト属性を OBJ_NONEXIST にする (そのため，オブ
+ *  ジェクト属性のすべてのビットを独立に使うことができないという制限が
+ *  ある)．
  */
 
 struct generic_control_block {
-	QUEUE	wait_queue;	/* $BBT$A%-%e!<(B */
-	ID	objid;		/* $B%*%V%8%'%/%H(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	objatr;		/* $B%*%V%8%'%/%HB0@-(B */
-	/*  $B$3$l0J9_$KB>$N%U%#!<%k%I$,$"$C$F$b$h$$$,!$(B */
-	/*  $BHFMQA`:n%k!<%A%s$G$O07$o$l$J$$!%(B */
+	QUEUE	wait_queue;	/* 待ちキュー */
+	ID	objid;		/* オブジェクトID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	objatr;		/* オブジェクト属性 */
+	/*  これ以降に他のフィールドがあってもよいが， */
+	/*  汎用操作ルーチンでは扱われない． */
 };
 
 #define OBJ_NONEXIST	(-1)
 
 /*
- *  $B<B9TCf$N%?%9%/$rBT$A>uBV$K0\9T$5$;!$%?%$%^%$%Y%s%H%-%e!<$*$h$S%*%V(B
- *  $B%8%'%/%H$NBT$A%-%e!<$K$D$J$0!%$^$?!$(Bctxtsk $B$N(B wid $B$r@_Dj$9$k!%(B
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューおよびオブ
+ *  ジェクトの待ちキューにつなぐ．また，ctxtsk の wid を設定する．
  */
 extern void	gcb_make_wait(GCB *gcb, TMO tmout);
 
 /*
- *  $B%?%9%/$NM%@hEY$,JQ$o$C$?:]$K!$BT$A%-%e!<$NCf$G$N%?%9%/$N0LCV$r=$@5(B
- *  $B$9$k!%%*%V%8%'%/%HB0@-$K(B TA_TPRI $B$,;XDj$5$l$F$$$k>l9g$K$N$_!$8F$S=P(B
- *  $B$5$l$k!%(B
+ *  タスクの優先度が変わった際に，待ちキューの中でのタスクの位置を修正
+ *  する．オブジェクト属性に TA_TPRI が指定されている場合にのみ，呼び出
+ *  される．
  */
 extern void	gcb_change_priority(GCB *gcb, TCB *tcb);
 extern void	obj_chg_pri(TCB *tcb, INT oldpri);

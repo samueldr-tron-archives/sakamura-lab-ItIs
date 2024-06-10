@@ -33,7 +33,7 @@
  */
 
 /*
- *  BSD UNIX$BMQ(B $B%N%s%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k(B
+ *  BSD UNIX用 ノンブロッキングI/O サポートモジュール
  */
 
 #include "systask.h"
@@ -42,15 +42,15 @@
 #include <bsd_sigio.h>
 
 /*
- *  SIGIO$BDLCN%$%Y%s%H%-%e!<(B
+ *  SIGIO通知イベントキュー
  */
 
 static QUEUE	sigio_queue;
 
 /*
- *  SIGIO$BDLCN%O%s%I%i(B
+ *  SIGIO通知ハンドラ
  *
- *  SIGIO$BDLCN=hM}%?%9%/$r5/>2$9$k!%(B
+ *  SIGIO通知処理タスクを起床する．
  */
 
 static void
@@ -60,13 +60,13 @@ bsd_sigio_handler()
 }
 
 /*
- *  $B%N%s%V%m%C%-%s%0(BI/O $B%b%8%e!<%k5/F0%k!<%A%s(B
+ *  ノンブロッキングI/O モジュール起動ルーチン
  *
- *  SIGIO$BDLCN%$%Y%s%H%-%e!<$r=i4|2=!%(BSIGIO$BDLCN=hM}%?%9%/$H%;%^%U%)$r@8(B
- *  $B@.!%(BSIGIO$BDLCN%O%s%I%i$r@_Dj!%(B
+ *  SIGIO通知イベントキューを初期化．SIGIO通知処理タスクとセマフォを生
+ *  成．SIGIO通知ハンドラを設定．
  */
 
-static int	initflag = 0;		/* $B=i4|2=:Q%U%i%0(B */
+static int	initflag = 0;		/* 初期化済フラグ */
 
 void
 bsd_sigio_startup(void)
@@ -89,7 +89,7 @@ bsd_sigio_startup(void)
 }
 
 /*
- *  SIGIO$BDLCN=hM}%?%9%/K\BN(B
+ *  SIGIO通知処理タスク本体
  */
 
 void
@@ -100,9 +100,9 @@ bsd_sigio_task(void)
 
 	while (slp_tsk() == E_OK) {
 		/*
-		 *  SIGIO$BDLCN%$%Y%s%H%-%e!<Cf$N3F%$%Y%s%H%V%m%C%/$N%3!<(B
-		 *  $B%k%P%C%/%k!<%A%s$r8F$S$@$9!%%3!<%k%P%C%/%k!<%A%s$,(B
-		 *  0 $B0J30$rJV$7$?>l9g!$$=$N%$%Y%s%H%V%m%C%/$r:o=|$9$k!%(B
+		 *  SIGIO通知イベントキュー中の各イベントブロックのコー
+		 *  ルバックルーチンを呼びだす．コールバックルーチンが
+		 *  0 以外を返した場合，そのイベントブロックを削除する．
 		 */
 		syscall(wai_sem(SEM_BSD_SIGIO));
 		q = sigio_queue.next;
@@ -119,10 +119,10 @@ bsd_sigio_task(void)
 }
 
 /*
- *  SIGIO$BDLCN%$%Y%s%H$r(BSIGIO$BDLCN%$%Y%s%H%-%e!<$XA^F~(B
+ *  SIGIO通知イベントをSIGIO通知イベントキューへ挿入
  *
- *  $B%7%9%F%`%*%V%8%'%/%H$K%"%/%;%9$9$k$?$a$K!$3HD%(BSVC$B%O%s%I%i$H$7$FF0(B
- *  $B:n$5$;$F$$$k!%(B
+ *  システムオブジェクトにアクセスするために，拡張SVCハンドラとして動
+ *  作させている．
  */
 
 ER

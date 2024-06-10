@@ -44,10 +44,10 @@
 #include "offset.h"
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A%c(B
+ *  タスクディスパッチャ
  *
- *  $BCY1d3d9~$_$r;H$&>l9g$H;H$o$J$$>l9g$GBg$-$/0c$&$?$a!$:.Mp$rHr$1$k$?(B
- *  $B$a$K!$%U%!%$%k$rJ,$1$F$$$k!%(B
+ *  遅延割込みを使う場合と使わない場合で大きく違うため，混乱を避けるた
+ *  めに，ファイルを分けている．
  */
 #ifndef TRON_NO_DI
 #include "dispatch.S"
@@ -56,10 +56,10 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  $B%7%9%F%`%3!<%k5/F0%k!<%A%s(B
+ *  システムコール起動ルーチン
  *
- *  TRAPA $B$r;H$C$F%7%9%F%`%3!<%k$r5/F0$9$k$?$a$NJ,4t%k!<%A%s!%5!G=%3!<(B
- *  $B%I$K=>$C$F!$3F%7%9%F%`%3!<%k$N=hM}%k!<%A%s$XJ,4t$9$k!%(B
+ *  TRAPA を使ってシステムコールを起動するための分岐ルーチン．機能コー
+ *  ドに従って，各システムコールの処理ルーチンへ分岐する．
  */
 	.text
 	.align 1
@@ -67,13 +67,13 @@
 _trapa_ientry:
 	cmp #0, r6
 	bgt _trapa_ientry_1
-	cmp #FIRST_FNCD, r6		/* $B5!G=%3!<%I$N2<8B$N%A%'%C%/(B */
+	cmp #FIRST_FNCD, r6		/* 機能コードの下限のチェック */
 	blt _trapa_ientry_2
-	jsr @@(_itable,r6*4)		/* $B%7%9%F%`%3!<%k=hM}%k!<%A%s$XJ,4t(B */
+	jsr @@(_itable,r6*4)		/* システムコール処理ルーチンへ分岐 */
 	reit
 _trapa_ientry_1:
 #ifdef USE_SVC
-	jsr @_svc_ientry		/* $B3HD%(BSVC$B%O%s%I%i$X$NJ,4t(B */
+	jsr @_svc_ientry		/* 拡張SVCハンドラへの分岐 */
 	reit
 #endif /* USE_SVC */
 _trapa_ientry_2:
@@ -81,7 +81,7 @@ _trapa_ientry_2:
 	reit
 
 /*
- *  $BL$%5%]!<%H%7%9%F%`%3!<%k$N%(%s%H%j(B
+ *  未サポートシステムコールのエントリ
  */
 	.text
 	.align 1
@@ -91,17 +91,17 @@ _no_support:
 	rts
 
 /*
- *  $B%"%;%s%V%i$G5-=R$9$kI,MW$,$"$k%7%9%F%`%3!<%k(B
+ *  アセンブラで記述する必要があるシステムコール
  *
- *  $B%7%9%F%`%3!<%k%(%s%H%j%F!<%V%k$r:9$7BX$($k$?$a$K!$(BTRAPA $B$G8F$S=P$7(B
- *  $B$?;~$N=hM}$r%"%;%s%V%i$G5-=R$9$kI,MW$N$"$k%7%9%F%`%3!<%k(B ???_??? 
- *  $B$KBP$7$F$O!$(B_i_???_??? $B$r(B _z_???_??? $B$KDj5A$9$k!%(B
+ *  システムコールエントリテーブルを差し替えるために，TRAPA で呼び出し
+ *  た時の処理をアセンブラで記述する必要のあるシステムコール ???_??? 
+ *  に対しては，_i_???_??? を _z_???_??? に定義する．
  */
 
 /*
- *  $B%G%#%9%Q%C%A$N6X;_(B/$B5v2D5!G=(B
+ *  ディスパッチの禁止/許可機能
  *
- *  TRON_NO_DI $B$N;~$O!$(BC$B8@8l$G=q$$$?%k!<%A%s$r;H$($k!%(B
+ *  TRON_NO_DI の時は，C言語で書いたルーチンを使える．
  */
 
 #ifndef TRON_NO_DI
@@ -113,11 +113,11 @@ _no_support:
 	.globl _z_dis_dsp
 _z_dis_dsp:
 #ifdef CHK_CTX
-	bfextu #12,#4,@(4,sp), r0	/* IMASK $B$r(B EIT$B>pJs$+$i<h$j=P$9(B */
-	cmpu #14, r0			/* IMASK < 14 $B$J$i(B E_CTX$B%(%i!<(B */
+	bfextu #12,#4,@(4,sp), r0	/* IMASK を EIT情報から取り出す */
+	cmpu #14, r0			/* IMASK < 14 なら E_CTXエラー */
 	blt _context_error
 #endif /* CHK_CTX */
-	bfinsu #14, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
+	bfinsu #14, #12,#4,@(4,sp)	/* IMASK を EIT情報中に設定 */
 	mov #E_OK, r0
 	rts
 
@@ -130,11 +130,11 @@ _z_dis_dsp:
 	.globl _z_ena_dsp
 _z_ena_dsp:
 #ifdef CHK_CTX
-	bfextu #12,#4,@(4,sp), r0	/* IMASK $B$r(B EIT$B>pJs$+$i<h$j=P$9(B */
-	cmpu #14, r0			/* IMASK < 14 $B$J$i(B E_CTX$B%(%i!<(B */
+	bfextu #12,#4,@(4,sp), r0	/* IMASK を EIT情報から取り出す */
+	cmpu #14, r0			/* IMASK < 14 なら E_CTXエラー */
 	blt _context_error
 #endif /* CHK_CTX */
-	bfinsu #15, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
+	bfinsu #15, #12,#4,@(4,sp)	/* IMASK を EIT情報中に設定 */
 	mov #E_OK, r0
 	rts
 
@@ -142,7 +142,7 @@ _z_ena_dsp:
 #endif /* TRON_NO_DI */
 
 /*
- *  $B3d9~$_$N6X;_(B/$B5v2D5!G=(B
+ *  割込みの禁止/許可機能
  */
 
 #ifndef _z_loc_cpu
@@ -153,10 +153,10 @@ _z_ena_dsp:
 	.globl _z_loc_cpu
 _z_loc_cpu:
 #ifdef CHK_CTX
-	btst #0,@(4,sp)			/* $B%?%9%/FHN)It$J$i(B E_CTX$B%(%i!<(B */
+	btst #0,@(4,sp)			/* タスク独立部なら E_CTXエラー */
 	beq _context_error
 #endif /* CHK_CTX */
-	bfinsu #0, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
+	bfinsu #0, #12,#4,@(4,sp)	/* IMASK を EIT情報中に設定 */
 	mov #E_OK, r0
 	rts
 
@@ -169,14 +169,14 @@ _z_loc_cpu:
 	.globl _z_unl_cpu
 _z_unl_cpu:
 #ifdef CHK_CTX
-	btst #0,@(4,sp)			/* $B%?%9%/FHN)It$J$i(B E_CTX$B%(%i!<(B */
+	btst #0,@(4,sp)			/* タスク独立部なら E_CTXエラー */
 	beq _context_error
 #endif /* CHK_CTX */
-	bfinsu #15, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
+	bfinsu #15, #12,#4,@(4,sp)	/* IMASK を EIT情報中に設定 */
 #ifdef TRON_NO_DI
 	mov #0, @_dispatch_disabled
-	cmp @_ctxtsk, @_schedtsk	/* ctxtsk != schedtsk $B$N;~(B */
-        bne _dispatch			/* $B%G%#%9%Q%C%A%c$r5/F0(B */
+	cmp @_ctxtsk, @_schedtsk	/* ctxtsk != schedtsk の時 */
+        bne _dispatch			/* ディスパッチャを起動 */
 #endif /* TRON_NO_DI */
 	mov #E_OK, r0
 	rts
@@ -184,7 +184,7 @@ _z_unl_cpu:
 #endif /* _z_unl_cpu */
 
 /*
- *  IMASK $B$N@_Dj(B/$B;2>H5!G=(B
+ *  IMASK の設定/参照機能
  */
 
 #ifndef _z_chg_ims
@@ -195,21 +195,21 @@ _z_unl_cpu:
 	.globl _z_chg_ims
 _z_chg_ims:
 #ifdef CHK_PAR
-	btst #0,@(4,sp)			/* $B%?%9%/FHN)It$J$i(B z_chg_ims_1 $B$X(B */
+	btst #0,@(4,sp)			/* タスク独立部なら z_chg_ims_1 へ */
 	beq z_chg_ims_1
-	cmpu #15, r0			/* IMASK > 15 $B$J$i(B E_PAR$B%(%i!<(B */
+	cmpu #15, r0			/* IMASK > 15 なら E_PARエラー */
 	bra z_chg_ims_2
 z_chg_ims_1:
-	cmpu #7, r0			/* IMASK > 7 $B$J$i(B E_PAR$B%(%i!<(B */
+	cmpu #7, r0			/* IMASK > 7 なら E_PARエラー */
 z_chg_ims_2:
 	bgt _parameter_error
 #endif /* CHK_PAR */
-	bfinsu r0, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
+	bfinsu r0, #12,#4,@(4,sp)	/* IMASK を EIT情報中に設定 */
 #ifdef TRON_NO_DI
-	cmp #15, r0			/* $B@_Dj$7$?(BIMASK$BCM(B == 15 $B$+$D(B */
-	bne z_chg_ims_3			/* dispatch_disabled == 0 $B$+$D(B */
-	cmp #0, @_dispatch_disabled	/* ctxtsk != schedtsk $B$N;~(B */
-	bne z_chg_ims_3			/* $B%G%#%9%Q%C%A%c$r5/F0(B */
+	cmp #15, r0			/* 設定したIMASK値 == 15 かつ */
+	bne z_chg_ims_3			/* dispatch_disabled == 0 かつ */
+	cmp #0, @_dispatch_disabled	/* ctxtsk != schedtsk の時 */
+	bne z_chg_ims_3			/* ディスパッチャを起動 */
 	cmp @_ctxtsk, @_schedtsk
 	bne _dispatch
 #endif /* TRON_NO_DI */
@@ -225,7 +225,7 @@ z_chg_ims_3:
 	.align 1
 	.globl _z_ref_ims
 _z_ref_ims:
-	bfextu #12,#4,@(4,sp), r1	/* IMASK $B$r(B EIT$B>pJs$+$i<h$j=P$9(B */
+	bfextu #12,#4,@(4,sp), r1	/* IMASK を EIT情報から取り出す */
 	mov r1, @r0
 	mov #E_OK, r0
 	rts
@@ -233,46 +233,46 @@ _z_ref_ims:
 #endif /* _z_ref_ims */
 
 /*
- *  $B%G%#%9%Q%C%A%c$X$NJ,4t%k!<%A%s(B
+ *  ディスパッチャへの分岐ルーチン
  */
 #ifdef TRON_NO_DI
 	.text
 	.align 1
 _dispatch:
-	trapa #4			/* $B%G%#%9%Q%C%A%c$N5/F0(B */
+	trapa #4			/* ディスパッチャの起動 */
 	mov #E_OK, r0
 	rts
 #endif /* TRON_NO_DI */
 
 /*
- *  $B%"%;%s%V%i$G5-=R$5$l$?%7%9%F%`%3!<%k$N6&DL%(%i!<=hM}%k!<%A%s(B
+ *  アセンブラで記述されたシステムコールの共通エラー処理ルーチン
  */
 	.text
 	.align 1
 
 #ifdef CHK_CTX
-_context_error:				/* $B%3%s%F%-%9%H%(%i!<(B */
+_context_error:				/* コンテキストエラー */
 	mov #E_CTX, r0
 	rts
 #endif /* CHK_CTX */
 
 #ifdef CHK_PAR
-_parameter_error:			/* $B%Q%i%a!<%?%(%i!<(B */
+_parameter_error:			/* パラメータエラー */
 	mov #E_PAR, r0
 	rts
 #endif /* CHK_PAR */
 
 /*
- *  $B%7%9%F%`%3!<%k%(%s%H%j%F!<%V%k(B
+ *  システムコールエントリテーブル
  */
 	.text
 	.align 2
 #include "itable.S"
 _itable:
-	.int _no_support		/* $B5!G=HV9f(B 0 $B$KBP1~$9$k%(%s%H%j(B */
+	.int _no_support		/* 機能番号 0 に対応するエントリ */
 
 /*
- *  $B%?%$%^%O%s%I%i5/F0$N$?$a$N9b5i8@8lBP1~%k!<%A%s(B
+ *  タイマハンドラ起動のための高級言語対応ルーチン
  */
 	.text
 	.align 1

@@ -34,7 +34,7 @@
  */
 
 /* 
- *  CPU $B$K0MB8$9$k%7%9%F%`%3!<%k(B
+ *  CPU に依存するシステムコール
  */
 
 #include "itis_kernel.h"
@@ -42,7 +42,7 @@
 #include "check.h"
 
 /*
- *  $B%G%#%9%Q%C%A$N6X;_(B/$B5v2D5!G=(B
+ *  ディスパッチの禁止/許可機能
  */
 
 #ifndef _i_dis_dsp
@@ -69,7 +69,7 @@ i_ena_dsp(void)
 #endif /* _i_ena_dsp */
 
 /*
- *  $B3d9~$_$N6X;_(B/$B5v2D5!G=(B
+ *  割込みの禁止/許可機能
  */
 
 #ifndef _i_loc_cpu
@@ -96,7 +96,7 @@ i_unl_cpu(void)
 #endif /* _i_unl_cpu */
 
 /*
- *  IMASK $B$N@_Dj(B/$B;2>H5!G=(B
+ *  IMASK の設定/参照機能
  */
 
 #ifndef _i_chg_ims

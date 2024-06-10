@@ -34,7 +34,7 @@
  */
 
 /*
- *  $B%?%9%/4VF14|!&DL?.%*%V%8%'%/%HHFMQ%k!<%A%s(B
+ *  タスク間同期・通信オブジェクト汎用ルーチン
  */
 
 #include "itis_kernel.h"
@@ -42,10 +42,10 @@
 #include "wait.h"
 
 /*
- *  $BBT$A>uBV$,2r=|$9$k$h$&%?%9%/>uBV$r99?7$9$k!%%l%G%#>uBV$K$J$k>l9g$O!$(B
- *  $B%l%G%#%-%e!<$K$D$J$0!%(B
+ *  待ち状態が解除するようタスク状態を更新する．レディ状態になる場合は，
+ *  レディキューにつなぐ．
  *
- *  $B%?%9%/$,BT$A>uBV(B ($BFs=EBT$A$r4^$`(B) $B$N;~$K8F$V$3$H!%(B
+ *  タスクが待ち状態 (二重待ちを含む) の時に呼ぶこと．
  */
 Inline void
 make_non_wait(TCB *tcb)
@@ -61,7 +61,7 @@ make_non_wait(TCB *tcb)
 }
 
 /*
- *  $B%?%9%/$NBT$A>uBV$r2r=|$9$k!%(B
+ *  タスクの待ち状態を解除する．
  */
 __inline__ void
 wait_release(TCB *tcb)
@@ -91,12 +91,12 @@ wait_release_tmout(TCB *tcb)
 }
 
 /*
- *  $B<B9TCf$N%?%9%/$rBT$A>uBV$K0\9T$5$;!$%?%$%^%$%Y%s%H%-%e!<$K$D$J$0!%(B
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューにつなぐ．
  *
- *  ctxtsk $B$O(B RUN$B>uBV$K$J$C$F$$$k$N$,DL>o$G$"$k$,!$<B9TCf$N%7%9%F%`%3!<(B 
- *  $B%k$NESCf$G3d9~$_$,H/@8$7!$$=$N3d9~$_%O%s%I%iCf$G8F$P$l$?%7%9%F%`%3!<(B 
- *  $B%k$K$h$C$F(B ctxtsk $B$,$=$NB>$N>uBV$K$J$k>l9g$,$"$k!%$?$@$7!$(BWAIT$B>uBV(B
- *  $B$K$J$k$3$H$O$J$$!%(B
+ *  ctxtsk は RUN状態になっているのが通常であるが，実行中のシステムコー 
+ *  ルの途中で割込みが発生し，その割込みハンドラ中で呼ばれたシステムコー 
+ *  ルによって ctxtsk がその他の状態になる場合がある．ただし，WAIT状態
+ *  になることはない．
  */
 void
 make_wait(TMO tmout)
@@ -117,8 +117,8 @@ make_wait(TMO tmout)
 }
 
 /*
- *  $BBT$A%-%e!<$K$D$J$,$C$F$$$k%?%9%/$NBT$A>uBV$r$9$Y$F2r=|$7!$(BE_DLT$B%(%i!<(B
- *  $B$H$9$k!%(B
+ *  待ちキューにつながっているタスクの待ち状態をすべて解除し，E_DLTエラー
+ *  とする．
  */
 void
 wait_delete(QUEUE *wait_queue)
@@ -133,7 +133,7 @@ wait_delete(QUEUE *wait_queue)
 }
 
 /*
- *  $BBT$A%-%e!<$N@hF,$N%?%9%/$N(B ID $B$r<h$j=P$9!%(B
+ *  待ちキューの先頭のタスクの ID を取り出す．
  */
 ID
 wait_tskid(QUEUE *wait_queue)
@@ -147,7 +147,7 @@ wait_tskid(QUEUE *wait_queue)
 }
 
 /*
- *  $B%?%9%/$rM%@hEY=g$NBT$A%-%e!<$K$D$J$0!%(B
+ *  タスクを優先度順の待ちキューにつなぐ．
  */
 Inline void
 queue_insert_tpri(TCB *tcb, QUEUE *queue)
@@ -159,8 +159,8 @@ queue_insert_tpri(TCB *tcb, QUEUE *queue)
 }
 
 /*
- *  $B<B9TCf$N%?%9%/$rBT$A>uBV$K0\9T$5$;!$%?%$%^%$%Y%s%H%-%e!<$*$h$S%*%V(B
- *  $B%8%'%/%H$NBT$A%-%e!<$K$D$J$0!%$^$?!$(Bctxtsk $B$N(B wgcb $B$r@_Dj$9$k!%(B
+ *  実行中のタスクを待ち状態に移行させ，タイマイベントキューおよびオブ
+ *  ジェクトの待ちキューにつなぐ．また，ctxtsk の wgcb を設定する．
  */
 void
 gcb_make_wait(GCB *gcb, TMO tmout)
@@ -176,9 +176,9 @@ gcb_make_wait(GCB *gcb, TMO tmout)
 }
 
 /*
- *  $B%?%9%/$NM%@hEY$,JQ$o$C$?:]$K!$BT$A%-%e!<$NCf$G$N%?%9%/$N0LCV$r=$@5(B
- *  $B$9$k!%%*%V%8%'%/%HB0@-$K(B TA_TPRI $B$,;XDj$5$l$F$$$k>l9g$K$N$_!$8F$S=P(B
- *  $B$5$l$k!%(B
+ *  タスクの優先度が変わった際に，待ちキューの中でのタスクの位置を修正
+ *  する．オブジェクト属性に TA_TPRI が指定されている場合にのみ，呼び出
+ *  される．
  */
 inline void
 gcb_change_priority(GCB *gcb, TCB *tcb)

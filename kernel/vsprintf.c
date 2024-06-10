@@ -34,7 +34,7 @@
  */
 
 /*
- *  ItIs$B%+!<%M%kMQ(B $B4J0WHG(B vsprintf$B%i%$%V%i%j(B
+ *  ItIsカーネル用 簡易版 vsprintfライブラリ
  */
 
 #include <stdarg.h>

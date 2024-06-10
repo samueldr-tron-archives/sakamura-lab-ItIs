@@ -33,9 +33,9 @@
  */
 
 /*
- *  m68k $BMQ$N%9%?!<%H%"%C%W%b%8%e!<%k(B
+ *  m68k 用のスタートアップモジュール
  *
- *  ItIs $B%+!<%M%k$H(B ItIs $B%?%9%/$G6&DL$KMQ$$$k!%(B
+ *  ItIs カーネルと ItIs タスクで共通に用いる．
  */
 
 	.globl start
@@ -43,21 +43,21 @@
 	.even
 start:
 	/*
-	 *  main $B4X?t$KEO$90z?t$N%G%U%)%k%HCM$N@_Dj(B
+	 *  main 関数に渡す引数のデフォルト値の設定
 	 *
-	 *  d4$B!A(Bd6 $B$,(B $BBh(B1$B0z?t!ABh(B3$B0z?t$KBP1~$7$F$$$k!%(B_hardware_init_hook
-	 *  $B$d(B _software_init_hook $BCf$G=q$-49$($i$l$k$3$H$rA[Dj$7$F$$$k!%(B
-	 *  $B$3$3$G$O!$(BItIs $B$N%?%9%/MQ$N%G%U%)%k%H$r@_Dj$9$k!%(B
+	 *  d4〜d6 が 第1引数〜第3引数に対応している．_hardware_init_hook
+	 *  や _software_init_hook 中で書き換えられることを想定している．
+	 *  ここでは，ItIs のタスク用のデフォルトを設定する．
 	 */
 	move.l d0, d4
 	move.l d1, d5
 	clr.l d6
 
 	/*
-	 *  $B%9%?%C%/%]%$%s%?$r(B __stack $B$K=i4|2=$9$k(B (0 $B$G$J$$>l9g(B)$B!%(B
+	 *  スタックポインタを __stack に初期化する (0 でない場合)．
 	 *
-	 *  __stack $B$K%9%?%C%/%]%$%s%?$N=i4|CM$r@_Dj$7$F$*$/$H!$%9%?%C(B
-	 *  $B%/%]%$%s%?$N=i4|2=$,9T$o$l$k!%(BItIs $B4D6-$G$O;H$o$J$$!%(B
+	 *  __stack にスタックポインタの初期値を設定しておくと，スタッ
+	 *  クポインタの初期化が行われる．ItIs 環境では使わない．
 	 */
 	movea.l #__stack, a0
 	cmpa.l #0, a0
@@ -65,7 +65,7 @@ start:
 	movea.l a0, sp	
 
 	/*
-	 *  bss$B%;%/%7%g%s$r%/%j%"$9$k!%(B
+	 *  bssセクションをクリアする．
 	 */
 start_0:
 	movea.l #__bss_start, a0
@@ -80,10 +80,10 @@ start_1:
 	bcc start_1
 
 	/*
-	 *  data$B%;%/%7%g%s$r=i4|2=$9$k(B (ROM$B2=BP1~(B)$B!%(B
+	 *  dataセクションを初期化する (ROM化対応)．
 	 *
-	 *  __idata_start $B$+$i(B __idata_end $B$^$G$r!$(B__data_start $B0J9_$K(B
-	 *  $B%3%T!<$9$k!%(B
+	 *  __idata_start から __idata_end までを，__data_start 以降に
+	 *  コピーする．
 	 */
 start_2:
 	move.l #__idata_end, d0
@@ -99,12 +99,12 @@ start_3:
 	bcc start_3
 
 	/*
-	 *  _hardware_init_hook $B$r8F$S=P$9(B (0 $B$G$J$$>l9g(B)$B!%(B
+	 *  _hardware_init_hook を呼び出す (0 でない場合)．
 	 *
-	 *  $B%O!<%I%&%'%"0MB8$KI,MW$J=i4|2==hM}$,$"$k>l9g$O!$(B
-	 *  hardware_init_hook $B$H$$$&4X?t$rMQ0U$9$l$P$h$$!%(BItIs $B%+!<%M(B
-	 *  $B%k$G$O!$(Bsys_support.S $BFb$G(B hardware_init_hook $B$rDj5A$7$F$$(B
-	 *  $B$k!%(B
+	 *  ハードウェア依存に必要な初期化処理がある場合は，
+	 *  hardware_init_hook という関数を用意すればよい．ItIs カーネ
+	 *  ルでは，sys_support.S 内で hardware_init_hook を定義してい
+	 *  る．
 	 */
 start_4:
 	movea.l #_hardware_init_hook, a0
@@ -114,10 +114,10 @@ start_4:
 
 start_5:
 	/*
-	 *  _software_init_hook $B$r8F$S=P$9(B (0 $B$G$J$$>l9g(B)$B!%(B
+	 *  _software_init_hook を呼び出す (0 でない場合)．
 	 *
-	 *  $B%=%U%H%&%'%"4D6-0MB8$KI,MW$J=i4|2==hM}$,$"$k>l9g$O!$(B
-	 *  software_init_hook $B$H$$$&4X?t$rMQ0U$9$l$P$h$$!%(B
+	 *  ソフトウェア環境依存に必要な初期化処理がある場合は，
+	 *  software_init_hook という関数を用意すればよい．
 	 */
 	movea.l #_software_init_hook, a0
 	cmpa.l #0, a0
@@ -144,11 +144,11 @@ start_6:
 	/*
 	 *  exit(ercd);
 	 *
-	 *  ItIs $B%+!<%M%k$r:n$k>l9g$K$O!$(Bmain $B$+$iLa$k$3$H$O$J$$$N$G!$(B
-	 *  $B0J2<$OITMW!%(B
-	 *  ItIs $B%?%9%/$O!$K\Mh(B ter_tsk $B$G=*N;$9$Y$-$J$N$G!$$3$3$XLa$C(B
-	 *  $B$F$3$J$$$N$,@5$7$$!%$?$@$7!$(BItIs $B%?%9%/$G(B ter_tsk $B$7$J$$$H(B
-	 *  $B$3$3$XLa$C$F$/$k!%(B
+	 *  ItIs カーネルを作る場合には，main から戻ることはないので，
+	 *  以下は不要．
+	 *  ItIs タスクは，本来 ter_tsk で終了すべきなので，ここへ戻っ
+	 *  てこないのが正しい．ただし，ItIs タスクで ter_tsk しないと
+	 *  ここへ戻ってくる．
 	 */
 	move.l d0, -(sp)
 	jsr _exit

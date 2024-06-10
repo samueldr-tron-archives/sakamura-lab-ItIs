@@ -37,12 +37,12 @@
 #include "task.h"
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A%c(B
+ *  タスクディスパッチャ
  * 
- *  $B<B9TCf$N%?%9%/(B (ctxtsk) $B$N%3%s%F%-%9%H$r(B TCB $B$KJ]B8$7!$<B9T$9$Y$-(B
- *  $B%?%9%/(B (schedtsk) $B$r?7$7$$<B9T%?%9%/$H$7$F!$$=$N%3%s%F%-%9%H$r(B TCB 
- *  $B$+$iI|5"$9$k!%%?%9%/%G%#%9%Q%C%A%c$+$iLa$k:]$K!$%7%0%J%k%^%9%/$O0J(B
- *  $BA0$N>uBV$KLa$5$l$k!%(B
+ *  実行中のタスク (ctxtsk) のコンテキストを TCB に保存し，実行すべき
+ *  タスク (schedtsk) を新しい実行タスクとして，そのコンテキストを TCB 
+ *  から復帰する．タスクディスパッチャから戻る際に，シグナルマスクは以
+ *  前の状態に戻される．
  */
 void
 dispatch_handler()
@@ -59,15 +59,15 @@ dispatch_handler()
 }
 
 /*
- *  $B%?!<%2%C%H(BCPU$B0MB8$N=i4|2=%k!<%A%s(B
+ *  ターゲットCPU依存の初期化ルーチン
  */
 void
 cpu_initialize(void)
 {
 	/*
-	 *  $B%7%0%J%k%9%?%C%/$r!$%W%m%;%9%9%?%C%/>e$K<h$k!%%7%0%J%k%9%?%C(B
-	 *  $B%/$r;H$C$F$$$k$H@_Dj$9$k$N$O!$%9%?!<%H%"%C%W%k!<%A%s$r%?%9(B
-	 *  $B%/FHN)It$HH=Dj$5$;$k$?$a!%(B
+	 *  シグナルスタックを，プロセススタック上に取る．シグナルスタッ
+	 *  クを使っていると設定するのは，スタートアップルーチンをタス
+	 *  ク独立部と判定させるため．
 	 */
 	{
 #ifdef USE_SIGSTACK
@@ -88,7 +88,7 @@ cpu_initialize(void)
 	}
 
 	/*
-	 *  $B%G%#%9%Q%C%AMQ$N%7%0%J%k%O%s%I%i$r@_Dj!%(B
+	 *  ディスパッチ用のシグナルハンドラを設定．
 	 */
 	{
 		struct sigvec	vec;
@@ -101,7 +101,7 @@ cpu_initialize(void)
 }
 
 /*
- *  $B%?!<%2%C%H(BCPU$B0MB8$N=*N;=hM}%k!<%A%s(B
+ *  ターゲットCPU依存の終了処理ルーチン
  */
 void
 cpu_shutdown(void)
@@ -109,31 +109,31 @@ cpu_shutdown(void)
 }
 
 /*
- *  $B%?%9%/5/F0%k!<%A%s(B
+ *  タスク起動ルーチン
  *
- *  BSD UNIX$B>e$G$O!$%+!<%M%k$H%?%9%/$,F1$8FC8"%l%Y%k$GF0:n$9$k$?$a!$%?(B
- *  $B%9%/$X$NJ,4t$O4X?t8F$S=P$7$G<B8=$G$-$k!%(B
+ *  BSD UNIX上では，カーネルとタスクが同じ特権レベルで動作するため，タ
+ *  スクへの分岐は関数呼び出しで実現できる．
  */
 void
 task_start()
 {
 	/*
-	 *  $B%7%0%J%k%^%9%/$r@_Dj$7$F!$%?%9%/$r5/F0$9$k!%(B
+	 *  シグナルマスクを設定して，タスクを起動する．
 	 */
 	sigsetmask(SIGMASK_TASK);
 	(*ctxtsk->task)(ctxtsk->tskctxb.stacd, ctxtsk->exinf);
 
 	/*
-	 *  $B%?%9%/$N=*N;;~$K(B ext_tsk $B$r8F$V$N$G!$$3$3$X$OLa$i$J$$!%(B
+	 *  タスクの終了時に ext_tsk を呼ぶので，ここへは戻らない．
 	 */
 	assert(0);
 }
 
 /*
- *  $B%7%9%F%`%a%b%j%W!<%k$r;H$o$J$$>l9g(B
+ *  システムメモリプールを使わない場合
  *
- *  UNIX$B%i%$%V%i%j$N(B malloc $B$H(B free $B$K%7%9%F%`%a%b%j%W!<%k$NLr3d$rG$$;(B
- *  $B$k!%(B
+ *  UNIXライブラリの malloc と free にシステムメモリプールの役割を任せ
+ *  る．
  */
 
 #ifndef USE_TMPL_OS
@@ -161,9 +161,9 @@ sys_rel_blk(VP blk)
 #endif /* USE_TMPL_OS */
 
 /*
- *  $B3HD%(BSVC $B$N=PF~8}$N=hM}(B
+ *  拡張SVC の出入口の処理
  *
- *  $B3HD%(BSVC $BFb$G%7%9%F%`%*%V%8%'%/%H$r%"%/%;%9$G$-$k$h$&$K$9$k$?$a$N=hM}!%(B
+ *  拡張SVC 内でシステムオブジェクトをアクセスできるようにするための処理．
  */
 
 void

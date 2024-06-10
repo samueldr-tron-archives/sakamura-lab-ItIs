@@ -33,16 +33,16 @@
 # 
 
 #
-#  $B%*%V%8%'%/%H%U%!%$%k$+$i%G!<%?%;%/%7%g%s$NFbMF$r%"%;%s%V%i$N%=!<%97A(B
-#  $B<0$GCj=P$9$k(B (ROM$B2=BP1~%f!<%F%#%j%F%#(B)$B!%(B
+#  オブジェクトファイルからデータセクションの内容をアセンブラのソース形
+#  式で抽出する (ROM化対応ユーティリティ)．
 #
-#  $B%"%;%s%V%i%=!<%9$O!$<h$j=P$7$?%G!<%?%;%/%7%g%s$NFbMF$r%F%-%9%H%;%/%7%g(B
-#  $B%s$KCV$/$b$N$H$7$F@8@.$7!$$=$N@hF,$K(B __idata_start$B%7%s%\%k!$KvHx$K(B 
-#  __idata_end$B%7%s%\%k$rCV$/!%$3$l$i$N%7%s%\%k$O!$%9%?!<%H%"%C%W%b%8%e!<(B
-#  $B%k$G!$%G!<%?%;%/%7%g%s$r=i4|2=$9$k:]$KMQ$$$i$l$k!%(B
+#  アセンブラソースは，取り出したデータセクションの内容をテキストセクショ
+#  ンに置くものとして生成し，その先頭に __idata_startシンボル，末尾に 
+#  __idata_endシンボルを置く．これらのシンボルは，スタートアップモジュー
+#  ルで，データセクションを初期化する際に用いられる．
 #
-#  extidata $B$r;H$C$F(B ROM$B2=2DG=$J%W%m%0%i%`$r:n@.$9$k:]$K$O!$%j%s%+$r(B 3$B2s(B
-#  $BDL$9$3$H$,I,MW$G$"$k!%6qBNE*$K$O!$<!$N$h$&$K9T$&!%(B
+#  extidata を使って ROM化可能なプログラムを作成する際には，リンカを 3回
+#  通すことが必要である．具体的には，次のように行う．
 #
 #    % gcc -o program obj1.o obj2.o ... objn.o
 #    % extidata program
@@ -50,37 +50,37 @@
 #    % extidata program
 #    % gcc -o program obj1.o obj2.o ... objn.o program-idata.s
 #
-#  1$B2sL\$N%j%s%/$N7k2L$O!$DL>o$N%*%V%8%'%/%H%b%8%e!<%k$G$"$k!%$3$3$+$i!$(B
-#  extidata $B$r;H$C$F!$%G!<%?%;%/%7%g%s$r<h$j=P$9!%%G!<%?%;%/%7%g%s$N%5(B
-#  $B%$%:$O!$(B1$B2sL\$N%j%s%/$G(B fix $B$7$F$*$j!$0J8eJQ2=$7$J$$!%(B
+#  1回目のリンクの結果は，通常のオブジェクトモジュールである．ここから，
+#  extidata を使って，データセクションを取り出す．データセクションのサ
+#  イズは，1回目のリンクで fix しており，以後変化しない．
 #
-#  2$B2sL\$N%j%s%/$G!$%G!<%?%;%/%7%g%s$r=i4|2=$9$k$?$a$N%G!<%?$r%F%-%9%H(B
-#  $B%;%/%7%g%s$KF~$l$?%*%V%8%'%/%H%b%8%e!<%k$,:n$i$l$k!%$3$N%j%s%/7k2L$G(B
-#  $B$O!$%F%-%9%H%;%/%7%g%s$d%G!<%?%;%/%7%g%s$NG[CV$,JQ2=$7$F$$$k$?$a$K!$(B
-#  $B%F%-%9%H%;%/%7%g%sCf$N=i4|2=%G!<%?$H<B:]$N%G!<%?%;%/%7%g%s$NFbMF$,0l(B
-#  $BCW$7$F$$$k$H$O8B$i$J$$!%(B
+#  2回目のリンクで，データセクションを初期化するためのデータをテキスト
+#  セクションに入れたオブジェクトモジュールが作られる．このリンク結果で
+#  は，テキストセクションやデータセクションの配置が変化しているために，
+#  テキストセクション中の初期化データと実際のデータセクションの内容が一
+#  致しているとは限らない．
 #
-#  3$B2sL\$N%j%s%/$G!$:G=*E*$J(B ROM$B2=2DG=$J%W%m%0%i%`$,F@$i$l$k!%(B2$B2sL\$N%j(B
-#  $B%s%/7k2L$H(B 3$B2sL\$N%j%s%/7k2L$G!$%;%/%7%g%s$NG[CV$5$l$k%"%I%l%9$,JQ2=(B
-#  $B$7$J$$$3$H$,%]%$%s%H$G$"$k!%$3$NCJ3,$GBg>fIW$J$3$H$r3NG'$9$k$?$a$K$O!$(B
-#  $B:FEY(B extidata $B$r;H$C$F%G!<%?%;%/%7%g%s$rCj=P$7!$(B1$B$DA0$N7k2L$HHf3S$9(B
-#  $B$l$P$h$$!%$D$^$j!$(B
+#  3回目のリンクで，最終的な ROM化可能なプログラムが得られる．2回目のリ
+#  ンク結果と 3回目のリンク結果で，セクションの配置されるアドレスが変化
+#  しないことがポイントである．この段階で大丈夫なことを確認するためには，
+#  再度 extidata を使ってデータセクションを抽出し，1つ前の結果と比較す
+#  ればよい．つまり，
 #
 #    % extidata program program-idata.check
 #    % diff program-idata.s program-idata.check
 #
-#  $B:G8e$NHf3S$,0lCW$9$l$P!$7k2L$,@5$7$$$3$H$,J]>Z$5$l$k!%(B
+#  最後の比較が一致すれば，結果が正しいことが保証される．
 #
-#  extidata $B5/F0;~$K$O!$%Q%i%a!<%?$H$7$F!$F~NO%U%!%$%k$NL>A0$H=PNO%U%!(B
-#  $B%$%k$NL>A0$rM?$($k!%=PNO%U%!%$%kL>$r>JN,$7$?>l9g$K$O!$F~NO%U%!%$%kL>(B
-#  $B$K(B "-idata.s" $B$r$D$1$?$b$N$rMQ$$$k!%F~NO%U%!%$%kL>$b>JN,$7$?>l9g$K$O!$(B
-#  $BF~NO%U%!%$%kL>$H$7$F!$(B"a.out" $B$rMQ$$$k!%(B
+#  extidata 起動時には，パラメータとして，入力ファイルの名前と出力ファ
+#  イルの名前を与える．出力ファイル名を省略した場合には，入力ファイル名
+#  に "-idata.s" をつけたものを用いる．入力ファイル名も省略した場合には，
+#  入力ファイル名として，"a.out" を用いる．
 #
-#  extidata $B$K$O!$<!$N%*%W%7%g%s$,$"$k!%(B
+#  extidata には，次のオプションがある．
 #
-#  -p <prefix>	$BFbIt$G;H$&(B objdump $B%f!<%F%#%j%F%#$N%W%j%U%#%C%/%9!%Nc$((B
-#		$B$P!$(B<prefix> $B$r(B m68k $B$H$9$k$H!$(Bm68-objdump $B$r;H$&!%(B
-#  -v		$BF0:n>pJs$rI=<($9$k!%(B
+#  -p <prefix>	内部で使う objdump ユーティリティのプリフィックス．例え
+#		ば，<prefix> を m68k とすると，m68-objdump を使う．
+#  -v		動作情報を表示する．
 
 require "getopt.pl";
 do Getopt("p");
@@ -88,7 +88,7 @@ do Getopt("p");
 $prefix = $opt_p ? $opt_p."-" : "";
 
 #
-#  $B%*%V%8%'%/%H%@%s%W(B 1$B9TJ8$N%G!<%?$r%"%;%s%V%i7A<0$G=q$-=P$9(B
+#  オブジェクトダンプ 1行文のデータをアセンブラ形式で書き出す
 #
 sub writeline {
 	local($line) = @_;
@@ -108,8 +108,8 @@ sub writeline {
 }
 
 #
-#  $infile $B$+$i(B .data $B%;%/%7%g%s$rCj=P$7$F!$%"%;%s%V%i%=!<%9$r(B $outfile 
-#  $B$K=PNO!%(B
+#  $infile から .data セクションを抽出して，アセンブラソースを $outfile 
+#  に出力．
 #
 sub extidata {
 	local($infile, $outfile) = @_;

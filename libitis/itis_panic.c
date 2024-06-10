@@ -37,12 +37,12 @@
 #include <itis_syslog.h>
 
 /*
- *  $B%(%i!<%a%C%;!<%8$N@8@.(B
+ *  エラーメッセージの生成
  */
 extern char	*itron_strerror(ER);
 
 /*
- *  $B%(%i!<%a%C%;!<%8$r=PNO$7!$%?%9%/$+$iH4$1$k(B
+ *  エラーメッセージを出力し，タスクから抜ける
  */
 void
 itis_panic(const char *file, int line, const char *expr, ER ercd)

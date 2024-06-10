@@ -1,7 +1,7 @@
 
-		     $B!a(B 68040 $B$K0MB8$9$k5!G=(B $B!a(B
+		     ＝ 68040 に依存する機能 ＝
 
-	    $B!J(BRelease 1.4$B&BBP1~!$:G=*99?7(B: 6-Jul-1998$B!K(B
+	    （Release 1.4β対応，最終更新: 6-Jul-1998）
 
 ------------------------------------------------------------------------ 
 	ItIs - An ITRON Implementation for Research and Education
@@ -34,275 +34,275 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- * TRON $B$O(B The Real-time Operating system Nucleus $B$NN,>N$G$9!%(B
- * ITRON $B$O(B Industrial TRON $B$NN,>N$G$9!%(B
- * $B&L(BITRON $B$O(B Micro Industrial TRON $B$NN,>N$G$9!%(B
- * ItIs $B$O(B ITRON Implementation by Sakamura Lab $B$NN,>N$G$9!%(B
+ * TRON は The Real-time Operating system Nucleus の略称です．
+ * ITRON は Industrial TRON の略称です．
+ * μITRON は Micro Industrial TRON の略称です．
+ * ItIs は ITRON Implementation by Sakamura Lab の略称です．
 ------------------------------------------------------------------------
 
 
-$B#1!%(B68040 $BBP1~$N35MW(B
+１．68040 対応の概要
 
-1.1. $B%?!<%2%C%H%7%9%F%`!$3+H/4D6-(B
+1.1. ターゲットシステム，開発環境
 
-68040 $BMQ$N3+H/4D6-$H$7$F$O!$(BGNU$B3+H/4D6-$N:G?7HG$rMQ$$$F$$$k!%(B
+68040 用の開発環境としては，GNU開発環境の最新版を用いている．
 
-$B%?!<%2%C%H%7%9%F%`$H$7$F$O!$(B($B3t(B)$BEE;:@=$N(B DVE-68K/40 CPU$B%\!<%I!J(BCPU:
-68040 $B$J$$$7$O(B 68040LC$B!K$N$_$r%5%]!<%H$7$F$$$k!%(B
-
-
-1.2. $BMQ8l$NBP1~(B
-
-$B%f!<%6%:%^%K%e%"%k$GMQ$$$F$$$kMQ8l$H(B 68040 $B$N5!G=$H$NBP1~$O0J2<$NDL$j!%(B
-
-$B!&!VF0:n%b!<%I!W!$!V%9!<%Q!<%P%$%6%b!<%I!W$O$=$N$^$^BP1~$9$k!%(B
-
-$B!&!V%=%U%H%&%'%"3d9~$_!W$O(B TRAP$BL?Na$KBP1~$9$k!%(B
-
-$B!&!V(BINT$B7?!W!V%]%$%s%?!W$N%5%$%:$O$$$:$l$b(B 4$B%P%$%H$G$"$k!%(B
+ターゲットシステムとしては，(株)電産製の DVE-68K/40 CPUボード（CPU:
+68040 ないしは 68040LC）のみをサポートしている．
 
 
-1.3. $B%7%9%F%`%3!<%k%$%s%?%U%'!<%9(B
+1.2. 用語の対応
 
-(1) $B%=%U%H%&%'%"3d9~$_$r;H$&%$%s%?%U%'!<%9(B
+ユーザズマニュアルで用いている用語と 68040 の機能との対応は以下の通り．
 
-ret_int $B$r=|$/%7%9%F%`%3!<%k$N8F$S=P$7$K$O(B TRAP #1 $B$rMQ$$$k!%5!G=%3!<(B
-$B%I$O!$&L(BITRON3.0$B;EMM$NI8=`$K=>$C$F$$$k!%(Bret_int $B$O!$$9$Y$F$N%l%8%9%?$r(B
-$BJ]B8$7$?>uBV$G8F$S=P$9$3$H$,I,MW$G$"$k$?$a!$@lMQ$N(B TRAP #6 $B$rMQ$$$F8F(B
-$B$S=P$7!$5!G=%3!<%I$OMQ$$$J$$!%(B
+・「動作モード」，「スーパーバイザモード」はそのまま対応する．
 
-$B%=%U%H%&%'%"3d9~$_$r;H$C$?%$%s%?%U%'!<%9$N>l9g!$%9%?%C%/>e$K%Q%i%a!<%?(B
-$B$rCV$/%$%s%?%U%'!<%9$OK>$^$7$/$J$$!%(B68040 $B$N%3!<%j%s%0%3%s%Y%s%7%g%s$G(B
-$B$O!$%9%?%C%/>e$K%Q%i%a!<%?$rCV$/J}K!$rI8=`$H$7$F$$$k$?$a!$%7%9%F%`%3!<(B
-$B%k8F$S=P$7MQ$K!$%Q%i%a!<%?$r%l%8%9%?$r;H$C$FEO$9J}K!$rDj5A$7$F$$$k!%(B
+・「ソフトウェア割込み」は TRAP命令に対応する．
 
-$B6qBNE*$K$O!$Bh(B1$B%Q%i%a!<%?$r(B D0$B!$Bh(B2$B%Q%i%a!<%?$r(B D1$B!$!D!$Bh(B6$B%Q%i%a!<%?(B
-$B$r(B D5 $B$KCV$/!J&L(BITRON3.0$B;EMM$N(B C$B8@8l%$%s%?%U%'!<%9$G$O!$:GBg(B 6$B$D$N%Q%i(B
-$B%a!<%?$rMQ$$$k!K!%5!G=%3!<%I$O%Q%i%a!<%?EO$7$K;H$o$J$$%l%8%9%?$KF~$l$k(B
-$BI,MW$,$"$k$?$a!$(BD6 $B$KF~$l$k!%%(%i!<%3!<%I$O!$(BD0 $B$KF~$l$FJV$5$l$k!%%7%9(B
-$B%F%`%3!<%k$N<B9T$K$h$C$F!$(BD1$B!$(BA0$B!$(BA1 $B$N3F%l%8%9%?$NCM$OJ]B8$5$l$J$$!%(B
-
-(2) $B%5%V%k!<%A%s%3!<%k$r;H$&%$%s%?%U%'!<%9(B
-
-$B%Q%i%a!<%?$NEO$7J}!$%(%i!<%3!<%I$N<u$1<h$jJ}$O!$%3%s%Q%$%i$N%3!<%j%s%0(B
-$B%3%s%Y%s%7%g%s$K=>$&!%(B68040 $B$N%3!<%j%s%0%3%s%Y%s%7%g%s$G$O!$3F%Q%i%a!<(B
-$B%?$r%9%?%C%/>e$KCV$$$F%7%9%F%`%3!<%k$r8F$S=P$9!%%(%i!<%3!<%I$O(B D0 $B$KJV(B
-$B$5$l$k!%%7%9%F%`%3!<%k$N<B9T$K$h$C$F!$(BD1$B!$(BA0$B!$(BA1 $B$N3F%l%8%9%?$NCM$OJ](B
-$BB8$5$l$J$$!%(B
+・「INT型」「ポインタ」のサイズはいずれも 4バイトである．
 
 
-1.4. $B%?%9%/!$%O%s%I%i$N5/F0%$%s%?%U%'!<%9(B
+1.3. システムコールインタフェース
 
-$B%?%9%/$d%O%s%I%i$r(B C$B8@8l$G5-=R$9$k>l9g$N5/F0%$%s%?%U%'!<%9$O!$%?!<%2%C(B
-$B%H(BCPU $B$K$h$i$:$KDj$a$i$l$F$$$k!%0J2<$G$O!$%?%9%/$d%O%s%I%i$r%"%;%s%V%i(B
-$B$G5-=R$9$k>l9g$rCf?4$K@bL@$9$k!%(B
+(1) ソフトウェア割込みを使うインタフェース
 
-(1) $B%?%9%/(B
+ret_int を除くシステムコールの呼び出しには TRAP #1 を用いる．機能コー
+ドは，μITRON3.0仕様の標準に従っている．ret_int は，すべてのレジスタを
+保存した状態で呼び出すことが必要であるため，専用の TRAP #6 を用いて呼
+び出し，機能コードは用いない．
 
-$B%?%9%/B0@-$K(B TA_HLNG $B$r;XDj$7$J$$>l9g!$%?%9%/5/F0;~$K$O!$%?%9%/5/F0%3!<(B
-$B%I$,(B D0 $B$K!$%?%9%/$N3HD%>pJs$,(B D1 $B$KEO$5$l$k!%(B
+ソフトウェア割込みを使ったインタフェースの場合，スタック上にパラメータ
+を置くインタフェースは望ましくない．68040 のコーリングコンベンションで
+は，スタック上にパラメータを置く方法を標準としているため，システムコー
+ル呼び出し用に，パラメータをレジスタを使って渡す方法を定義している．
 
-$B%?%9%/B0@-$K(B TA_HLNG $B$r;XDj$7$?>l9g!$%?%9%/5/F0%3!<%I$H%?%9%/$N3HD%>p(B
-$BJs$O!$%3%s%Q%$%i$N%3!<%j%s%0%3%s%Y%s%7%g%s$K=>$C$F!$%9%?%C%/>e$KCV$$$F(B
-$BEO$5$l$k!%(B
+具体的には，第1パラメータを D0，第2パラメータを D1，…，第6パラメータ
+を D5 に置く（μITRON3.0仕様の C言語インタフェースでは，最大 6つのパラ
+メータを用いる）．機能コードはパラメータ渡しに使わないレジスタに入れる
+必要があるため，D6 に入れる．エラーコードは，D0 に入れて返される．シス
+テムコールの実行によって，D1，A0，A1 の各レジスタの値は保存されない．
 
-(2) $B%?%$%^%O%s%I%i!J<~4|5/F0%O%s%I%i!$%"%i!<%`%O%s%I%i!K(B
+(2) サブルーチンコールを使うインタフェース
 
-$B%?%$%^%O%s%I%i5/F0;~$K$O!$%?%$%^%O%s%I%i$N3HD%>pJs$,!$%3%s%Q%$%i$N%3!<(B
-$B%j%s%0%3%s%Y%s%7%g%s$K=>$C$F!$%9%?%C%/>e$KCV$$$FEO$5$l$k!%%?%$%^%O%s%I(B
-$B%i$+$i$NI|5"$K$O!$%5%V%k!<%A%s%3!<%k$+$i$NI|5"$9$kL?Na!J(BRTS$B!K$rMQ$$$k!%(B
-
-(3) $B3HD%(BSVC$B%O%s%I%i(B
-
-$B3HD%(BSVC$B%O%s%I%i5/F0;~$K$O!$:GBg(B6$B$D$N%Q%i%a!<%?$,!$%3%s%Q%$%i$N%3!<%j%s(B
-$B%0%3%s%Y%s%7%g%s$K=>$C$F!$%9%?%C%/>e$KCV$$$FEO$5$l$k!%%=%U%H%&%'%"3d9~(B
-$B$_$rMQ$$$?%$%s%?%U%'!<%9$N>l9g$O!$(B7$B$D$a$N%Q%i%a!<%?$H$7$F!$5!G=%3!<%I(B
-$B$,EO$5$l$k!%3HD%(BSVC$B%O%s%I%i$+$i$NI|5"$K$O!$%5%V%k!<%A%s%3!<%k$+$i$NI|(B
-$B5"$9$kL?Na!J(BRTS$B!K$rMQ$$$k!%(B
-
-(4) $B3d9~$_%O%s%I%i(B
-
-$B3d9~$_%O%s%I%iB0@-$K(B TA_HLNG $B$r;XDj$7$J$$>l9g!$Dj5A$7$?3d9~$_%O%s%I%i(B
-$B$r(B CPU $B$,D>@\5/F0$9$k!%3d9~$_%O%s%I%i$O!$$9$Y$F$N%l%8%9%?$NFbMF$rJ]B8(B
-$B$9$k$h$&5-=R$7$J$1$l$P$J$i$J$$!%3d9~$_%O%s%I%i$+$iI|5"$9$k;~$K$O!$$9$Y(B
-$B$F$N%l%8%9%?$NFbMF$r85$N>uBV$KLa$7$?8e!$<!$N$$$:$l$+$NJ}K!$G(B ret_int 
-$B$r8F$S=P$5$J$1$l$P$J$i$J$$!%(B
-
- (a) $B@lMQ$N%=%U%H%&%'%"3d9~$_$K$h$j(B ret_int $B$r8F$S=P$9!J(BTRAP #6$B!K(B
- (b) _i_ret_int $B$r%5%V%k!<%A%s%3!<%k$9$k!J(Bjsr _i_ret_int$B!K(B
- (c) __ret_int $B$KJ,4t$9$k!J(Bjmp __ret_int$B!K(B
-
-$B3d9~$_%O%s%I%iB0@-$K(B TA_HLNG $B$r;XDj$79b5i8@8lBP1~%k!<%A%s$rMQ$$$?>l9g(B
-$B$K!$Bh(B1$B0z?t$K@hF,HVCO$,EO$5$l$k!V3d9~$_%9%?%C%/%U%l!<%`!W$O!$(B68040 $B$N(B
-$BNc30%9%?%C%/%U%l!<%`$KBP1~$9$k!%Nc30%9%?%C%/%U%l!<%`$N@hF,HVCO$O!$%3%s(B
-$B%Q%$%i$N%3!<%j%s%0%3%s%Y%s%7%g%s$K=>$C$F!$%9%?%C%/>e$KCV$$$FEO$5$l$k!%(B
-$B$^$?$3$N>l9g!$3d9~$_%O%s%I%i$+$i$NI|5"$K$O!$%5%V%k!<%A%s%3!<%k$+$iI|5"(B
-$B$9$kL?Na!J(BRTS$B!K$rMQ$$$k!%(B
+パラメータの渡し方，エラーコードの受け取り方は，コンパイラのコーリング
+コンベンションに従う．68040 のコーリングコンベンションでは，各パラメー
+タをスタック上に置いてシステムコールを呼び出す．エラーコードは D0 に返
+される．システムコールの実行によって，D1，A0，A1 の各レジスタの値は保
+存されない．
 
 
-$B#2!%%7%9%F%`%3!<%k;EMM$N0c$$(B
+1.4. タスク，ハンドラの起動インタフェース
 
-$B0J2<$G$O!$3F%7%9%F%`%3!<%k$N(B 68040 $B$K0MB8$9$k;EMM$K$D$$$F=R$Y$k!%(B
+タスクやハンドラを C言語で記述する場合の起動インタフェースは，ターゲッ
+トCPU によらずに定められている．以下では，タスクやハンドラをアセンブラ
+で記述する場合を中心に説明する．
 
-(1) cre_tsk		$B%?%9%/@8@.(B
+(1) タスク
 
-$B!&%?%9%/(BID $B$,@5$N>l9g$K$O!$0J2<$N%?%9%/B0@-$K$h$j!$%?%9%/$r$I$N%j%s%0(B
-$B%l%Y%k!JF0:n%b!<%I!K$GF0:n$5$;$k$+$r;XDj$9$k$3$H$,$G$-$k!%(B
+タスク属性に TA_HLNG を指定しない場合，タスク起動時には，タスク起動コー
+ドが D0 に，タスクの拡張情報が D1 に渡される．
 
-#define TA_SMODE	0x00000000	/* $B%9!<%Q%P%$%6%b!<%I$GF0:n$5$;$k(B */
-#define TA_UMODE	0x01000000	/* $B%f!<%6%b!<%I$GF0:n$5$;$k(B */
+タスク属性に TA_HLNG を指定した場合，タスク起動コードとタスクの拡張情
+報は，コンパイラのコーリングコンベンションに従って，スタック上に置いて
+渡される．
 
-(2) dis_dsp		$B%G%#%9%Q%C%A6X;_(B
+(2) タイマハンドラ（周期起動ハンドラ，アラームハンドラ）
 
-$B!&(Bdis_dsp $B$O!$%+!<%M%kFb$N%G%#%9%Q%C%A6X;_%U%i%0$r%;%C%H$9$k$@$1$G!$(B
-IPM$B!J3d9~$_%^%9%/!K$NCM$OJQ2=$7$J$$!%(B
+タイマハンドラ起動時には，タイマハンドラの拡張情報が，コンパイラのコー
+リングコンベンションに従って，スタック上に置いて渡される．タイマハンド
+ラからの復帰には，サブルーチンコールからの復帰する命令（RTS）を用いる．
 
-(3) ena_dsp		$B%G%#%9%Q%C%A5v2D(B
+(3) 拡張SVCハンドラ
 
-$B!&(Bena_dsp $B$O!$%+!<%M%kFb$N%G%#%9%Q%C%A6X;_%U%i%0$r%j%;%C%H$9$k$@$1$G!$(B 
-IPM$B!J3d9~$_%^%9%/!K$NCM$OJQ2=$7$J$$!%(B
+拡張SVCハンドラ起動時には，最大6つのパラメータが，コンパイラのコーリン
+グコンベンションに従って，スタック上に置いて渡される．ソフトウェア割込
+みを用いたインタフェースの場合は，7つめのパラメータとして，機能コード
+が渡される．拡張SVCハンドラからの復帰には，サブルーチンコールからの復
+帰する命令（RTS）を用いる．
 
-(4) def_int		$B3d9~$_%O%s%I%iDj5A(B
+(4) 割込みハンドラ
 
-$B!&(Bdintno $B$O(B 68040 $B$G$N3d9~$_%Y%/%?HV9f$rI=$7!$(B0x02 $B$+$i(B 0xff $B$^$G$NCM(B
-$B$,;H$($k!%(B
+割込みハンドラ属性に TA_HLNG を指定しない場合，定義した割込みハンドラ
+を CPU が直接起動する．割込みハンドラは，すべてのレジスタの内容を保存
+するよう記述しなければならない．割込みハンドラから復帰する時には，すべ
+てのレジスタの内容を元の状態に戻した後，次のいずれかの方法で ret_int 
+を呼び出さなければならない．
 
-$B!&30It3d9~$_0J30$N3d9~$_%Y%/%?$KBP$7$F%O%s%I%i$r@_Dj$9$k5!G=$O!$(BItIs 
-$B$G<BAu$5$l$F$$$J$$Nc304IM}5!G=$r%f!<%6$,:n$l$k$h$&$K$9$k$?$a$N3HD%$G$"(B
-$B$j!$MxMQ$9$k$K$"$?$C$F$O!$%+!<%M%k$N9=B$$r==J,$KM}2r$7$F$$$k$3$H$,K>$^(B
-$B$l$k!%(B
+ (a) 専用のソフトウェア割込みにより ret_int を呼び出す（TRAP #6）
+ (b) _i_ret_int をサブルーチンコールする（jsr _i_ret_int）
+ (c) __ret_int に分岐する（jmp __ret_int）
 
-(5) loc_cpu		$B3d9~$_$H%G%#%9%Q%C%A$N6X;_(B
+割込みハンドラ属性に TA_HLNG を指定し高級言語対応ルーチンを用いた場合
+に，第1引数に先頭番地が渡される「割込みスタックフレーム」は，68040 の
+例外スタックフレームに対応する．例外スタックフレームの先頭番地は，コン
+パイラのコーリングコンベンションに従って，スタック上に置いて渡される．
+またこの場合，割込みハンドラからの復帰には，サブルーチンコールから復帰
+する命令（RTS）を用いる．
 
-$B!&(Bloc_cpu $B$O!$(BIPM$B!J3d9~$_%^%9%/!K$r(B 7 $B$K@_Dj$9$k!%(B
 
-(6) unl_cpu		$B3d9~$_$H%G%#%9%Q%C%A$N5v2D(B
+２．システムコール仕様の違い
 
-$B!&(Bunl_cpu $B$O!$(BIPM$B!J3d9~$_%^%9%/!K$r(B 0 $B$K@_Dj$9$k!%(B
+以下では，各システムコールの 68040 に依存する仕様について述べる．
 
-(7) dis_int		$B3d9~$_6X;_(B
-(8) ena_int		$B3d9~$_5v2D(B
+(1) cre_tsk		タスク生成
 
-$B!&(B68040 $B$G$O!$$3$l$i$N%7%9%F%`%3!<%k$O!$<~JU%A%C%W$rA`:n$9$k$b$N$H0LCV(B
-$BIU$1$i$l$k!%<~JU%A%C%W$NA`:n$O!$(BCPU $B$P$+$j$G$J$/!$%O!<%I%&%'%"9=@.$KBg(B
-$B$-$/0MB8$9$k$?$a!$$3$l$i$N%7%9%F%`%3!<%k$O%5%]!<%H$7$J$$!%(B
+・タスクID が正の場合には，以下のタスク属性により，タスクをどのリング
+レベル（動作モード）で動作させるかを指定することができる．
 
-(9) chg_iXX		$B3d9~$_%^%9%/JQ99(B
+#define TA_SMODE	0x00000000	/* スーパバイザモードで動作させる */
+#define TA_UMODE	0x01000000	/* ユーザモードで動作させる */
 
-$B!&L>>N$O(B chg_ipm $B$H$7$F$$$k!%(B
+(2) dis_dsp		ディスパッチ禁止
 
-$B!&(Bchg_ipm $B$O(B IPM$B!J3d9~$_%^%9%/!K$r;XDj$7$?CM$K@_Dj$9$k!%;XDj$7$?CM$,(B 0$B!A(B
-7 $B0J30$N>l9g!$(BE_PAR$B%(%i!<$H$J$k!%%?%9%/FHN)It$+$i8F$S=P$7$?>l9g$K$O!$(B 
-IMASK $B$r(B 0 $B$K@_Dj$9$k$3$H$O$G$-$J$$!J@_Dj$7$h$&$H$9$k$H!$(BE_PAR $B%(%i!<(B
-$B$K$J$k!K!%(B
+・dis_dsp は，カーネル内のディスパッチ禁止フラグをセットするだけで，
+IPM（割込みマスク）の値は変化しない．
 
-$B!&(BIPM $B$r(B 1$B!A(B7 $B$K@_Dj$9$k$H!$%G%#%9%Q%C%A$,6X;_$5$l$k!%(B
+(3) ena_dsp		ディスパッチ許可
 
-$B!&@_Dj$7$?(B IPM $B$NCM$H!$(Bref_sys $B$G;2>H$G$-$k%?%9%/It$N%7%9%F%`>uBV(B
-$B!J(Bsysstat$B!K$N4X78$O0J2<$N$h$&$K$J$k!%(B
+・ena_dsp は，カーネル内のディスパッチ禁止フラグをリセットするだけで， 
+IPM（割込みマスク）の値は変化しない．
+
+(4) def_int		割込みハンドラ定義
+
+・dintno は 68040 での割込みベクタ番号を表し，0x02 から 0xff までの値
+が使える．
+
+・外部割込み以外の割込みベクタに対してハンドラを設定する機能は，ItIs 
+で実装されていない例外管理機能をユーザが作れるようにするための拡張であ
+り，利用するにあたっては，カーネルの構造を十分に理解していることが望ま
+れる．
+
+(5) loc_cpu		割込みとディスパッチの禁止
+
+・loc_cpu は，IPM（割込みマスク）を 7 に設定する．
+
+(6) unl_cpu		割込みとディスパッチの許可
+
+・unl_cpu は，IPM（割込みマスク）を 0 に設定する．
+
+(7) dis_int		割込み禁止
+(8) ena_int		割込み許可
+
+・68040 では，これらのシステムコールは，周辺チップを操作するものと位置
+付けられる．周辺チップの操作は，CPU ばかりでなく，ハードウェア構成に大
+きく依存するため，これらのシステムコールはサポートしない．
+
+(9) chg_iXX		割込みマスク変更
+
+・名称は chg_ipm としている．
+
+・chg_ipm は IPM（割込みマスク）を指定した値に設定する．指定した値が 0〜
+7 以外の場合，E_PARエラーとなる．タスク独立部から呼び出した場合には， 
+IMASK を 0 に設定することはできない（設定しようとすると，E_PAR エラー
+になる）．
+
+・IPM を 1〜7 に設定すると，ディスパッチが禁止される．
+
+・設定した IPM の値と，ref_sys で参照できるタスク部のシステム状態
+（sysstat）の関係は以下のようになる．
 
 	IPM		sysstat
 	------------------------
-	0		TTS_DDSP $B$^$?$O(B TTS_TSK
-	1$B!A(B7		TTS_LOC
+	0		TTS_DDSP または TTS_TSK
+	1〜7		TTS_LOC
 
-(10) ref_iXX		$B3d9~$_%^%9%/;2>H(B
+(10) ref_iXX		割込みマスク参照
 
-$B!&L>>N$O(B ref_ipm $B$H$7$F$$$k!%(B
+・名称は ref_ipm としている．
 
-$B!&(Bref_ims $B$O(B IPM$B!J3d9~$_%^%9%/!K$N8=:_CM$rFI$_=P$9%7%9%F%`%3!<%k$G$"$k!%(B
+・ref_ims は IPM（割込みマスク）の現在値を読み出すシステムコールである．
 
-(11) vset_reg		$B%?%9%/$N%l%8%9%?FbMF@_Dj(B
+(11) vset_reg		タスクのレジスタ内容設定
 
-$B!&(Bpk_regs$B!$(Bpk_eit$B!$(Bpk_cregs $B$NFbMF$O0J2<$NDL$j!%(B
+・pk_regs，pk_eit，pk_cregs の内容は以下の通り．
 
-  pk_regs $B$NFbMF(B
-    VW		d0		$BHFMQ%l%8%9%?(B D0 $B$NCM(B
-	  $B!D(B
-    VW		d7		$BHFMQ%l%8%9%?(B D7 $B$NCM(B
-    VW		a0		$BHFMQ%l%8%9%?(B A0 $B$NCM(B
-	  $B!D(B
-    VW		a6		$BHFMQ%l%8%9%?(B A6 $B$NCM(B
-    VW		sp		$B8=:_$NF0:n%b!<%I$N%9%?%C%/%]%$%s%?$NCM(B
+  pk_regs の内容
+    VW		d0		汎用レジスタ D0 の値
+	  …
+    VW		d7		汎用レジスタ D7 の値
+    VW		a0		汎用レジスタ A0 の値
+	  …
+    VW		a6		汎用レジスタ A6 の値
+    VW		sp		現在の動作モードのスタックポインタの値
 
-  pk_eit $B$NFbMF(B
-    VW		pc		PC$B!J%W%m%0%i%`%+%&%s%?!K$NCM(B
-    VH		sr		SR $B$NCM(B
+  pk_eit の内容
+    VW		pc		PC（プログラムカウンタ）の値
+    VH		sr		SR の値
 
-  pk_cregs $B$NFbMF(B
-    VW		msp		MSP$B!J%9!<%Q%P%$%6%b!<%I$N%9%?%C%/%]%$%s%?!K$NCM(B
-    VW		usp		USP$B!J%f!<%6%b!<%I$N%9%?%C%/%]%$%s%?!K$NCM(B
+  pk_cregs の内容
+    VW		msp		MSP（スーパバイザモードのスタックポインタ）の値
+    VW		usp		USP（ユーザモードのスタックポインタ）の値
 
-$B!&(Bpk_regs, pk_cregs $B$,6&$K(B NADR $B$G$J$$>l9g!$(Bpk_cregs $B$K4^$^$l$F$$$k8=(B
-$B:_$NF0:n%b!<%I$N%9%?%C%/%]%$%s%?$NCM$,M-8z$K$J$j!$(Bpk_regs $B$N%9%?%C%/%](B
-$B%$%s%?;XDj$OL58z$K$J$k!%(Bpk_cregs $B$,(B NADR $B$N>l9g$K$O!$(Bpk_regs $B$N%9%?%C(B
-$B%/%]%$%s%?$NCM$,8=:_$NF0:n%b!<%I!J(BSR $B$NCM$NJQ99$K$h$j8=:_$NF0:n%b!<%I(B
-$B$,JQ99$5$l$k>l9g$K$O!$JQ998e$NF0:n%b!<%I!K$N%9%?%C%/%]%$%s%?$K@_Dj$5$l(B
-$B$k!%(B
+・pk_regs, pk_cregs が共に NADR でない場合，pk_cregs に含まれている現
+在の動作モードのスタックポインタの値が有効になり，pk_regs のスタックポ
+インタ指定は無効になる．pk_cregs が NADR の場合には，pk_regs のスタッ
+クポインタの値が現在の動作モード（SR の値の変更により現在の動作モード
+が変更される場合には，変更後の動作モード）のスタックポインタに設定され
+る．
 
-$B!&$3$N%7%9%F%`%3!<%k$rMQ$$$F(B MSP$B!J%9!<%Q%P%$%6%b!<%I$N%9%?%C%/%]%$%s%?!K(B
-$B$NCM$rJQ99$9$k$3$H$O4+$a$i$l$J$$!%$I$&$7$F$bJQ99$7$?$$>l9g$K$O!$%+!<%M(B
-$B%k$N9=B$$r==J,$KM}2r$7$F$$$k$3$H$,I,MW$K$J$k!%$=$N>l9g!$(Bpk_eit $B$r(B NADR 
-$B$K$7$F!$3d9~$_%9%?%C%/%U%l!<%`$rA4It<+J,$GMQ0U$9$kJ}$,4V0c$$$,5/$3$j$K(B
-$B$/$$$@$m$&!%$^$?!$(BItIs $B$,>-Mh%P!<%8%g%s%"%C%W$7$?:]$K!$4XO"ItJ,$N=q$-(B
-$BD>$7$,I,MW$K$J$k$3$H$r3P8g$7$J$1$l$P$J$i$J$$!%(B
+・このシステムコールを用いて MSP（スーパバイザモードのスタックポインタ）
+の値を変更することは勧められない．どうしても変更したい場合には，カーネ
+ルの構造を十分に理解していることが必要になる．その場合，pk_eit を NADR 
+にして，割込みスタックフレームを全部自分で用意する方が間違いが起こりに
+くいだろう．また，ItIs が将来バージョンアップした際に，関連部分の書き
+直しが必要になることを覚悟しなければならない．
 
-$B!&(BE_PAR $B$,JV$k$N$O!$(BSR $B$NCM$,IT@5$N>l9g!%(B
+・E_PAR が返るのは，SR の値が不正の場合．
 
-(12) vget_reg		$B%?%9%/$N%l%8%9%?FbMF;2>H(B
+(12) vget_reg		タスクのレジスタ内容参照
 
-$B!&(Bpk_regs$B!$(Bpk_eit$B!$(Bpk_cregs $B$NFbMF$O(B vset_reg $B$HF1MM!%(B
-
-
-$B#3!%3+H/4D6-!&$=$NB>(B
-
-3.1. $B3+H/4D6-(B
-
-$B%+!<%M%k$r%$%s%9%H!<%k$9$k$K$O!$(BItIs $B$NI8=`%j%j!<%9$K4^$^$l$k0J30$K!$(B
-$B0J2<$N%D!<%k!$%i%$%V%i%j$,I,MW$G$"$k!%(B
-
-    GNU$B3+H/4D6-(B
-	GCC egcs-1.0.1 release$B!J(BC$B%3%s%Q%$%i!K(B
-	BINUTILS 2.8.1$B!J%"%;%s%V%i(B,$B%j%s%+$J$I!K(B
-    $BI8=`(BC$B%i%$%V%i%j(B
-	Cygnus NEWLIB 1.8.0$B!JI8=`(BC$B%i%$%V%i%j!K(B
-    perl 4$B!JF0:n3NG'$O(B 4.036$B!K(B
-    GNU Make$B!JF0:n3NG'$O(B 3.75$B!K(B
-    aout2$B!J(Ba.out $B$+$i(B S$B%U%)!<%^%C%H$X$NJQ49%D!<%k!K(B
+・pk_regs，pk_eit，pk_cregs の内容は vset_reg と同様．
 
 
-3.2. $B3+H/4D6-$N9=C[J}K!(B
+３．開発環境・その他
 
-$B>e5-$N3+H/4D6-$O!$$9$Y$F%U%j!<$N%=!<%9%3!<%I$+$i9=C[$9$k$3$H$,$G$-$k(B
-$B!J$?$@$7!$8=>u$G$O(B aout2 $B$N9=C[4D6-$OL$@0Hw$G$"$k!K!%6qBNE*$J9=C[J}K!(B
-$B$r0J2<$K@bL@$9$k!%(B
+3.1. 開発環境
 
-(1) $B=`Hw:n6H(B
+カーネルをインストールするには，ItIs の標準リリースに含まれる以外に，
+以下のツール，ライブラリが必要である．
 
-$B=`Hw:n6H$H$7$F!$%[%9%H>e$KI,MW$J%D!<%k$r%$%s%9%H!<%k$9$k!%6qBNE*$K$O!$(B
-perl 4$B!$(BGNU Make $B$N:G?7HG$,I,MW$G$"$k!%$5$i$K!$3+H/4D6-$N9=C[$K;H$&$?(B
-$B$a$K!$%[%9%H>e$K$b:G?7$N(B GCC $B$r%$%s%9%H!<%k$9$k$3$H$,K>$^$7$$!%(B
+    GNU開発環境
+	GCC egcs-1.0.1 release（Cコンパイラ）
+	BINUTILS 2.8.1（アセンブラ,リンカなど）
+    標準Cライブラリ
+	Cygnus NEWLIB 1.8.0（標準Cライブラリ）
+    perl 4（動作確認は 4.036）
+    GNU Make（動作確認は 3.75）
+    aout2（a.out から Sフォーマットへの変換ツール）
 
-(2) $B%G%#%l%/%H%j$N7hDj(B
 
-$B3+H/4D6-$r9=C[$9$k$?$a$K!$0J2<$N%G%#%l%/%H%j$rMQ0U$9$k!%(B
+3.2. 開発環境の構築方法
 
-    <PREFIX>		$B3+H/4D6-$r%$%s%9%H!<%k$9$k%G%#%l%/%H%j(B
-    <BINUTILS-SRCDIR>	BINUTILS $B$N%=!<%9$rE83+$9$k%G%#%l%/%H%j(B
-    <BINUTILS-OBJDIR>	BITUTILS $B$N%*%V%8%'%/%H$r@8@.$9$k%G%#%l%/%H%j(B
-    <EGCS-SRCDIR>	GCC $B$N%=!<%9$rE83+$9$k%G%#%l%/%H%j(B
-    <EGCS-OBJDIR>	GCC $B$N%*%V%8%'%/%H$r@8@.$9$k%G%#%l%/%H%j(B
-    <NEWLIB-SRCDIR>	NEWLIB $B$N%=!<%9$rE83+$9$k%G%#%l%/%H%j(B
-    <NEWLIB-OBJDIR>	NEWLIB $B$N%*%V%8%'%/%H$r@8@.$9$k%G%#%l%/%H%j(B
-    <ITIS>		ItIs $B$NG[IU%-%C%H$rE83+$9$k%G%#%l%/%H%j(B
+上記の開発環境は，すべてフリーのソースコードから構築することができる
+（ただし，現状では aout2 の構築環境は未整備である）．具体的な構築方法
+を以下に説明する．
 
-$B$^$?!$0J2<$G$O!$%m!<%+%k$J<B9T%U%!%$%k$rCV$/%G%#%l%/%H%j!JDL>o$O(B 
-/usr/local/bin$B!K$r(B <LOCALDIR> $B$H5-=R$9$k!%(B
+(1) 準備作業
 
-(3) BINUTILS $B$N%$%s%9%H!<%k!J(B2.8.1$B!K(B
+準備作業として，ホスト上に必要なツールをインストールする．具体的には，
+perl 4，GNU Make の最新版が必要である．さらに，開発環境の構築に使うた
+めに，ホスト上にも最新の GCC をインストールすることが望ましい．
 
-$B%$%s%9%H!<%k:n6H$NA0$K!$(B<BINUTILS-SRCDIR>/ld/scripttempl/aout.sc $B$K<!(B
-$B$N%Q%C%A$r$"$F$k!%(B
+(2) ディレクトリの決定
+
+開発環境を構築するために，以下のディレクトリを用意する．
+
+    <PREFIX>		開発環境をインストールするディレクトリ
+    <BINUTILS-SRCDIR>	BINUTILS のソースを展開するディレクトリ
+    <BINUTILS-OBJDIR>	BITUTILS のオブジェクトを生成するディレクトリ
+    <EGCS-SRCDIR>	GCC のソースを展開するディレクトリ
+    <EGCS-OBJDIR>	GCC のオブジェクトを生成するディレクトリ
+    <NEWLIB-SRCDIR>	NEWLIB のソースを展開するディレクトリ
+    <NEWLIB-OBJDIR>	NEWLIB のオブジェクトを生成するディレクトリ
+    <ITIS>		ItIs の配付キットを展開するディレクトリ
+
+また，以下では，ローカルな実行ファイルを置くディレクトリ（通常は 
+/usr/local/bin）を <LOCALDIR> と記述する．
+
+(3) BINUTILS のインストール（2.8.1）
+
+インストール作業の前に，<BINUTILS-SRCDIR>/ld/scripttempl/aout.sc に次
+のパッチをあてる．
 
 ------------------------------------------------------------------------
 *** aout.sc.dist	Tue May 27 02:35:01 1997
@@ -332,7 +332,7 @@ perl 4$B!$(BGNU Make $B$N:G?7HG$,I,MW$G$"$k!%$5$i$K!$3+H/4D6-$N9=C[$K;H$&$?(
       *(.got)
 ------------------------------------------------------------------------
 
-$B0J2<!$<!$N<j=g$K=>$C$F!$(BBINUTILS $B$N@_Dj!&9=C[!&%$%s%9%H!<%k$r9T$&!%(B
+以下，次の手順に従って，BINUTILS の設定・構築・インストールを行う．
 
     % cd <BINUTILS-OBJDIR>
     % <BINUTILS-SRCDIR>/configure \
@@ -341,9 +341,9 @@ perl 4$B!$(BGNU Make $B$N:G?7HG$,I,MW$G$"$k!%$5$i$K!$3+H/4D6-$N9=C[$K;H$&$?(
     % gmake
     % gmake install
 
-$B0J>e$N<j=g$K$h$j!$(B<PREFIX>/bin $B$K(B m68k-unknow-aout-XXXX $B$,:n$i$l$k$N$G!$(B
-$B%7%s%\%j%C%/$rMQ$$$F!$$=$l$i$rC;$$L>A0$G;H$($k$h$&$K$9$k!%0J2<$G$O!$(B
-ItIs $B$N9=C[$KI,MW$J:G>.8B$N%D!<%k$N$_$r<($7$F$$$k!%(B
+以上の手順により，<PREFIX>/bin に m68k-unknow-aout-XXXX が作られるので，
+シンボリックを用いて，それらを短い名前で使えるようにする．以下では，
+ItIs の構築に必要な最小限のツールのみを示している．
 
     % cd <LOCALDIR>
     % ln -s <PREFIX>/bin/m68k-unknown-aout-as m68k-as
@@ -353,15 +353,15 @@ ItIs $B$N9=C[$KI,MW$J:G>.8B$N%D!<%k$N$_$r<($7$F$$$k!%(B
     % ln -s <PREFIX>/bin/m68k-unknown-aout-ranlib m68k-ranlib
     % ln -s <PREFIX>/bin/m68k-unknown-aout-objdump m68k-objdump
 
-(4) GCC $B$N%$%s%9%H!<%k!J(Begcs-1.0.1 release$B!K(B
+(4) GCC のインストール（egcs-1.0.1 release）
 
-$B:G=i$K!$(BGCC $B$N9=C[$KI,MW$J%X%C%@%U%!%$%k$r(B NEWLIB $B$+$i%3%T!<$9$k!%(B
+最初に，GCC の構築に必要なヘッダファイルを NEWLIB からコピーする．
 
     % mkdir <PREFIX>/m68k-unknown-aout/include
     % cp -R <NEWLIB-SRCDIR>/newlib/libc/include/* \
 		<PREFIX>/m68k-unknown-aout/include/
 
-$B0J2<!$<!$N<j=g$K=>$C$F!$(BGCC $B$N@_Dj!&9=C[!&%$%s%9%H!<%k$r9T$&!%(B
+以下，次の手順に従って，GCC の設定・構築・インストールを行う．
 
     % mkdir <EGCS-OBJDIR>
     % cd <EGCS-OBJDIR>
@@ -373,15 +373,15 @@ ItIs $B$N9=C[$KI,MW$J:G>.8B$N%D!<%k$N$_$r<($7$F$$$k!%(B
     % gmake cross LANGUAGES="c c++"
     % gmake install LANGUAGES="c c++"
 
-$B0J>e$N<j=g$K$h$j!$(B<PREFIX>/bin $B$K(B m68k-unknow-aout-gcc $B$,:n$i$l$k$N$G!$(B
-$B%7%s%\%j%C%/$rMQ$$$F!$$=$l$rC;$$L>A0$G;H$($k$h$&$K$9$k!%(B
+以上の手順により，<PREFIX>/bin に m68k-unknow-aout-gcc が作られるので，
+シンボリックを用いて，それを短い名前で使えるようにする．
 
     % cd <LOCALDIR>
     % ln -s <PREFIX>/bin/m68k-unknown-aout-gcc m68k-gcc
 
-(5) NEWLIB $B$N%$%s%9%H!<%k!J(B1.8.0$B!K(B
+(5) NEWLIB のインストール（1.8.0）
 
-$B<!$N<j=g$K=>$C$F!$(BNEWLIB $B$N@_Dj!&9=C[!&%$%s%9%H!<%k$r9T$&!%(B
+次の手順に従って，NEWLIB の設定・構築・インストールを行う．
 
     % mkdir <NEWLIB-OBJDIR>
     % cd <NEWLIB-OBJDIR>
@@ -391,8 +391,8 @@ ItIs $B$N9=C[$KI,MW$J:G>.8B$N%D!<%k$N$_$r<($7$F$$$k!%(B
     % gmake
     % gmake install
 
-$B$3$N<j=g$G%$%s%9%H!<%k$5$l$k%9%?!<%H%"%C%W%b%8%e!<%k$O!$(BItIs $B$N4D6-$G(B
-$B$O$=$N$^$^;H$&$3$H$,$G$-$J$$!%$=$3$G!$0BA4$N$?$a$K!$%j%M!<%`$7$F$*$/!%(B
+この手順でインストールされるスタートアップモジュールは，ItIs の環境で
+はそのまま使うことができない．そこで，安全のために，リネームしておく．
 
     % cd <PREFIX>/m68k-unknown-aout/lib/
     % mv crt0.o crt0.o.libgloss
@@ -400,28 +400,28 @@ ItIs $B$N9=C[$KI,MW$J:G>.8B$N%D!<%k$N$_$r<($7$F$$$k!%(B
     % mv m68000/crt0.o m68000/crt0.o.libgloss
     % mv m5200/crt0.o m5200/crt0.o.libgloss
 
-(6) ItIs $BMQ$N%9%?!<%H%"%C%W%b%8%e!<%k$N%$%s%9%H!<%k(B
+(6) ItIs 用のスタートアップモジュールのインストール
 
     % cd <ITIS>/m68k/start
     % gmake
     % gmake install
 
-$B0J>e$K$h$j!$(BItIs $B$N3+H/4D6-$,9=C[$G$-$k!%:G=i$K=R$Y$?DL$j!$8=>u$G$O(B 
-aout2 $B$N9=C[4D6-$OL$@0Hw$G$"$k!J>-MhE*$K$O!$(BItIs $B$NG[IU%-%C%H$K4^$a$k(B
-$BM=Dj!K!%(Baout2 $B$,I,MW$JJ}$O!$JLESAjCL$5$l$?$$!%(B
+以上により，ItIs の開発環境が構築できる．最初に述べた通り，現状では 
+aout2 の構築環境は未整備である（将来的には，ItIs の配付キットに含める
+予定）．aout2 が必要な方は，別途相談されたい．
 
 
-3.3. $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P(B
+3.3. シリアルインタフェースドライバ
 
-$B%?%9%/$NI8=`F~=PNO$r%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P7PM3$K$9$k$?$a$K!$(B
-libitis $B$NCf$K(B newlib $BBP1~$NDc%l%Y%kF~=PNO%k!<%A%s!J(Bglue_newlib.c$B!K$r(B
-$BMQ0U$7$F$$$k!%$3$N%b%8%e!<%k$r%j%s%/$9$k$3$H$G!$%?%9%/$NI8=`F~=PNO$r%7(B
-$B%j%"%k%$%s%?%U%'!<%9%I%i%$%P7PM3$H$J$k!%(B
+タスクの標準入出力をシリアルインタフェースドライバ経由にするために，
+libitis の中に newlib 対応の低レベル入出力ルーチン（glue_newlib.c）を
+用意している．このモジュールをリンクすることで，タスクの標準入出力をシ
+リアルインタフェースドライバ経由となる．
 
 
-3.4. $B$=$NB>(B
+3.4. その他
 
-$B!&(Bxscheme $B$GIbF0>/?tE@1i;;$r;H$&@_Dj$O%F%9%H$r9T$C$F$$$J$$!%(B
+・xscheme で浮動少数点演算を使う設定はテストを行っていない．
 
-$B!&%+!<%M%k$NFbIt$G!$%?%9%/%G%#%9%Q%C%A%c$N5/F0MQ$K(B TRAP #7 $B$r;H$C$F$$(B
-$B$k!%(B
+・カーネルの内部で，タスクディスパッチャの起動用に TRAP #7 を使ってい
+る．

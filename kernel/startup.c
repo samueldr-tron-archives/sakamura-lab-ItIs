@@ -40,12 +40,12 @@
 #include "../systask/systask.h"
 
 /*
- *  $B%P!<%8%g%s>pJs(B (version.c)
+ *  バージョン情報 (version.c)
  */
 extern char	version[];
 
 /*
- *  ItIs$B%+!<%M%k$N=i4|2=$H=i4|2=%?%9%/$N@8@.!&5/F0(B
+ *  ItIsカーネルの初期化と初期化タスクの生成・起動
  */
 main()
 {
@@ -56,13 +56,13 @@ main()
 		version, MAJOR_REL, MINOR_REL, PATCH_LEVEL);
 
 	/*
-	 *  $B%?!<%2%C%H0MB8$N=i4|2=(B
+	 *  ターゲット依存の初期化
 	 */
 	cpu_initialize();
 	sys_initialize();
 
 	/*
-	 *  $B3F%b%8%e!<%k$N=i4|2=(B
+	 *  各モジュールの初期化
 	 */
 	task_initialize();
 #ifdef USE_SEM
@@ -101,7 +101,7 @@ main()
 	timer_initialize();
 
 	/*
-	 *  $B%7%9%F%`%a%b%j%W!<%k$N@8@.(B
+	 *  システムメモリプールの生成
 	 */
 	if ((ercd = sys_cre_mpl()) < 0) {
 		i_syslog(LOG_KERN|LOG_EMERG,
@@ -110,7 +110,7 @@ main()
 	}
 
 	/*
-	 *  $B=i4|2=%?%9%/$N@8@.!&5/F0(B
+	 *  初期化タスクの生成・起動
 	 */
 	if ((ercd = i_cre_tsk(TSK_INIT, &TSK_INIT_CTSK)) < 0) {
 		i_syslog(LOG_KERN|LOG_EMERG,
@@ -124,13 +124,13 @@ main()
 	}
 
 	/*
-	 *  $B%+!<%M%k$NF0:n$r3+;O$9$k!%(B
+	 *  カーネルの動作を開始する．
 	 */
 	force_dispatch();
 }
 
 /*
- *  ItIs $B=*N;=hM}(B
+ *  ItIs 終了処理
  */
 void
 itis_exit()

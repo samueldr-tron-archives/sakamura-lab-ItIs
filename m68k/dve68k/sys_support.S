@@ -38,54 +38,54 @@
 #include "isysconf.h"
 
 /*
- *  DVE68K/40 CPU$B%\!<%I>e$N%l%8%9%?%"%I%l%9$NDj5A(B
+ *  DVE68K/40 CPUボード上のレジスタアドレスの定義
  */
-#define BOARD_REG0	0xfff48000	/* DIP$B%9%$%C%A(B */
-#define BOARD_REG1	0xfff48004	/* $B%\!<%I%3%s%H%m!<%k%l%8%9%?(B */
-#define BOARD_REG2	0xfff48008	/* $B%U%i%C%7%e%a%b%j3d9~$_%/%j%"(B */
+#define BOARD_REG0	0xfff48000	/* DIPスイッチ */
+#define BOARD_REG1	0xfff48004	/* ボードコントロールレジスタ */
+#define BOARD_REG2	0xfff48008	/* フラッシュメモリ割込みクリア */
 
-#define DGA_CSR0	0xfff44000	/* DGA-001 $B$N%l%8%9%?(B */
+#define DGA_CSR0	0xfff44000	/* DGA-001 のレジスタ */
 #define DGA_CSR1	0xfff44004
 
 /*
- *  DVE68K/40 CPU$B%\!<%IMQ(B $B%O!<%I%&%'%"0MB8=i4|2==hM}(B
+ *  DVE68K/40 CPUボード用 ハードウェア依存初期化処理
  *
- *  $B%9%?!<%H%"%C%W%b%8%e!<%k$NCf$G!$(Bmain $B$r8F$S=P$9A0$K8F$S=P$5$l$k!%(B
+ *  スタートアップモジュールの中で，main を呼び出す前に呼び出される．
  */
 	.text
 	.align 1
 	.globl _hardware_init_hook
 _hardware_init_hook:
 dve68k_start:
-	move.l (sp)+, a0		/* $BLa$jHVCO$r(B a0 $B$K(B */
+	move.l (sp)+, a0		/* 戻り番地を a0 に */
 
 	move.w sr, d0
-	or.w #0x2000, d0		/* $B%9!<%Q%P%$%6%b!<%I$K(B */
-	and.w #0xe8ff ,d0		/* $B3d9~$_%b!<%I(B, IPL=0 $B$K@_Dj(B */
+	or.w #0x2000, d0		/* スーパバイザモードに */
+	and.w #0xe8ff ,d0		/* 割込みモード, IPL=0 に設定 */
 	move.w d0, sr
-	movea.l #STACKTOP, sp		/* $B%9%?%C%/%]%$%s%?(B (SPI) $B$N=i4|2=(B */
-	movea.l #0, fp			/* $B%U%l!<%`%]%$%s%?$N=i4|2=(B */
+	movea.l #STACKTOP, sp		/* スタックポインタ (SPI) の初期化 */
+	movea.l #0, fp			/* フレームポインタの初期化 */
 
-	cinva bc			/* $B$9$Y$F$N%-%c%C%7%e$rL58z2=(B */
-	move.l #0x80008000, d0		/* $BN>J}$N%-%c%C%7%e$r(B ON */
+	cinva bc			/* すべてのキャッシュを無効化 */
+	move.l #0x80008000, d0		/* 両方のキャッシュを ON */
 	movec.l d0, cacr
 
-	move.l BOARD_REG0, d0		/* DIP$B%9%$%C%A$rFI$`(B */
-	and.l #0x1f, d0			/* board_id $B$N=i4|2=(B */
+	move.l BOARD_REG0, d0		/* DIPスイッチを読む */
+	and.l #0x1f, d0			/* board_id の初期化 */
 	move.l d0, _board_id
-	asl.l #8, d0			/* board_addr $B$N=i4|2=(B */
+	asl.l #8, d0			/* board_addr の初期化 */
 	asl.l #8, d0
 	asl.l #8, d0
 	move.l d0, _board_addr
-	move.l #0x09, BOARD_REG1	/* $B%3%s%H%m!<%k%l%8%9%?$N=i4|2=(B */
+	move.l #0x09, BOARD_REG1	/* コントロールレジスタの初期化 */
 
-	move.l #0x2c07e000, DGA_CSR0	/* CSR0 $B$N=i4|2=(B */
-	move.l #0x60000300, DGA_CSR1	/* CSR1 $B$N=i4|2=(B */
+	move.l #0x2c07e000, DGA_CSR0	/* CSR0 の初期化 */
+	move.l #0x60000300, DGA_CSR1	/* CSR1 の初期化 */
 
-	jmp (a0)			/* $B8F$S85$XLa$k(B */
+	jmp (a0)			/* 呼び元へ戻る */
 
 /*
- *  $BDc%l%Y%k%a%b%j%(%j%"3NJ]%k!<%A%s(B
+ *  低レベルメモリエリア確保ルーチン
  *
  *  void *sbrk(int size)
  */
@@ -93,16 +93,16 @@ dve68k_start:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	movea.l _break, a0		/* _break $B$N8=:_CM$r<h$j=P$9(B */
-	move.l a0, d0			/* $B99?7A0$N(B _break $B$rJV$9(B */
+	movea.l _break, a0		/* _break の現在値を取り出す */
+	move.l a0, d0			/* 更新前の _break を返す */
 	add.l -4(sp), a0
-	bcs sbrk_overflow		/* $B%a%b%j%U%k$N%A%'%C%/(B */
+	bcs sbrk_overflow		/* メモリフルのチェック */
 	cmp.l #HEAPLIMIT, a0
 	bhi sbrk_overflow
-	move.l a0, _break		/* _break $B$N99?7(B */
+	move.l a0, _break		/* _break の更新 */
 	rts
 sbrk_overflow:
-	moveq.l #-1, d0			/* $B%*!<%P!<%U%m!<$N>l9g$O(B NADR */
+	moveq.l #-1, d0			/* オーバーフローの場合は NADR */
 	rts
 
 	.data
@@ -111,7 +111,7 @@ _break:
 	.int HEAPTOP
 
 /*
- *  Access Fault $B%O%s%I%i5/F0$N$?$a$N9b5i8@8lBP1~%k!<%A%s(B
+ *  Access Fault ハンドラ起動のための高級言語対応ルーチン
  */
 	.text
 	.align 1

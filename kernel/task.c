@@ -40,41 +40,41 @@
 #include "cpu_task.h"
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A6X;_>uBV(B
+ *  タスクディスパッチ禁止状態
  */
 #ifdef USE_DISPATCH_DISABLED
 BOOL	dispatch_disabled;
 #endif /* USE_DISPATCH_DISABLED */
 
 /*
- *  $B<B9TCf$N%?%9%/(B
+ *  実行中のタスク
  */
 TCB	*ctxtsk;
 
 /*
- *  $B<B9T$9$Y$-%?%9%/(B
+ *  実行すべきタスク
  */
 TCB	*schedtsk;
 
 /*
- *  TCB $B$N%(%j%"(B
+ *  TCB のエリア
  */
 TCB	tcb_table[NUM_TSKID];
 
 /*
- *  $B%l%G%#%-%e!<(B
+ *  レディキュー
  */ 
 RDYQUE	ready_queue;
 
 /*
- *  $BL$;HMQ$N(B TCB $B$N%j%9%H(B
+ *  未使用の TCB のリスト
  */
 #ifndef _i_vcre_tsk
 QUEUE	free_tcb;
 #endif /* _i_vcre_tsk */
 
 /*
- *  TCB $B$N=i4|2=(B
+ *  TCB の初期化
  */
 void
 task_initialize(void)
@@ -108,13 +108,13 @@ task_initialize(void)
 }
 
 /*
- *  $B%?%9%/$N<B9T=`Hw$r$9$k!%(B
+ *  タスクの実行準備をする．
  */
 void
 make_dormant(TCB *tcb)
 {
 	/*
-	 *  DORMANT$B>uBV$G$O%j%;%C%H$5$l$F$$$k$Y$-JQ?t$r=i4|2=!%(B
+	 *  DORMANT状態ではリセットされているべき変数を初期化．
 	 */
 	tcb->state = TS_DORMANT;
 	tcb->priority = tcb->ipriority;
@@ -131,15 +131,15 @@ make_dormant(TCB *tcb)
 #endif /* USE_TASK_MAILBOX */
 
 	/*
-	 *  $B%?%9%/5/F0$N$?$a$N%3%s%F%-%9%H$N@_Dj!%(B
+	 *  タスク起動のためのコンテキストの設定．
 	 */
 	setup_context(tcb);
 }
 
 /*
- *  $B<B9T$9$Y$-%?%9%/$rA*Br$7D>$9!%(B
+ *  実行すべきタスクを選択し直す．
  *
- *  schedtsk $B$r%l%G%#%-%e!<$N@hF,$N%?%9%/$H0lCW$5$;$k!%(B
+ *  schedtsk をレディキューの先頭のタスクと一致させる．
  */
 Inline void
 reschedule(void)
@@ -153,10 +153,10 @@ reschedule(void)
 }
 
 /*
- *  $B%?%9%/$r<B9T2DG=>uBV$K$9$k!%(B
+ *  タスクを実行可能状態にする．
  *
- *  $B%?%9%/>uBV$r99?7$7!$%l%G%#%-%e!<$KA^F~$9$k!%I,MW$J$i!$(Bschedtsk $B$r(B
- *  $B99?7$7!$%?%9%/%G%#%9%Q%C%A%c$N5/F0$rMW5a$9$k!%(B
+ *  タスク状態を更新し，レディキューに挿入する．必要なら，schedtsk を
+ *  更新し，タスクディスパッチャの起動を要求する．
  */
 void
 make_ready(TCB *tcb)
@@ -169,10 +169,10 @@ make_ready(TCB *tcb)
 }
 
 /*
- *  $B%?%9%/$r<B9T2DG=0J30$N>uBV$K$9$k!%(B
+ *  タスクを実行可能以外の状態にする．
  *
- *  $B%?%9%/$r%l%G%#%-%e!<$+$i:o=|$9$k!%:o=|$7$?%?%9%/$,(B schedtsk $B$G$"$C(B
- *  $B$?>l9g$K$O!$(Bschedtsk $B$r%l%G%#%-%e!<Cf$N:G9bM%@hEY%?%9%/$K@_Dj$9$k!%(B
+ *  タスクをレディキューから削除する．削除したタスクが schedtsk であっ
+ *  た場合には，schedtsk をレディキュー中の最高優先度タスクに設定する．
  */
 void
 make_non_ready(TCB *tcb)
@@ -186,7 +186,7 @@ make_non_ready(TCB *tcb)
 }
 
 /*
- *  $B%?%9%/$NM%@hEY$rJQ99$9$k!%(B
+ *  タスクの優先度を変更する．
  */
 void
 change_task_priority(TCB *tcb, INT priority)
@@ -195,10 +195,10 @@ change_task_priority(TCB *tcb, INT priority)
 
 	if (tcb->state == TS_READY) {
 		/*
-		 *  $B%?%9%/$r%l%G%#%-%e!<$+$i:o=|$9$k:]$K(B TCB $B$N(B
-		 *  priority $B%U%#!<%k%I$NCM$,I,MW$K$J$k$?$a!$%l(B
-		 *  $B%G%#%-%e!<$+$i$N:o=|$O!$(Btcb->priority $B$r=q(B
-		 *  $B$-49$($kA0$K9T$o$J$1$l$P$J$i$J$$!%(B
+		 *  タスクをレディキューから削除する際に TCB の
+		 *  priority フィールドの値が必要になるため，レ
+		 *  ディキューからの削除は，tcb->priority を書
+		 *  き換える前に行わなければならない．
 		 */
 		ready_queue_delete(&ready_queue, tcb);
 		tcb->priority = priority;
@@ -215,7 +215,7 @@ change_task_priority(TCB *tcb, INT priority)
 }
 
 /*
- *  $B%l%G%#%-%e!<$r2sE>$5$;$k!%(B
+ *  レディキューを回転させる．
  */
 void
 rotate_ready_queue(INT priority)
@@ -225,7 +225,7 @@ rotate_ready_queue(INT priority)
 }
 
 /*
- *  $B:G9bM%@hEY$N%?%9%/$r4^$`%l%G%#%-%e!<$r2sE>$5$;$k!%(B
+ *  最高優先度のタスクを含むレディキューを回転させる．
  */
 void
 rotate_ready_queue_run(void)

@@ -36,7 +36,7 @@
 #include <itis_services.h>
 
 /*
- *  $B%7%9%F%`>uBV$r<h$j=P$9!%(B
+ *  システム状態を取り出す．
  */
 INT
 sysstat(void)

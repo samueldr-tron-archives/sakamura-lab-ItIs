@@ -37,11 +37,11 @@
 #define _ITIS_KERNEL_
 
 /*
- *  ItIs$B%+!<%M%k(B $BI8=`%$%s%/%k!<%I%U%!%$%k(B
+ *  ItIsカーネル 標準インクルードファイル
  */
 
 /*
- *  ItIs $BI8=`%$%s%/%k!<%I%U%!%$%k(B
+ *  ItIs 標準インクルードファイル
  */
 #include <itron.h>
 #include <itron_errno.h>
@@ -51,7 +51,7 @@
 #include <itis_syslog.h>
 
 /*
- *  $B%+!<%M%kMQ(B assert$B%^%/%m$NDj5A(B
+ *  カーネル用 assertマクロの定義
  */
 #ifndef NDEBUG
 
@@ -67,7 +67,7 @@ extern void	i_assert_fail(const char *expr, const char *file,
 #endif /* NDEBUG */
 
 /*
- *  $B%+!<%M%k9=@.@_Dj%U%!%$%k(B
+ *  カーネル構成設定ファイル
  */
 #include "config.h"
 #include "cpu_conf.h"
@@ -75,17 +75,17 @@ extern void	i_assert_fail(const char *expr, const char *file,
 #include "isysconf.h"
 
 /*
- *  CPU$B0MB8%$%s%/%k!<%I%U%!%$%k(B
+ *  CPU依存インクルードファイル
  */
 #include "cpu_status.h"
 
 /*
- *  $B%7%9%F%`%3!<%k%W%m%H%?%$%W@k8@(B
+ *  システムコールプロトタイプ宣言
  */
 #include "isyscall.h"
 
 /*
- *  $B%7%9%F%`=i4|2=MQ4X?t(B ($B3F%b%8%e!<%k(B)
+ *  システム初期化用関数 (各モジュール)
  */
 extern void	task_initialize(void);
 extern void	semaphore_initialize(void);
@@ -101,36 +101,36 @@ extern void	alarmhandler_initialize(void);
 extern void	extended_svc_initialize(void);
 
 /*
- *  $B%7%9%F%`=*N;MQ4X?t(B (startup.c)
+ *  システム終了用関数 (startup.c)
  */
 extern void	itis_exit(void);
 
 /*
- *  $B%7%9%F%`%a%b%j%W!<%k$+$i$N%a%b%j%V%m%C%/$N<hF@$HJV5Q(B (mempool.c)
+ *  システムメモリプールからのメモリブロックの取得と返却 (mempool.c)
  *
- *  $B%7%9%F%`%a%b%j%W!<%k$O!$(BID $B$,(B TMPL_OS $B$N%a%b%j%W!<%k$H$7$F%"%/%;%9(B
- *  $B$9$k$3$H$b$G$-$k$,!$%+!<%M%kFb$+$iMQ$$$k$?$a$N%$%s%?%U%'!<%9$rMQ0U(B
- *  $B$7$F$$$k!%(Bsys_get_blk $B$O!$%a%b%j%V%m%C%/$,<h$l$J$+$C$?>l9g$K!$BT$A(B
- *  $B>uBV$K$OF~$i$:$K!$B(:B$K(B NULL $B$rJV$9!%(B
+ *  システムメモリプールは，ID が TMPL_OS のメモリプールとしてアクセス
+ *  することもできるが，カーネル内から用いるためのインタフェースを用意
+ *  している．sys_get_blk は，メモリブロックが取れなかった場合に，待ち
+ *  状態には入らずに，即座に NULL を返す．
  */
 extern ER	sys_cre_mpl(void);
 extern VP	sys_get_blk(INT size);
 extern void	sys_rel_blk(VP blk);
 
 /*
- *  $B%+!<%M%kMQ%7%9%F%`%m%05-O?%i%$%V%i%j(B (isyslog.c)
+ *  カーネル用システムログ記録ライブラリ (isyslog.c)
  */
 extern void	i_syslog(int class, const char *format, ...);
 
 /*
- *  $B%?!<%2%C%H%7%9%F%`0MB8%k!<%A%s(B (sys_util.c)
+ *  ターゲットシステム依存ルーチン (sys_util.c)
  */
 extern void	sys_initialize(void);
 extern void	sys_exit(void);
 extern int	sys_write(const char *buf, unsigned int len);
 
 /*
- *  $B$=$NB>$NDj5A(B
+ *  その他の定義
  */
 #define	offsetof(structure, field) ((INT) &(((structure *) 0)->field))
 

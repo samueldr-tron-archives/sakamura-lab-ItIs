@@ -37,49 +37,49 @@
 #define _SYS_SERIAL_
 
 /*
- *  H32SBC$B%7%9%F%`(B CPU$B%\!<%IMQ(B $BDc%l%Y%k%7%j%"%k(BI/O $B4XO"$NDj5A(B
+ *  H32SBCシステム CPUボード用 低レベルシリアルI/O 関連の定義
  */
 
 #include "h32sbc.h"
 
 /*
- *  $B%7%j%"%k%]!<%H$N%O!<%I%&%'%"0MB8>pJs$NDj5A(B
+ *  シリアルポートのハードウェア依存情報の定義
  */
 typedef struct raw_serial_port_descripter {
-	IOREG	*data;		/* ACI$B%G!<%?%l%8%9%?$NHVCO(B */
-	IOREG	*status;	/* ACI$B%9%F!<%?%9%l%8%9%?$NHVCO(B */
-	IOREG	*mode;		/* ACI$B%b!<%I%l%8%9%?$NHVCO(B */
-	IOREG	*command;	/* ACI$B%3%^%s%I%l%8%9%?$NHVCO(B */
+	IOREG	*data;		/* ACIデータレジスタの番地 */
+	IOREG	*status;	/* ACIステータスレジスタの番地 */
+	IOREG	*mode;		/* ACIモードレジスタの番地 */
+	IOREG	*command;	/* ACIコマンドレジスタの番地 */
 
-	byte	def_mode1;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B(1) */
-	byte	def_mode2;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B(2) */
+	byte	def_mode1;	/* デフォールトのモード設定値(1) */
+	byte	def_mode2;	/* デフォールトのモード設定値(2) */
 
-	byte	irc_bit;	/* IRC$B@_Dj$N%S%C%H%Q%?!<%s(B */
-	byte	int_level;	/* $B3d9~$_%l%Y%k(B */
-	FP	int_handler;	/* $B3d9~$_%O%s%I%i(B */
+	byte	irc_bit;	/* IRC設定のビットパターン */
+	byte	int_level;	/* 割込みレベル */
+	FP	int_handler;	/* 割込みハンドラ */
 } RPORT;
 
 /*
- *  ACI$B%3%^%s%I%l%8%9%?$N@_DjCM(B
+ *  ACIコマンドレジスタの設定値
  */
-#define	COM_STOP	0x32	/* $BAw<u?.$H$bDd;_(B */
-#define	COM_SSTOP	0x36	/* $BAw?.Dd;_!$<u?.$O%$%M!<%V%k(B */
-#define	COM_START	0x37	/* $BAw<u?.$H$b%$%M!<%V%k(B */
+#define	COM_STOP	0x32	/* 送受信とも停止 */
+#define	COM_SSTOP	0x36	/* 送信停止，受信はイネーブル */
+#define	COM_START	0x37	/* 送受信ともイネーブル */
 
 /*
- *  ACI$B%b!<%I%l%8%9%?$N%G%U%)%k%H@_DjCM(B
+ *  ACIモードレジスタのデフォルト設定値
  */
-#define	DEF_MODE1	0x4d	/* 8bit, $B%9%H%C%W%S%C%H(B 1bit, $B%Q%j%F%#$J$7(B */
+#define	DEF_MODE1	0x4d	/* 8bit, ストップビット 1bit, パリティなし */
 #define	DEF_MODE2	0x3e	/* 9600bps */
 
 /*
- *  $B3d9~$_%Y%/%?$H%O%s%I%i%"%I%l%9$N<h$j=P$7(B
+ *  割込みベクタとハンドラアドレスの取り出し
  */
 #define	raw_int_vector(p)	INT_VECTOR((p)->int_level)
 #define	raw_int_handler(p)	((p)->int_handler)
 
 /*
- *  $B3d9~$_%O%s%I%i$N%(%s%H%j(B ($BA0J}@k8@(B)
+ *  割込みハンドラのエントリ (前方宣言)
  */
 static void	int_handler_aci1(void);
 static void	int_handler_aci0(void);
@@ -87,10 +87,10 @@ static void	int_handler_aci0(void);
 static void	serial_int_handler(int portid);
 
 /*
- *  $BDc%l%Y%k%]!<%H>pJs4IM}%V%m%C%/$N=i4|CM(B
+ *  低レベルポート情報管理ブロックの初期値
  */
 
-#define NUM_PORT	2	/* $B%5%]!<%H$9$k%7%j%"%k%]!<%H$N?t(B */
+#define NUM_PORT	2	/* サポートするシリアルポートの数 */
 
 #define	RAWPORT1	{ ACI0_DATA, ACI0_STATUS, ACI0_MODE, ACI0_COMMAND, \
 			  DEF_MODE1, DEF_MODE2,				   \
@@ -100,7 +100,7 @@ static void	serial_int_handler(int portid);
 			  LIR3_BIT, 3, int_handler_aci1 }
 
 /*
- *  $B%7%j%"%k(B I/O $B%]!<%H$N=i4|2=(B
+ *  シリアル I/O ポートの初期化
  */
 Inline BOOL
 raw_port_init(RPORT *p)
@@ -108,30 +108,30 @@ raw_port_init(RPORT *p)
 	byte	n;
 
 	/*
-	 *  ACI $B$N@_Dj(B
+	 *  ACI の設定
 	 */
 	*(p->command) = COM_STOP;
-	n = *(p->command);		/* $B%@%_!<%j!<%I(B */
+	n = *(p->command);		/* ダミーリード */
 	*(p->mode) = p->def_mode1;
 	*(p->mode) = p->def_mode2;
-	*(p->command) = COM_SSTOP;	/* $B<u?.$N$_%$%M!<%V%k(B */
+	*(p->command) = COM_SSTOP;	/* 受信のみイネーブル */
 
 	/*
-	 *  IRC $B$N@_Dj(B
+	 *  IRC の設定
 	 */
 	irc_assign(IRC_LMR(p->int_level), p->irc_bit);
 	irc_or_assign(IRC_VMR, p->irc_bit);
-	irc_and_assign(IRC_TMR, ~(p->irc_bit));	/* $B%l%Y%k%H%j%,%b!<%I(B */
-	irc_and_assign(IRC_IMR, ~(p->irc_bit));	/* $B3d9~$_%^%9%/2r=|(B */
+	irc_and_assign(IRC_TMR, ~(p->irc_bit));	/* レベルトリガモード */
+	irc_and_assign(IRC_IMR, ~(p->irc_bit));	/* 割込みマスク解除 */
 
 	if ((n = irc_read(IRC_TMR)) & p->irc_bit) {
 		/*
-		 *  IRC $B$N=i4|2=$K<:GT(B
+		 *  IRC の初期化に失敗
 		 *
-		 *  TMR ($B%H%j%,%b!<%I%l%8%9%?(B) $B$NFI$_=P$7$K<:GT$7!$$=$N(B
-		 *  $B7k2L@5$7$/3d9~$_$,$+$+$i$J$/$"$k$H$$$&>c32$,=P$k$3(B
-		 *  $B$H$,B?$$!%$3$N>c32$O%W%m%0%i%`$NCV$+$l$k0LCV$K0MB8(B
-		 *  $B$7$F5/$3$j!$:F8=@-$b$"$k!%860x$OITL@!%(B
+		 *  TMR (トリガモードレジスタ) の読み出しに失敗し，その
+		 *  結果正しく割込みがかからなくあるという障害が出るこ
+		 *  とが多い．この障害はプログラムの置かれる位置に依存
+		 *  して起こり，再現性もある．原因は不明．
 		 */
 		syslog(LOG_EMERG,
 			"Serial port initialization error (%02x).", n);
@@ -141,35 +141,35 @@ raw_port_init(RPORT *p)
 }
 
 /*
- *  $B%7%j%"%k(B I/O $B%]!<%H$N%7%c%C%H%@%&%s(B
+ *  シリアル I/O ポートのシャットダウン
  */
 Inline void
 raw_port_shutdown(RPORT *p)
 {
-	irc_or_assign(IRC_IMR, p->irc_bit);	/* $B3d9~$_$r%^%9%/(B */
+	irc_or_assign(IRC_IMR, p->irc_bit);	/* 割込みをマスク */
 }
 
 /*
- *  $B3d9~$_%O%s%I%i$N%(%s%H%j(B
+ *  割込みハンドラのエントリ
  */
 static void
 int_handler_aci0(void)
 {
 	int	intmask;
 
-	irc_assign(IRC_IRR, LIR2_BIT);	/* $B3d9~$_MW5a$r%/%j%"(B($BK\Mh$OITMW(B) */
+	irc_assign(IRC_IRR, LIR2_BIT);	/* 割込み要求をクリア(本来は不要) */
 	serial_int_handler(1);
 }
 
 static void
 int_handler_aci1(void)
 {
-	irc_assign(IRC_IRR, LIR3_BIT);	/* $B3d9~$_MW5a$r%/%j%"(B($BK\Mh$OITMW(B) */
+	irc_assign(IRC_IRR, LIR3_BIT);	/* 割込み要求をクリア(本来は不要) */
 	serial_int_handler(2);
 }
 
 /*
- *  $B3d9~$_%/%j%"=hM}(B
+ *  割込みクリア処理
  */
 Inline void
 raw_port_clear_int(RPORT *p)
@@ -177,7 +177,7 @@ raw_port_clear_int(RPORT *p)
 }
 
 /*
- *  $BJ8;z$r<u?.$7$?$+!)(B
+ *  文字を受信したか？
  */
 Inline BOOL
 raw_port_getready(RPORT *p)
@@ -186,7 +186,7 @@ raw_port_getready(RPORT *p)
 }
 
 /*
- *  $BJ8;z$rAw?.$G$-$k$+!)(B
+ *  文字を送信できるか？
  */
 Inline BOOL
 raw_port_putready(RPORT *p)
@@ -195,7 +195,7 @@ raw_port_putready(RPORT *p)
 }
 
 /*
- *  $B<u?.$7$?J8;z$N<h$j=P$7(B
+ *  受信した文字の取り出し
  */
 Inline byte
 raw_port_getchar(RPORT *p)
@@ -204,7 +204,7 @@ raw_port_getchar(RPORT *p)
 }
 
 /*
- *  $BAw?.$9$kJ8;z$N=q$-9~$_(B
+ *  送信する文字の書き込み
  */
 Inline void
 raw_port_putchar(RPORT *p, byte c)
@@ -213,7 +213,7 @@ raw_port_putchar(RPORT *p, byte c)
 }
 
 /*
- *  $BAw?.@)8f4X?t(B
+ *  送信制御関数
  */
 Inline void
 raw_port_sendstart(RPORT *p)
@@ -228,7 +228,7 @@ raw_port_sendstop(RPORT *p)
 }
 
 /*
- *  IRC $B$H(B ACI $B$N@_Dj>uBV$rI=<($9$k(B ($B%G%P%C%0MQ(B)$B!%(B
+ *  IRC と ACI の設定状態を表示する (デバッグ用)．
  */
 #ifdef DEBUG
 

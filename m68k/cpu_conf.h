@@ -36,12 +36,12 @@
 #define _CPU_CONF_
 
 /*
- *  get_ver $B$G;2>H$5$l$k(B CPU$B%3!<%I$NDj5A(B
+ *  get_ver で参照される CPUコードの定義
  */
 #define	CPU_CODE	0x0044		/* 68040 */
 
 /*
- *  CPU$B0MB8$N%7%9%F%`%3!<%kL>(B/$B%Q%i%a!<%?L>$N@_Dj(B
+ *  CPU依存のシステムコール名/パラメータ名の設定
  */
 #define chg_iXX	chg_ipm
 #define ref_iXX	ref_ipm
@@ -49,42 +49,42 @@
 #define p_iXXXX	p_imask
 
 /*
- *  m68k $B$G$O%5%]!<%H$5$l$J$$5!G=$NDj5A(B
+ *  m68k ではサポートされない機能の定義
  */
-#define _i_dis_int	_no_support	/* dis_int$B%7%9%F%`%3!<%k(B */
-#define _i_ena_int	_no_support	/* ena_int$B%7%9%F%`%3!<%k(B */
+#define _i_dis_int	_no_support	/* dis_intシステムコール */
+#define _i_ena_int	_no_support	/* ena_intシステムコール */
 
 /*
- *  $B%?%9%/B0@-Cf$N<B9T%b!<%I$K4X$9$kDj5A(B
+ *  タスク属性中の実行モードに関する定義
  */
 #define TA_MODEMASK	(TA_UMODE)
 #define SYSMODE(atr)	(((atr) & TA_MODEMASK) == TA_SMODE)
 
 /*
- *  $B%7%9%F%`%9%?%C%/$H%f!<%6%9%?%C%/$rJL!9$K;}$D(B
+ *  システムスタックとユーザスタックを別々に持つ
  */
 #define	USE_SEPARATE_SSTACK
 
 /*
- *  dispatch_disabled $B$OI,MW(B
+ *  dispatch_disabled は必要
  */
 #define USE_DISPATCH_DISABLED
 
 /*
- *  $B%7%9%F%`%9%?%C%/$N:G>.%5%$%:$NDj5A(B
+ *  システムスタックの最小サイズの定義
  *
- *  cre_tsk $B$G%?%9%/Kh$K%7%9%F%`%9%?%C%/%5%$%:$r@_Dj$9$k>l9g$N:G>.$N%7(B
- *  $B%9%F%`%9%?%C%/%5%$%:!%(B
+ *  cre_tsk でタスク毎にシステムスタックサイズを設定する場合の最小のシ
+ *  ステムスタックサイズ．
  */
 #ifndef MIN_SYS_STACK_SIZE
 #define	MIN_SYS_STACK_SIZE	256
 #endif /* MIN_SYS_STACK_SIZE */
 
 /*
- *  $B%G%U%)%k%H%7%9%F%`%9%?%C%/%5%$%:$NDj5A(B
+ *  デフォルトシステムスタックサイズの定義
  *
- *  cre_tsk $B$G%?%9%/Kh$K%7%9%F%`%9%?%C%/%5%$%:$r@_Dj$7$J$$>l9g$N%G%U%)(B
- *  $B%k%H$N%7%9%F%`%9%?%C%/%5%$%:!%(B
+ *  cre_tsk でタスク毎にシステムスタックサイズを設定しない場合のデフォ
+ *  ルトのシステムスタックサイズ．
  */
 #ifndef DEF_SYS_STACK_SIZE
 #define DEF_SYS_STACK_SIZE	1024

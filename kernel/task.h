@@ -45,22 +45,22 @@ typedef struct prisem_control_block	PISCB;
 #include "winfo.h"
 
 /*
- *  $B%?%9%/>uBV$NFbItI=8=$NDj5A(B
+ *  タスク状態の内部表現の定義
  *
- *  $B%?%9%/$,BT$A>uBV$+$I$&$+$O(B (state & TS_WAIT) $B$G%A%'%C%/$G$-$k(B.
- *  $B%?%9%/$,6/@)BT$A>uBV$+$I$&$+$O(B (state & TS_SUSPEND) $B$G%A%'%C%/$G$-$k(B.
+ *  タスクが待ち状態かどうかは (state & TS_WAIT) でチェックできる.
+ *  タスクが強制待ち状態かどうかは (state & TS_SUSPEND) でチェックできる.
  */
 typedef enum {
-	TS_NONEXIST = 0,	/* $BL$EPO?>uBV(B */
-	TS_READY = 1,		/* $B<B9T$^$?$O<B9T2DG=>uBV(B */
-	TS_WAIT = 2,		/* $BBT$A>uBV(B */
-	TS_SUSPEND = 4,		/* $B6/@)BT$A>uBV(B */
-	TS_WAITSUS = 6,		/* $BFs=EBT$A>uBV(B */
-	TS_DORMANT = 8		/* $B5Y;_>uBV(B */
+	TS_NONEXIST = 0,	/* 未登録状態 */
+	TS_READY = 1,		/* 実行または実行可能状態 */
+	TS_WAIT = 2,		/* 待ち状態 */
+	TS_SUSPEND = 4,		/* 強制待ち状態 */
+	TS_WAITSUS = 6,		/* 二重待ち状態 */
+	TS_DORMANT = 8		/* 休止状態 */
 } TSTAT;
 
 /*
- *  $B%?%9%/$,@8$-$F$$$k$+(B (NON-EXISTENT$B!$(BDORMANT$B0J30$+(B) $B$N%A%'%C%/(B
+ *  タスクが生きているか (NON-EXISTENT，DORMANT以外か) のチェック
  */
 Inline BOOL
 task_alive(TSTAT state)
@@ -69,144 +69,144 @@ task_alive(TSTAT state)
 }
 
 /*
- *  $B%?%9%/M%@hEY$NFbIt(B/$B30ItI=8=JQ49%^%/%m(B
+ *  タスク優先度の内部/外部表現変換マクロ
  */
 #define int_priority(x)	((INT)((x) - MIN_PRI))
 #define ext_tskpri(x)	((PRI)((x) + MIN_PRI))
 
 /*
- *  $B%?%9%/%3%s%H%m!<%k%V%m%C%/(B (TCB) $B$NDj5A(B
+ *  タスクコントロールブロック (TCB) の定義
  */
 struct task_control_block {
-	QUEUE	tskque;		/* $B%?%9%/%-%e!<(B */
-	ID	tskid;		/* $B%?%9%/(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	tskatr;		/* $B%?%9%/B0@-(B */
-	FP	task;		/* $B%?%9%/5/F0%"%I%l%9(B */
-	INT	ipriority;	/* $B%?%9%/5/F0;~M%@hEY(B */
+	QUEUE	tskque;		/* タスクキュー */
+	ID	tskid;		/* タスクID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	tskatr;		/* タスク属性 */
+	FP	task;		/* タスク起動アドレス */
+	INT	ipriority;	/* タスク起動時優先度 */
 #ifdef USE_SEPARATE_SSTACK
-	INT	stksz;		/* $B%f!<%6%9%?%C%/%5%$%:(B */
+	INT	stksz;		/* ユーザスタックサイズ */
 #endif /* USE_SEPARATE_SSTACK */
-	INT	sstksz;		/* $B%7%9%F%`%9%?%C%/%5%$%:(B */
-	INT	priority;	/* $B8=:_$NM%@hEY(B */
-	TSTAT	state;		/* $B%?%9%/>uBV(B ($BFbItI=8=(B) */
-	WSPEC	*wspec;		/* $BBT$A;EMM(B */
-	GCB	*wgcb;		/* $BBT$A%*%V%8%'%/%H$N%3%s%H%m!<%k%V%m%C%/(B */
-	INT	wupcnt;		/* $B5/>2MW5a%-%e!<%$%s%0?t(B */
-	INT	suscnt;		/* SUSPEND$BMW5a%M%9%H?t(B */
-	INT	sysmode;	/* $B%?%9%/F0:n%b!<%I!$=`%?%9%/It8F=P$7%l%Y%k(B */
+	INT	sstksz;		/* システムスタックサイズ */
+	INT	priority;	/* 現在の優先度 */
+	TSTAT	state;		/* タスク状態 (内部表現) */
+	WSPEC	*wspec;		/* 待ち仕様 */
+	GCB	*wgcb;		/* 待ちオブジェクトのコントロールブロック */
+	INT	wupcnt;		/* 起床要求キューイング数 */
+	INT	suscnt;		/* SUSPEND要求ネスト数 */
+	INT	sysmode;	/* タスク動作モード，準タスク部呼出しレベル */
 #ifdef USE_QTSK_PORTION
-	INT	isysmode;	/* $B%?%9%/F0:n%b!<%I=i4|CM(B */
+	INT	isysmode;	/* タスク動作モード初期値 */
 #endif /* USE_QTSK_PORTION */
 
 #ifdef USE_POR
-	RNO	wrdvno;		/* $B%i%s%G%VHV9f@8@.MQ(B */
+	RNO	wrdvno;		/* ランデブ番号生成用 */
 #endif /* USE_POR */
 #ifdef PRISEM_SPEC1
-	PISCB	*pislist;	/* $B3MF@M%@hEY7Q>5%;%^%U%)%j%9%H(B */
+	PISCB	*pislist;	/* 獲得優先度継承セマフォリスト */
 #endif /* PRISEM_SPEC1 */
 #ifdef USE_TASK_MAILBOX
-	T_MSG	*tmq_head;	/* $B%?%9%/IUB0%a%C%;!<%8%-%e!<$N@hF,(B */
-	T_MSG	*tmq_tail;	/* $B%?%9%/IUB0%a%C%;!<%8%-%e!<$NKvHx(B */
+	T_MSG	*tmq_head;	/* タスク付属メッセージキューの先頭 */
+	T_MSG	*tmq_tail;	/* タスク付属メッセージキューの末尾 */
 #endif /* USE_TASK_MAILBOX */
-	ER	*wercd;		/* $BBT$A%(%i!<%3!<%I@_Dj%(%j%"(B */
-	WINFO	winfo;		/* $BBT$A>pJs(B */
-	TMEB	wtmeb;		/* $BBT$A%?%$%^%$%Y%s%H%V%m%C%/(B */
+	ER	*wercd;		/* 待ちエラーコード設定エリア */
+	WINFO	winfo;		/* 待ち情報 */
+	TMEB	wtmeb;		/* 待ちタイマイベントブロック */
 
 #ifdef USE_SEPARATE_SSTACK
-	VP	istack;		/* $B%f!<%6%9%?%C%/%]%$%s%?$N=i4|CM(B */
+	VP	istack;		/* ユーザスタックポインタの初期値 */
 #endif /* USE_SEPARATE_SSTACK */
-	VP	isstack;	/* $B%7%9%F%`%9%?%C%/%]%$%s%?$N=i4|CM(B */
-	CTXB	tskctxb;	/* $B%?%9%/%3%s%F%-%9%H%V%m%C%/(B */
+	VP	isstack;	/* システムスタックポインタの初期値 */
+	CTXB	tskctxb;	/* タスクコンテキストブロック */
 };
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A6X;_>uBV(B
+ *  タスクディスパッチ禁止状態
  *
- *  dispatch_disabled $B$O!$%?%9%/%G%#%9%Q%C%A6X;_>uBV$r5-21$7$F$*$/$?$a(B
- *  $B$NJQ?t!%CY1d3d9~$_$r;H$&>l9g$J$I$K$O!$I,MW$J$$!%(B
+ *  dispatch_disabled は，タスクディスパッチ禁止状態を記憶しておくため
+ *  の変数．遅延割込みを使う場合などには，必要ない．
  */
 #ifdef USE_DISPATCH_DISABLED
 extern BOOL	dispatch_disabled;
 #endif /* USE_DISPATCH_DISABLED */
 
 /*
- *  $B<B9TCf$N%?%9%/(B
+ *  実行中のタスク
  *
- *  ctxtsk $B$O!$<B9TCf$N%?%9%/(B (= CPU $B$,%3%s%F%-%9%H$r;}$C$F$$$k%?%9%/(B) 
- *  $B$N(B TCB $B$r;X$9JQ?t!%%7%9%F%`%3!<%k$N=hM}Cf$G!$%7%9%F%`%3!<%k$rMW5a$7(B
- *  $B$?%?%9%/$K4X$9$k>pJs$r;2>H$9$k>l9g$O!$(Bctxtsk $B$r;H$&!%(Bctxtsk $B$r=q$-(B
- *  $B49$($k$N$O!$%?%9%/%G%#%9%Q%C%A%c$N$_!%(B
+ *  ctxtsk は，実行中のタスク (= CPU がコンテキストを持っているタスク) 
+ *  の TCB を指す変数．システムコールの処理中で，システムコールを要求し
+ *  たタスクに関する情報を参照する場合は，ctxtsk を使う．ctxtsk を書き
+ *  換えるのは，タスクディスパッチャのみ．
  */
 extern TCB	*ctxtsk;
 
 /*
- *  $B<B9T$9$Y$-%?%9%/(B
+ *  実行すべきタスク
  *
- *  schedtsk $B$O!$<B9T$9$Y$-%?%9%/$N(B TCB $B$r;X$9JQ?t!%CY1d%G%#%9%Q%C%A$d(B
- *  $B%G%#%9%Q%C%A$N6X;_$K$h$j%G%#%9%Q%C%A$,CY1d$5$l$F$$$k>uBV$G$O!$(B
- *  ctxtsk $B$H0lCW$7$J$$!%(B
+ *  schedtsk は，実行すべきタスクの TCB を指す変数．遅延ディスパッチや
+ *  ディスパッチの禁止によりディスパッチが遅延されている状態では，
+ *  ctxtsk と一致しない．
  */
 extern TCB	*schedtsk;
 
 /*
- *  TCB $B$N%(%j%"(B
+ *  TCB のエリア
  *
- *  TCB $B$N%(%j%"$O!$%7%9%F%`@8@.;~$K@EE*$K3d$jIU$1$F$$$k!%(B
+ *  TCB のエリアは，システム生成時に静的に割り付けている．
  */
 extern TCB	tcb_table[];
 
 /*
- *  $BL$;HMQ$N(B TCB $B$N%j%9%H(B
+ *  未使用の TCB のリスト
  */
 #ifndef _i_vcre_tsk
 extern QUEUE	free_tcb;
 #endif /* _i_vcre_tsk */
 
 /*
- *  $B%?%9%/(BID $B$+$i(B TCB $B$r<h$j=P$9!%(B
+ *  タスクID から TCB を取り出す．
  */
 #define get_tcb(id)	 (&tcb_table[INDEX_TSK(id)])
 #define get_tcb_self(id) ((id)==TSK_SELF ? ctxtsk : &tcb_table[INDEX_TSK(id)])
 
 /*
- *  $B%?%9%/$N<B9T=`Hw$r$9$k!%(B
+ *  タスクの実行準備をする．
  */
 extern void	make_dormant(TCB *tcb);
 
 /*
- *  $B%?%9%/$r<B9T2DG=>uBV$K$9$k!%(B
+ *  タスクを実行可能状態にする．
  *
- *  tcb $B$G<($5$l$k%?%9%/$NM%@hEY$,!$8=:_<B9TCf$N%?%9%/$NM%@hEY$h$j$b9b(B
- *  $B$$>l9g$O!$<B9T>uBV$K$9$k!%$=$&$G$J$$>l9g$O!$%?%9%/$r%l%G%#%-%e!<$K(B
- *  $B$D$J$0!%(B
+ *  tcb で示されるタスクの優先度が，現在実行中のタスクの優先度よりも高
+ *  い場合は，実行状態にする．そうでない場合は，タスクをレディキューに
+ *  つなぐ．
  */
 extern void	make_ready(TCB *tcb);
 
 /*
- *  $B%?%9%/$r<B9T2DG=0J30$N>uBV$K$9$k!%(B
+ *  タスクを実行可能以外の状態にする．
  *
- *  tcb $B$G<($5$l$k%?%9%/$r<B9T2DG=0J30$N>uBV!$$D$^$jBT$A>uBV!$6/@)BT$A(B
- *  $B>uBV!$5Y;_>uBV$X0\9T$5$;$k!%$3$N4X?t$r8F$S=P$9:]$K$O!$%?%9%/$,<B9T(B
- *  $B2DG=>uBV$K$J$C$F$$$k$3$H!%(Btcb->state $B$O!$8F$S=P$7$?B&$G!$$3$N4X?t$+(B
- *  $B$i%j%?!<%s8e$KJQ99$9$k!%(B
+ *  tcb で示されるタスクを実行可能以外の状態，つまり待ち状態，強制待ち
+ *  状態，休止状態へ移行させる．この関数を呼び出す際には，タスクが実行
+ *  可能状態になっていること．tcb->state は，呼び出した側で，この関数か
+ *  らリターン後に変更する．
  */
 extern void	make_non_ready(TCB *tcb);
 
 /*
- *  $B%?%9%/$NM%@hEY$rJQ99$9$k!%(B
+ *  タスクの優先度を変更する．
  *
- *  tcb $B$G<($5$l$k%?%9%/$NM%@hEY$r(B priority $B$KJQ99$9$k!%$=$l$KH<$C$FI,(B
- *  $BMW$H$J$k%?%9%/$N>uBVA+0\$r5/$3$5$;$k!%(B
+ *  tcb で示されるタスクの優先度を priority に変更する．それに伴って必
+ *  要となるタスクの状態遷移を起こさせる．
  */
 extern void	change_task_priority(TCB *tcb, INT priority);
 
 /*
- *  $B%l%G%#%-%e!<$r2sE>$5$;$k!%(B
+ *  レディキューを回転させる．
  *
- *  rotate_ready_queue $B$O!$(Bpriority $B$G;XDj$5$l$?M%@hEY$N%l%G%#%-%e!<$r(B
- *  $B2sE>$5$;$k!%(Brotate_ready_queue_run $B$O!$%l%G%#%-%e!<Cf$N:G9bM%@hEY(B
- *  $B$N%?%9%/$r4^$`%l%G%#%-%e!<$r2sE>$5$;$k!%(B
+ *  rotate_ready_queue は，priority で指定された優先度のレディキューを
+ *  回転させる．rotate_ready_queue_run は，レディキュー中の最高優先度
+ *  のタスクを含むレディキューを回転させる．
  */
 extern void	rotate_ready_queue(INT priority);
 extern void	rotate_ready_queue_run(void);

@@ -37,11 +37,11 @@
 #define _CHECK_
 
 /*
- *  $B%(%i!<%A%'%C%/MQ%^%/%m$NDj5A(B
+ *  エラーチェック用マクロの定義
  */
 
 /*
- *  $B%*%V%8%'%/%H(BID $B$NHO0O$N%A%'%C%/(B (E_ID)
+ *  オブジェクトID の範囲のチェック (E_ID)
  */
 
 #ifdef CHK_ID
@@ -128,7 +128,7 @@
 #endif /* CHK_ID */
 
 /*
- *  $B%*%V%8%'%/%H$N%"%/%;%98"$N%A%'%C%/(B (E_OACV)
+ *  オブジェクトのアクセス権のチェック (E_OACV)
  */
 
 #ifdef CHK_OACV
@@ -200,7 +200,7 @@
 #endif /* CHK_OACV */
 
 /*
- *  $B<+%?%9%/$r;XDj$7$F$$$J$$$+$N%A%'%C%/(B (E_OBJ)
+ *  自タスクを指定していないかのチェック (E_OBJ)
  */
 #ifdef CHK_SELF
 #define CHECK_NONSELF(tskid) {					\
@@ -213,7 +213,7 @@
 #endif /* CHK_SELF */
 
 /*
- *  $BM%@hEYCM$N%A%'%C%/(B (E_PAR)
+ *  優先度値のチェック (E_PAR)
  */
 
 #ifdef CHK_PAR
@@ -243,7 +243,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  $B%?%$%`%"%&%H;XDjCM$N%A%'%C%/(B (E_PAR)
+ *  タイムアウト指定値のチェック (E_PAR)
  */
 #ifdef CHK_PAR
 #define CHECK_TMOUT(tmout) {					\
@@ -256,7 +256,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  $B$=$NB>$N%Q%i%a!<%?%(%i!<$N%A%'%C%/(B (E_PAR)
+ *  その他のパラメータエラーのチェック (E_PAR)
  */
 #ifdef CHK_PAR
 #define CHECK_PAR(exp) {					\
@@ -269,7 +269,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  $BM=LsB0@-%(%i!<$N%A%'%C%/(B (E_RSATR)
+ *  予約属性エラーのチェック (E_RSATR)
  */
 #ifdef CHK_RSATR
 #define CHECK_RSATR(atr, maxatr) {				\
@@ -282,7 +282,7 @@
 #endif /* CHK_RSATR */
 
 /*
- *  $BL$%5%]!<%H5!G=$N%A%'%C%/(B (E_NOSPT)
+ *  未サポート機能のチェック (E_NOSPT)
  */
 #ifdef CHK_NOSPT
 #define CHECK_NOSPT(exp) {					\
@@ -295,7 +295,7 @@
 #endif /* CHK_NOSPT */
 
 /*
- *  $B%?%9%/FHN)It<B9TCf$G$J$$$+$N%A%'%C%/(B (E_CTX)
+ *  タスク独立部実行中でないかのチェック (E_CTX)
  */
 #ifdef CHK_CTX
 #define CHECK_INTSK() {						\
@@ -308,7 +308,7 @@
 #endif /* CHK_CTX */
 
 /*
- *  $B%G%#%9%Q%C%A6X;_>uBV$G$J$$$+$N%A%'%C%/(B (E_CTX)
+ *  ディスパッチ禁止状態でないかのチェック (E_CTX)
  */
 
 #ifdef CHK_CTX
@@ -331,7 +331,7 @@
 #endif /* CHK_CTX */
 
 /*
- *  $B$=$NB>$N%3%s%F%-%9%H%(%i!<$N%A%'%C%/(B (E_CTX)
+ *  その他のコンテキストエラーのチェック (E_CTX)
  */
 #ifdef CHK_CTX
 #define CHECK_CTX(exp) {					\

@@ -2,611 +2,611 @@
 Mon Jul  6 23:55:00 JST 1998	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, TRON, M68K, BSDUNIX,
-	kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
+	kernel/patchlevel.h: この時点までの修正をまとめる．
 
-	* systask/bsd_sigio.c: $B%7%0%J%k%O%s%I%i$NDj5A$G!$0z?t$,$J$$$3$H$r(B
-	$B@k8@$9$k$N$r$d$a$k!%(B
+	* systask/bsd_sigio.c: シグナルハンドラの定義で，引数がないことを
+	宣言するのをやめる．
 
-	* Release1.4 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs4-1_4")$B!%(B
+	* Release1.4 (patchlevel=0) をフィックス (TAG = "ItIs4-1_4")．
 
 Mon Jul  6 23:22:04 JST 1998	Hiroaki Takada
 
-	* systask/bsd_sigio.c, include/bsd_sigio.h: BSD UNIX$BMQ(B $B%N%s%V%m%C(B
-	$B%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$rA4LL2~D{!%%$%Y%s%H%U%i%0$K4X$o$k%P%0(B
-	$B$r2r7h!%(B
+	* systask/bsd_sigio.c, include/bsd_sigio.h: BSD UNIX用 ノンブロッ
+	キングI/O サポートモジュールを全面改訂．イベントフラグに関わるバグ
+	を解決．
 
-	* systask/bsd_serial.c, libitis/bsd_nbio.c, bsd_nbeio.c: $B?7$7$$%N(B
-	$B%s%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$r;H$&$h$&$K=$@5!%(B
+	* systask/bsd_serial.c, libitis/bsd_nbio.c, bsd_nbeio.c: 新しいノ
+	ンブロッキングI/O サポートモジュールを使うように修正．
 
-	* systask/systask.h, inittask.c, sample/config.def.bsd: $B?7$7$$%N%s(B
-	$B%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$X$NBP1~!%(B
+	* systask/systask.h, inittask.c, sample/config.def.bsd: 新しいノン
+	ブロッキングI/O サポートモジュールへの対応．
 
-	* sample/Makefile.sunos4: sysio.o $B$rKu>C!%(B
+	* sample/Makefile.sunos4: sysio.o を抹消．
 
 Mon Jul  6 20:34:07 JST 1998	Hiroaki Takada
 
-	* include/m68k/itis_scint.h: trapa $B$r(B trap $B$K(B ($B%P%0%U%#%C%/%9(B)$B!%(B
+	* include/m68k/itis_scint.h: trapa を trap に (バグフィックス)．
 
-	* include/Makefile, libitis/Makefile: newlib $BBP1~$K=$@5!%(B
+	* include/Makefile, libitis/Makefile: newlib 対応に修正．
 
 	* libitis/glue_newlib.c, systask/sysio.c, sample/Makefile.dve68k:
-	newlib $BBP1~Dc%l%Y%kF~=PNO%k!<%A%s$r(B sysio.c $B$+$i@Z$jN%$7!$(B
-	glue_newlib.c $B$KFHN)$5$;$k!%(B
+	newlib 対応低レベル入出力ルーチンを sysio.c から切り離し，
+	glue_newlib.c に独立させる．
 
-	* kernel/startup.c: main $B4X?t$NJV$jCM$r(B void $B$HL@5-$9$k$N$r$d$a$k(B 
-	(gcc $B$N%P!<%8%g%s$K$h$C$F$O!$(Bwarning $B$,=P$k$?$a(B)$B!%(B
+	* kernel/startup.c: main 関数の返り値を void と明記するのをやめる 
+	(gcc のバージョンによっては，warning が出るため)．
 
-	* sample/Makefile.dve68k: newlib $BBP1~$KH<$&@0M}!%(B
+	* sample/Makefile.dve68k: newlib 対応に伴う整理．
 
 Mon Jul  6 19:48:32 JST 1998	Hiroaki Takada
 
-	* m68k/Makefile.config: TOPDIR $B$r=$@5!%(BAR $B$r=$@5!%(B
+	* m68k/Makefile.config: TOPDIR を修正．AR を修正．
 
-	* m68k/start/Makefile: install $B$rM-8z$K(B (crt0.o $B$N%$%s%9%H!<%k@h$r(B
-	$BJQ99$9$k(B)$B!%(B
+	* m68k/start/Makefile: install を有効に (crt0.o のインストール先を
+	変更する)．
 
-	* m68k/cpu_support.S: ret_int $B$G%?%9%/@Z$jBX$($r9T$&>l9g$r!$La$C$?(B
-	$B8e$N(B IPM $B$,(B 0 $B$N>l9g$K8BDj$9$k(B ($BL7=b$7$?%1!<%9$rKI$0$?$a$NM=KIA<CV(B)$B!%(B
+	* m68k/cpu_support.S: ret_int でタスク切り替えを行う場合を，戻った
+	後の IPM が 0 の場合に限定する (矛盾したケースを防ぐための予防措置)．
 
-	* m68k/cpu_calls.c: $B%3%a%s%H$N=$@5!%(B
+	* m68k/cpu_calls.c: コメントの修正．
 
-	* m68k/cpu_task.h: $BA0$N2~B$$r%-%c%s%;%k$9$k(B ($B%?%9%/B0@-$N(B TA_HLNG
-	$B$rM-8z$K$9$k(B)$B!%(B
+	* m68k/cpu_task.h: 前の改造をキャンセルする (タスク属性の TA_HLNG
+	を有効にする)．
 
 Mon Jul  6 15:30:49 JST 1998	Hiroaki Takada
 
-	* bsd/cpu_calls.c: chg_ims $B$G!$(BSIGUSR2 $B0J30$N%7%0%J%k$r%^%9%/$7$?(B
-	$B>uBV$K@_Dj$9$k>l9g$K$O!$(BSIGUSR2 $B$b%^%9%/$7$?>uBV$K$7$J$1$l$P$J$i$J(B
-	$B$$$b$N$H$9$k!%(B
+	* bsd/cpu_calls.c: chg_ims で，SIGUSR2 以外のシグナルをマスクした
+	状態に設定する場合には，SIGUSR2 もマスクした状態にしなければならな
+	いものとする．
 
-	* doc/BSDUNIX, CONDITION, M68K, PRISEM, TRON, USER: $B%I%-%e%a%s%H$r(B
-	$B:G?7HG$K(B ($B$^$@40@.$G$O$J$$(B)$B!%(BCPU$B0MB8$N5-=R$rJL$N%U%!%$%k$KJ,N%!%(B
+	* doc/BSDUNIX, CONDITION, M68K, PRISEM, TRON, USER: ドキュメントを
+	最新版に (まだ完成ではない)．CPU依存の記述を別のファイルに分離．
 
 Mon Jul  6 13:43:41 JST 1998	Hiroaki Takada
 
-	* m68k/cpu_task.h: $B%?%9%/B0@-$,(B TA_HLNG $B$G$J$$>l9g$K$b!$(BC$B8@8l$N%3(B
-	$B%s%Y%s%7%g%s$G0z?t$rEO$9J}<0$KJQ99!%(B
+	* m68k/cpu_task.h: タスク属性が TA_HLNG でない場合にも，C言語のコ
+	ンベンションで引数を渡す方式に変更．
 
-	* kernel/misc_call.c: get_ver $B$,JV$9>pJs$rJQ99!%(B
+	* kernel/misc_call.c: get_ver が返す情報を変更．
 
-	* kernel/time_calls.c: vdef_cyc $B$G%(%i!<%A%'%C%/$,H4$1$F$$$?%P%0$r(B
-	$B=$@5!%(B
+	* kernel/time_calls.c: vdef_cyc でエラーチェックが抜けていたバグを
+	修正．
 
 Thu Jun 18 16:49:30 JST 1998	Hiroaki Takada
 
-	* utils/extidata: $B%P%0$N=$@5$H2~NI!%(B
+	* utils/extidata: バグの修正と改良．
 
-	* sample/Makefile.*: extidata $B$K(B prefix $B%*%W%7%g%s$rDI2C!%(B
+	* sample/Makefile.*: extidata に prefix オプションを追加．
 
 Thu Jun 18 16:45:29 JST 1998	Hiroaki Takada
 
-	* m68k/cpu_task.h: TA_HLNG $BIU$-$GDj5A$5$l$?%?%9%/$r5/F0;~$K!$La$j(B
-	$BHVCO$r@Q$`%(%j%"$r3NJ]$7$F$$$J$+$C$?LdBj$r=$@5!%(BSYSMODE $B%^%/%m$r;H(B
-	$B$&$h$&$K=$@5!%(B
+	* m68k/cpu_task.h: TA_HLNG 付きで定義されたタスクを起動時に，戻り
+	番地を積むエリアを確保していなかった問題を修正．SYSMODE マクロを使
+	うように修正．
 
-	* systask/sysio.h: newlib $B$N>l9g$K$O!$(B_exit $B$,I,MW!%(Bnewlib $BBP1~$O(B
-	$B$^$@IT40A4!%(B
+	* systask/sysio.h: newlib の場合には，_exit が必要．newlib 対応は
+	まだ不完全．
 
-	* m68k/dve68k/sys_conf.h: NEWLIB $B%^%/%m$NDj5A$rDI2C!%(B
+	* m68k/dve68k/sys_conf.h: NEWLIB マクロの定義を追加．
 
-	* m68k/dve68k/sys_support.S: ___sys_init $B$r(B _hardware_init_hook $B$K(B
-	$B%j%M!<%`!%La$jHVCO$r<+J,$G<h$j=P$9$3$H$K(B (newlib $B$X$NBP1~(B)$B!%(B
+	* m68k/dve68k/sys_support.S: ___sys_init を _hardware_init_hook に
+	リネーム．戻り番地を自分で取り出すことに (newlib への対応)．
 
-	* m68k/*, m68k/*/*: copyright notice $B$rIU$1D>$9!%(B
+	* m68k/*, m68k/*/*: copyright notice を付け直す．
 
 Thu Jun 18 16:35:20 JST 1998	Hiroaki Takada
 
-	* m68k/start/Makefile: install $B=hM}$r%3%a%s%H%"%&%H!%(B
+	* m68k/start/Makefile: install 処理をコメントアウト．
 
-	* m68k/start/start.S: newlib $BBP1~$K=q$-D>$9!%(Bstart.s $B$r(B start.S $B$K(B
-	$B%j%M!<%`!%(B
+	* m68k/start/start.S: newlib 対応に書き直す．start.s を start.S に
+	リネーム．
 
 Wed Jun 17 19:25:05 JST 1998	Hiroaki Takada
 
-	* utils/extidata: extidata $B%f!<%F%#%j%F%#$r(B perl $B$G=q$-D>$9!%(B
+	* utils/extidata: extidata ユーティリティを perl で書き直す．
 
-	* sample/Makefile.*: extidata $B$N%Q%9$NJQ99!%(B
+	* sample/Makefile.*: extidata のパスの変更．
 
 Mon Jun  8 20:00:28 JST 1998	Hiroaki Takada
 
-	* systask/bsd_sigio.c: SIGIO$B%O%s%I%i$rDj5A$9$kA0$K!$%$%Y%s%H%U%i%0(B
-	$B$r@8@.$9$k$h$&$K=$@5!%(B
+	* systask/bsd_sigio.c: SIGIOハンドラを定義する前に，イベントフラグ
+	を生成するように修正．
 
-	* systask/bsd_serial.c: $BD>@\%U%!%$%k%G%#%9%/%j%W%?(B 0 $B$rD>@\;H$&$3(B
-	$B$H$KH<$&=$@5!%(B
+	* systask/bsd_serial.c: 直接ファイルディスクリプタ 0 を直接使うこ
+	とに伴う修正．
 
 Mon Jun  8 19:52:30 JST 1998	Hiroaki Takada
 
-	* bsd/cpu_status.h: _force_dispatch $B$+$iD>@\(B dispatch_handler $B$r8F(B
-	$B$S=P$9$h$&$K$9$k(B (_force_dispatch $B$N:G8e$G3d9~$_$r<u$1IU$1$k$H!$F1(B
-	$B$8%9%?%C%/%(%j%"$r:FMxMQ$9$k$*$=$l$,$"$j4m81(B)$B!%(B
+	* bsd/cpu_status.h: _force_dispatch から直接 dispatch_handler を呼
+	び出すようにする (_force_dispatch の最後で割込みを受け付けると，同
+	じスタックエリアを再利用するおそれがあり危険)．
 
-	* bsd/cpu_status.h, cpu_util.c: CPU$B%m%C%/Cf$b(B SIGTRAP $B$O<u$1IU$1$k(B
-	$B$h$&$K(B ($B%7%s%0%k%9%F%C%WF0:n$r2DG=$K(B)$B!%(B
+	* bsd/cpu_status.h, cpu_util.c: CPUロック中も SIGTRAP は受け付ける
+	ように (シングルステップ動作を可能に)．
 
-	* bsd/cpu_status.h: SA_ONSTACK $B$r(B SS_ONSTACK $B$K=$@5!%(B
+	* bsd/cpu_status.h: SA_ONSTACK を SS_ONSTACK に修正．
 
 	* bsd/sunos4/sys_conf.h, bsd/freebsd/sys_conf.h: SIGSTACK_MERGIN 
-	$B$rBg$-$/$9$k!%(B
+	を大きくする．
 
 Wed Jun  3 16:34:38 JST 1998	Hiroaki Takada
 
-	* sample/Makefile.dve68k, Makefile.*: Makefile.dve68k $B$rDI2C!%(B
-	$BB>$N(B Makefile $B$N@0M}(B (-soft-float $B$J$I(B)$B!%(B
+	* sample/Makefile.dve68k, Makefile.*: Makefile.dve68k を追加．
+	他の Makefile の整理 (-soft-float など)．
 
 Wed Jun  3 16:12:54 JST 1998	Hiroaki Takada
 
-	* sample/sample1.c: $B%5%s%W%k%W%m%0%i%`$rG[IU%-%C%H$K2C$($k!%(B
+	* sample/sample1.c: サンプルプログラムを配付キットに加える．
 
 Tue Jun  2 19:22:02 JST 1998	Hiroaki Takada
 
 	* kernel/task_manage.c, tron/cpu_conf.h, m68k/cpu_conf.h,
-	bsd/cpu_conf.h: $B%?%9%/B0@-Cf$N<B9T%b!<%I$K4X$9$k(B CPU$B0MB8ItJ,$r!$(B
-	task_manage.c $B$+$i(B cpu_conf.h $B$KDI$$=P$9!%(B
+	bsd/cpu_conf.h: タスク属性中の実行モードに関する CPU依存部分を，
+	task_manage.c から cpu_conf.h に追い出す．
 
 Tue Jun  2 12:07:28 JST 1998	Hiroaki Takada
 
-	* bsd/cpu_task.h: sys/types.h $B$r(B include $B$9$k!%(B
+	* bsd/cpu_task.h: sys/types.h を include する．
 
 	* bsd/cpu_task.h, bsd/sunos/sys_conf.h, bsd/freebsd/sys_conf.h:
-	JUMPBUF_MERGIN $B$r(B STACK_MERGIN $B$K%j%M!<%`$7!$(BCPU $B$K$h$k%9%?%C%/%](B
-	$B%$%s%?$N=i4|CM$NCV$-J}$N:9$r$3$3$G5[<}$9$k$3$H$K$9$k!%(BFreeBSD $B$G$O!$(B
-	$B$3$l$r(B 4 $B$K$9$k!%(B
+	JUMPBUF_MERGIN を STACK_MERGIN にリネームし，CPU によるスタックポ
+	インタの初期値の置き方の差をここで吸収することにする．FreeBSD では，
+	これを 4 にする．
 
-	* bsd/sys_timer.h, systask/bsd_serial.c, bsd_sigio.h: $B%7%0%J%k%O%s(B
-	$B%I%i$N0z?t$N?t$N0c$$$r5[<}$9$k$?$a$K!$%7%0%J%k%O%s%I%i$N0z?t$N?t$r(B
-	$BL@<(E*$K@k8@$7$J$$$3$H$H$9$k!%(B
+	* bsd/sys_timer.h, systask/bsd_serial.c, bsd_sigio.h: シグナルハン
+	ドラの引数の数の違いを吸収するために，シグナルハンドラの引数の数を
+	明示的に宣言しないこととする．
 
-	* systask/bsd_serial.c: $B5?;w%7%j%"%k%I%i%$%P$G!$(B/dev/tty $B$r(B open 
-	$B$9$k$N$r$d$a$F!$%U%!%$%k%G%#%9%/%j%W%?(B 0 $B$rD>@\;H$&$3$H$K$9$k!%(B
+	* systask/bsd_serial.c: 疑似シリアルドライバで，/dev/tty を open 
+	するのをやめて，ファイルディスクリプタ 0 を直接使うことにする．
 
 Mon May 25 10:38:55 JST 1998	Hiroaki Takada
 
-	* kernel/mempfix.c: OBJ_NONEXIST $B$H$NHf3S$r(B mpfid $B$H9T$C$F$$$k%P%0(B
-	$B$N=$@5(B (thanks to $BIZED>oM:$5$s(B)$B!%(B
+	* kernel/mempfix.c: OBJ_NONEXIST との比較を mpfid と行っているバグ
+	の修正 (thanks to 冨田常雄さん)．
 
 Tue Mar 10 23:29:22 JST 1998	Hiroaki Takada
 
-	* m68k/cpu_support.S: $B%"%;%s%V%iL?Na$N%5%$%:;XDj$NDI2C!%(B
+	* m68k/cpu_support.S: アセンブラ命令のサイズ指定の追加．
 
-	* kernel/newversion: $B%P%0$N=$@5!%(B
+	* kernel/newversion: バグの修正．
 
 Tue Feb 24 11:38:10 JST 1998	Hiroaki Takada
 
-	* m68k/cpu_support.S, m68k/dve68k/sys_support.S: ret_int $B$H%7%9%F(B
-	$B%`=i4|2==hM}$N%P%0$N=$@5!%(B
+	* m68k/cpu_support.S, m68k/dve68k/sys_support.S: ret_int とシステ
+	ム初期化処理のバグの修正．
 
 Fri Jan 30 19:00:10 JST 1998	Hiroaki Takada
 
-	* $BA4%U%!%$%k(B: $BJ88@I=<($rJQ99$9$k!%(B
+	* 全ファイル: 文言表示を変更する．
 
-	* m68k/*, m68k/startup/*, m68k/dve68k/*, include/m68k/*: 68040 $B$N(B
-	$B%5%]!<%H$rDI2C!%(B
+	* m68k/*, m68k/startup/*, m68k/dve68k/*, include/m68k/*: 68040 の
+	サポートを追加．
 
-	* $B$3$l0J9_!$(BPhase4 $B$H8F$V$3$H$K$9$k!%%P!<%8%g%sHV9f$O!$(BPhase3 $B$N$b(B
-	$B$N$r7QB3$7$F;H$&(B ($B<!$N%j%j!<%9$O(B Release1.4 $B$K$J$k(B)$B!%(B
+	* これ以降，Phase4 と呼ぶことにする．バージョン番号は，Phase3 のも
+	のを継続して使う (次のリリースは Release1.4 になる)．
 
 Fri Jan 30 17:00:00 JST 1998	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, BSDUNIX,
-	kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
+	kernel/patchlevel.h: この時点までの修正をまとめる．
 
-	* bsd/makeoffset.c: $B6u$N%U%!%$%k$r:n$k(B (makeoffset.c $B$,(B tron $B$N2<(B
-	$B$X0\F0$7$?$3$H$KH<$&A<CV(B)$B!%(B
+	* bsd/makeoffset.c: 空のファイルを作る (makeoffset.c が tron の下
+	へ移動したことに伴う措置)．
 
-	* Release1.3 (patchlevel=4) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_4")$B!%(B
+	* Release1.3 (patchlevel=4) をフィックス (TAG = "ItIs3-1_3_4")．
 
 Fri Jan 30 16:14:47 JST 1998	Hiroaki Takada
 
-	* include/itron.h: TRON$B;EMM%A%C%W0MB8$NItJ,$K%3%a%s%H$rDI2C!%(Bm68k 
-	$B0MB8$NDj5A$rDI2C!%(B
+	* include/itron.h: TRON仕様チップ依存の部分にコメントを追加．m68k 
+	依存の定義を追加．
 
-	* include/itis_debug.h: TRON$B;EMM%A%C%W0MB8$NItJ,$r(B #ifdef tron $B$G(B
-	$B0O$_!$(Bm68k $B0MB8$NDj5A$rDI2C!%(B
+	* include/itis_debug.h: TRON仕様チップ依存の部分を #ifdef tron で
+	囲み，m68k 依存の定義を追加．
 
-	* kernel/newversion: freebsd $B$H(B dve68k $B$rDI2C!%(B
+	* kernel/newversion: freebsd と dve68k を追加．
 
-	* kernel/task_manage.c: ID $B$,Ii$N%?%9%/$r(B TA_RNG0 $B0J30$G@8@.$7$h$&(B
-	$B$H$7$?>l9g$K%(%i!<$K!%(B
+	* kernel/task_manage.c: ID が負のタスクを TA_RNG0 以外で生成しよう
+	とした場合にエラーに．
 
-	* kernel/task_sync.c, genconfig, sample/config.def: $B<+%?%9%/$K(B 
-	sus/rem_tsk $B$r5v$9%*%W%7%g%s$NDI2C!%(B
+	* kernel/task_sync.c, genconfig, sample/config.def: 自タスクに 
+	sus/rem_tsk を許すオプションの追加．
 
-	* kernel/genisyscall, kernel/ptable.S: $B0z?t$r@Q$`=hM}$r9T$&$?$a$N(B
-	$B%8%c%s%W%F!<%V%k$b@8@.$9$k$h$&$K=$@5!%(B
+	* kernel/genisyscall, kernel/ptable.S: 引数を積む処理を行うための
+	ジャンプテーブルも生成するように修正．
 
 	* kernel/syscall.def, genisyscall, isyscall.h, itable.S,
 	include/itis_isyscall.h, itron_fncode.h, include/bsd/itis_scint.h,
 	include/tron/itis_scint.h, bsd/cpu_conf.h, tron/cpu_conf.h:
-	chg/ref_ims $B$r(B chg/ref_iXX $B$KJQ99!%(Bdis/ena_int $B$r%5%]!<%H$G$-$k$h(B
-	$B$&$K2~B$!%(B
+	chg/ref_ims を chg/ref_iXX に変更．dis/ena_int をサポートできるよ
+	うに改造．
 
-	* systask/inittask.c: $B%7%j%"%k%]!<%H$NDd;_$r(B #ifdef CONSOLE_PORT 
-	$B$G0O$`!%(B
+	* systask/inittask.c: シリアルポートの停止を #ifdef CONSOLE_PORT 
+	で囲む．
 
-	* tron/cpu_status.h: $B%3%a%s%H$N%_%9$N=$@5!%(B
+	* tron/cpu_status.h: コメントのミスの修正．
 
 Sun Jan 19 16:06:41 JST 1997	Hiroaki Takada
 
-	* kernel/taskmbox.c: vref_tmb $B$G@hF,%a%C%;!<%8$r@5$7$/JV$i$J$$%P%0(B
-	$B$r=$@5!%(B
+	* kernel/taskmbox.c: vref_tmb で先頭メッセージを正しく返らないバグ
+	を修正．
 
 Mon Jan 13 12:55:36 JST 1997	Hiroaki Takada
 
-	* kernel/task_sync.c: $B%3%a%s%H$NDI2C!%(B
+	* kernel/task_sync.c: コメントの追加．
 
-	* kernel/genoffset: $B%U%!%$%k$N@hF,$K=PNO$9$k%3%a%s%H$r=$@5$7!$(B
-	utils $B%G%#%l%/%H%j$X0\F0!%(B
+	* kernel/genoffset: ファイルの先頭に出力するコメントを修正し，
+	utils ディレクトリへ移動．
 
-	* sample/Makefile.*: genoffset $B$r(B utils $B$X0\F0$7$?$3$H$K$h$k=$@5!%(B
+	* sample/Makefile.*: genoffset を utils へ移動したことによる修正．
 
-	* sample/Makefile.sunos4: offset.h $B$r:n$k$N$r$d$a$k!%(B
+	* sample/Makefile.sunos4: offset.h を作るのをやめる．
 
-	* kernel/makeoffset.c: tron $B%G%#%l%/%H%j$X0\F0!%(B
+	* kernel/makeoffset.c: tron ディレクトリへ移動．
 
-	* tron/cpu_support.S: NUM_SVC $B"*(B USE_SVC$B!%(B
+	* tron/cpu_support.S: NUM_SVC → USE_SVC．
 
 Fri Jan 10 22:36:39 JST 1997	Hiroaki Takada
 
 	* kernel/isysconf.h, winfo.h, startup.c, semaphore.c, eventflag.c,
 	mailbox.c, messagebuf.c, rendezvous.c, prisem.c, mempfix.c,
-	mempool.c, task.h, task.c, misc_calls.c, time_calls.c: $B5!G=%V%m%C(B
-	$B%/C10L$G30$9$3$H$r<1JL$9$k%^%/%m$H$7$F!$(BUSE_??? $B$rF3F~!%(B
+	mempool.c, task.h, task.c, misc_calls.c, time_calls.c: 機能ブロッ
+	ク単位で外すことを識別するマクロとして，USE_??? を導入．
 
 Fri Jan 10 22:16:02 JST 1997	Hiroaki Takada
 
 	* kernel/task.h, wait.h, wait.c, task_manage.c, task_sync.c,
 	semaphore.c, mailbox.c, messagebuf.c, rendezvous.c, mempool.c,
-	mempfix.c, time_call.c, prisem.c, taskmbox.c: WAIT$B>uBV$K$*$$$F(B TCB 
-	$BCf$K;}$D$N$r!$BT$A%*%V%8%'%/%H$N(BID $B$+$iBT$A%*%V%8%'%/%H$N%3%s%H%m!<(B
-	$B%k%V%m%C%/$KJQ99$9$k!%(B
+	mempfix.c, time_call.c, prisem.c, taskmbox.c: WAIT状態において TCB 
+	中に持つのを，待ちオブジェクトのID から待ちオブジェクトのコントロー
+	ルブロックに変更する．
 
 Fri Jan 10 21:35:01 JST 1997	Hiroaki Takada
 
-	* tron/cpu_call.h, cpu_status.h, tron_defs.h, tron_insn.h: $B:Y$+$J(B
-	$B%j%U%!%$%s(B (/MP $B$K$"$o$;$k(B)$B!%(B
+	* tron/cpu_call.h, cpu_status.h, tron_defs.h, tron_insn.h: 細かな
+	リファイン (/MP にあわせる)．
 
 Fri Jan 10 21:05:40 JST 1997	Hiroaki Takada
 
 	* kernel/task_sync.c, semaphore.c, eventflag.c, mailbox.c,
 	messagebuf.c, rendezvous.c, prisem.c, taskmbox.c, mempfix.c,
-	mempool.c: ercd $B$r(B E_TMOUT $B$K=i4|2=$9$k=hM}$rA0$X0\F0(B (/MP $B$K$"$o(B
-	$B$;$k(B)$B!%(B
+	mempool.c: ercd を E_TMOUT に初期化する処理を前へ移動 (/MP にあわ
+	せる)．
 
-	* kernel/wait.c, task_manage.c: wercd $B7PM3$G%(%i!<%3!<%I$r@_Dj$9$k(B
-	$B=hM}$r!$(Bwait_release $B$h$j$bA0$X0\F0(B (/MP $B$K$"$o$;$k(B)$B!%(B
+	* kernel/wait.c, task_manage.c: wercd 経由でエラーコードを設定する
+	処理を，wait_release よりも前へ移動 (/MP にあわせる)．
 
 Fri Jan 10 20:50:17 JST 1997	Hiroaki Takada
 
 	* kernel/wait.h, semaphore.c, eventflag.c, mailbox.c,
-	messagebuf.c, rendezvous.c, prisem.c, mempfix.c, mempool.c: $B%*%V%8%'(B
-	$B%/%H$,B8:_$7$J$$>l9g$N07$$$rJQ99!%(B
+	messagebuf.c, rendezvous.c, prisem.c, mempfix.c, mempool.c: オブジェ
+	クトが存在しない場合の扱いを変更．
 
-	* kernel/ready_queue.h: $B%3%a%s%H$NJT=8!%(B
+	* kernel/ready_queue.h: コメントの編集．
 
 Tue Aug 27 12:54:58 JST 1996	Hiroaki Takada
 
-	* tron/cpu_support.S: _dispatch $BCf$N(B trapa $B$N%Y%/%H%kHV9f$r=$@5!%(B
-	$B$3$N4X?t$r(B #ifdef TRON_NO_DI $B$G0O$`!%(B
+	* tron/cpu_support.S: _dispatch 中の trapa のベクトル番号を修正．
+	この関数を #ifdef TRON_NO_DI で囲む．
 
 Sun Jul 28 10:40:17 JST 1996	Hiroaki Takada
 
-	* kernel/taskmbox.c: $B%?%9%/IUB0%a%$%k%\%C%/%95!G=(B ($B?75,(B)$B!%(B
+	* kernel/taskmbox.c: タスク付属メイルボックス機能 (新規)．
 
 	* include/itron.h, kernel/syscall.def, isysconf.h, genconfig,
-	task.h, task.c, winfo.h, sample/Makefile.*, config.def*: $B%?%9%/IU(B
-	$BB0%a%$%k%\%C%/%95!G=$N$?$a$NDj5A$rDI2C!%(B
+	task.h, task.c, winfo.h, sample/Makefile.*, config.def*: タスク付
+	属メイルボックス機能のための定義を追加．
 
-	* systask/inittask.c: $B=i4|2=%?%9%/$KEO$5$l$k5/F0%3!<%I$r!$$=$N$^$^(B
-	$B=i4|5/F0%?%9%/$KEO$9$h$&$K$9$k!%(B
+	* systask/inittask.c: 初期化タスクに渡される起動コードを，そのまま
+	初期起動タスクに渡すようにする．
 
 Sun Jul 28 09:29:23 JST 1996	Hiroaki Takada
 
-	* kernel/task.c: $B0z?t$N$J$$4X?t$N@k8@$r(B (void) $B$K!%(B
+	* kernel/task.c: 引数のない関数の宣言を (void) に．
 
-	* tron/tvme/sys_support.S: $B%"%;%s%V%i$N5-=R$N%j%U%!%$%s!%(B
+	* tron/tvme/sys_support.S: アセンブラの記述のリファイン．
 
 	* kernel/genisyscall, task.c, timer.c, tron/tvme/sys_conf.h,
-	sys_util.c: $B%3%a%s%H$r=$@5!%(B
+	sys_util.c: コメントを修正．
 
-	* kernel/rendezvous.c: ref_por $B$r%?%9%/FHN)It$+$i8F$V$3$H$r6X;_!%(B
+	* kernel/rendezvous.c: ref_por をタスク独立部から呼ぶことを禁止．
 
 Sun Jul 28 08:30:56 JST 1996	Hiroaki Takada
 
-	* sample/Makefile.*: $B%+!<%M%k$N%=!<%9$,$"$k%G%#%l%/%H%j$rJQ?t$KCV(B
-	$B$/!%(Boffset.h $B$r(B clean $B$G>C5n!%(B
+	* sample/Makefile.*: カーネルのソースがあるディレクトリを変数に置
+	く．offset.h を clean で消去．
 
 Sat Feb 17 19:00:15 JST 1996	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, kernel/patchlevel.h: 
-	$B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
+	この時点までの修正をまとめる．
 
-	* $BA4%U%!%$%k(B: $BJ88@I=<($r!$(B4.4 BSD $B$N$b$N$r%Y!<%9$K$7$?$b$N$KJQ99$9(B
-	$B$k!%$3$NJ}$,!$I=8=$,$o$+$j$d$9$$!%(B
+	* 全ファイル: 文言表示を，4.4 BSD のものをベースにしたものに変更す
+	る．この方が，表現がわかりやすい．
 
-	* Release1.3 (patchlevel=3) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_3")$B!%(B
+	* Release1.3 (patchlevel=3) をフィックス (TAG = "ItIs3-1_3_3")．
 
 Wed Feb  7 16:24:22 JST 1996	Hiroaki Takada
 
-	* doc/CONDITION: $B!V(BItIs $B$NG[IU!&;HMQ>r7o$K4X$9$k(B FAQ$B!W$rDI2C!%(B
+	* doc/CONDITION: 「ItIs の配付・使用条件に関する FAQ」を追加．
 
 Tue Jan  9 13:11:22 JST 1996	Hiroaki Takada
 
-	* libitis/bsd_nbio.c, bsd_nbeio.c, systask/bsd_serial.c: $B%N%s%V%m%C(B
-	$B%-%s%0(BI/O$B%b!<%I$G%*!<%W%s$9$k;~$K!$(Bfcntl(fd, F_SETOWN, getpid()) 
-	$B$9$k$h$&$K=$@5!%(Bnb{e}_close$B!$(Bnb{e}_socket$B!$(Bnb{e}_accept $B$rDI2C!%(B
+	* libitis/bsd_nbio.c, bsd_nbeio.c, systask/bsd_serial.c: ノンブロッ
+	キングI/Oモードでオープンする時に，fcntl(fd, F_SETOWN, getpid()) 
+	するように修正．nb{e}_close，nb{e}_socket，nb{e}_accept を追加．
 
 Fri Sep  8 23:51:36 JST 1995	Hiroaki Takada
 
-	* MANIFEST: bsd/freebsd/sys_conf.h $B$rDI2C!%(B
+	* MANIFEST: bsd/freebsd/sys_conf.h を追加．
 
-	* bsd/cpu_status.h: sigaltstack $B$r@5$7$/;H$C$F$$$J$+$C$?LdBj$r(B
-	$B=$@5!%(B
+	* bsd/cpu_status.h: sigaltstack を正しく使っていなかった問題を
+	修正．
 
 Mon Jun 19 19:10:00 JST 1995	Hiroaki Takada
 
-	* include/itis_debug.h: TRON$B;EMM%A%C%W$K0MB8$9$kItJ,$r(B #ifdef tron
-	$B$G0O$s$@=$@5$r$d$a$k(B ($B%7%_%e%l!<%7%g%s4D6-$G%(%i!<$K$J$k(B)$B!%(B
+	* include/itis_debug.h: TRON仕様チップに依存する部分を #ifdef tron
+	で囲んだ修正をやめる (シミュレーション環境でエラーになる)．
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N(B
-	$B=$@5$r$^$H$a$k!%(B
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: この時点までの
+	修正をまとめる．
 
-	* $BA4%U%!%$%k(B: $BJ88@I=<($rJQ99$9$k!%(B
+	* 全ファイル: 文言表示を変更する．
 
-	* Release1.3 (patchlevel=2) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_2")$B!%(B
+	* Release1.3 (patchlevel=2) をフィックス (TAG = "ItIs3-1_3_2")．
 
 Mon Jun 19 17:28:27 JST 1995	Hiroaki Takada
 
-	* include/itis_debug.h: TRON$B;EMM%A%C%W$K0MB8$9$kItJ,$r(B #ifdef tron
-	$B$G0O$`!%(B
+	* include/itis_debug.h: TRON仕様チップに依存する部分を #ifdef tron
+	で囲む．
 
-	* kernel/messagebuf.c: rcv_mbf $B$G!$4V0c$C$?%a%C%;!<%8%5%$%:$,JV$k(B
-	$B>l9g$,$"$k%P%0$r=$@5!%(B
+	* kernel/messagebuf.c: rcv_mbf で，間違ったメッセージサイズが返る
+	場合があるバグを修正．
 
-	* kernel/rendezvous.c: fwd_por $B$G!$Aj<j$,BT$C$F$$$J$+$C$?;~$KI,$:(B 
-	E_TMOUT$B%(%i!<$K$J$k%P%0$r=$@5!%(B
+	* kernel/rendezvous.c: fwd_por で，相手が待っていなかった時に必ず 
+	E_TMOUTエラーになるバグを修正．
 
 Mon May 29 19:12:19 JST 1995	Hiroaki Takada
 
-	* kernel/timer.c: TIMER_PERIOD $B$,(B 1 $B$G$J$$>l9g$K!$(Bvget_tim $B$,@5$7(B
-	$B$/$J$$CM$rJV$9%P%0$r=$@5!%(B
+	* kernel/timer.c: TIMER_PERIOD が 1 でない場合に，vget_tim が正し
+	くない値を返すバグを修正．
 
 Wed Mar 15 19:14:02 JST 1995	Hiroaki Takada
 
 	* ChangeLog, MANIFEST, README, doc/USER, BSDUNIX,
-	kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
+	kernel/patchlevel.h: この時点までの修正をまとめる．
 
-	* Release1.3 (patchlevel=1) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_1")$B!%(B
+	* Release1.3 (patchlevel=1) をフィックス (TAG = "ItIs3-1_3_1")．
 
 Mon Mar 13 12:13:08 JST 1995	Hiroaki Takada
 
-	* kernel/genconfig: ID $B$N(B max $B$r;XDj$7$J$$>l9g$N%G%U%)%k%H$r(B 0 $B$K(B
-	$B=$@5!%(B
+	* kernel/genconfig: ID の max を指定しない場合のデフォルトを 0 に
+	修正．
 
-	* sample/Makefile.sunos4: itis_panic.o, panic.o $B$rDI2C(B ($B8E$$(B GCC 
-	$B$X$NBP1~(B)$B!%(B
+	* sample/Makefile.sunos4: itis_panic.o, panic.o を追加 (古い GCC 
+	への対応)．
 
-	* sample/Makefile.tvme: S$B%U%)!<%^%C%H%U%!%$%k$r:n$k$h$&$K=$@5!%(B
+	* sample/Makefile.tvme: Sフォーマットファイルを作るように修正．
 
 Mon Mar 13 12:09:08 JST 1995	Hiroaki Takada
 
-	* libitis/bsd_nbeio.c: $B?75,(B (errno $B$rJV$9%N%s%V%m%C%-%s%0(BI/O$B%i%$%V(B
-	$B%i%j(B)$B!%(B
+	* libitis/bsd_nbeio.c: 新規 (errno を返すノンブロッキングI/Oライブ
+	ラリ)．
 
 Fri Mar 10 12:31:16 JST 1995	Hiroaki Takada
 
-	* tron/tvme/sys_timer.h: start_hw_timer $B$NDj5A$N=$@5(B ($B=$@5K:$l(B)$B!%(B
+	* tron/tvme/sys_timer.h: start_hw_timer の定義の修正 (修正忘れ)．
 
-	* tron/*/sys_timer.h: $B%3%a%s%H$N=$@5!%(B
+	* tron/*/sys_timer.h: コメントの修正．
 
 Thu Feb 23 18:27:11 JST 1995	Hiroaki Takada
 
-	* kernel/task.h, task.c, ready_queue.h, task_manage.c: RUN$B>uBV$N%?(B
-	$B%9%/$r%l%G%#%-%e!<$KF~$l$F$*$/J}<0$KJQ99!%(B
+	* kernel/task.h, task.c, ready_queue.h, task_manage.c: RUN状態のタ
+	スクをレディキューに入れておく方式に変更．
 
 Thu Feb 23 14:44:48 JST 1995	Hiroaki Takada
 
 	* kernel/task_manage.c, bsd/cpu_conf.h, cpu_task.h, bsd/sunos4/
-	sys_conf.h: USE_SPECIAL_STACK $B$r(B USE_MPROTECT_STACK $B$H%j%M!<%`$7!$(B
-	cpu_conf.h $B$G$O$J$/(B sys_conf.h $B$GDj5A$9$k$h$&$KJQ99$9$k!%(B
+	sys_conf.h: USE_SPECIAL_STACK を USE_MPROTECT_STACK とリネームし，
+	cpu_conf.h ではなく sys_conf.h で定義するように変更する．
 
 	* bsd/cpu_status.h, cpu_util.c, bsd/sunos4/sys_conf.h: sigaltstack 
-	$B$r;H$&>l9g$KBP1~!%(B
+	を使う場合に対応．
 
-	* bsd/cpu_task.h: jmp_buf $B9=B$BN$NA`:n$NItJ,$G!$(Bjmp_buf $B$NDj5A$K0M(B
-	$BB8$7$J$$$h$&$K=$@5$7!$(B#ifdef sunos4 $B$r$d$a$k!%(B
+	* bsd/cpu_task.h: jmp_buf 構造体の操作の部分で，jmp_buf の定義に依
+	存しないように修正し，#ifdef sunos4 をやめる．
 
-	* bsd/cpu_task.h: sys/mman.h $B$G(B PROT_NONE $B$,Dj5A$5$l$F$$$J$$%1!<%9(B
-	$B$r5_:Q!%(Bmprotect $B$NBh0l0z?t$r(B caddr_t $B$K%-%c%9%H$9$k!%(B
+	* bsd/cpu_task.h: sys/mman.h で PROT_NONE が定義されていないケース
+	を救済．mprotect の第一引数を caddr_t にキャストする．
 
-	* bsd/sunos4/sys_conf.h, systask/bsd_serial.c: $BC<Kv$r(B RAW$B%b!<%I$K(B
-	$B@_Dj$9$kJ}K!$r(B OS $BFHN)$K!%(B
+	* bsd/sunos4/sys_conf.h, systask/bsd_serial.c: 端末を RAWモードに
+	設定する方法を OS 独立に．
 
-	* bsd/sunos4/sys_conf.h: #define $B$9$k%7%s%\%k$rBgJ8;z$K!%(B
+	* bsd/sunos4/sys_conf.h: #define するシンボルを大文字に．
 
-	* bsd/freebsd/sys_conf.h: $B?75,!%(B
+	* bsd/freebsd/sys_conf.h: 新規．
 
 Tue Feb 14 20:28:47 JST 1995	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, README, doc/USER, PRISEM, BSDUNIX: $B$3$N;~E@(B
-	$B$^$G$N=$@5$r$^$H$a$k!%(B
+	* ChangeLog, MANIFEST, README, doc/USER, PRISEM, BSDUNIX: この時点
+	までの修正をまとめる．
 
-	* Release1.3 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3")$B!%(B
+	* Release1.3 (patchlevel=0) をフィックス (TAG = "ItIs3-1_3")．
 
 Tue Feb 14 19:48:46 JST 1995	Hiroaki Takada
 
 	* bsd/cpu_conf.h, cpu_util.c, systask/systask.h, logtask.c,
-	serial.c, bsd_serial.c: BSD UNIX $B>e$G!$3HD%(BSVC $B$,$J$$$?$a$K!$%f!<(B
-	$B%6%?%9%/$+$i%7%9%F%`%m%0MQ%a%C%;!<%8%P%C%U%!$d%7%j%"%k%I%i%$%P$K%"(B
-	$B%/%;%9$G$-$J$$LdBj$KBP=h!%(B
+	serial.c, bsd_serial.c: BSD UNIX 上で，拡張SVC がないために，ユー
+	ザタスクからシステムログ用メッセージバッファやシリアルドライバにア
+	クセスできない問題に対処．
 
 Tue Feb 14 19:14:59 JST 1995	Hiroaki Takada
 
-	* tron/h32/sys_serial.c: $B%]!<%HHV9f$r5U$K$7$?;~$K!$3d9~$_%O%s%I%i(B
-	$B$r5U$K$9$k$N$rK:$l$F$$$?%P%0$r=$@5!%(B
+	* tron/h32/sys_serial.c: ポート番号を逆にした時に，割込みハンドラ
+	を逆にするのを忘れていたバグを修正．
 
 Tue Feb 14 18:40:41 JST 1995	Hiroaki Takada
 
-	* util/makedep, sample/Makefile.*: makedep $B$,(B C$B%3%s%Q%$%i$N0c$$$K(B
-	$BBP1~$G$-$k$h$&$K2~B$!%(B".s" $B%U%!%$%k(B ($B%W%j%W%m%;%C%5$rDL$5$J$$%"%;(B
-	$B%s%V%i%=!<%9(B) $B$KBP1~$9$k$N$r$d$a$k!%$^$?!$%*%W%7%g%s$NEO$7J}$r@0M}!%(B
-	$B4XO"$7$F!$3F%7%9%F%`MQ$N(B Makefile $B$r=$@5!%(B
+	* util/makedep, sample/Makefile.*: makedep が Cコンパイラの違いに
+	対応できるように改造．".s" ファイル (プリプロセッサを通さないアセ
+	ンブラソース) に対応するのをやめる．また，オプションの渡し方を整理．
+	関連して，各システム用の Makefile を修正．
 
 Tue Feb 14 18:10:35 JST 1995	Hiroaki Takada
 
-	* sample/Makefile.sun4: $B%j%j!<%9HG$K%U%#%C%/%9!%(B
+	* sample/Makefile.sun4: リリース版にフィックス．
 
 Tue Feb 14 18:05:02 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_conf.h: FLG_SIGIO $B$NDj5A$r:o=|!%%7%j%"%k%]!<%H$K4X$9$kDj(B
-	$B5A$rDI2C!%(B
+	* bsd/cpu_conf.h: FLG_SIGIO の定義を削除．シリアルポートに関する定
+	義を追加．
 
-	* sample/config.def.bsd: $B?75,!%(BBSD UNIX$BMQ(B $B%7%9%F%`9=@.@_Dj%U%!%$%k(B
-	$B$N%5%s%W%k!%(B
+	* sample/config.def.bsd: 新規．BSD UNIX用 システム構成設定ファイル
+	のサンプル．
 
-	* systask/serial.c: CR $B$r(B CR+LF $B$KJQ49$9$k=hM}$r(B serial_write_one 
-	$B$K0\F0!%(B
+	* systask/serial.c: CR を CR+LF に変換する処理を serial_write_one 
+	に移動．
 
-	* systask/systask.h: bsd_serial_task $B$NDj5A$r=$@5!%(B
+	* systask/systask.h: bsd_serial_task の定義を修正．
 
-	* systask/bsd_serial.c: $B?75,!%(BBSD UNIX$BMQ(B $B5?;w%7%j%"%k%I%i%$%P!%(B
+	* systask/bsd_serial.c: 新規．BSD UNIX用 疑似シリアルドライバ．
 
-	* libitis/bsd_nbio.c: $B?75,!%(BBSD UNIX$BMQ(B $B%N%s%V%m%C%-%s%0(BI/O$B%i%$%V%i(B
-	$B%j!%(B
+	* libitis/bsd_nbio.c: 新規．BSD UNIX用 ノンブロッキングI/Oライブラ
+	リ．
 
 Mon Feb 13 02:06:45 JST 1995	Hiroaki Takada
 
-	* kernel/itis_kernel.h, startup.c: $B%$%s%/%k!<%I%U%!%$%k$r=$@5!%(B
-	TSK_INIT_CTSK $B$N%-%c%9%H$r:o=|!%(B
+	* kernel/itis_kernel.h, startup.c: インクルードファイルを修正．
+	TSK_INIT_CTSK のキャストを削除．
 
-	* xscheme/itisstuff.c, itis3call.c: $B%$%s%/%k!<%I%U%!%$%k$r=$@5!%(B
-	SCHEME_MPL $B$r(B MPL_XSCHEME $B$K%j%M!<%`!%(B
+	* xscheme/itisstuff.c, itis3call.c: インクルードファイルを修正．
+	SCHEME_MPL を MPL_XSCHEME にリネーム．
 
-	* systask/inittask.c: $B3F%7%9%F%`%?%9%/(B/$B%I%i%$%P$N5/F0$r(B ifdef $B$G0O(B
-	$B$`!%(B
+	* systask/inittask.c: 各システムタスク/ドライバの起動を ifdef で囲
+	む．
 
 	* systask/inittask.c, logtask.c, serial.c, sysio.c, bsd_sigio.c:
-	systask.h $B$r%$%s%/%k!<%I$9$k$h$&$K=$@5!%ITMW$K$J$C$?%-%c%9%H$r:o=|!%(B
+	systask.h をインクルードするように修正．不要になったキャストを削除．
 
-	* systask/systask.h, serial.c, logtask.c: def_svc $B$,%5%]!<%H$5$l$F(B
-	$B$$$k>l9g$K!$(BUSE_EXTENDED_SVC $B$rDj5A!%(BDSVC $B$NDj5A$r(B systask.h $B$K0\(B
-	$BF0!%(BUSE_EXTENDED_SVC $B$,Dj5A$5$l$F$$$k>l9g$N$_!$3HD%(BSVC $B$rDj5A$9$k(B
-	$B$h$&$K=$@5!%%7%j%"%k%I%i%$%PFb$N4X?t$N%W%m%H%?%$%W@k8@$r(B systsak.h 
-	$B$K0\F0!%(B
+	* systask/systask.h, serial.c, logtask.c: def_svc がサポートされて
+	いる場合に，USE_EXTENDED_SVC を定義．DSVC の定義を systask.h に移
+	動．USE_EXTENDED_SVC が定義されている場合のみ，拡張SVC を定義する
+	ように修正．シリアルドライバ内の関数のプロトタイプ宣言を systsak.h 
+	に移動．
 
-	* systask/logtask.c: port $B$r(B portid $B$K%j%M!<%`!%(B
+	* systask/logtask.c: port を portid にリネーム．
 
-	* systask/bsd_sigio.c: sigio $B$r(B bsd_sigio $B$K%j%M!<%`!%(B
+	* systask/bsd_sigio.c: sigio を bsd_sigio にリネーム．
 
 Mon Feb 13 01:10:13 JST 1995	Hiroaki Takada
 
-	* kernel/genconfig, sample/config.def: $B%7%9%F%`%?%9%/$,;H$&%*%V%8%'(B
-	$B%/%H(BID $B$NDj5A$r(B config.h $B$KF~$l$k$h$&$K2~B$!%(B
+	* kernel/genconfig, sample/config.def: システムタスクが使うオブジェ
+	クトID の定義を config.h に入れるように改造．
 
-	* include/itis_resouces.h: $B:o=|!%FbMF$N0lIt$O(B config.h $B$KF~$k!%;D(B
-	$B$j$O(B systask/systask.h $B$H(B include/svc_fncode.h $B$KJ,$1$k!%(B
+	* include/itis_resouces.h: 削除．内容の一部は config.h に入る．残
+	りは systask/systask.h と include/svc_fncode.h に分ける．
 
-	* include/svc_serial.h, svc_syslog.h: itis_resources.h $B$r(B 
-	svc_fncode.h $B$K!$(Bitis_sysint.h $B$r(B itis_scint.h $B$K=$@5!%(B
+	* include/svc_serial.h, svc_syslog.h: itis_resources.h を 
+	svc_fncode.h に，itis_sysint.h を itis_scint.h に修正．
 
 	* include/itis_services.h, itis_isyscall.h, kernel/genisyscall:
-	itis_sysint.h $B$r(B itis_scint.h $B$K=$@5$7!$(Bitis_isyscall.h $BFb$G%$%s%/(B
-	$B%k!<%I$9$k$h$&$K$9$k!%(B
+	itis_sysint.h を itis_scint.h に修正し，itis_isyscall.h 内でインク
+	ルードするようにする．
 
 Mon Feb 13 00:52:11 JST 1995	Hiroaki Takada
 
-	* include/tron/itis_sysint.h: DOS$B>e$GB>$N%U%!%$%k$H6hJL$G$-$J$/$J(B
-	$B$k$?$a!$(Bitis_scint.h $B$K%j%M!<%`!%(B
+	* include/tron/itis_sysint.h: DOS上で他のファイルと区別できなくな
+	るため，itis_scint.h にリネーム．
 
-	* include/bsd/itis_scint.h: $B6u$N%U%!%$%k$H$7$F@8@.!%(B
+	* include/bsd/itis_scint.h: 空のファイルとして生成．
 
 Sat Feb 11 00:40:39 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_conf.h, systask/bsd_sigio.c: $B%N%s%V%m%C%-%s%0(BI/O $B%5%]!<(B
-	$B%H%b%8%e!<%k$NDI2C!%(B
+	* bsd/cpu_conf.h, systask/bsd_sigio.c: ノンブロッキングI/O サポー
+	トモジュールの追加．
 
-	* systask/inittask.c: $B%$%s%/%k!<%I$9$k%U%!%$%k$N=$@5!%(B
+	* systask/inittask.c: インクルードするファイルの修正．
 
 Fri Feb 10 17:36:39 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_status.h, bsd/cpu_util.c: $B%?%9%/FHN)It$NH=Dj$K(B SIGUSR1 
-	$B$N%^%9%/$r;H$&$N$r$d$a$F!$%7%0%J%k%9%?%C%/$r;H$C$F$$$k$+$I$&$+$r;H(B
-	$B$&$3$H$K$9$k!%(B
+	* bsd/cpu_status.h, bsd/cpu_util.c: タスク独立部の判定に SIGUSR1 
+	のマスクを使うのをやめて，シグナルスタックを使っているかどうかを使
+	うことにする．
 
-	* bsd/cpu_task.h, cpu_util.c, sunos4/sys_conf.h: CPU $B$N%9%?%C%/$N(B
-	$B;H$$J}$K0MB8$9$kDj?t$r(B sys_conf.h $B$GDj5A$9$k$3$H$K$9$k!%(B
+	* bsd/cpu_task.h, cpu_util.c, sunos4/sys_conf.h: CPU のスタックの
+	使い方に依存する定数を sys_conf.h で定義することにする．
 
 Thu Feb  9 18:51:14 JST 1995	Hiroaki Takada
 
 	* systask/inittask.c, tron/*/sys_conf.h: COLSOLE_PORT,
-	LOGTASK_PORT $B$NDj5A$r(B inittask.c $B$+$i(B sysconf.h $B$K0\F0!%(B
+	LOGTASK_PORT の定義を inittask.c から sysconf.h に移動．
 
-	* tron/h32/sys_conf.h, sys_serial.c: $B%]!<%H(B1 $B$H(B 2 $B$N0UL#$r5U$K$9$k!%(B
+	* tron/h32/sys_conf.h, sys_serial.c: ポート1 と 2 の意味を逆にする．
 
-	* tron/mcube/sys_serial.c, tron/tvme/sys_serial.c: initflag $B$NDj5A(B
-	$B>l=j$r0\F0!%(B
+	* tron/mcube/sys_serial.c, tron/tvme/sys_serial.c: initflag の定義
+	場所を移動．
 
 Thu Feb  9 18:49:55 JST 1995	Hiroaki Takada
 
-	* kernel/newversion: BSD UNIX$B4D6-$G!$(BOS$BL>$^$G8+$k$h$&$K=$@5!%(B
+	* kernel/newversion: BSD UNIX環境で，OS名まで見るように修正．
 
 Thu Feb  9 15:20:43 JST 1995	Hiroaki Takada
 
-	* bsd/*, bsd/sunos4/*, sample/Makefile.sunos4: BSD UNIX$B>e$N%7%_%e(B
-	$B%l!<%7%g%s4D6-$rDI2C!%(BMakefile.sunos4 $B$O;CDjHG!%(B
+	* bsd/*, bsd/sunos4/*, sample/Makefile.sunos4: BSD UNIX上のシミュ
+	レーション環境を追加．Makefile.sunos4 は暫定版．
 
 Thu Feb  9 14:55:30 JST 1995	Hiroaki Takada
 
 	* kernel/genconfig, task_manage.c, tron/cpu_task.h: SYS_STACK_SIZE 
-	$B$r(B DEF_SYS_STACK_SIZE $B$K%j%M!<%`!%(B
+	を DEF_SYS_STACK_SIZE にリネーム．
 
-	* kernel/genconfig: min_sys_stack_size $B$rDI2C!%(B
+	* kernel/genconfig: min_sys_stack_size を追加．
 
-	* sample/config.def: $B%G%U%)%k%H%7%9%F%`%9%?%C%/%5%$%:$H%7%9%F%`%a(B
-	$B%b%j%W!<%k$N%5%$%:$NDj5A$r30$9(B ($B%?!<%2%C%HKh$N%G%U%)%k%H$KG$$;$k(B)$B!%(B
+	* sample/config.def: デフォルトシステムスタックサイズとシステムメ
+	モリプールのサイズの定義を外す (ターゲット毎のデフォルトに任せる)．
 
 Thu Feb  9 14:22:22 JST 1995	Hiroaki Takada
 
-	* tron/tvme/sys_serial.h: MCUBE$BMQ$K$"$o$;$F%G%P%C%0!%(B
+	* tron/tvme/sys_serial.h: MCUBE用にあわせてデバッグ．
 
 Wed Feb  8 12:19:04 JST 1995	Hiroaki Takada
 
-	* startup: tron $B$N2<$K0\F0!%(B
+	* startup: tron の下に移動．
 
-	* tron/h32/h32sbc.h, tron/mcube/mcube.h: $B4A;z%3!<%I$r?7(BJIS$B%3!<%I$K(B
-	$BJQ49!%(B
+	* tron/h32/h32sbc.h, tron/mcube/mcube.h: 漢字コードを新JISコードに
+	変換．
 
 Sat Feb  4 02:26:27 JST 1995	Hiroaki Takada
 
-	* $B%G%#%l%/%H%j$N9=@.$rJQ99(B: tron $B$H$$$&%G%#%l%/%H%j$r:n$j!$(B
-	TRON$B;EMM%A%C%W$K0MB8$9$kItJ,$r$=$N2<$K0\F0$9$k!%(Bh32, tvme,
-	mcube $B$N(B 3$B$D$N%G%#%l%/%H%j$O!$(Btron $B$N2<$K0\F0$9$k!%%+!<%M%k$N(B
-	$B9=@.$K4X$9$k(B CPU$B0MB8$NDj5A$rF~$l$k$?$a$N%U%!%$%k$H$7$F!$(B
-	tron/cpu_conf.h $B$r?7@_!%(B
+	* ディレクトリの構成を変更: tron というディレクトリを作り，
+	TRON仕様チップに依存する部分をその下に移動する．h32, tvme,
+	mcube の 3つのディレクトリは，tron の下に移動する．カーネルの
+	構成に関する CPU依存の定義を入れるためのファイルとして，
+	tron/cpu_conf.h を新設．
 
-	* Makefile.conf: tron $B$N2<$K0\F0!%(B.s $B$+$i(B .o $B$r:n$kDj5A$r:o=|!%(B
+	* Makefile.conf: tron の下に移動．.s から .o を作る定義を削除．
 
-	* kernel/common.h: $B$3$N%U%!%$%k$OGQ;_!%(Btron/cpu_status.h $B$r?7(B
-	$B@_$7!$(BCPU $B$K0MB8$9$kItJ,$r0\F0!%$=$&$G$J$$ItJ,$O(B itis_kernel.h 
-	$B$X0\F0!%(B
+	* kernel/common.h: このファイルは廃止．tron/cpu_status.h を新
+	設し，CPU に依存する部分を移動．そうでない部分は itis_kernel.h 
+	へ移動．
 
-	* kernel/cpu_inline.h: tron/tron_insn.h $B$K%j%M!<%`!%(B
+	* kernel/cpu_inline.h: tron/tron_insn.h にリネーム．
 
-	* kernel/cregs.h: tron/tron_defs.h $B$K%j%M!<%`!%(B
+	* kernel/cregs.h: tron/tron_defs.h にリネーム．
 
-	* kernel/ientry.S: tron/cpu_support.S $B$K%j%M!<%`!%%"%;%s%V%i$G(B
-	$B5-=R$7$?%7%9%F%`%3!<%k$N%(%s%H%j$r!$%7%9%F%`%3!<%k%(%s%H%j%F!<(B
-	$B%V%k$GFb$G:9$7$+$($k@_Dj$rDI2C!%%"%;%s%V%i$G5-=R$7$?%7%9%F%`%3!<(B
-	$B%k$,!$CY1d3d9~$_$r;H$o$J$$@_Dj$KBP1~$7$F$$$J$+$C$?LdBj$r=$@5!%(B
+	* kernel/ientry.S: tron/cpu_support.S にリネーム．アセンブラで
+	記述したシステムコールのエントリを，システムコールエントリテー
+	ブルで内で差しかえる設定を追加．アセンブラで記述したシステムコー
+	ルが，遅延割込みを使わない設定に対応していなかった問題を修正．
 
-	* kernel/dispatch.S, nd_dispatch.S: tron/ $B$N2<$K0\F0!%$3$l$i$N(B
-	$B%U%!%$%k$O!$(Btron/cpu_support.S $B$+$i%$%s%/%k!<%I$7$F;H$&$3$H$K(B
-	$B$9$k!%(Bnd_dispatch.S $BCf$NDj?tDj5A$O!$(Btron/tron_defs.h $B$K0\F0!%(B
+	* kernel/dispatch.S, nd_dispatch.S: tron/ の下に移動．これらの
+	ファイルは，tron/cpu_support.S からインクルードして使うことに
+	する．nd_dispatch.S 中の定数定義は，tron/tron_defs.h に移動．
 
-	* $B%?!<%2%C%H%7%9%F%`0MB8%U%!%$%kL>$NJQ99(B: $B=>Mh!$%?!<%2%C%H%7%9(B
-	$B%F%`L>$r@hF,$K$D$1$F$$$?$N$r!$(Bsys_ $B$r@hF,$K$D$1$k%9%?%$%k$K$9(B
-	$B$k!%(Btron/h32/sys_conf.h $B$H(B tron/tvme/sys_conf.h $B$O?7@_!%$^$?!$(B
-	$B0lIt$NFbMF$r$3$l$i$N%U%!%$%k$N4V$G0\F0!%(B
+	* ターゲットシステム依存ファイル名の変更: 従来，ターゲットシス
+	テム名を先頭につけていたのを，sys_ を先頭につけるスタイルにす
+	る．tron/h32/sys_conf.h と tron/tvme/sys_conf.h は新設．また，
+	一部の内容をこれらのファイルの間で移動．
 
 		$(TARGET)conf.h --> sys_conf.h
 		$(TARGET)start.S --> sys_support.S
@@ -614,880 +614,880 @@ Sat Feb  4 02:26:27 JST 1995	Hiroaki Takada
 		$(TARGET)timer.h --> sys_timer.h
 		$(TARGET)serial.h --> sys_serial.h
 
-	* $B%9%?%C%/%(%j%"!$%R!<%W%(%j%"$NDj5A$r(B $(TARGET)start.S $B$+$i(B 
-	sys_conf.h $B$K0\F0!%(B
+	* スタックエリア，ヒープエリアの定義を $(TARGET)start.S から 
+	sys_conf.h に移動．
 
-	* tron/{h32,tvme,mcube}/sys_util.c: target_??? $B$r(B sys_??? $B$K%j(B
-	$B%M!<%`!%(B
+	* tron/{h32,tvme,mcube}/sys_util.c: target_??? を sys_??? にリ
+	ネーム．
 
-	* kernel/misc_calls.c: tron/cpu_calls.c $B$r?7@_$7!$(BCPU $B$K0MB8$9(B
-	$B$k%7%9%F%`%3!<%k$NDj5A$r0\F0!%(Bget_ver $B$G!$(BCPU $B%3!<%I$rF~$l$k$H(B
-	$B$3$m$G!$(BCPU_CODE $B%^%/%m$r;2>H$9$k$h$&$K=$@5!%(B
+	* kernel/misc_calls.c: tron/cpu_calls.c を新設し，CPU に依存す
+	るシステムコールの定義を移動．get_ver で，CPU コードを入れると
+	ころで，CPU_CODE マクロを参照するように修正．
 
-	* kernel/debug_calls.c: vset_reg, vget_reg $B$r(B tron/cpu_calls.c 
-	$B$K0\F0!%$3$N;~E@$G!$(Bdebug_calls.c $B$O6u$K$J$C$?$,!$>-Mh$N3HD%$N(B
-	$B$?$a$K%U%!%$%k$O>C$5$:$K$*$$$F$*$/!%(B
+	* kernel/debug_calls.c: vset_reg, vget_reg を tron/cpu_calls.c 
+	に移動．この時点で，debug_calls.c は空になったが，将来の拡張の
+	ためにファイルは消さずにおいておく．
 
-	* kernel/task.h: $B%?%9%/%3%s%F%-%9%H%V%m%C%/$NDj5A$r(B tron/
-	cpu_status.h $B$K0\F0!%(Bdispatch_disabled $BJQ?t$r;H$&$+$I$&$+$r@)(B
-	$B8f$9$k%9%$%C%A(B (USE_DISPATCH_DISABLED) $B$H!$%7%9%F%`%9%?%C%/$r(B
-	$B%f!<%6%9%?%C%/$HJL$K;}$D$+$I$&$+$r@)8f$9$k%9%$%C%A(B 
-	(USE_SEPARATE_SSTACK) $B$rDI2C!%(B
+	* kernel/task.h: タスクコンテキストブロックの定義を tron/
+	cpu_status.h に移動．dispatch_disabled 変数を使うかどうかを制
+	御するスイッチ (USE_DISPATCH_DISABLED) と，システムスタックを
+	ユーザスタックと別に持つかどうかを制御するスイッチ 
+	(USE_SEPARATE_SSTACK) を追加．
 
-	* kernel/task.c: TRON$B;EMM%A%C%W$K0MB8$9$kDj?t$NDj5A$r!$(Btron/
-	tron_defs.h $B$H(B tron/cpu_task.h $B$K0\F0!%%?%9%/5/F0$N$?$a$N%3%s(B
-	$B%F%-%9%H$r@_Dj$9$kItJ,$r!$(Btron/cpu_task.h $BCf$GDj5A$9$k(B 
-	startup_context $B4X?t$H$7$F@Z$jJ,$1$k!%(Bdispatch $B4X?t$NDj5A$O!$(B
-	tron/cpu_status.h $B$K0\F0!%?7@_$5$l$?(B USE_DISPATCH_DISABLE $B$H(B
-	USE_SEPARATE_SSTACK $B$KBP1~!%(B
+	* kernel/task.c: TRON仕様チップに依存する定数の定義を，tron/
+	tron_defs.h と tron/cpu_task.h に移動．タスク起動のためのコン
+	テキストを設定する部分を，tron/cpu_task.h 中で定義する 
+	startup_context 関数として切り分ける．dispatch 関数の定義は，
+	tron/cpu_status.h に移動．新設された USE_DISPATCH_DISABLE と
+	USE_SEPARATE_SSTACK に対応．
 
-	* kernel/task_manage.c: $B%?%9%/5/F0%3!<%I$r@_Dj$9$kItJ,$r!$(B
-	tron/cpu_task.h $BCf$GDj5A$9$k(B startup_stacd $B4X?t$H$7$F@Z$jJ,$1(B
-	$B$k!%(BEIT_FRAME_SIZE $B$O!$F1$8L\E*$N(B DORMANT_STACK_SIZE $B$KBe$(!$(B
-	$B$=$NDj5A$O(B tron/cpu_task.h $B$NCf$G9T$&!%%7%9%F%`%9%?%C%/$N:G>.(B
-	$B%5%$%:$NDj5A$r(B tron/cpu_conf.h $B$K0\F0!%?7@_$5$l$?(B 
-	USE_SEPARATE_SSTACK $B$KBP1~!%%9%?%C%/%(%j%"$r<hF@(B/$BJV5Q$9$k:]$K(B
-	$BFC<l$JA`:n$,I,MW$J>l9g$KBP1~!%$=$N$?$a$N%9%$%C%A$H$7$F!$(B
-	USE_SPECIAL_STACK $B$r?7@_!%(B
+	* kernel/task_manage.c: タスク起動コードを設定する部分を，
+	tron/cpu_task.h 中で定義する startup_stacd 関数として切り分け
+	る．EIT_FRAME_SIZE は，同じ目的の DORMANT_STACK_SIZE に代え，
+	その定義は tron/cpu_task.h の中で行う．システムスタックの最小
+	サイズの定義を tron/cpu_conf.h に移動．新設された 
+	USE_SEPARATE_SSTACK に対応．スタックエリアを取得/返却する際に
+	特殊な操作が必要な場合に対応．そのためのスイッチとして，
+	USE_SPECIAL_STACK を新設．
 
-	* kernel/timer.c: start_hw_timer $B$K%?%$%^%O%s%I%i$N%"%I%l%9$r(B
-	$BEO$9$N$r$d$a$k!%(BC_timer_handler $B$r(B timer_handler $B$K%j%M!<%`!%(B
-	$B%?%$%^%O%s%I%i5/F0$N$?$a$N9b5i8@8lBP1~%k!<%A%s$r(B 
-	tron/cpu_support.S $B$K0\F0!%(B
+	* kernel/timer.c: start_hw_timer にタイマハンドラのアドレスを
+	渡すのをやめる．C_timer_handler を timer_handler にリネーム．
+	タイマハンドラ起動のための高級言語対応ルーチンを 
+	tron/cpu_support.S に移動．
 
 	* kernel/genisyscall, syscall.def, itable.h: itis_isyscall.h 
-	$B$,%?!<%2%C%HFHN)$K$J$k$h$&$K!$D>@\%$%s%i%$%s%"%;%s%V%i$r=P$9$N(B
-	$B$r$d$a$F!$%7%9%F%`%3!<%k8F$S=P$7MQ%^%/%m$r=P$9$h$&$K=$@5!%%"%;(B
-	$B%s%V%i$G5-=R$7$?%7%9%F%`%3!<%k$K4X$9$kFC<l=hM}(B (z$B%*%W%7%g%s(B) 
-	$B$rGQ;_!%(Bitable.h $B$r(Bitable.S $B$K%j%M!<%`!%(B
+	がターゲット独立になるように，直接インラインアセンブラを出すの
+	をやめて，システムコール呼び出し用マクロを出すように修正．アセ
+	ンブラで記述したシステムコールに関する特殊処理 (zオプション) 
+	を廃止．itable.h をitable.S にリネーム．
 
-	* kernel/isysconf.h: $B%7%9%F%`%9%?%C%/%5%$%:$N%G%U%)%k%HCM$NDj(B
-	$B5A$r(B tron/cpu_conf.h $B$K0\F0!%%"%;%s%V%i$G5-=R$5$l$F$$$k%7%9%F(B
-	$B%`%3!<%k$N$?$a$NDj5A$r:o=|!%(B
+	* kernel/isysconf.h: システムスタックサイズのデフォルト値の定
+	義を tron/cpu_conf.h に移動．アセンブラで記述されているシステ
+	ムコールのための定義を削除．
 
-	* kernel/startup.c: cpu_initialize, cpu_shutdown $B$N(B 2$B$D$N4X?t(B
-	$B$r(B cpu_util.c $BCf$GDj5A$9$k$3$H$K$7$F!$(BCPU$B0MB8$N=i4|2=(B/$B=*N;=hM}(B
-	$B$*$h$S4XO"$9$kDj5A$r$=$l$i$N4X?t$KG$$;$k!%(Bcpu_util.c $B$O?7@_!%(B
+	* kernel/startup.c: cpu_initialize, cpu_shutdown の 2つの関数
+	を cpu_util.c 中で定義することにして，CPU依存の初期化/終了処理
+	および関連する定義をそれらの関数に任せる．cpu_util.c は新設．
 
 	* kernel/itis_kernel.h, isyslog.h, startup.c, systask/logtask.c:
-	target_??? $B$r(B sys_??? $B$K=$@5!%(B
+	target_??? を sys_??? に修正．
 
-	* kernel/patchlevel.h: $B%j%j!<%9HV9f$r(B 1.3.0 $B$K!%(B
+	* kernel/patchlevel.h: リリース番号を 1.3.0 に．
 
-	* kernel/newversion: $B%?!<%2%C%H(BCPU $B$H%7%9%F%`$NN>J}$+$i!$%?!<(B
-	$B%2%C%H$NL>>N$r7h$a$k$h$&$K=$@5!%(Bbsd $B$rDI2C!%(BCopyright $B$NF|IU$r(B
-	$B99?7!%(B
+	* kernel/newversion: ターゲットCPU とシステムの両方から，ター
+	ゲットの名称を決めるように修正．bsd を追加．Copyright の日付を
+	更新．
 
-	* include/svc_serial.h, svc_syslog.h: $B%7%9%F%`%3!<%k8F$S=P$7MQ(B
-	$B%^%/%m$r;H$&$h$&$K=$@5!%(B
+	* include/svc_serial.h, svc_syslog.h: システムコール呼び出し用
+	マクロを使うように修正．
 
-	* include/tron/itis_sysint.h: TRON$B;EMM%A%C%WMQ$N%7%9%F%`%3!<%k(B
-	$B8F$S=P$7MQ%^%/%m$NDj5A%U%!%$%k$H$7$F?7@_!%(B
+	* include/tron/itis_sysint.h: TRON仕様チップ用のシステムコール
+	呼び出し用マクロの定義ファイルとして新設．
 
-	* include/itis_services.h: itis_sysint.h $B$r%$%s%/%k!<%I$9$k$h(B
-	$B$&=$@5!%(B
+	* include/itis_services.h: itis_sysint.h をインクルードするよ
+	う修正．
 
-	* include/itis_stddefs.h: REGISTER $B$NDj5A$r(B include/tron/
-	itis_sysint.h $B$K0\F0!%(B
+	* include/itis_stddefs.h: REGISTER の定義を include/tron/
+	itis_sysint.h に移動．
 
-	* include/Makefile: include/tron/itis_sysint.h $B$r%3%T!<$9$k;](B
-	$B$N%a%C%;!<%8$rDI2C!%(B
+	* include/Makefile: include/tron/itis_sysint.h をコピーする旨
+	のメッセージを追加．
 
-	* include/itis_resources.h: $B=i4|2=%?%9%/$H%7%9%F%`%m%0%?%9%/$N(B
-	$B%7%9%F%`%9%?%C%/%5%$%:$r!$%+!<%M%k$N%G%U%)%k%H$KG$$;$k!%(B
+	* include/itis_resources.h: 初期化タスクとシステムログタスクの
+	システムスタックサイズを，カーネルのデフォルトに任せる．
 
-	* $BB?$/$N%U%!%$%k(B: $B%3%a%s%H$r@0M}!%%$%s%/%k!<%I$N4X78$r@0M}!%(B
+	* 多くのファイル: コメントを整理．インクルードの関係を整理．
 
-	* $B$[$\$9$Y$F$N%U%!%$%k(B: $B4A;z%3!<%I$r?7(BJIS$B%3!<%I$KJQ49!%(B
+	* ほぼすべてのファイル: 漢字コードを新JISコードに変換．
 
 Fri Nov 11 11:29:24 JST 1994	Hiroaki Takada
 
-	* kernel/task_sync.c: #ifndef $B$N(B TYPO $B$r=$@5(B (by nobuo)$B!%(B
+	* kernel/task_sync.c: #ifndef の TYPO を修正 (by nobuo)．
 
 Tue Sep 27 02:35:26 JST 1994	Hiroaki Takada
 
-	* kernel/prisem.c, doc/PRISEM: $B;EMM(B2 $B$NM%@hEY7Q>5%;%^%U%)$N;E(B
-	$BMM$rJQ99$9$k!%6qBNE*$K$O!$M%@hEY7Q>5%;%^%U%)$r2rJ|$7$?:]$K!$3M(B
-	$BF@A0$NM%@hEY$G$O$J$/!$%?%9%/$N=i4|M%@hEY$KLa$9$3$H$K$9$k!%$^$?!$(B
-	$B3MF@$5$l$F$$$kM%@hEY7Q>5%;%^%U%)$r:o=|$9$k$3$H$r5v$9$3$H$K$9$k!%(B
+	* kernel/prisem.c, doc/PRISEM: 仕様2 の優先度継承セマフォの仕
+	様を変更する．具体的には，優先度継承セマフォを解放した際に，獲
+	得前の優先度ではなく，タスクの初期優先度に戻すことにする．また，
+	獲得されている優先度継承セマフォを削除することを許すことにする．
 
 Tue Sep 27 02:22:17 JST 1994	Hiroaki Takada
 
-	* kernel/winfo.h: WSPEC $B$NDj5A$K(B const $B@k8@$rDI2C!%(B
+	* kernel/winfo.h: WSPEC の定義に const 宣言を追加．
 
 Tue Sep 27 01:13:14 JST 1994	Hiroaki Takada
 
 	* h32/h32init.c, tvme/tvmeinit.c, mcube/mcubeinit.c:
-	cpu_inline.h $B$r%$%s%/%k!<%I$9$k$N$r$d$a$k!%(B
+	cpu_inline.h をインクルードするのをやめる．
 
-	* kernel/task_manage.c: MIN_SYS_STACK_SIZE $B$NDj5A$r(B ifndef $B$G(B
-	$B0O$`!%(B
+	* kernel/task_manage.c: MIN_SYS_STACK_SIZE の定義を ifndef で
+	囲む．
 
-	* systask/inittask.c: $B%+!<%M%k$NDd;_%a%C%;!<%8$r=P$9$N$r$d$a$k(B 
-	($B<B$O!$%a%C%;!<%8%P%C%U%!$KF~$k$@$1$G!$I=<($O$5$l$F$$$J$+$C$?(B)$B!%(B
+	* systask/inittask.c: カーネルの停止メッセージを出すのをやめる 
+	(実は，メッセージバッファに入るだけで，表示はされていなかった)．
 
 Fri Sep  9 07:53:36 JST 1994	Hiroaki Takada
 
-	* sample/Makefile.*: target.h $B$K4X$9$kDj5A$r:o=|$7!$(Btargetconf.h 
-	$B$K4X$9$kDj5A$rDI2C!%%Q%9$NCf$G!$(B../$(TARGET) $B$rA0$X0\F0$J$$$7(B
-	$B$ODI2C!%(B
+	* sample/Makefile.*: target.h に関する定義を削除し，targetconf.h 
+	に関する定義を追加．パスの中で，../$(TARGET) を前へ移動ないし
+	は追加．
 
-	* mcube/mcube.h, mcubeconf.h: mcubeconf.h $B$r?75,$K:n$j!$(BEITVB 
-	$B$K4X$9$kDj5A$r(B mcube.h $B$+$i0\F0!%(B
+	* mcube/mcube.h, mcubeconf.h: mcubeconf.h を新規に作り，EITVB 
+	に関する定義を mcube.h から移動．
 
-	* kernel/itis_kernel.h, startup.c: target.h $B$r$d$a$F!$(B
-	targetconf.h $B$r(B itis_kernel.h $B$+$i%$%s%/%k!<%I$9$k$h$&$KJQ99!%(B
+	* kernel/itis_kernel.h, startup.c: target.h をやめて，
+	targetconf.h を itis_kernel.h からインクルードするように変更．
 
 Fri Sep  9 02:05:54 JST 1994	Hiroaki Takada
 
-	* kernel/task.c: ctxtsk, schedtsk $B$N=i4|2=$rDI2C!%(B
+	* kernel/task.c: ctxtsk, schedtsk の初期化を追加．
 
-	* kernel/startup.c: syslog $B%a%C%;!<%8$N=$@5!%(B
+	* kernel/startup.c: syslog メッセージの修正．
 
-	* kernel/misc_calls.c: #ifndef _i_def_int $B$G0O$`HO0O$r9-$2$k!%(B
+	* kernel/misc_calls.c: #ifndef _i_def_int で囲む範囲を広げる．
 
-	* systask/logtask.c: perror $B$N8F$S=P$7J}K!$r=$@5!%(B
+	* systask/logtask.c: perror の呼び出し方法を修正．
 
 	* kernel/itis_kernel.h, common.h, ready_queue.h, startup.c,
 	task.c, task_manage.c, misc_calls.c, debug_calls.c:
-	cpu_inline.h $B$r(B itis_kernel.h $B$+$i%$%s%/%k!<%I$9$k$3$H$K$7$F!$(B
-	$BB>$N%U%!%$%k$+$i%$%s%/%k!<%I$7$J$$$h$&$K$9$k!%(B
+	cpu_inline.h を itis_kernel.h からインクルードすることにして，
+	他のファイルからインクルードしないようにする．
 
 	* kernel/common.h, cpu_inline.h, task.c: dispatch_request,
-	force_dispatch $B$r(B common.h $B$K0\F0!%(B
+	force_dispatch を common.h に移動．
 
-	* kernel/mailbox.c: $B%3%a%s%H$N=$@5!%(B
+	* kernel/mailbox.c: コメントの修正．
 
 Tue Sep  6 13:43:39 JST 1994	Hiroaki Takada
 
-	* include/itron.h, kernel/mailbox.c: $B%a%C%;!<%8%-%e!<$N4IM}J}(B
-	$BK!$r!$%7%s%0%k%j%s%/$KD>$9!%(B
+	* include/itron.h, kernel/mailbox.c: メッセージキューの管理方
+	法を，シングルリンクに直す．
 
-	* kernel/queue.h: $BL$;HMQ$N(B queue_serach_ge $B$rKu>C!%(B
+	* kernel/queue.h: 未使用の queue_serach_ge を抹消．
 
 Fri Sep  2 19:05:08 JST 1994	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, doc/USER: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
+	* ChangeLog, MANIFEST, doc/USER: この時点までの修正をまとめる．
 
-	* doc/PRISEM: $B?7$?$K:n@.!%(B
+	* doc/PRISEM: 新たに作成．
 
 Fri Sep  2 16:13:38 JST 1994	Hiroaki Takada
 
 	* kernel/task.h, task.c, wait.h, wait.c, winfo.h, task_manage.c,
 	task_sync.c, semaphore.c, eventflag.c, mailbox.c, messagebuf.c,
-	rendezvous.c, prisem.c, mempool.c, mempfix.c, time_call.c: $BBT(B
-	$B$A;EMM$rF3F~$7!$M%@hEYJQ99;~!$BT$A>uBV2r=|;~$N=hM}$r%U%C%/%k!<(B
-	$B%A%s$G=hM}$9$k$h$&$K2~B$$9$k!%(B
+	rendezvous.c, prisem.c, mempool.c, mempfix.c, time_call.c: 待
+	ち仕様を導入し，優先度変更時，待ち状態解除時の処理をフックルー
+	チンで処理するように改造する．
 
 	* kernel/task_manage.c, task_sync.c, eventflag.c, mailbox.c,
-	messagebuf.c, mempool.c, mempfix.c: $B%7%9%F%`%3!<%kKh$K30$;$k$h(B
-	$B$&$K$9$k!%(B
+	messagebuf.c, mempool.c, mempfix.c: システムコール毎に外せるよ
+	うにする．
 
-	* kernel/isysconf.h, isyslog.c, messagebuf.c, mempool.c: $B%+!<(B
-	$B%M%k$,;HMQ$9$k%*%V%8%'%/%H$,$J$$>l9g$KBP1~(B (USE_TMBF_OS,
-	USE_TMPL_OS $B$rF3F~(B)$B!%(B
+	* kernel/isysconf.h, isyslog.c, messagebuf.c, mempool.c: カー
+	ネルが使用するオブジェクトがない場合に対応 (USE_TMBF_OS,
+	USE_TMPL_OS を導入)．
 
-	* kernel/itis_kernel.h: $B%X%C%@%U%!%$%k$r%$%s%/%k!<%I$9$k=g=x$r(B
-	$BJQ99(B ($B>e$NJQ99$KH<$C$FI,MW$K(B)$B!%(B
+	* kernel/itis_kernel.h: ヘッダファイルをインクルードする順序を
+	変更 (上の変更に伴って必要に)．
 
-	* kernel/isysconf.h: SYS_OS_SIZE $B$r(B SYS_MPL_SIZE $B$K!%(B
+	* kernel/isysconf.h: SYS_OS_SIZE を SYS_MPL_SIZE に．
 
 Fri Sep  2 15:43:17 JST 1994	Hiroaki Takada
 
-	* kernel/misc_calls.c: get_ver $B$,JV$9(B spver $B$r%P!<%8%g%s(B 3.02 
-	$B$rI=$9CM$KJQ99!%(B
+	* kernel/misc_calls.c: get_ver が返す spver をバージョン 3.02 
+	を表す値に変更．
 
-	* kernel/common.h: $B%3%a%s%H$N=$@5!%(B
+	* kernel/common.h: コメントの修正．
 
 Fri Aug 26 01:37:46 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c, prisem.c: $B;EMM(B1 ($B5lL>(B: $B;EMM(B2) $B$NM%@hEY(B
-	$B7Q>5%;%^%U%)5!G=$r%^!<%8!%;EMM(B1 $B$N>l9g$K!$%?%9%/=*N;;~$K3MF@$7(B
-	$B$F$$$kM%@hEY7Q>5%;%^%U%)$r<+F0E*$K2rJ|$9$k$h$&$K$9$k!%(B
+	* kernel/task_manage.c, prisem.c: 仕様1 (旧名: 仕様2) の優先度
+	継承セマフォ機能をマージ．仕様1 の場合に，タスク終了時に獲得し
+	ている優先度継承セマフォを自動的に解放するようにする．
 
 Mon Aug  8 18:40:33 JST 1994	Hiroaki Takada
 
 	* kernel/isysconf.h, task.h, task.c, wait.h, sample/config.def: 
-	$BM%@hEY7Q>5%;%^%U%)$N;EMM(B1 $B$H;EMM(B2 $B$NL>>N$r5U$K$9$k!%(B
+	優先度継承セマフォの仕様1 と仕様2 の名称を逆にする．
 
 Mon Aug  8 14:57:22 JST 1994	Hiroaki Takada
 
-	* kernel/isyslog.c: NDEBUG $B$N;~$K$O!$(Bi_assert_fail $B$r30$9!%(B
+	* kernel/isyslog.c: NDEBUG の時には，i_assert_fail を外す．
 
 Mon Aug  8 14:04:36 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h, startup.c, misc_call.c: def_int $B$G!$A0(B
-	$B$NDj5A$r2r=|$9$k5!G=$rDI2C!%(B
+	* kernel/cpu_inline.h, startup.c, misc_call.c: def_int で，前
+	の定義を解除する機能を追加．
 
-	* sample/Makefile.*: target.h $B$K4X$9$kDj5A$rDI2C!%(B
+	* sample/Makefile.*: target.h に関する定義を追加．
 
-	* mcube/mcube.h, mcubestart.S: EITVB $B$K4X$9$kDj5A$r0\F0!%(B
+	* mcube/mcube.h, mcubestart.S: EITVB に関する定義を移動．
 
 Mon Aug  8 12:56:48 JST 1994	Hiroaki Takada
 
-	* kernel/genconfig: (-4)$B!A(B0 $B$NM%@hEYCM$r!$M=LsCM$H$7$F%(%i!<$r(B
-	$BJV$9$h$&$K$9$k!%(B
+	* kernel/genconfig: (-4)〜0 の優先度値を，予約値としてエラーを
+	返すようにする．
 
 Sun Aug  7 23:19:06 JST 1994	Hiroaki Takada
 
 	* kernel/itis_kernel.h, isyslog.c, libitis/assert_fail.c:
-	assert$B%^%/%m$N=hM}4X?t$r(B GNU$BI8=`(BC$B%i%$%V%i%j$K$"$o$;$k(B/$B6a$/$9$k!%(B
+	assertマクロの処理関数を GNU標準Cライブラリにあわせる/近くする．
 
-	* sample/config.def: min_mplid $B$N%G%U%)%k%H$r(B -5 $B$KLa$9!%(B
+	* sample/config.def: min_mplid のデフォルトを -5 に戻す．
 
 Sun Aug  7 22:44:33 JST 1994	Hiroaki Takada
 
-	* kernel/isysconf.h, startup.c, winfo.h: $B3F%*%V%8%'%/%H$N%b%8%e!<(B
-	$B%k$r30$;$k$h$&$K$9$k$?$a$NDj5A$rDI2C!%(B
+	* kernel/isysconf.h, startup.c, winfo.h: 各オブジェクトのモジュー
+	ルを外せるようにするための定義を追加．
 
 Sun Aug  7 22:13:03 JST 1994	Hiroaki Takada
 
-	* sample/config.def: min_mplid $B$N%G%U%)%k%H$r(B 1 $B$K!%(B
+	* sample/config.def: min_mplid のデフォルトを 1 に．
 
 Sun Aug  7 22:05:16 JST 1994	Hiroaki Takada
 
-	* kernel/isysconf.h: TMPL_OS_SIZE $B$r(B SYS_OS_SIZE $B$K!%(B
+	* kernel/isysconf.h: TMPL_OS_SIZE を SYS_OS_SIZE に．
 
 Sun Aug  7 21:23:03 JST 1994	Hiroaki Takada
 
 	* kernel/semaphore.c, mailbox.c, messagebuf.c, mempool.c,
-	mempfix.c: ID $B$r%A%'%C%/$9$k(B assert $B$N>r7o$r6/$/$9$k!%(B
+	mempfix.c: ID をチェックする assert の条件を強くする．
 
 Thu Aug  4 23:55:04 JST 1994	Hiroaki Takada
 
-	* kernel/task.h, task.c, task_manage.c, prisem.c, wait.h: $B;EMM(B2
-	$B$NM%@hEY7Q>5%;%^%U%)$r<h$j9~$`$?$a$N=$@5!%(B
+	* kernel/task.h, task.c, task_manage.c, prisem.c, wait.h: 仕様2
+	の優先度継承セマフォを取り込むための修正．
 
 	* kernel/genconfig, isysconf.h, sample/config.def: prisem_spec 
-	$B$NDj5A$H$=$l$K4XO"$9$k@_Dj$rDI2C!%(B
+	の定義とそれに関連する設定を追加．
 
-	* kernel/prisem.c: del_pis $B$N;EMM$rJQ99!%%P%0%U%#%C%/%9!%(B
+	* kernel/prisem.c: del_pis の仕様を変更．バグフィックス．
 
-	* kernel/wait.c, wait.h, task_manage.c, rendezvous.c: $BBT$A2r=|(B
-	$B=hM}$N$?$a$N%k!<%A%s72$r@0M}!%(B
+	* kernel/wait.c, wait.h, task_manage.c, rendezvous.c: 待ち解除
+	処理のためのルーチン群を整理．
 
 Thu Aug  4 22:16:31 JST 1994	Hiroaki Takada
 
 	* include/itis_services.h, libitis/itis_panic.c, itis_perror.c,
-	panic.c, perror.c: itron_errno $B$r$d$a$k(B ($B%?%9%/6&DL$K;}$D$N$O(B
-	$BL5M}(B)$B!%(B
+	panic.c, perror.c: itron_errno をやめる (タスク共通に持つのは
+	無理)．
 
-	* libitis/errno.c: $B:o=|!%(B
+	* libitis/errno.c: 削除．
 
-	* libitis/Makefile, sample/Makefile.*: errno.o $B$rKu>C!%(B
+	* libitis/Makefile, sample/Makefile.*: errno.o を抹消．
 
-	* xscheme/itisstuff.c: $B%a%b%j$,$J$$>l9g$N%P%0$r%U%#%C%/%9!%(B
+	* xscheme/itisstuff.c: メモリがない場合のバグをフィックス．
 
 Thu Aug  4 21:22:30 JST 1994	Hiroaki Takada
 
-	* systask/logtask.c: itron_errno $B$X$NBeF~$r$d$a$k(B ($B%"%W%j%1!<(B
-	$B%7%g%s$+$i8+$k$H!$(Bitron_errno $B$,>!<j$K=q$-$+$o$k(B)$B!%(B
+	* systask/logtask.c: itron_errno への代入をやめる (アプリケー
+	ションから見ると，itron_errno が勝手に書きかわる)．
 
 Tue Aug  2 21:51:52 JST 1994	Hiroaki Takada
 
-	* kernel/semaphore.c: $B%7%9%F%`%3!<%kKh$K30$;$k$h$&$K$9$k(B 
-	(prisem.c $B$H%=!<%9%3!<%I%5%$%:$rHf3S$9$k$?$a(B)$B!%(B
+	* kernel/semaphore.c: システムコール毎に外せるようにする 
+	(prisem.c とソースコードサイズを比較するため)．
 
 Tue Aug  2 21:30:17 JST 1994	Hiroaki Takada
 
-	* Makefile.config: tgas $B$r(B tron-gas$B!$(Btld $B$r(B tron-ld $B$K!%(B
+	* Makefile.config: tgas を tron-gas，tld を tron-ld に．
 
 Tue Aug  2 13:35:42 JST 1994	Hiroaki Takada
 
-	* h32/h32start.S, tvme/tvmestart.S: FPU $B$N4]$a%b!<%I$r(B RZ $B$K$9(B
-	$B$k=hM}$r30$9(B ($B%3%s%Q%$%i$,BP1~$7$?$?$a(B)$B!%(B
+	* h32/h32start.S, tvme/tvmestart.S: FPU の丸めモードを RZ にす
+	る処理を外す (コンパイラが対応したため)．
 
 Sun Jul 31 21:45:48 JST 1994	Hiroaki Takada
 
-	* kernel/task.h, task.c, task_manage.c: change_running_task $B$r(B 
-	change_scheduled_task $B$K%j%M!<%`!%(B
+	* kernel/task.h, task.c, task_manage.c: change_running_task を 
+	change_scheduled_task にリネーム．
 
 Sun Jul 31 14:40:33 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h: force_dispatch $B$N(B volatile $B@k8@$r>C$9(B 
-	(GCC 2.6 $BBP1~$N=$@5(B)$B!%(B
+	* kernel/cpu_inline.h: force_dispatch の volatile 宣言を消す 
+	(GCC 2.6 対応の修正)．
 
 Sun Jul 31 14:37:23 JST 1994	Hiroaki Takada
 
-	* tvme/tvmetimer.c, h32/h32timer.c: get_current_hw_time $BCf$G!$(B
-	TIMER_TICK $B$r;2>H$7$F$$$?$H$3$m$r(B TO_TICK(TIMER_PERIOD) $B$K=$@5!%(B
+	* tvme/tvmetimer.c, h32/h32timer.c: get_current_hw_time 中で，
+	TIMER_TICK を参照していたところを TO_TICK(TIMER_PERIOD) に修正．
 
 Mon Jul 18 17:25:24 JST 1994	Hiroaki Takada
 
 	* libitis/strerror.c, panic.c, perror.c, itis_panic.c,
-	itis_perror.c: itron_strerror$B4X?t$KBP$9$k(B const $B@k8@$r:o=|!%(B
+	itis_perror.c: itron_strerror関数に対する const 宣言を削除．
 
 Fri Jun 24 20:43:13 JST 1994	Hiroaki Takada
 
-	* kernel/prisem.c: $BM%@hEY7Q>5%;%^%U%)4X78$N%7%9%F%`%3!<%k$r4^(B
-	$B$`%b%8%e!<%k$H$7$F?75,:n@.!%(B
+	* kernel/prisem.c: 優先度継承セマフォ関係のシステムコールを含
+	むモジュールとして新規作成．
 
 	* kernel/check.h, common.h, genconfig, isysconf.h, startup.c,
-	task.c, include/itron.h: $BM%@hEY7Q>5%;%^%U%)4X78$N=hM}$*$h$SDj(B
-	$B5A$rDI2C!%(B
+	task.c, include/itron.h: 優先度継承セマフォ関係の処理および定
+	義を追加．
 
 	* kernel/syscall.def, isyscall.h, itable.h, include/itron_fncd.h,
-	itis_isyscall.h: $BM%@hEY7Q>5%;%^%U%)4X78$N%7%9%F%`%3!<%k$rDI2C!%(B
+	itis_isyscall.h: 優先度継承セマフォ関係のシステムコールを追加．
 
 	* sample/config.def, Makefile.h32, Makefile.tvme, Makefile.mcube:
-	$BM%@hEY7Q>5%;%^%U%)4X78$N5-=R$rDI2C!%(B
+	優先度継承セマフォ関係の記述を追加．
 
-	* kernel/wait.h: $B3FF14|!&DL?.%b%8%e!<%k$NM%@hEYJQ99=hM}4X?t$N(B
-	$B@k8@$rDI2C!%(B
+	* kernel/wait.h: 各同期・通信モジュールの優先度変更処理関数の
+	宣言を追加．
 
-	* kernel/semaphore.c: $B>iD9$J>r7o<0$r=$@5!%(Btypo $B$N=$@5!%(B
+	* kernel/semaphore.c: 冗長な条件式を修正．typo の修正．
 
 Tue Jun 21 19:30:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^(B
-	$B$G$N=$@5$r$^$H$a$k!%(B
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: この時点ま
+	での修正をまとめる．
 
-	* Release1.2 (patchlevel=5) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_5")$B!%(B
+	* Release1.2 (patchlevel=5) をフィックス (TAG = "ItIs3-1_2_5")．
 
 Tue Jun 21 19:21:17 JST 1994	Hiroaki Takada
 
-	* systask/serial.c: serial_init $B$,%(%i!<$K$J$C$?>l9g$K$O!$(B
-	init_flag $B$r(B 1 $B$K$7$J$$$h$&=$@5!%(B
+	* systask/serial.c: serial_init がエラーになった場合には，
+	init_flag を 1 にしないよう修正．
 
 Tue Jun 21 15:14:30 JST 1994	Hiroaki Takada
 
-	* mcube/mcubeserial.c, tvme/tvmeserial.c: 2$B$D$a$N%]!<%H$r=i4|(B
-	$B2=$9$k$H!$:G=i$N%]!<%H$b;H$($J$/$J$kLdBj$r=$@5!%(B
+	* mcube/mcubeserial.c, tvme/tvmeserial.c: 2つめのポートを初期
+	化すると，最初のポートも使えなくなる問題を修正．
 
-	* mcube/mcubeserial.c: TRON$B;EMM%-!<%\!<%I$N@\B3$r%5%]!<%H!%(B
+	* mcube/mcubeserial.c: TRON仕様キーボードの接続をサポート．
 
 Tue Jun 21 15:12:07 JST 1994	Hiroaki Takada
 
 	* systask/serial.c, include/svc_serial.h, itis_resources.h:
-	serial_init, serial_shutdown $B$r3HD%(BSVC $B$H$7$F%f!<%6%?%9%/$+$i(B
-	$B8F$S=P$;$k$h$&$K$9$k!%(B
+	serial_init, serial_shutdown を拡張SVC としてユーザタスクから
+	呼び出せるようにする．
 
-	* sample/config.def: $B%5%s%W%k$G$N3HD%(BSVC $B$NDj5A?t$r(B 50 $B$KJQ99!%(B
+	* sample/config.def: サンプルでの拡張SVC の定義数を 50 に変更．
 
 Thu Jun  9 19:03:59 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c: $B%7%9%F%`%@%&%s$9$k:]$N%m%0$N(B priority 
-	$B$r(B LOG_EMERG $B$KJQ99!%(B
+	* kernel/task_manage.c: システムダウンする際のログの priority 
+	を LOG_EMERG に変更．
 
-	* systask/inittask.c: serial_shutdown $B8F$S$@$7;~$N0z?t$rDI2C!%(B
+	* systask/inittask.c: serial_shutdown 呼びだし時の引数を追加．
 
-	* systask/serial.c: read $B$,9TKv$G=*N;$9$k$N$O!$(BCANONICAL $B$N;~(B
-	$B$N$_$K$9$k!%(B
+	* systask/serial.c: read が行末で終了するのは，CANONICAL の時
+	のみにする．
 
 Thu Jun  9 16:18:40 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c, misc_calls.c: RUN$B>uBV$N%?%9%/$NDj5A$r(B
-	$BJQ99$9$k!%(B
+	* kernel/task_manage.c, misc_calls.c: RUN状態のタスクの定義を
+	変更する．
 
-	* kernel/dispatch.S, nd_dispatch.S: WAIT$BL?Na$rH/9T$9$kD>A0$K!$(B
-	ctxtsk $B$r(B NULL $B$K$9$k!%(B
+	* kernel/dispatch.S, nd_dispatch.S: WAIT命令を発行する直前に，
+	ctxtsk を NULL にする．
 
 Thu Jun  9 15:38:30 JST 1994	Hiroaki Takada
 
 	* kernel/check.h, task_manage.c, sample/config.def: CHK_CTX2 
-	$B$r(B CHK_CTX $B$H2~L>!%?7$?$J(B CHK_CTX2 $B$r!$CWL?E*$J%3%s%F%-%9%H%((B
-	$B%i!<$N;~$K%7%9%F%`%@%&%s$5$;$k$+$I$&$+$N%U%i%0$H$9$k!%(B
+	を CHK_CTX と改名．新たな CHK_CTX2 を，致命的なコンテキストエ
+	ラーの時にシステムダウンさせるかどうかのフラグとする．
 
-	* kernel/genconfig: CHK_CTX $B$N%5%]!<%H$rDI2C!%(B
+	* kernel/genconfig: CHK_CTX のサポートを追加．
 
 Fri Mar  4 23:04:46 JST 1994	Hiroaki Takada
 
-	* systask/logtask.c: logtask_alive $B$r(B 1 $B$K$9$k$N$r!$(Bsys_log $B$N(B
-	$B3HD%(BSVC$BDj5A$h$j8e$K0\F0$9$k(B ($BLdBj$J$$$O$:$@$,!$G0$N$?$a(B)$B!%(B
+	* systask/logtask.c: logtask_alive を 1 にするのを，sys_log の
+	拡張SVC定義より後に移動する (問題ないはずだが，念のため)．
 
 Tue Feb 15 12:59:00 JST 1994	Hiroaki Takada
 
-	* kernel/rendezvous.c: $B%i%s%G%V$N1~Ez%a%C%;!<%8$,6u(B ($BD9$5$,(B 0) 
-	$B$r5v$9$3$H$K$9$k!%(B
+	* kernel/rendezvous.c: ランデブの応答メッセージが空 (長さが 0) 
+	を許すことにする．
 
 Tue Feb 15 12:40:30 JST 1994	Hiroaki Takada
 
-	* kernel/check.h, genconfig, sample/config.def: $B%(%i!<%A%'%C%/(B
-	$B%*%W%7%g%s$K(B CHK_SELF $B$rDI2C!%(B
+	* kernel/check.h, genconfig, sample/config.def: エラーチェック
+	オプションに CHK_SELF を追加．
 
 Tue Feb 15 12:07:41 JST 1994	Hiroaki Takada
 
-	* kernel/check.h: CHK_PAR $B$G$J$$>l9g$N(B CHECK_PRI_INI $B$NDj5A$N(B 
-	typo $B$r=$@5!%(B
+	* kernel/check.h: CHK_PAR でない場合の CHECK_PRI_INI の定義の 
+	typo を修正．
 
 Tue Feb 15 11:11:03 JST 1994	Hiroaki Takada
 
-	* kernel/task_sync.c: wup_tsk $B$G!$(BE_QOVR $B$N%A%'%C%/>l=j$r8e$m(B
-	$B$K0\F0$9$k(B ($B@-G=$,>/$7>e$k$O$:(B)$B!%(B
+	* kernel/task_sync.c: wup_tsk で，E_QOVR のチェック場所を後ろ
+	に移動する (性能が少し上るはず)．
 
 Thu Feb 10 19:00:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5(B
-	$B$r$^$H$a$k!%(B
+	* ChangeLog, doc/USER, kernel/patchlevel.h: この時点までの修正
+	をまとめる．
 
-	* Release1.2 (patchlevel=4) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_4")$B!%(B
+	* Release1.2 (patchlevel=4) をフィックス (TAG = "ItIs3-1_2_4")．
 
 Thu Feb 10 04:27:11 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h: "memory" $B$N;XDj$,M>7W$K$5$l$F$$$?$N$r:o(B
-	$B=|!%4XO"$7$F!$%3%a%s%H$rDI2C!%(B
+	* kernel/cpu_inline.h: "memory" の指定が余計にされていたのを削
+	除．関連して，コメントを追加．
 
 Thu Feb 10 04:19:25 JST 1994	Hiroaki Takada
 
-	* kernel/messagebuf.c: del_mbf $B$G!$%P%C%U%!%5%$%:$,(B 0 $B$N>l9g$K(B
-	$B$b!$%P%C%U%!NN0h$r2rJ|$7$h$&$H$7$F$$$?%P%0$r=$@5!%(B
+	* kernel/messagebuf.c: del_mbf で，バッファサイズが 0 の場合に
+	も，バッファ領域を解放しようとしていたバグを修正．
 
 Sat Feb  5 11:45:04 JST 1994	Hiroaki Takada
 
 	* kernel/cpu_inline.h, genisyscall, queue.h, ready_queue.h,
 	syscall.def, task.c, include/itis_isyscall.h, svc_serial.h:
-	$B%$%s%i%$%s%"%;%s%V%i$NCf$N(B clobber $B%j%9%H$K(B "memory" $B$,$J$$$H!$(B
-	$B@5$7$/$J$$%3!<%I$,=P$k2DG=@-$,$"$k!%I,MW$J2U=j$K(B "memory" $B$rDI(B
-	$B2C!%(B
+	インラインアセンブラの中の clobber リストに "memory" がないと，
+	正しくないコードが出る可能性がある．必要な箇所に "memory" を追
+	加．
 
 Mon Jan 31 22:36:25 JST 1994	Hiroaki Takada
 
-	* kernel/newversion: $B5/F0;~$N%a%C%;!<%8$N(B 93 $B$r(B 94 $B$K=$@5!%(B
+	* kernel/newversion: 起動時のメッセージの 93 を 94 に修正．
 
 Wed Jan 26 11:49:13 JST 1994	Hiroaki Takada
 
-	* README: $B$3$N%U%!%$%k$rC1FH$G8x3+$G$-$kMM$K=q$-D>$9!%(B
+	* README: このファイルを単独で公開できる様に書き直す．
 
 Wed Jan 26 11:45:56 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h, nd_dispatch.S, startup.c task.c: $BCY1d3d(B
-	$B9~$_$r;H$o$J$$>l9g$N%G%#%9%Q%C%A%c$N5/F0$r(B TRAPA #14 $B$+$i(B #4 
-	$B$KJQ99!%(B
+	* kernel/cpu_inline.h, nd_dispatch.S, startup.c task.c: 遅延割
+	込みを使わない場合のディスパッチャの起動を TRAPA #14 から #4 
+	に変更．
 
 Thu Jan 20 00:54:57 JST 1994	Hiroaki Takada
 
-	* kernel/mempfix.c: rel_blf $B$G!$(Bblf $B$,@5$7$$%"%I%l%9$+%A%'%C%/(B
-	$B$9$k>r7o$r87$7$/$9$k!%(B
+	* kernel/mempfix.c: rel_blf で，blf が正しいアドレスかチェック
+	する条件を厳しくする．
 
 Thu Jan 20 00:46:16 JST 1994	Hiroaki Takada
 
-	* doc/USER: $B%7%9%F%`%a%b%j%W!<%k$N%5%$%:;XDj$NJ}K!$K4X$9$k5-=R(B
-	$B$r=$@5!%(B
+	* doc/USER: システムメモリプールのサイズ指定の方法に関する記述
+	を修正．
 
 Wed Jan 19 18:55:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5(B
-	$B$r$^$H$a$k!%(B
+	* ChangeLog, doc/USER, kernel/patchlevel.h: この時点までの修正
+	をまとめる．
 
-	* Release1.2 (patchlevel=3) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_3")$B!%(B
+	* Release1.2 (patchlevel=3) をフィックス (TAG = "ItIs3-1_2_3")．
 
 Wed Jan 19 18:37:07 JST 1994	Hiroaki Takada
 
-	* kernel/genconfig: sys_mpl_size $B$NDj5A$rDI2C!%(B16$B?J?t$r%5%]!<%H!%(B
+	* kernel/genconfig: sys_mpl_size の定義を追加．16進数をサポート．
 
-	* sample/config.def: sys_mpl_size $B$NDj5A$rDI2C!%(B
+	* sample/config.def: sys_mpl_size の定義を追加．
 
-	* kernel/mempool.c: TMPL_OS_SIZE $B$r(B SYS_MPL_SIZE $B$K%j%M!<%`!%(B
+	* kernel/mempool.c: TMPL_OS_SIZE を SYS_MPL_SIZE にリネーム．
 
 	* kernel/isysconf.h, task_manage.c, include/itis_resources.h:
-	SYS_STACK_SIZE, SYS_MPL_SIZE $B$N%G%U%)%k%HCM$r(B isysconf.h $B$GDj(B
-	$B5A$9$k$3$H$K$9$k!%(B
+	SYS_STACK_SIZE, SYS_MPL_SIZE のデフォルト値を isysconf.h で定
+	義することにする．
 
 Wed Jan 19 17:27:32 JST 1994	Hiroaki Takada
 
-	* sample/Makefile.mcube, mcube/mcubestart.S: MCUBE $B$N>l9g$N%+!<(B
-	$B%M%k%3!<%I$N@hF,HVCO$r(B 0x80020000 $B$KJQ99!%(B
+	* sample/Makefile.mcube, mcube/mcubestart.S: MCUBE の場合のカー
+	ネルコードの先頭番地を 0x80020000 に変更．
 
-	* mcube/mcube.h: mcube_getc $B$N%$%s%i%$%s%"%;%s%V%iCf$G!$%3%s%^(B
-	$B$,H4$1$F$$$?E@$r=$@5!%(B
+	* mcube/mcube.h: mcube_getc のインラインアセンブラ中で，コンマ
+	が抜けていた点を修正．
 
 Mon Jan 17 16:10:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^(B
-	$B$G$N=$@5$r$^$H$a$k!%(B
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: この時点ま
+	での修正をまとめる．
 
-	* Release1.2 (patchlevel=2) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_2")$B!%(B
-	$B$3$N%P!<%8%g%s$+$i!$&BHG$H$9$k!%(B
+	* Release1.2 (patchlevel=2) をフィックス (TAG = "ItIs3-1_2_2")．
+	このバージョンから，β版とする．
 
 Mon Jan 17 15:58:37 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c: _ter_tsk $B$+$i(B make_dormant $B$r8F$S=P$7(B
-	$B$F$$$kItJ,$r!$8F$S=P$7B&$K0\F0$9$k!%(B
+	* kernel/task_manage.c: _ter_tsk から make_dormant を呼び出し
+	ている部分を，呼び出し側に移動する．
 
-	* kernel/task.c, task_manage.c: $B%?%9%/3HD%>pJs$r(B R1 $B$KF~$l$k=h(B
-	$BM}$r!$(Bsta_tsk $B$X0\F0!%(B
+	* kernel/task.c, task_manage.c: タスク拡張情報を R1 に入れる処
+	理を，sta_tsk へ移動．
 
-	* kernel/task_manage.c: ext_tsk $B$G!$(Bmake_dormant $BCf$G;HMQCf$N(B
-	$B%9%?%C%/$,GK2u$5$l$kLdBj$r=$@5!%(B
+	* kernel/task_manage.c: ext_tsk で，make_dormant 中で使用中の
+	スタックが破壊される問題を修正．
 
 Wed Jan 12 21:58:15 JST 1994	Hiroaki Takada
 
-	* systask/serial.c: $B%3%a%s%H$N=$@5!%(B
+	* systask/serial.c: コメントの修正．
 
 Mon Jan 10 19:23:53 JST 1994	Hiroaki Takada
 
-	* mcube/mcubeinit.c: $B%+!<%M%k5/F0;~$K!$%P%93d9~$_$b%^%9%/$9$k(B
-	$B$h$&$K=$@5(B (BMS $B$N@_Dj$K$"$o$;$k(B)$B!%(B
+	* mcube/mcubeinit.c: カーネル起動時に，バス割込みもマスクする
+	ように修正 (BMS の設定にあわせる)．
 
 Mon Jan 10 19:19:09 JST 1994	Hiroaki Takada
 
-	* h32/h32sbc.h, mcube/mcube.h: Gmicro IRC $B$N%P%93d9~$_4X78$NDj(B
-	$B5A(B (BIR?_BIT) $B$rDI2C!%(B
+	* h32/h32sbc.h, mcube/mcube.h: Gmicro IRC のバス割込み関係の定
+	義 (BIR?_BIT) を追加．
 
 Fri Jan  7 12:26:24 JST 1994	Hiroaki Takada
 
-	* kernel/messagebuf.c: $B%a%C%;!<%8%P%C%U%!$H$N4V$N%a%C%;!<%8E>(B
-	$BAw%k!<%A%s$N%P%0$N=$@5!%(B
+	* kernel/messagebuf.c: メッセージバッファとの間のメッセージ転
+	送ルーチンのバグの修正．
 
-	* kernel/messagebuf.c: cre_mbf, vcre_mbf $B$G!$(Bbufsz $B$,Ii$N>l9g(B
-	$B$r%(%i!<$H$9$k%Q%i%a!<%?%A%'%C%/$rDI2C!%(B
+	* kernel/messagebuf.c: cre_mbf, vcre_mbf で，bufsz が負の場合
+	をエラーとするパラメータチェックを追加．
 
 Thu Jan  6 13:54:23 JST 1994	Hiroaki Takada
 
-	* kernel/time_calls.c: i_def_alm $B$G(B NADR $B;XDj;~$N%Q%i%a!<%?%A%'%C(B
-	$B%/$N%_%9$r=$@5!%(B
+	* kernel/time_calls.c: i_def_alm で NADR 指定時のパラメータチェッ
+	クのミスを修正．
 
 Mon Dec 27 11:13:29 JST 1993	Hiroaki Takada
 
-	* kernel/mempfix.c: _cre_mpf $B$G(B mpfid $B$N=i4|2=$,$5$l$F$$$J$+$C(B
-	$B$?LdBj$r=$@5!%(B
+	* kernel/mempfix.c: _cre_mpf で mpfid の初期化がされていなかっ
+	た問題を修正．
 
-	* kernel/time_calls.c: vdef_alm $B$G(B $B%(%i!<%A%'%C%/$,H4$1$F$$$?(B
-	$BLdBj$r=$@5!%(B
+	* kernel/time_calls.c: vdef_alm で エラーチェックが抜けていた
+	問題を修正．
 
 Fri Dec 24 12:26:22 JST 1993	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5(B
-	$B$r$^$H$a$k!%(B
+	* ChangeLog, doc/USER, kernel/patchlevel.h: この時点までの修正
+	をまとめる．
 
-	* Release1.2 (patchlevel=1) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_1")$B!%(B
+	* Release1.2 (patchlevel=1) をフィックス (TAG = "ItIs3-1_2_1")．
 
 Fri Dec 24 12:19:33 JST 1993	Hiroaki Takada
 
-	* kernel/rendezvous.c: cre_por, del_por $B$r%?%9%/FHN)It$+$i8F$S(B
-	$B=P$9$3$H$r6X;_$9$k!%(B
+	* kernel/rendezvous.c: cre_por, del_por をタスク独立部から呼び
+	出すことを禁止する．
 
 Mon Dec 20 22:42:12 JST 1993	Hiroaki Takada
 
-	* sample/Makefile.*, startup/start.S: $B?7HG$N(B GNU LD $BBP1~$K=$@5(B
-	$B$9$k!%(B-Trom$B%*%W%7%g%s$,$J$/$J$C$?$?$a!$(Bextidata $B$r;H$C$F%G!<%?(B
-	$B%;%/%7%g%s$N=i4|2=$r9T$&!%(B
+	* sample/Makefile.*, startup/start.S: 新版の GNU LD 対応に修正
+	する．-Tromオプションがなくなったため，extidata を使ってデータ
+	セクションの初期化を行う．
 
 Mon Dec 20 16:30:12 JST 1993	Hiroaki Takada
 
-	* kernel/cpu_inline.h, common.h, rendezvous.c: $B%?%9%/FHN)It$+(B
-	$B$i%i%s%G%V5!G=$r;H$&$3$H6X;_$7$?=$@5$r85$KLa$9!%$b$&>/$79M;!$,(B
-	$BI,MW!%(B
+	* kernel/cpu_inline.h, common.h, rendezvous.c: タスク独立部か
+	らランデブ機能を使うこと禁止した修正を元に戻す．もう少し考察が
+	必要．
 
 Mon Dec 20 12:03:20 JST 1993	Hiroaki Takada
 
-	* kernel/time_calls.c: $B<~4|5/F0%O%s%I%iCf$G!$<+J,$KBP$9$k(B 
-	def_cyc $B$r8F$S=P$7$?>l9g$K5/$3$kLdBj$r=$@5!%(B
+	* kernel/time_calls.c: 周期起動ハンドラ中で，自分に対する 
+	def_cyc を呼び出した場合に起こる問題を修正．
 
 Tue Dec 14 22:25:11 JST 1993	Hiroaki Takada
 
 	* include/itis_services.h, libitis/errno.c, itis_panic.c,
-	itis_perror.c, panic.c, perror.c, strerror.c: $B%(%i!<HV9f(B 
-	(errno)	$B$N7?$r(B ER $B$K=$@5!%(B
+	itis_perror.c, panic.c, perror.c, strerror.c: エラー番号 
+	(errno)	の型を ER に修正．
 
 Fri Dec 10 18:45:00 JST 1993	Hiroaki Takada
 
-	* README, ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^(B
-	$B$G$N=$@5$r$^$H$a$k!%(B
+	* README, ChangeLog, doc/USER, kernel/patchlevel.h: この時点ま
+	での修正をまとめる．
 
-	* Release1.2 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2")$B!%(B
+	* Release1.2 (patchlevel=0) をフィックス (TAG = "ItIs3-1_2")．
 
 Fri Dec 10 15:00:16 JST 1993	Hiroaki Takada
 
-	* tvme/tvmetimer.h: vget_tim $B$G;H$&%^%/%m$rDI2C!%(B
+	* tvme/tvmetimer.h: vget_tim で使うマクロを追加．
 
 Fri Dec 10 14:31:23 JST 1993	Hiroaki Takada
 
-	* kernel/cpu_inline.h, common.h: $B%?%9%/4V%/%j%F%#%+%k%;%/%7%g(B
-	$B%sDj5AMQ%^%/%m$rDI2C$9$k!%(B
+	* kernel/cpu_inline.h, common.h: タスク間クリティカルセクショ
+	ン定義用マクロを追加する．
 
-	* kernel/rendezvous.c: $B%?%9%/FHN)It$+$i%i%s%G%V5!G=$r;H$&$3$H(B
-	$B$r6X;_$9$k!%(B
+	* kernel/rendezvous.c: タスク独立部からランデブ機能を使うこと
+	を禁止する．
 
 Fri Dec 10 14:13:15 JST 1993	Hiroaki Takada
 
 	* kernel/check.h, task_manage.c, misc_calls.c, debug_calls.c:
-	$B%?%9%/It<B9TCf$+$I$&$+$r%A%'%C%/$9$k(B CHECK_INTSK$B%^%/%m$rDI2C!%(B
+	タスク部実行中かどうかをチェックする CHECK_INTSKマクロを追加．
 
 Fri Dec 10 13:23:05 JST 1993	Hiroaki Takada
 
-	* kernel/task_manage.c: chg_pri $B$r!$(BDORMANT$B>uBV$N%?%9%/$KBP$7(B
-	$B$F$bH/9T2DG=$H$9$k!%(B
+	* kernel/task_manage.c: chg_pri を，DORMANT状態のタスクに対し
+	ても発行可能とする．
 
 Thu Dec  9 20:25:29 JST 1993	Hiroaki Takada
 
-	* h32/h32timer.h: vget_tim $B$G;H$&%^%/%m$rDI2C!%%?%$%^$N@_DjCM(B
-	$B$r=$@5!%(B
+	* h32/h32timer.h: vget_tim で使うマクロを追加．タイマの設定値
+	を修正．
 
 Tue Dec  7 18:14:32 JST 1993	Hiroaki Takada
 
-	* kernel/timer.c: $B@-G=I>2AMQ%7%9%F%`;~9o$r<h$j=P$9$?$a$N(B
-	vget_tim $B%7%9%F%`%3!<%k$rDI2C!%(B
+	* kernel/timer.c: 性能評価用システム時刻を取り出すための
+	vget_tim システムコールを追加．
 
-	* include/itron.h: SYSUTIME$B7?$rDI2C!%(B
+	* include/itron.h: SYSUTIME型を追加．
 
 	* kernel/syscall.def, isyscall.h, itable.h, include/itron_fncd.h,
-	itis_isyscall.h: vget_tim $B%7%9%F%`%3!<%k$rDI2C!%(B
+	itis_isyscall.h: vget_tim システムコールを追加．
 
-	* kernel/genconfig, isysconf.h: $B%7%9%F%`9=@.@_Dj%U%!%$%k$G!$(B
-	use_vget_tim $B$r%5%]!<%H$9$k!%(B
+	* kernel/genconfig, isysconf.h: システム構成設定ファイルで，
+	use_vget_tim をサポートする．
 
-	* mcube/mcubetimer.h: fetch_hw_timer_interrupt $B$r:n@.!%(B
+	* mcube/mcubetimer.h: fetch_hw_timer_interrupt を作成．
 
-	* include/itis_resources.h: $B%7%9%F%`%;%^%U%)$N(B ID $B$r$:$i$9!%(B
+	* include/itis_resources.h: システムセマフォの ID をずらす．
 
-	* sample/config.def: $B0J>e$NJQ99$KBP1~$7$F!$%7%9%F%`9=@.@_Dj%U%!(B
-	$B%$%k$r=$@5!%(B
+	* sample/config.def: 以上の変更に対応して，システム構成設定ファ
+	イルを修正．
 
 Mon Nov 22 23:36:14 JST 1993	Hiroaki Takada
 
-	* kernel/ientry.S: CHK_??? $B$r8+$F!$%(%i!<%A%'%C%/$r$9$k$+$I$&(B
-	$B$+$r7h$a$k$h$&$K=$@5(B (.S $B$K$7$?$+$i2DG=$K$J$C$?(B)$B!%(B
+	* kernel/ientry.S: CHK_??? を見て，エラーチェックをするかどう
+	かを決めるように修正 (.S にしたから可能になった)．
 
 Mon Nov 22 20:15:47 JST 1993	Hiroaki Takada
 
-	* kernel/task.c, task_manage.c, rendezvous.c: TCB $B$N(B wrdvno$B%U%#!<(B
-	$B%k%I$O!$(Btask_initialize $B$G(B tskid $B$K=i4|2=$9$k$3$H$K$9$k!%(B
+	* kernel/task.c, task_manage.c, rendezvous.c: TCB の wrdvnoフィー
+	ルドは，task_initialize で tskid に初期化することにする．
 
 Mon Nov 22 19:44:30 JST 1993	Hiroaki Takada
 
-	* h32/h32start.S: $BA0$K!$(BGmicro/300 $B$N>l9g$K%-%c%C%7%e$r$9$Y$F(B
-	OFF $B$K$7$?$N$r!$85$KLa$9(B (Gmicro/300 $B$r?7$7$$HG$K8r49$7$?(B)$B!%(B
+	* h32/h32start.S: 前に，Gmicro/300 の場合にキャッシュをすべて
+	OFF にしたのを，元に戻す (Gmicro/300 を新しい版に交換した)．
 
 Fri Nov 19 18:20:12 JST 1993	Hiroaki Takada
 
 	* kernel/task_manage.c, semaphore.c, eventflag.c, mailbox.c,
 	messagebuf.c, rendezvous.c, mempool.c, mempfix.c,
-	time_calls.c: ID$B<+F03dEv5!G=$G!$(BID $B$,3d$jEv$F$i$l$J$$>l9g$N%((B
-	$B%i!<$r(B EV_FULL $B$KJQ99!%(B
+	time_calls.c: ID自動割当機能で，ID が割り当てられない場合のエ
+	ラーを EV_FULL に変更．
 
-	* include/itron_errno.h, libitis/strerror.c: EV_FULL $B$rDI2C!%(B
+	* include/itron_errno.h, libitis/strerror.c: EV_FULL を追加．
 
 Fri Nov 19 16:56:15 JST 1993	Hiroaki Takada
 
-	* kernel/ready_queue.h: C$B8@8l$G5-=R$7$?(B _ffs $B$N%P%0$r=$@5!%(B
+	* kernel/ready_queue.h: C言語で記述した _ffs のバグを修正．
 
-	* kernel/mempool.c: sys_rel_blk $BCf$G!$(Bassert() $BFb$KI{:nMQ$N$"(B
-	$B$k<0$,=q$+$l$F$$$?!%(B
+	* kernel/mempool.c: sys_rel_blk 中で，assert() 内に副作用のあ
+	る式が書かれていた．
 
-	* kernel/rendezvous.c: get_tskid_rdvno $B$G!$(Btskid $BItJ,$,Ii$N>l(B
-	$B9g$N07$$$KLdBj$,$"$C$?$N$r=$@5!%(B
+	* kernel/rendezvous.c: get_tskid_rdvno で，tskid 部分が負の場
+	合の扱いに問題があったのを修正．
 
 Fri Nov 19 15:16:50 JST 1993	Hiroaki Takada
 
-	* kernel/misc_calls.c: C$B8@8l$G5-=R$7$?3d9~$_%O%s%I%i$K!$(BEIT$B%9(B
-	$B%?%C%/%U%l!<%`$N@hF,HVCO$rEO$9$h$&$K$9$k!%(B
+	* kernel/misc_calls.c: C言語で記述した割込みハンドラに，EITス
+	タックフレームの先頭番地を渡すようにする．
 
 Fri Nov 19 14:22:36 JST 1993	Hiroaki Takada
 
-	* kernel/time_call.c: $B%"%i!<%`%O%s%I%i5/F0;~$K!$2rJ|$5$l$?%"%i!<(B
-	$B%`%O%s%I%i4IM}%V%m%C%/$r%U%j!<%j%9%H$K$D$J$0$h$&$K=$@5!%(B
+	* kernel/time_call.c: アラームハンドラ起動時に，解放されたアラー
+	ムハンドラ管理ブロックをフリーリストにつなぐように修正．
 
 Fri Nov 19 13:30:14 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, task.c, task_manage.c, debug_calls.c:
-	vset_reg $B$H(B vget_reg $B$r(B DORMANT$B>uBV$N%?%9%/$KBP$7$F$bH/9T$G$-(B
-	$B$k$h$&$K$9$k!%(B
+	vset_reg と vget_reg を DORMANT状態のタスクに対しても発行でき
+	るようにする．
 
 Thu Nov 18 23:35:57 JST 1993	Hiroaki Takada
 
-	* kernel/debug_calls.c: ($B?75,(B) $B%G%P%C%0%5%]!<%H5!G=(B (vset_reg
-	$B$H(B vget_reg) $B$r%5%]!<%H!%(B
+	* kernel/debug_calls.c: (新規) デバッグサポート機能 (vset_reg
+	と vget_reg) をサポート．
 
 	* kernel/itis_kernel.h, include/itis_services.h, include/
-	itis_debug.h: itis_debug.h $B$N07$$$r=$@5!%(B
+	itis_debug.h: itis_debug.h の扱いを修正．
 
-	* sample/Makefile.*: debug_calls.c $B$rDI2C!%(B
+	* sample/Makefile.*: debug_calls.c を追加．
 
-	* $B<!$N(B Release $B$G%5%]!<%HM=Dj$N5!G=$N:n$j9~$_$r40N;!%(B
+	* 次の Release でサポート予定の機能の作り込みを完了．
 
 Thu Nov 18 21:36:52 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, task.c, task_manage.c, semaphore.c,
 	eventflag.c, mailbox.c, messagebuf.c, rendezvous.c,
-	mempool.c, mempfix.c, time_calls.c: ID$B<+F03dEv5!G=$r%5%]!<%H!%(B
+	mempool.c, mempfix.c, time_calls.c: ID自動割当機能をサポート．
 
 Thu Nov 18 21:30:53 JST 1993	Hiroaki Takada
 
-	* kernel/syscall.def: ID$B<+F03dEv5!G=!$%G%P%C%0%5%]!<%H5!G=$N$?(B
-	$B$a$NDj5A$rDI2C!%(B
+	* kernel/syscall.def: ID自動割当機能，デバッグサポート機能のた
+	めの定義を追加．
 
-	* include/itis_debug.h: ($B?75,(B) $B%G%P%C%0%5%]!<%H5!G=$N$?$a$NDj(B
-	$B5A%U%!%$%k!%(B
+	* include/itis_debug.h: (新規) デバッグサポート機能のための定
+	義ファイル．
 
-	* kernel/itis_kernel.h: itis_debug.h $B$r%$%s%/%k!<%I$9$k$h$&$K(B
-	$B=$@5!%(B
+	* kernel/itis_kernel.h: itis_debug.h をインクルードするように
+	修正．
 
 Thu Nov 18 17:57:03 JST 1993	Hiroaki Takada
 
-	* kernel/genconfig: $B%3%s%H%m!<%k%V%m%C%/$N%$%s%G%C%/%9$+$i(B ID 
-	$B$r5a$a$k(B ID_???(index) $B%^%/%m$r@8@.$9$k$h$&$K$9$k!%(B
+	* kernel/genconfig: コントロールブロックのインデックスから ID 
+	を求める ID_???(index) マクロを生成するようにする．
 
 Thu Nov 18 17:54:51 JST 1993	Hiroaki Takada
 
-	* sample/Makefile.*: FTASK_CFLAGS $B$+$i!$(B-I$(ITISINCDIR) $B$r:o=|!%(B
+	* sample/Makefile.*: FTASK_CFLAGS から，-I$(ITISINCDIR) を削除．
 
 Thu Nov 18 17:51:21 JST 1993	Hiroaki Takada
 
-	* h32/h32start.S: Gmicro/300 $B$N>l9g$K!$%-%c%C%7%e$r$9$Y$F(B OFF 
-	$B$K$9$k(B (IRC $B$N@_Dj$,$&$^$/$$$+$J$$>l9g$,$"$k(B)$B!%(B
+	* h32/h32start.S: Gmicro/300 の場合に，キャッシュをすべて OFF 
+	にする (IRC の設定がうまくいかない場合がある)．
 
 Sat Nov 13 01:35:34 JST 1993	Hiroaki Takada
 
 	* kernel/ientry.S, kernel/isysconf.h, kernel/misc_calls.c,
-	kernel/rendezvous.c, kernel/time_calls.c: $B%7%9%F%`%3!<%k$r%5%]!<(B
-	$B%H$7$J$$>l9g$N%@%_!<Dj5A$r:o=|!%0lIt!$%7%9%F%`%3!<%kKh$K<h$j30(B
-	$B$72DG=$K$9$k!%(B
+	kernel/rendezvous.c, kernel/time_calls.c: システムコールをサポー
+	トしない場合のダミー定義を削除．一部，システムコール毎に取り外
+	し可能にする．
 
 Sat Nov 13 01:04:46 JST 1993	Hiroaki Takada
 
-	* $B%"%;%s%V%i%=!<%9$b%W%j%W%m%;%C%5$rDL$9$h$&$K=$@5!%(B
+	* アセンブラソースもプリプロセッサを通すように修正．
 
-	* kernel/isysconf.h: $B%7%9%F%`%3!<%k$N9=@.Dj5A%U%!%$%k$rDI2C!%(B
+	* kernel/isysconf.h: システムコールの構成定義ファイルを追加．
 
-	* sample/config.def: $B$3$N8e$N3HD%$N$?$a$NDj5A$rDI2C!%(B
+	* sample/config.def: この後の拡張のための定義を追加．
 
-	* h32/h32serial.h: $BA02s$N=$@5K:$l2U=j$r=$@5!%(B
+	* h32/h32serial.h: 前回の修正忘れ箇所を修正．
 
 Sat Nov 13 00:01:05 JST 1993	Hiroaki Takada
 
-	* kernel/rendezvous.c: $B%3%a%s%H$N=$@5!%(B
+	* kernel/rendezvous.c: コメントの修正．
 
-	* kernel/time_calls.c: NUM_CYC, NUM_ALM $B$,Dj5A$5$l$F$$$J$$>l9g(B
-	$B$N%@%_!<4X?t$NL>>N$r=$@5!%(B
+	* kernel/time_calls.c: NUM_CYC, NUM_ALM が定義されていない場合
+	のダミー関数の名称を修正．
 
 Wed Nov 10 16:20:29 JST 1993	Hiroaki Takada
 
 	* include/itron.h, kernel/task.h, kernel/task.c, kernel/
-	misc_calls.c: ref_sys $B$r(B runtskid $B$H(B schedtskid $B$rJV$9$h$&$K(B
-	$B3HD%!%(B
+	misc_calls.c: ref_sys を runtskid と schedtskid を返すように
+	拡張．
 
 Wed Nov 10 12:26:23 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, kernel/task.c, kernel/task_manage.c: task.c 
-	$BCf$K(B SCHEDULED $B$H$$$&%^%/%m$rF3F~$9$k$3$H$K$h$C$F!$(BTCB $B$N(B 
-	runflag$B%U%#!<%k%I$rGQ;_$9$k!%%^%k%A%W%m%;%C%52=$9$k;~$K$O!$I|(B
-	$B3h$5$;$k!%(B
+	中に SCHEDULED というマクロを導入することによって，TCB の 
+	runflagフィールドを廃止する．マルチプロセッサ化する時には，復
+	活させる．
 
 	* kernel/cpu_inline.h, kernel/dispatch.s, kernel/nd_dispach.s,
-	kernel/task.c: runtsk $B$H$$$&JQ?tL>$OJ6$i$o$7$$$?$a!$(Bschedtsk
-	(scheduled task $B$NN,(B) $B$KJQ99$9$k!%(B
+	kernel/task.c: runtsk という変数名は紛らわしいため，schedtsk
+	(scheduled task の略) に変更する．
 
 Wed Nov 10 11:56:03 JST 1993	Hiroaki Takada
 
-	* kernel/task.h, kernel/task_manage.c: ref_tsk $B$GJV$k(B tskstat
-	($B%?%9%/>uBV(B) $B$N(B TTS_RUN $B$N2r<a$rJQ99$9$k!%=>Mh$O!$(Bruntsk $B$,(B 
-	TTS_RUN $B$G$"$k$H$7$F$$$?$,!$(Bctxtsk $B$,(B TTS_RUN $B$G$"$k$H$9$k!%(B
+	* kernel/task.h, kernel/task_manage.c: ref_tsk で返る tskstat
+	(タスク状態) の TTS_RUN の解釈を変更する．従来は，runtsk が 
+	TTS_RUN であるとしていたが，ctxtsk が TTS_RUN であるとする．
 
 Tue Nov  9 23:08:01 JST 1993	Hiroaki Takada
 
 	* kernel/task_manage.c, kernel/dispatch.s, kernel/nd_dispatch.s:
-	$B%?%9%/FHN)It$+$i(B ter_tsk $B$r8F$S=P$9$3$H$r6X;_$7$?!%$3$l$K$h$j!$(B
-	ctxtsk $B$,(B NULL $B$K$J$k$3$H$O$J$/$J$k!%(B
+	タスク独立部から ter_tsk を呼び出すことを禁止した．これにより，
+	ctxtsk が NULL になることはなくなる．
 
 	* kernel/common.h, kernel/genconfig, kernel/task.h, kernel/
-	misc_calls.c: $B%7%9%F%`%*%V%8%'%/%H$,%"%/%;%9$G$-$k$+$I$&$+$N%A%'%C(B
-	$B%/$r8zN($h$/9T$&$?$a$K!$(BTCB $B$K(B sysmode$B%U%#!<%k%I$rDI2C$7$?!%(B
-	sysmode$B%U%#!<%k%I$O!$(Bqtsklev $B%U%#!<%k%I$NLr3d$b2L$?$9$?$a!$(B
-	qtsklev$B%U%#!<%k%I$OITMW$K$J$C$?$,!$=`%?%9%/It$r;H$&>l9g$K$O(B 
-	sysmode$B%U%#!<%k%I$N=i4|CM$rF~$l$F$*$/(B isysmode$B%U%#!<%k%I$,I,(B
-	$BMW$K$J$k!%(B
+	misc_calls.c: システムオブジェクトがアクセスできるかどうかのチェッ
+	クを効率よく行うために，TCB に sysmodeフィールドを追加した．
+	sysmodeフィールドは，qtsklev フィールドの役割も果たすため，
+	qtsklevフィールドは不要になったが，準タスク部を使う場合には 
+	sysmodeフィールドの初期値を入れておく isysmodeフィールドが必
+	要になる．
 
-	* kernel/ientry.s, kernel/misc_calls.c: $B%?%9%/FHN)It$+$i(B 
-	chg_ims $B$r8F$S=P$7$?>l9g$K!$(BIMASK $B$H$7$F(B 7 $B$h$jBg$-$$CM$r;XDj(B
-	$B$G$-$J$$$h$&$K=$@5!%(B
+	* kernel/ientry.s, kernel/misc_calls.c: タスク独立部から 
+	chg_ims を呼び出した場合に，IMASK として 7 より大きい値を指定
+	できないように修正．
 
 Tue Nov  9 22:19:25 JST 1993	Hiroaki Takada
 
-	* kernel/mailbox.c: i_trcv_msg $B$G!$%(%i!<%A%'%C%/$,IT==J,$@$C(B
-	$B$?$N$r=$@5!%(B
+	* kernel/mailbox.c: i_trcv_msg で，エラーチェックが不十分だっ
+	たのを修正．
 
 Tue Nov  9 17:29:40 JST 1993	Hiroaki Takada
 
 	* systask/serial.c, h32/h32serial.h, tvme/tvmeserial.h,
-	mcube/mcubeserial.h: $B%?%9%/FHN)It$+$i(B serial_ioctl $B$r8F$S=P$9(B
-	$B$3$H$r6X;_$7!$%7%j%"%k%$%s%?%U%'!<%93d9~$_%O%s%I%i$NCf$G!$B>$N(B
-	$B3d9~$_$r6X;_$9$k$N$r$d$a$k!%$3$l$O!$%7%j%"%k(BI/O $B$rA`:n$9$k3HD%(B
-	SVC$B$O$$$:$l$b%?%9%/FHN)It$+$i8F$V$3$H$,$G$-$J$$$?$a!$%7%j%"%k(B
-	I/O $B$N6%9g$,5/$3$i$J$$$?$a$G$"$k!%(B
+	mcube/mcubeserial.h: タスク独立部から serial_ioctl を呼び出す
+	ことを禁止し，シリアルインタフェース割込みハンドラの中で，他の
+	割込みを禁止するのをやめる．これは，シリアルI/O を操作する拡張
+	SVCはいずれもタスク独立部から呼ぶことができないため，シリアル
+	I/O の競合が起こらないためである．
 
 Mon Nov  8 12:30:00 JST 1993	Hiroaki Takada
 
-	* ChangeLog: $B$3$N;~E@$G!$(Bpatchlevel=1 $B$H$7$F%j%j!<%9$9$k(B (TAG
-	= "ItIs3-1_1_1")$B!%(B
+	* ChangeLog: この時点で，patchlevel=1 としてリリースする (TAG
+	= "ItIs3-1_1_1")．
 
-	* kernel/task.c: change_running_task $B$G!$(Bruntsk $B$,(B NULL $B$N>l9g(B
-	$B$r9MN8$9$k!%$=$NB>!$(Bruntsk $B2s$j$r@0M}$9$k!%(B
+	* kernel/task.c: change_running_task で，runtsk が NULL の場合
+	を考慮する．その他，runtsk 回りを整理する．
 
 Sat Nov  6 00:40:46 JST 1993	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, doc/USER, kernel/patchlevel.h: $B$3$N;~E@(B
-	$B$^$G$N=$@5$r$^$H$a$k!%(B
+	* ChangeLog, MANIFEST, doc/USER, kernel/patchlevel.h: この時点
+	までの修正をまとめる．
 
-	* kernel/task.c: rotate_ready_queue $B$G!$(Bruntsk $B$,(B NULL $B$N>l9g(B
-	$B$r9MN8$9$k!%(B
+	* kernel/task.c: rotate_ready_queue で，runtsk が NULL の場合
+	を考慮する．
 
-	* libitis/syslog.c: syslog $B4X?t$,(B priority $B$r%A%'%C%/$9$k$h$&(B
-	$B$K=$@5!%(B
+	* libitis/syslog.c: syslog 関数が priority をチェックするよう
+	に修正．
 
-	* mcube/mcubeinit.c: $B%+!<%M%k5/F0;~$K!$(BABORT$B%9%$%C%A0J30$N$9$Y(B
-	$B$F$N3d9~$_$r%^%9%/$9$k$h$&$K=$@5!%(B
+	* mcube/mcubeinit.c: カーネル起動時に，ABORTスイッチ以外のすべ
+	ての割込みをマスクするように修正．
 
 Fri Nov  5 19:30:06 JST 1993	Hiroaki Takada
 
-	* kernel/task.c: make_ready $B$NF~8}$G!$(Bassert(tcb->state !=
-	TS_READY) $B$7$F$$$?$N$r:o=|$9$k!%(Bchange_task_priority $B$NCf$+$i(B
-	$B8F$P$l$?>l9g$K$O!$$3$N(B assertion $B$O@.N)$7$J$$!%(B
+	* kernel/task.c: make_ready の入口で，assert(tcb->state !=
+	TS_READY) していたのを削除する．change_task_priority の中から
+	呼ばれた場合には，この assertion は成立しない．
 
 Thu Nov  4 17:30:33 JST 1993	Hiroaki Takada
 
-	* kernel/task_manage.c: cre_tsk $B$G(B pk_ctsk->stksz $B$,(B 0 $B$N>l9g(B
-	$B$r5v$9!%$3$N>l9g!$%f!<%6%9%?%C%/$O3NJ]$5$l$J$$!%(B
+	* kernel/task_manage.c: cre_tsk で pk_ctsk->stksz が 0 の場合
+	を許す．この場合，ユーザスタックは確保されない．
 
 Thu Nov  4 17:22:23 JST 1993	Hiroaki Takada
 
-	* include/itis_resources.h, testtask/*.c: $B%f!<%6%9%?%C%/%5%$%:(B
-	$B$NI8=`CM$r(B 4096 $B$+$i(B 8192 $B$KJQ99$9$k!%$3$l$O!$(BGNU C $B%i%$%V%i%j(B
-	$B$N(B vsprintf $B$,%9%?%C%/%(%j%"$r>/$J$/$H$b(B 3KB $B;H$$(B (vfprinf $B$G(B 
-	2KB$B!$(Bprintf_unknown $B$G(B 1KB $B;H$&!%$=$l$i$+$i8F$P$l$k4X?t$^$G$O(B
-	$BD4$Y$F$$$J$$(B)$B!$$3$l$K(B syslog $B$,;H$&(B 1KB $B$r2C$($k$H(B 4KB $B$G$OIT(B
-	$BB-$9$k$?$a$G$"$k!%(B
+	* include/itis_resources.h, testtask/*.c: ユーザスタックサイズ
+	の標準値を 4096 から 8192 に変更する．これは，GNU C ライブラリ
+	の vsprintf がスタックエリアを少なくとも 3KB 使い (vfprinf で 
+	2KB，printf_unknown で 1KB 使う．それらから呼ばれる関数までは
+	調べていない)，これに syslog が使う 1KB を加えると 4KB では不
+	足するためである．
 	
 Tue Nov  2 16:17:20 JST 1993	Hiroaki Takada
 
-	* kernel/misc_calls.c: i_get_ver $B$G!$(Bprver ($B@=IJ%P!<%8%g%s(B) $B$K(B
-	$BF~$l$kCM$r=$@5$9$k(B ($B%7%U%H$9$k?t$,4V0c$C$F$$$?(B)$B!%(B
+	* kernel/misc_calls.c: i_get_ver で，prver (製品バージョン) に
+	入れる値を修正する (シフトする数が間違っていた)．
 
 Tue Nov  2 00:55:05 JST 1993	Hiroaki Takada
 
-	* kernel/vsprintf.c: long long $B7?$N$?$a$N%b%G%#%U%!%$%d$r!$(BGNU
-	C $B%i%$%V%i%j$K$"$o$;$k$?$a$K(B 'L' $B$KJQ99!%(B
+	* kernel/vsprintf.c: long long 型のためのモディファイヤを，GNU
+	C ライブラリにあわせるために 'L' に変更．
 
 Mon Nov  1 23:48:51 JST 1993	Hiroaki Takada
 
-	* GNU C $B%i%$%V%i%j(B (GLIBC) $B$r;H$&$h$&$KJQ99!%(B
+	* GNU C ライブラリ (GLIBC) を使うように変更．
 
 	* Makefile.config, h32/h32start.s, tvme/tvmestart.s,
-	mcube/mcubestart.s: GNU C $B%i%$%V%i%j$N=i4|2=%3!<%I$r8F$V$h$&$K(B
-	$B=$@5!%(B
+	mcube/mcubestart.s: GNU C ライブラリの初期化コードを呼ぶように
+	修正．
 
-	* systask/sysio.c: $B%3%s%=!<%kF~=PNO4X?t$NL>A0$r(B GNU C $B%i%$%V%i(B
-	$B%j$K$"$o$;$F=$@5!%(B
+	* systask/sysio.c: コンソール入出力関数の名前を GNU C ライブラ
+	リにあわせて修正．
 
-	* startup/Makefile, startup/startup.s, startup/start.S: $B%9%?!<(B
-	$B%H%"%C%W%b%8%e!<%k$r!$=>Mh$N%i%$%V%i%jMQ$N$b$N$+$i(B GNU C $B%i%$(B
-	$B%V%i%jMQ$N$b$N$K8r49!%(B
+	* startup/Makefile, startup/startup.s, startup/start.S: スター
+	トアップモジュールを，従来のライブラリ用のものから GNU C ライ
+	ブラリ用のものに交換．
 
 Mon Nov  1 23:10:39 JST 1993	Hiroaki Takada
 
-	* $B$9$Y$F$N%?!<%2%C%H$G!$(Bxscheme $B$GIbF0>/?tE@?t$r%5%]!<%H$9$k$N(B
-	$B$r$d$a$k!%$^$?!$(Bxscheme $BFb$N8E$$(B ItIs $B$N$?$a$N%3!<%I$rKu>C!%(B
+	* すべてのターゲットで，xscheme で浮動少数点数をサポートするの
+	をやめる．また，xscheme 内の古い ItIs のためのコードを抹消．
 
-	* xscheme/tronstuff.c $B$r(B xscheme/itisstuff.c $B$K%j%M!<%`!%(B
+	* xscheme/tronstuff.c を xscheme/itisstuff.c にリネーム．
 
-	* sample/Makefile.*, libitis/Makefile: $B>e$NJQ99$KH<$&=$@5!%$^(B
-	$B$?!$$3$l$KH<$C$?!$%i%$%V%i%j$r:n$k:]$K$b(B -msoft-float $B$9$k$3$H(B
-	$B$K$7$F!$(B2$B<oN`$N%i%$%V%i%j$rMQ0U$9$k$N$r$d$a$k!%(B
+	* sample/Makefile.*, libitis/Makefile: 上の変更に伴う修正．ま
+	た，これに伴った，ライブラリを作る際にも -msoft-float すること
+	にして，2種類のライブラリを用意するのをやめる．
 
 Mon Nov  1 15:00:26 JST 1993	Hiroaki Takada
 
-	* include/sys/ioctl.h $B$r(B include/itis_ioctl.h $B$K0\F0(B/$B%j%M!<%`!%(B
+	* include/sys/ioctl.h を include/itis_ioctl.h に移動/リネーム．
 
 Wed Oct 20 18:05:28 JST 1993	Hiroaki Takada
 
-	* Release1.1 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_1")$B!%(B
+	* Release1.1 (patchlevel=0) をフィックス (TAG = "ItIs3-1_1")．

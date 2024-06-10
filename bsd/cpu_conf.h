@@ -37,12 +37,12 @@
 #define _CPU_CONF_
 
 /*
- *  get_ver $B$G;2>H$5$l$k(B CPU$B%3!<%I$NDj5A(B
+ *  get_ver で参照される CPUコードの定義
  */
-#define	CPU_CODE	0x0000		/* CPU $B$rFCDj$7$J$$(B */
+#define	CPU_CODE	0x0000		/* CPU を特定しない */
 
 /*
- *  CPU$B0MB8$N%7%9%F%`%3!<%kL>(B/$B%Q%i%a!<%?L>$N@_Dj(B
+ *  CPU依存のシステムコール名/パラメータ名の設定
  */
 #define chg_iXX	chg_ims
 #define ref_iXX	ref_ims
@@ -50,54 +50,54 @@
 #define p_iXXXX	p_imask
 
 /*
- *  BSD UNIX$B>e$G$O%5%]!<%H$5$l$J$$5!G=$NDj5A(B
+ *  BSD UNIX上ではサポートされない機能の定義
  */
-#undef NUM_SVC				/* $B3HD%(BSVC$B%O%s%I%i(B */
-#undef USE_QTSK_PORTION			/* $B=`%?%9%/It(B */
-#undef USE_VGET_TIM			/* $B@-G=I>2AMQ%7%9%F%`;~9o;2>H5!G=(B */
+#undef NUM_SVC				/* 拡張SVCハンドラ */
+#undef USE_QTSK_PORTION			/* 準タスク部 */
+#undef USE_VGET_TIM			/* 性能評価用システム時刻参照機能 */
 
-#define _i_dis_int	_no_support	/* dis_int$B%7%9%F%`%3!<%k(B */
-#define _i_ena_int	_no_support	/* ena_int$B%7%9%F%`%3!<%k(B */
-#define _i_def_int	_no_support	/* def_int$B%7%9%F%`%3!<%k(B */
-#define _i_set_reg	_no_support	/* set_reg$B%7%9%F%`%3!<%k(B */
-#define _i_get_reg	_no_support	/* get_reg$B%7%9%F%`%3!<%k(B */
+#define _i_dis_int	_no_support	/* dis_intシステムコール */
+#define _i_ena_int	_no_support	/* ena_intシステムコール */
+#define _i_def_int	_no_support	/* def_intシステムコール */
+#define _i_set_reg	_no_support	/* set_regシステムコール */
+#define _i_get_reg	_no_support	/* get_regシステムコール */
 
 /*
- *  $B%?%9%/B0@-Cf$N<B9T%b!<%I$K4X$9$kDj5A(B
+ *  タスク属性中の実行モードに関する定義
  */
 #define TA_MODEMASK	(0)
 #define SYSMODE(atr)	(0)
 
 /*
- *  $B%7%9%F%`%9%?%C%/$N:G>.%5%$%:$NDj5A(B
+ *  システムスタックの最小サイズの定義
  *
- *  cre_tsk $B$G%?%9%/Kh$K%7%9%F%`%9%?%C%/%5%$%:$r@_Dj$9$k>l9g$N:G>.$N%7(B
- *  $B%9%F%`%9%?%C%/%5%$%:!%(B
+ *  cre_tsk でタスク毎にシステムスタックサイズを設定する場合の最小のシ
+ *  ステムスタックサイズ．
  */
 #ifndef MIN_SYS_STACK_SIZE
 #define	MIN_SYS_STACK_SIZE	8192
 #endif /* MIN_SYS_STACK_SIZE */
 
 /*
- *  $B%G%U%)%k%H%7%9%F%`%9%?%C%/%5%$%:$NDj5A(B
+ *  デフォルトシステムスタックサイズの定義
  *
- *  cre_tsk $B$G%?%9%/Kh$K%7%9%F%`%9%?%C%/%5%$%:$r@_Dj$7$J$$>l9g$N%G%U%)(B
- *  $B%k%H$N%7%9%F%`%9%?%C%/%5%$%:!%(B
+ *  cre_tsk でタスク毎にシステムスタックサイズを設定しない場合のデフォ
+ *  ルトのシステムスタックサイズ．
  */
 #ifndef DEF_SYS_STACK_SIZE
 #define DEF_SYS_STACK_SIZE	8192
 #endif /* DEF_SYS_STACK_SIZE */
 
 /*
- *  $B3HD%(BSVC $B$N=PF~8}$N=hM}(B
+ *  拡張SVC の出入口の処理
  */
 #define ENTER_EXTENDED_SVC	enter_extended_svc()
 #define EXIT_EXTENDED_SVC	exit_extended_svc()
 
 /*
- *  $B%7%9%F%`%?%9%/$K4X$9$kDj5A(B
+ *  システムタスクに関する定義
  */
-#define	CONSOLE_PORT	1	/* $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B */
-#define	LOGTASK_PORT	1	/* $B%7%9%F%`%m%0$r=PNO$9$k%7%j%"%k%]!<%HHV9f(B */
+#define	CONSOLE_PORT	1	/* コンソール用に用いるシリアルポート番号 */
+#define	LOGTASK_PORT	1	/* システムログを出力するシリアルポート番号 */
 
 #endif /* _CPU_CONF_ */

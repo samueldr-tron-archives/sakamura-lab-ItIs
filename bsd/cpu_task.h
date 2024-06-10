@@ -37,15 +37,15 @@
 #define _CPU_TASK_
 
 /*
- *  $B%?%9%/5/F0%k!<%A%s(B
+ *  タスク起動ルーチン
  */
 extern void	task_start(void);
 
 /*
- *  CPU$B0MB8$N%?%9%/5/F0=hM}(B
+ *  CPU依存のタスク起動処理
  *
- *  $B%7%9%F%`%9%?%C%/>e$K!$(BEIT$B%9%?%C%/%U%l!<%`$r:n$k!%(Bmake_dormant $B$+$i(B
- *  $B8F$P$l$k!%(B
+ *  システムスタック上に，EITスタックフレームを作る．make_dormant から
+ *  呼ばれる．
  */
 Inline void
 setup_context(TCB *tcb)
@@ -56,9 +56,9 @@ setup_context(TCB *tcb)
 }
 
 /*
- *  $B%?%9%/5/F0%3!<%IEy$N@_Dj(B
+ *  タスク起動コード等の設定
  *
- *  sta_tsk $B$N=hM}$+$i8F$P$l$k!%(B
+ *  sta_tsk の処理から呼ばれる．
  */
 Inline void
 setup_stacd(TCB *tcb, INT stacd)
@@ -67,11 +67,11 @@ setup_stacd(TCB *tcb, INT stacd)
 }
 
 /*
- *  $B%9%?%C%/%(%j%"$N<hF@(B/$BJV5Q(B
+ *  スタックエリアの取得/返却
  *
- *  USE_MPROTECT_STACK $B$,Dj5A$5$l$F$$$k>l9g$K$O!$%9%?%C%/%(%j%"$r(B 2$B%Z!<(B
- *  $B%8J,B?$a$K3NJ]$7!$2<$NJ}$N(B 1$B%Z!<%8$r(B mprotect $B$G%"%/%;%9IT2D$K$9$k!%(B
- *  $B:G0-$G$b!$3NJ]$7$h$&$H$7$?J,$N%(%j%"$O;H$($k!%(B
+ *  USE_MPROTECT_STACK が定義されている場合には，スタックエリアを 2ペー
+ *  ジ分多めに確保し，下の方の 1ページを mprotect でアクセス不可にする．
+ *  最悪でも，確保しようとした分のエリアは使える．
  */
 
 #ifdef USE_MPROTECT_STACK
@@ -80,11 +80,11 @@ setup_stacd(TCB *tcb, INT stacd)
 #include <sys/mman.h>
 
 #ifndef PROT_NONE
-#define PROT_NONE	0x00		/* $B%Z!<%8$r%"%/%;%9$G$-$J$/$9$k(B */
+#define PROT_NONE	0x00		/* ページをアクセスできなくする */
 #endif
 
 #define PROT_ORIG	(PROT_READ|PROT_WRITE)
-					/* $B%Z!<%8$N>uBV$r85$KLa$9(B */
+					/* ページの状態を元に戻す */
 
 #define ALIGN(addr, unit)	((((INT)(addr)) + (unit) - 1) & ~((unit) - 1))
 

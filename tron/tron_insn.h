@@ -37,11 +37,11 @@
 #define	_TRON_INSN_
 
 /*
- *  $B@)8f%l%8%9%?$NA`:n4X?t(B
+ *  制御レジスタの操作関数
  */
 
 /*
- *  PSW $B$N8=:_CM$NFI$_=P$7(B
+ *  PSW の現在値の読み出し
  */
 Inline VW
 current_psw(void)
@@ -53,7 +53,7 @@ current_psw(void)
 }
 
 /*
- *  PSW $B$N8=:_CM$NJQ99(B
+ *  PSW の現在値の変更
  */
 Inline void
 set_psw(VW psw)
@@ -62,17 +62,17 @@ set_psw(VW psw)
 }
 
 /*
- *  IMASK $B$N8=:_CM$NFI$_=P$7(B
+ *  IMASK の現在値の読み出し
  *
- *  IMASK $B$NCM$H$7$F!$(B0 $B0J>e(B 15 $B0J2<$NCM$,JV$k!%(B
+ *  IMASK の値として，0 以上 15 以下の値が返る．
  */
 #define imask_psw(psw)	((psw >> 16) & 15)
 #define current_imask() (imask_psw(current_psw()))
 
 /*
- *  IMASK $B$N8=:_CM$NJQ99(B
+ *  IMASK の現在値の変更
  *
- *  imask $B$O!$(B0 $B0J>e(B 15 $B0J2<$G$"$k$3$H!%(B
+ *  imask は，0 以上 15 以下であること．
  */
 Inline void
 set_imask(INT imask)
@@ -81,7 +81,7 @@ set_imask(INT imask)
 }
 
 /*
- *  $B3d9~$_%^%9%/>uBV$rFbItI=8=$GJV$9!%(B
+ *  割込みマスク状態を内部表現で返す．
  */
 Inline INT
 current_intmask(void)
@@ -93,7 +93,7 @@ current_intmask(void)
 }
 
 /*
- *  NMI $B$r=|$/$9$Y$F$N3d9~$_$r6X;_$9$k!%(B
+ *  NMI を除くすべての割込みを禁止する．
  */
 Inline void
 disint(void)
@@ -102,13 +102,13 @@ disint(void)
 }
 
 /*
- *  current_intmask $B$,JV$7$?3d9~$_%^%9%/>uBV$rEO$7$F!$3d9~$_6X;_A0$N>u(B
- *  $BBV$KLa$9!%(B
+ *  current_intmask が返した割込みマスク状態を渡して，割込み禁止前の状
+ *  態に戻す．
  *
- *  clobber$B%j%9%H$K(B memory $B$rF~$l$F$$$k$N$O!$(Benaint $B$ND>8e$K%?%9%/%G%#(B
- *  $B%9%Q%C%A$,5/$3$j!$M=4|$7$J$$%a%b%j%(%j%"$,=q$-49$($i$l$k2DG=@-$,$"(B
- *  $B$k$3$H$r%3%s%Q%$%i$KCN$i$;$k$?$a$G$"$k!%6qBNE*$K$O!$%(%i!<%3!<%I$r(B
- *  $BF~$l$kJQ?t$,LdBj$K$J$k!%(B
+ *  clobberリストに memory を入れているのは，enaint の直後にタスクディ
+ *  スパッチが起こり，予期しないメモリエリアが書き換えられる可能性があ
+ *  ることをコンパイラに知らせるためである．具体的には，エラーコードを
+ *  入れる変数が問題になる．
  */
 Inline void
 enaint(INT intmask)
@@ -117,7 +117,7 @@ enaint(INT intmask)
 }
 
 /*
- *  DIR ($BCY1d3d9~$_MW5a%l%8%9%?(B) $B$N8=:_CM$NFI$_=P$7(B
+ *  DIR (遅延割込み要求レジスタ) の現在値の読み出し
  */
 Inline VW
 current_dir(void)
@@ -129,9 +129,9 @@ current_dir(void)
 }
 
 /*
- *  DIR ($BCY1d3d9~$_MW5a%l%8%9%?(B) $B$N8=:_CM$NJQ99(B
+ *  DIR (遅延割込み要求レジスタ) の現在値の変更
  *
- *  dir $B$O!$(B0 $B0J>e(B 15 $B0J2<$G$"$k$3$H!%(B
+ *  dir は，0 以上 15 以下であること．
  */
 Inline void
 set_dir(INT dir)
@@ -140,30 +140,30 @@ set_dir(INT dir)
 }
 
 /*
- *  EIT$B4XO"$NDj5A(B
+ *  EIT関連の定義
  */
 
-#define EITVEC_BUSERR	0x11		/* $B%P%9%(%i!<$N%Y%/%?HV9f(B */
-#define EITVEC_TRAPA1	0x21		/* TRAPA #1 $B$N%Y%/%?HV9f(B */
-#define EITVEC_TRAPA2	0x22		/* TRAPA #2 $B$N%Y%/%?HV9f(B */
-#define EITVEC_TRAPA3	0x23		/* TRAPA #3 $B$N%Y%/%?HV9f(B */
-#define EITVEC_TRAPA4	0x24		/* TRAPA #4 $B$N%Y%/%?HV9f(B */
-#define EITVEC_DI14	0x5e		/* DI=14 $B$N%Y%/%?HV9f(B */
+#define EITVEC_BUSERR	0x11		/* バスエラーのベクタ番号 */
+#define EITVEC_TRAPA1	0x21		/* TRAPA #1 のベクタ番号 */
+#define EITVEC_TRAPA2	0x22		/* TRAPA #2 のベクタ番号 */
+#define EITVEC_TRAPA3	0x23		/* TRAPA #3 のベクタ番号 */
+#define EITVEC_TRAPA4	0x24		/* TRAPA #4 のベクタ番号 */
+#define EITVEC_DI14	0x5e		/* DI=14 のベクタ番号 */
 
 #define EITATR(smode, imask)	(((smode) << 31) + ((imask) << 16))
 
 /*
- *  EIT$B%Y%/%?%F!<%V%k$N9=B$$NDj5A(B
+ *  EITベクタテーブルの構造の定義
  */
 typedef struct eit_vector_entry {
-	UINT	eitatr;			/* EIT$BB0@-(B */
-	FP	eithdr;			/* EIT$B%O%s%I%i$N%"%I%l%9(B */
+	UINT	eitatr;			/* EIT属性 */
+	FP	eithdr;			/* EITハンドラのアドレス */
 } EITVE;
 
 /*
- *  EIT$B%Y%/%?%F!<%V%k%Y!<%9(B (EITVB) $B$N@_Dj(B
+ *  EITベクタテーブルベース (EITVB) の設定
  *
- *  $B=i4|2==hM}$NCf$G;H$&$?$a$N4X?t!%(B
+ *  初期化処理の中で使うための関数．
  */
 Inline void
 set_eitvb(EITVE *eitvb)
@@ -172,11 +172,11 @@ set_eitvb(EITVE *eitvb)
 }
 
 /*
- *  EIT$B%Y%/%?%F!<%V%k%Y!<%9(B (EITVB) $B$N8=:_CM$NFI$_=P$7(B
+ *  EITベクタテーブルベース (EITVB) の現在値の読み出し
  *
- *  EITVB_ITIS $B$,Dj5A$5$l$F$$$k;~$O!$=i4|2==hM}$NCf$G(B EITVB$B%l%8%9%?$r(B
- *  EITVB_ITIS $B$K@_Dj$9$k$N$G!$(BEITVB_ITIS $B$rJV$;$P$h$$!%$=$&$G$J$$>l9g(B
- *  $B$O!$(BCPU $B$N(B EITVB$B%l%8%9%?$rFI$_=P$9!%(B
+ *  EITVB_ITIS が定義されている時は，初期化処理の中で EITVBレジスタを
+ *  EITVB_ITIS に設定するので，EITVB_ITIS を返せばよい．そうでない場合
+ *  は，CPU の EITVBレジスタを読み出す．
  */
 #ifdef EITVB_ITIS
 #define current_eitvb()	((EITVE *) EITVB_ITIS)
@@ -194,12 +194,12 @@ Inline EITVE
 #endif /* EITVB_ITIS */
 
 /*
- *  EIT$B%O%s%I%i$N@_Dj(B
+ *  EITハンドラの設定
  *
- *  $B%Y%/%H%kHV9f(B eitvec $B$N(B EIT$B%Y%/%?%F!<%V%k%(%s%H%j$N!$(BEIT$BB0@-(B (EIT$B%O(B
- *  $B%s%I%i<B9T;~$N!$%9%?%C%/%b!<%I!$%"%I%l%9JQ49%b!<%I!$%G%P%C%0%b!<%I!$(B
- *  $B3d9~$_%^%9%/$r7h$a$k(B) $B$r(B eitatr$B!$(BEIT$B%O%s%I%i3+;OHVCO$r(B eithdr $B$K@_(B
- *  $BDj$9$k!%(B
+ *  ベクトル番号 eitvec の EITベクタテーブルエントリの，EIT属性 (EITハ
+ *  ンドラ実行時の，スタックモード，アドレス変換モード，デバッグモード，
+ *  割込みマスクを決める) を eitatr，EITハンドラ開始番地を eithdr に設
+ *  定する．
  */
 Inline void
 define_eit(INT eitvec, UINT eitatr, FP eithdr)
@@ -211,10 +211,10 @@ define_eit(INT eitvec, UINT eitatr, FP eithdr)
 }
 
 /*
- *  $B%a%b%j%V%m%C%/A`:n%i%$%V%i%j(B
+ *  メモリブロック操作ライブラリ
  *
- *  $B4X?t$N;EMM$O!$(BANSI C $B%i%$%V%i%j$N;EMM$HF1$8!%I8=`%i%$%V%i%j$N$b$N$r(B
- *  $B;H$C$?J}$,8zN($,NI$$2DG=@-$,$"$k!%(B
+ *  関数の仕様は，ANSI C ライブラリの仕様と同じ．標準ライブラリのものを
+ *  使った方が効率が良い可能性がある．
  */
 
 Inline VP

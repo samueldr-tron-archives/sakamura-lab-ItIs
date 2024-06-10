@@ -36,38 +36,38 @@
 #define _CPU_TASK_
 
 /*
- *  $B%?%9%/5/F0$N$?$a$NDj?t$NDj5A(B
+ *  タスク起動のための定数の定義
  */
-#define INI_SR_SMODE	0x3000		/* SR $B$N=i4|CM(B ($B%9!<%Q%P%$%6%b!<%I(B) */
-#define INI_SR_UMODE	0x1000		/* SR $B$N=i4|CM(B ($B%f!<%6%b!<%I(B) */
+#define INI_SR_SMODE	0x3000		/* SR の初期値 (スーパバイザモード) */
+#define INI_SR_UMODE	0x1000		/* SR の初期値 (ユーザモード) */
 
 /*
- *  CPU$B0MB8$N%?%9%/5/F0=hM}(B
+ *  CPU依存のタスク起動処理
  *
- *  $B%7%9%F%`%9%?%C%/>e$K!$Nc30%9%?%C%/%U%l!<%`$r:n$k!%(Bmake_dormant $B$+$i(B
- *  $B8F$P$l$k!%(B
+ *  システムスタック上に，例外スタックフレームを作る．make_dormant から
+ *  呼ばれる．
  */
 Inline void
 setup_context(TCB *tcb)
 {
 	VW	*ssp, *usp;
 
-	ssp = (VW *)(tcb->isstack);	/* $B=i4|%7%9%F%`%9%?%C%/%]%$%s%?(B */
+	ssp = (VW *)(tcb->isstack);	/* 初期システムスタックポインタ */
 
 	if (SYSMODE(tcb->tskatr) && (tcb->tskatr & TA_HLNG)) {
-		ssp -= 3;		/* $B5/F0%3!<%I$N$?$a$N%(%j%"$r<h$k(B */
+		ssp -= 3;		/* 起動コードのためのエリアを取る */
 	}
-	*--((VH *) ssp) = 0;		/* $BNc30>pJs$r@Q$`(B */
-	*--ssp = (VW)(tcb->task);	/* $B%?%9%/5/F0%"%I%l%9$r@Q$`(B */
+	*--((VH *) ssp) = 0;		/* 例外情報を積む */
+	*--ssp = (VW)(tcb->task);	/* タスク起動アドレスを積む */
 
 	/*
-	 *  SR $B$N=i4|CM$r%7%9%F%`%9%?%C%/$K@Q$_!$%f!<%6%9%?%C%/%]%$%s(B
-	 *  $B%?$r=i4|2=$9$k!%(B
+	 *  SR の初期値をシステムスタックに積み，ユーザスタックポイン
+	 *  タを初期化する．
 	 */
 	if (!SYSMODE(tcb->tskatr)) {
 		usp = tcb->istack;
 		if (tcb->tskatr & TA_HLNG) {
-			usp -= 3;	/* $B5/F0%3!<%I$N$?$a$N%(%j%"$r<h$k(B */
+			usp -= 3;	/* 起動コードのためのエリアを取る */
 		}
 		tcb->tskctxb.usp = usp;
 		*--((VH *) ssp) = INI_SR_UMODE;
@@ -75,22 +75,22 @@ setup_context(TCB *tcb)
 	else {
 		*--((VH *) ssp) = INI_SR_SMODE;
 	}
-	ssp -= 15;			/* D0$B!A(BD7/A0$B!A(BA6 $B$NJ,$N%(%j%"$r<h$k(B */
+	ssp -= 15;			/* D0〜D7/A0〜A6 の分のエリアを取る */
 
 	tcb->tskctxb.msp = ssp;
 }
 
 /*
- *  make_dormant $B$G2u$5$l$k%9%?%C%/NN0h$N%5%$%:$NDj5A(B
+ *  make_dormant で壊されるスタック領域のサイズの定義
  *
- *  ext_tsk $B$N=hM}Cf$G;H$o$l$k!%(B
+ *  ext_tsk の処理中で使われる．
  */
 #define DORMANT_STACK_SIZE	(sizeof(VH) * 2 + sizeof(VW))
 
 /*
- *  $B%?%9%/5/F0%3!<%IEy$N@_Dj(B
+ *  タスク起動コード等の設定
  *
- *  sta_tsk $B$N=hM}$+$i8F$P$l$k!%(B
+ *  sta_tsk の処理から呼ばれる．
  */
 Inline void
 setup_stacd(TCB *tcb, INT stacd)
@@ -99,15 +99,15 @@ setup_stacd(TCB *tcb, INT stacd)
 
 	if (!(tcb->tskatr & TA_HLNG)) {
 		sp = tcb->tskctxb.msp;
-		*sp = stacd;			/* $B5/F0%3!<%I$r@Q$`(B (D0) */
-		*(sp+1) = (VW)(tcb->exinf);	/* $B%?%9%/3HD%>pJs$r@Q$`(B (D1) */
+		*sp = stacd;			/* 起動コードを積む (D0) */
+		*(sp+1) = (VW)(tcb->exinf);	/* タスク拡張情報を積む (D1) */
 	}
 	else {
 		sp = (SYSMODE(tcb->tskatr)) ? (VW *)(tcb->isstack)
 					    : (VW *)(tcb->istack);
-		*(sp-3) = (VW) NADR;		/* $BLa$jHVCO$r@Q$`(B */
-		*(sp-2) = stacd;		/* $B5/F0%3!<%I$r@Q$`(B */
-		*(sp-1) = (VW)(tcb->exinf);	/* $B%?%9%/3HD%>pJs$r@Q$`(B */
+		*(sp-3) = (VW) NADR;		/* 戻り番地を積む */
+		*(sp-2) = stacd;		/* 起動コードを積む */
+		*(sp-1) = (VW)(tcb->exinf);	/* タスク拡張情報を積む */
 	}
 }
 

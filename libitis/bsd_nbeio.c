@@ -34,7 +34,7 @@
  */
 
 /*
- *  BSD UNIX$BMQ(B $B%N%s%V%m%C%-%s%0(BI/O$B%i%$%V%i%j(B (errno $B$rJV$9%P!<%8%g%s(B)
+ *  BSD UNIX用 ノンブロッキングI/Oライブラリ (errno を返すバージョン)
  */
 
 #include "systask.h"
@@ -44,17 +44,17 @@
 #include <bsd_sigio.h>
 
 /*
- *  errno $B$,%W%m%;%9A4BN$G6&M-$5$l$kJQ?t$J$N$G!$%7%9%F%`%3!<%k$r8F$S=P(B
- *  $B$7$?8e!$(Berrno $B$rFI$`$^$G$O3d9~$_$r6X;_$7$F$$$k!%(B
+ *  errno がプロセス全体で共有される変数なので，システムコールを呼び出
+ *  した後，errno を読むまでは割込みを禁止している．
  *
- *  $B%N%s%V%m%C%-%s%0%b!<%I$G$"$k$3$H$H!$$9$Y$F$N%7%0%J%k$r%^%9%/$7$F$$(B
- *  $B$k$3$H$+$i!$(BEINTR $B$OJV$i$J$$$O$:$J$N$G!$BP=h$7$F$$$J$$!%(B
+ *  ノンブロッキングモードであることと，すべてのシグナルをマスクしてい
+ *  ることから，EINTR は返らないはずなので，対処していない．
  */
 
 /*
- *  nbe_open: $B%N%s%V%m%C%-%s%0%3!<%k8_49$N(B open
+ *  nbe_open: ノンブロッキングコール互換の open
  *
- *  open $B8e$K%N%s%V%m%C%-%s%0%b!<%I$K@_Dj$9$k!%(Bopen $B$G$O%V%m%C%/$7$J$$!%(B
+ *  open 後にノンブロッキングモードに設定する．open ではブロックしない．
  */
 
 int
@@ -72,10 +72,10 @@ nbe_open(int *p_errno, char *path, int flags, mode_t mode)
 }
 
 /*
- *  nbe_close: $B%N%s%V%m%C%-%s%0%3!<%k8_49$N(B close
+ *  nbe_close: ノンブロッキングコール互換の close
  *
- *  close $B$G$O%V%m%C%/$7$J$$$?$a!$(Berrno $B$rJV$9ItJ,$@$1$,I8=`$N(B close 
- *  $B$H0[$J$k!%(B
+ *  close ではブロックしないため，errno を返す部分だけが標準の close 
+ *  と異なる．
  */
 
 int
@@ -91,16 +91,16 @@ nbe_close(int *p_errno, int fd)
 }
 
 /*
- *  nbe_read: $B%N%s%V%m%C%-%s%0$N(B read
+ *  nbe_read: ノンブロッキングの read
  */
 
 typedef struct nbe_read_args {
-	ID	tskid;		/* nbe_read $B$r8F$S=P$7$?%?%9%/$N(B ID */
-	int	*p_result;	/* read $B$NJV$jCM$rF~$l$kJQ?t$X$N%]%$%s%?(B */
-	int	*p_errno;	/* errno $B$rF~$l$kJQ?t$X$N%]%$%s%?(B */
-	int	fd;		/* read $B$NBh(B1$B0z?t(B */
-	void	*buf;		/* read $B$NBh(B2$B0z?t(B */
-	size_t	nbytes;		/* read $B$NBh(B3$B0z?t(B */
+	ID	tskid;		/* nbe_read を呼び出したタスクの ID */
+	int	*p_result;	/* read の返り値を入れる変数へのポインタ */
+	int	*p_errno;	/* errno を入れる変数へのポインタ */
+	int	fd;		/* read の第1引数 */
+	void	*buf;		/* read の第2引数 */
+	size_t	nbytes;		/* read の第3引数 */
 } READ_ARGS;
 
 static BOOL
@@ -147,16 +147,16 @@ nbe_read(int *p_errno, int fd, void *buf, size_t nbytes)
 }
 
 /*
- *  nbe_write: $B%N%s%V%m%C%-%s%0$N(B write
+ *  nbe_write: ノンブロッキングの write
  */
 
 typedef struct nbe_write_args {
-	ID	tskid;		/* nbe_write $B$r8F$S=P$7$?%?%9%/$N(B ID */
-	int	*p_result;	/* write $B$NJV$jCM$rF~$l$kJQ?t$X$N%]%$%s%?(B */
-	int	*p_errno;	/* errno $B$rF~$l$kJQ?t$X$N%]%$%s%?(B */
-	int	fd;		/* write $B$NBh(B1$B0z?t(B */
-	void	*buf;		/* write $B$NBh(B2$B0z?t(B */
-	size_t	nbytes;		/* write $B$NBh(B3$B0z?t(B */
+	ID	tskid;		/* nbe_write を呼び出したタスクの ID */
+	int	*p_result;	/* write の返り値を入れる変数へのポインタ */
+	int	*p_errno;	/* errno を入れる変数へのポインタ */
+	int	fd;		/* write の第1引数 */
+	void	*buf;		/* write の第2引数 */
+	size_t	nbytes;		/* write の第3引数 */
 } WRITE_ARGS;
 
 static BOOL

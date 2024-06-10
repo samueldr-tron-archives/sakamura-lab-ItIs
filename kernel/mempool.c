@@ -41,20 +41,20 @@
 #ifdef USE_MPL
 
 /*
- *  $B2DJQD9%a%b%j%W!<%k4IM}%V%m%C%/$NDj5A(B
+ *  可変長メモリプール管理ブロックの定義
  */
 
-typedef QUEUE	AREAQ;		/* $B%(%j%"%-%e!<(B */
-typedef QUEUE	FREEQ;		/* $B%U%j!<%V%m%C%/%-%e!<(B */
+typedef QUEUE	AREAQ;		/* エリアキュー */
+typedef QUEUE	FREEQ;		/* フリーブロックキュー */
 
 typedef struct memorypool_control_block {
-	QUEUE	wait_queue;	/* $B%a%b%j%W!<%kBT$A%-%e!<(B */
-	ID	mplid;		/* $B2DJQD9%a%b%j%W!<%k(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	mplatr;		/* $B%a%b%j%W!<%kB0@-(B */
-	INT	mplsz;		/* $B%a%b%j%W!<%kA4BN$N%5%$%:(B */
-	VP	mempool;	/* $B%a%b%j%W!<%k$N@hF,%"%I%l%9(B */
-	FREEQ	freequeue;	/* $B6u$-%V%m%C%/$N%-%e!<(B */
+	QUEUE	wait_queue;	/* メモリプール待ちキュー */
+	ID	mplid;		/* 可変長メモリプールID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	mplatr;		/* メモリプール属性 */
+	INT	mplsz;		/* メモリプール全体のサイズ */
+	VP	mempool;	/* メモリプールの先頭アドレス */
+	FREEQ	freequeue;	/* 空きブロックのキュー */
 } MPLCB;
 
 static MPLCB	mplcb_table[NUM_MPLID];
@@ -62,14 +62,14 @@ static MPLCB	mplcb_table[NUM_MPLID];
 #define get_mplcb(id)	(&(mplcb_table[INDEX_MPL(id)]))
 
 /*
- *  $BL$;HMQ$N2DJQD9%a%b%j%W!<%k4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用の可変長メモリプール管理ブロックのリスト
  */
 #ifndef _i_vcre_mpl
 QUEUE	free_mplcb;
 #endif /* _i_vcre_mpl */
 
 /* 
- *  $B2DJQD9%a%b%j%W!<%k4IM}%V%m%C%/$N=i4|2=(B
+ *  可変長メモリプール管理ブロックの初期化
  */
 void
 memorypool_initialize(void)
@@ -95,7 +95,7 @@ memorypool_initialize(void)
 }
 
 /*
- *  $B2DJQD9%a%b%j%W!<%k4IM}MQ%k!<%A%s(B
+ *  可変長メモリプール管理用ルーチン
  */
 
 #define ROUNDSIZE	(sizeof(FREEQ))
@@ -132,7 +132,7 @@ mempool_end(MPLCB *mplcb)
 }
 
 /*
- *  $B%a%b%j%W!<%k$N=i4|2=%k!<%A%s(B
+ *  メモリプールの初期化ルーチン
  */
 static void
 init_mpl(VP mempool, INT mplsz)
@@ -149,7 +149,7 @@ init_mpl(VP mempool, INT mplsz)
 }
 
 /*
- *  $B%a%b%j%V%m%C%/$N3MF@%k!<%A%s(B
+ *  メモリブロックの獲得ルーチン
  */
 static VP
 _get_blk(FREEQ *freequeue, INT blksz)
@@ -163,7 +163,7 @@ _get_blk(FREEQ *freequeue, INT blksz)
 		if ((remsz = BLOCKSIZE(area) - blksz) >= 0) {
 			if (remsz >= MINSIZE) {
 				/*
-				 *  $B%(%j%"$r(B 2$B$D$KJ,3d$9$k(B
+				 *  エリアを 2つに分割する
 				 */
 				new = (AREAQ *)(((VB *) area) + remsz);
 				new->prev = area;
@@ -183,7 +183,7 @@ _get_blk(FREEQ *freequeue, INT blksz)
 }
 
 /*
- *  $B%a%b%j%V%m%C%/$N2rJ|%k!<%A%s(B
+ *  メモリブロックの解放ルーチン
  */
 ER
 _rel_blk(FREEQ *freequeue, VP blk)
@@ -204,13 +204,13 @@ _rel_blk(FREEQ *freequeue, VP blk)
 	if (FIRST_AREA(area) || USED_AREA(prevarea = area->prev)) {
 		if (USED_AREA(nextarea = area->next)) {
 			/*
-			 *  $B%^!<%8$NI,MW$J$7!%(B
+			 *  マージの必要なし．
 			 */
 			queue_insert(free, freequeue->next);
 		}
 		else {
 			/*
-			 *  $BD>8e$N%(%j%"$H%^!<%8$9$k!%(B
+			 *  直後のエリアとマージする．
 			 */
 			area->next = nextarea->next;
 			_ASSIGN(nextarea->next->prev, area);
@@ -221,14 +221,14 @@ _rel_blk(FREEQ *freequeue, VP blk)
 	else {
 		if (USED_AREA(nextarea = area->next)) {
 			/*
-			 *  $BD>A0$N%(%j%"$H%^!<%8$9$k!%(B
+			 *  直前のエリアとマージする．
 			 */
 			prevarea->next = nextarea;
 			_ASSIGN(nextarea->prev, prevarea);
 		}
 		else {
 			/*
-			 *  $BA08e$N%(%j%"$H%^!<%8$9$k!%(B
+			 *  前後のエリアとマージする．
 			 */
 			prevarea->next = nextarea->next;
 			_ASSIGN(nextarea->next->prev, prevarea);
@@ -239,7 +239,7 @@ _rel_blk(FREEQ *freequeue, VP blk)
 }
 
 /*
- *  $B2DJQD9%a%b%j%W!<%kBT$A$N%?%9%/$r%a%b%j$,$"$k8B$j5/$3$9(B
+ *  可変長メモリプール待ちのタスクをメモリがある限り起こす
  */
 static void
 wakeup_mpl(MPLCB *mplcb)
@@ -268,13 +268,13 @@ wakeup_mpl(MPLCB *mplcb)
 }
 
 /*
- *  $B2DJQD9%a%b%j%W!<%kBT$A;EMM$NDj5A(B
+ *  可変長メモリプール待ち仕様の定義
  */
 static WSPEC wspec_mpl_tfifo = { TTW_MPL, 0, 0 };
 static WSPEC wspec_mpl_tpri = { TTW_MPL, obj_chg_pri, 0 };
 
 /*
- *  $B2DJQD9%a%b%j%W!<%k4IM}5!G=(B
+ *  可変長メモリプール管理機能
  */
 
 #if !defined(_i_cre_mpl) || !defined(_i_vcre_mpl)
@@ -524,9 +524,9 @@ i_ref_mpl(T_RMPL *pk_rmpl, ID mplid)
 #endif /* _i_ref_mpl */
 
 /*
- *  $B%7%9%F%`%a%b%j%W!<%k4IM}%k!<%A%s(B
+ *  システムメモリプール管理ルーチン
  *
- *  $B0J2<$N4X?t$O!$I,$:%/%j%F%#%+%k%;%/%7%g%s$NCf$+$i8F$V$3$H!%(B
+ *  以下の関数は，必ずクリティカルセクションの中から呼ぶこと．
  */
 
 #ifdef USE_TMPL_OS

@@ -1,7 +1,7 @@
 
-		$B!a(B $BM%@hEY7Q>5%;%^%U%)5!G=$N;EMM(B $B!a(B
+		＝ 優先度継承セマフォ機能の仕様 ＝
 
-	    $B!J(BRelease 1.4$B&BBP1~!$:G=*99?7(B: 18-Jun-1998$B!K(B
+	    （Release 1.4β対応，最終更新: 18-Jun-1998）
 
 ------------------------------------------------------------------------ 
 	ItIs - An ITRON Implementation for Research and Education
@@ -34,42 +34,42 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- * TRON $B$O(B The Real-time Operating system Nucleus $B$NN,>N$G$9!%(B
- * ITRON $B$O(B Industrial TRON $B$NN,>N$G$9!%(B
- * $B&L(BITRON $B$O(B Micro Industrial TRON $B$NN,>N$G$9!%(B
- * ItIs $B$O(B ITRON Implementation by Sakamura Lab $B$NN,>N$G$9!%(B
+ * TRON は The Real-time Operating system Nucleus の略称です．
+ * ITRON は Industrial TRON の略称です．
+ * μITRON は Micro Industrial TRON の略称です．
+ * ItIs は ITRON Implementation by Sakamura Lab の略称です．
 ------------------------------------------------------------------------
 
 
-$B#1!%M%@hEY7Q>5%;%^%U%)$K$D$$$F(B
+１．優先度継承セマフォについて
 
-$BM%@hEY7Q>5$H$O!$M%@hEY5UE>$,>e8B$J$/B3$/$3$H!J(Bunbounded priority
-inversion$B!K$rKI$0$?$a$N;EAH$_$G$"$k!%M%@hEY5UE>$H$O!$M%@hEY$N9b$$%?%9(B
-$B%/$r<B9T$9$Y$-$G$"$k$K$b$+$+$o$i$:!$2?$i$+$NM}M3$K$h$jM%@hEY$NDc$$%?%9(B
-$B%/$,<B9T$5$l$F$$$k>uBV$r$$$&!%M%@hEY5UE>$O!$!VK\Mh<B9T$9$Y$-%?%9%/$,<B(B
-$B9T$5$l$J$$!W$H$$$&0UL#$G9%$^$7$/$J$$>uBV$G$"$k$,!$%j%=!<%9@)Ls$NLdBj$K(B
-$B$h$j!$0l;~E*$K5/$3$k$3$H$OHr$1$i$l$J$$!%$=$3$G!$M%@hEY5UE>$rC;$$;~4V$K(B
-$B2!$($k;EAH$_$G$"$kM%@hEY7Q>5$,=EMW$K$J$k!%(B
+優先度継承とは，優先度逆転が上限なく続くこと（unbounded priority
+inversion）を防ぐための仕組みである．優先度逆転とは，優先度の高いタス
+クを実行すべきであるにもかかわらず，何らかの理由により優先度の低いタス
+クが実行されている状態をいう．優先度逆転は，「本来実行すべきタスクが実
+行されない」という意味で好ましくない状態であるが，リソース制約の問題に
+より，一時的に起こることは避けられない．そこで，優先度逆転を短い時間に
+押える仕組みである優先度継承が重要になる．
 
-$BM%@hEY7Q>5$N%3%s%;%W%H$r0l8@$G$$$&$H!$!VB>$N%?%9%/$rBT$?$;$F$$$k%?%9%/(B
-$B$O!$BT$?$5$l$F$$$k%?%9%/$NM%@hEY$r7Q>5$9$k!W$H$$$&$3$H$K$J$k!%$=$N$?$a!$(B
-$BK\Mh$O!$BT$A$rH<$&%?%9%/4VF14|!&DL?.5!G=$9$Y$F$K4XO"$9$k$3$H$K$J$k!%(B
+優先度継承のコンセプトを一言でいうと，「他のタスクを待たせているタスク
+は，待たされているタスクの優先度を継承する」ということになる．そのため，
+本来は，待ちを伴うタスク間同期・通信機能すべてに関連することになる．
 
-ITRON$B;EMM$KM%@hEY7Q>5$r<h$j9~$`J}K!$O$$$/$D$+9M$($i$l$k$,!$(BItIs $B$G$O$=(B
-$B$N8!F$$N0l4S$H$7$F!$M%@hEY7Q>55!G=$r;}$C$?%;%^%U%)$r%5%]!<%H$7$F$$$k!%(B
-$B$3$l$rM%@hEY7Q>5%;%^%U%)$H8F$V!%M%@hEY7Q>5%;%^%U%)5!G=$N;EMM$r8!F$$7$F(B
-$B$$$/$H!$M}A[E*$@$,<BAuIi2Y$,Bg$-$$!J<B9T8zN($,0-$$(B, $B%+!<%M%k%5%$%:$,Bg(B
-$B$-$$!K;EMM$H!$<BAuIi2Y$O7Z$$$,;HMQ$K$"$?$C$F@)Ls$,$"$k;EMM$,9M$($i$l$k!%(B
-$B$I$A$i$N;EMM$,NI$$$+$O!$%"%W%j%1!<%7%g%s$K$b$h$j0l35$K$O7h$a$i$l$J$$$?(B
-$B$a!$(BItIs $B$N8=%P!<%8%g%s$G$O$=$NN>J}$N;EMM$r%5%]!<%H$7$F$$$k!%(B
+ITRON仕様に優先度継承を取り込む方法はいくつか考えられるが，ItIs ではそ
+の検討の一貫として，優先度継承機能を持ったセマフォをサポートしている．
+これを優先度継承セマフォと呼ぶ．優先度継承セマフォ機能の仕様を検討して
+いくと，理想的だが実装負荷が大きい（実行効率が悪い, カーネルサイズが大
+きい）仕様と，実装負荷は軽いが使用にあたって制約がある仕様が考えられる．
+どちらの仕様が良いかは，アプリケーションにもより一概には決められないた
+め，ItIs の現バージョンではその両方の仕様をサポートしている．
 
-ItIs $B$G$O!$A0<T$N!JM}A[E*$@$,8zN($,0-$$J}$N!K;EMM$r;EMM(B1$B!$8e<T$N!J8zN((B
-$B$ONI$$$,@)Ls$,$"$kJ}$N!K;EMM$r;EMM(B2 $B$H8F$V!%$I$A$i$N;EMM$rMQ$$$k$+$O!$(B
-$B%7%9%F%`9=@.@_Dj%U%!%$%kCf$N(B prisem_spec $B$G;XDj$9$k!%%G%U%)%k%H$O!$;E(B
-$BMM(B1 $B$G$"$k!%(B
+ItIs では，前者の（理想的だが効率が悪い方の）仕様を仕様1，後者の（効率
+は良いが制約がある方の）仕様を仕様2 と呼ぶ．どちらの仕様を用いるかは，
+システム構成設定ファイル中の prisem_spec で指定する．デフォルトは，仕
+様1 である．
 
-$BM%@hEY7Q>5%;%^%U%)$K4X$9$k>\$7$$5DO@$K$D$$$F$O!$0J2<$N;29MJ88%$r;2>H$5(B
-$B$l$?$$!%(B
+優先度継承セマフォに関する詳しい議論については，以下の参考文献を参照さ
+れたい．
 
 [1] L. Sha, R. Rajkumar, and J. P. Lehoczky, "Priority Inheritance
 Protocols: An Approach to Real-Time Synchronization," IEEE Trans. 
@@ -81,551 +81,551 @@ Proc. 11th TRON Project International Symposium, pp. 106-113, IEEE CS
 Press, Dec. 1994.
 
 
-$B#2!%;EMM(B1 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$N;EMM(B
+２．仕様1 における優先度継承セマフォ機能の仕様
 
-$B;EMM(B1 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$G$O!$(Bchg_pri $B$r;H$o$J$$>l9g$N%?%9(B
-$B%/$NM%@hEY$O!$$=$N%?%9%/$N=i4|M%@hEY$H!$$=$N%?%9%/$,3MF@$7$F$$$kM%@hEY(B
-$B7Q>5%;%^%U%)$rBT$C$F$$$kCf$G:G9bM%@hEY$N%?%9%/$NM%@hEY$H$N!$9b$$!JCM$,(B
-$B>.$5$$!KJ}$K@_Dj$5$l$k!%$=$N$?$a$K(B OS $B$O!$%?%9%/$,3MF@$7$F$$$kM%@hEY7Q(B
-$B>5%;%^%U%)$N%j%9%H$r4IM}$7$F$$$k!%(B
+仕様1 における優先度継承セマフォ機能では，chg_pri を使わない場合のタス
+クの優先度は，そのタスクの初期優先度と，そのタスクが獲得している優先度
+継承セマフォを待っている中で最高優先度のタスクの優先度との，高い（値が
+小さい）方に設定される．そのために OS は，タスクが獲得している優先度継
+承セマフォのリストを管理している．
 
-$BM%@hEY7Q>5%;%^%U%)$r3MF@(B/$B2rJ|$9$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99(B
-$B$7$F$b!$M%@hEY7Q>5%;%^%U%)$N5!G=$K$h$C$FM%@hEY$,JQ99$5$l$k$H!$(Bchg_pri 
-$B$G@_Dj$7$?M%@hEY$OL58z$K$J$k!%$D$^$j!$(Bchg_pri $B$O%?%9%/$N8=:_M%@hEY$r0l(B
-$B;~E*$KJQ99$9$k$b$N$H$$$&$3$H$K$J$k!%M%@hEY7Q>5%;%^%U%)5!G=$N<BAu$K(B 
-chg_pri $B$,;H$o$l$F$$$k$H9M$($k$o$+$j$d$9$$$+$b$7$l$J$$!%(B
+優先度継承セマフォを獲得/解放するタスクの優先度を chg_pri によって変更
+しても，優先度継承セマフォの機能によって優先度が変更されると，chg_pri 
+で設定した優先度は無効になる．つまり，chg_pri はタスクの現在優先度を一
+時的に変更するものということになる．優先度継承セマフォ機能の実装に 
+chg_pri が使われていると考えるわかりやすいかもしれない．
 
-$BM%@hEY7Q>5%;%^%U%)$rBT$C$F$$$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99$7(B
-$B$?>l9g!$$=$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;!&JQ(B
-$B99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$<!$N(B 2$B$D$N%1!<%9$G!$M%@hEY$NJQ99$,9T$o(B
-$B$l$k!%(B(1) $BM%@hEY$rJQ99$5$l$?%?%9%/$NJQ998e$NM%@hEY$,!$M%@hEY7Q>5%;%^%U%)(B
-$B$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$h$j$b9b$$!JCM$,>.$5$$!K>l9g!%(B(2) $BM%@h(B
-$BEY$,JQ99$5$l$?%?%9%/$NJQ99A0$NM%@hEY$,!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$(B
-$B$k%?%9%/$NM%@hEY$KEy$7$$>l9g$K!$$=$N%?%9%/$NM%@hEY$,:F7W;;$5$l!$$=$N7k(B
-$B2LF@$i$l$?CM$,8=:_M%@hEY$HEy$7$/$J$$>l9g!%(B
+優先度継承セマフォを待っているタスクの優先度を chg_pri によって変更し
+た場合，その優先度継承セマフォを獲得しているタスクの優先度が再計算・変
+更される場合がある．具体的には，次の 2つのケースで，優先度の変更が行わ
+れる．(1) 優先度を変更されたタスクの変更後の優先度が，優先度継承セマフォ
+を獲得しているタスクの現在優先度よりも高い（値が小さい）場合．(2) 優先
+度が変更されたタスクの変更前の優先度が，優先度継承セマフォを獲得してい
+るタスクの優先度に等しい場合に，そのタスクの優先度が再計算され，その結
+果得られた値が現在優先度と等しくない場合．
 
-$B;EMM(B1 $B$G$O!$(Bext_tsk, exd_tsk, ter_tsk $B$K$h$j%?%9%/$,=*N;$9$k>l9g!$%?%9(B
-$B%/$,3MF@$7$F$$$?M%@hEY7Q>5%;%^%U%)$O!$(BOS $B$K$h$C$F<+F0E*$K2rJ|$5$l$k!%(B
+仕様1 では，ext_tsk, exd_tsk, ter_tsk によりタスクが終了する場合，タス
+クが獲得していた優先度継承セマフォは，OS によって自動的に解放される．
 
-(1) vcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.(B			   $B!J5!G=%3!<%I(B: -257$B!K(B
+(1) vcre_pis	優先度継承セマフォ生成			   （機能コード: -257）
 
     vcre_pis: Create Priority Inheritance Semaphore
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
-    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
 
-$B!Z2r@b![(B
-vcre_pis $B$G$O!$(Bpisid $B$G;XDj$5$l$?(B ID$BHV9f$r;}$DM%@hEY7Q>5%;%^%U%)$r@8@.(B
-$B$9$k!%6qBNE*$K$O!$@8@.$9$k%;%^%U%)$KBP$7$F4IM}%V%m%C%/$r3d$jIU$1!$%;%^(B
-$B%U%)$N=i4|CM$r(B 1 $B$K=i4|2=$9$k!%(B
+【解説】
+vcre_pis では，pisid で指定された ID番号を持つ優先度継承セマフォを生成
+する．具体的には，生成するセマフォに対して管理ブロックを割り付け，セマ
+フォの初期値を 1 に初期化する．
 
-ID$BHV9f$N@5Ii$N07$$$d;HMQ$G$-$J$$HO0O!$$=$l$i$N>l9g$N%(%i!<%3!<%I!$3HD%(B
-$B>pJs!J(Bexinf$B!K$N07$$$K$D$$$F$O!$B>$NF14|!&DL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
+ID番号の正負の扱いや使用できない範囲，それらの場合のエラーコード，拡張
+情報（exinf）の扱いについては，他の同期・通信オブジェクトと同様である．
 
-pisatr $B$O!$2<0LB&$,%7%9%F%`B0@-$rI=$7!$>e0LB&$,%$%s%W%j%a%s%H0MB8B0@-(B
-$B$rI=$9!%(Bpisatr $B$N%7%9%F%`B0@-$NItJ,$G$O!$<!$N$h$&$J;XDj$r9T$&!%(B
+pisatr は，下位側がシステム属性を表し，上位側がインプリメント依存属性
+を表す．pisatr のシステム属性の部分では，次のような指定を行う．
 
 	sematr := TA_TPRI
 
-	    TA_TPRI	$BBT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g(B
+	    TA_TPRI	待ちタスクのキューイングは優先度順
 
-$BM%@hEY7Q>5%;%^%U%)$G$O!$BT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g$G$J$$$H0UL#(B
-$B$,$J$$$?$a!$(BFIFO $B%-%e!<%$%s%0$OMQ0U$7$F$$$J$$!%$=$N$?$a!$(BTA_TPRI $B$r;X(B
-$BDj$7$J$/$F$bM%@hEY=g$N%-%e!<%$%s%0$K$J$k$,!$B>$NF14|!&DL?.%*%V%8%'%/%H(B
-$B$H$NE}0l@-$N$?$a$K!$(BTA_TPRI $B$r;XDj$7$F$b$h$$$3$H$K$7$F$$$k!%(B
+優先度継承セマフォでは，待ちタスクのキューイングは優先度順でないと意味
+がないため，FIFO キューイングは用意していない．そのため，TA_TPRI を指
+定しなくても優先度順のキューイングになるが，他の同期・通信オブジェクト
+との統一性のために，TA_TPRI を指定してもよいことにしている．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_RSATR	$BM=LsB0@-!J(Bpisatr $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!JF10l(BID$BHV9f$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,4{$KB8:_!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_RSATR	予約属性（pisatr が不正あるいは利用できない）
+    E_OBJ	オブジェクトの状態が不正（同一ID番号の優先度継承セマフォ
+		が既に存在）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
 
-(2) vvcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.!J(BID$B<+F03dEv!K(B	   $B!J5!G=%3!<%I(B: -259$B!K(B
+(2) vvcre_pis	優先度継承セマフォ生成（ID自動割当）	   （機能コード: -259）
 
     vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
 
-$B!Z%Q%i%a!<%?![(B
-    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
+【パラメータ】
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B@8@.$7$?M%@hEY7Q>5%;%^%U%)$N(BID, $B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		生成した優先度継承セマフォのID, エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vvcre_pis(T_CPIS *pk_cpis);
 
-$B!Z2r@b![(B
-ID$BHV9f$r;XDj$;$:$KM%@hEY7Q>5%;%^%U%)$r@8@.$7!$@8@.$7$?M%@hEY7Q>5%;%^%U%)(B
-$B$N(B ID$B!JI,$:@5$NCM!K$r(B ercd $B$KJV$9!%(Bercd $B$,Ii$N>l9g$O!$%(%i!<%3!<%I$rI=(B
-$B$9!%3d$jEv$F2DG=$J(B ID $B$,$J$$>l9g!$(BEV_FULL$B%(%i!<$H$J$k!%$=$NB>$K$D$$$F(B
-$B$O!$(Bvcre_pis $B$HF1$8!%(B
+【解説】
+ID番号を指定せずに優先度継承セマフォを生成し，生成した優先度継承セマフォ
+の ID（必ず正の値）を ercd に返す．ercd が負の場合は，エラーコードを表
+す．割り当て可能な ID がない場合，EV_FULLエラーとなる．その他について
+は，vcre_pis と同じ．
 
-(3) vdel_pis	$BM%@hEY7Q>5%;%^%U%):o=|(B			   $B!J5!G=%3!<%I(B: -258$B!K(B
+(3) vdel_pis	優先度継承セマフォ削除			   （機能コード: -258）
 
     vdel_pis: Delete Priority Inheritance Semaphore
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vdel_pis(ID pisid);
 
-$B!Z2r@b![(B
-pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$r:o=|$9$k!%(B
+【解説】
+pisid で示された優先度継承セマフォを削除する．
 
-$BK\%7%9%F%`%3!<%k$NH/9T$K$h$j!$BP>]M%@hEY7Q>5%;%^%U%)$N4IM}%V%m%C%/MQ$N(B
-$BNN0h$O2rJ|$5$l$k!%$^$?!$$3$N%7%9%F%`%3!<%k$,=*N;$7$?8e$O!$F1$8(B ID$BHV9f(B
-$B$NM%@hEY7Q>5%;%^%U%)$r:F$S@8@.$9$k$3$H$,$G$-$k!%(B
+本システムコールの発行により，対象優先度継承セマフォの管理ブロック用の
+領域は解放される．また，このシステムコールが終了した後は，同じ ID番号
+の優先度継承セマフォを再び生成することができる．
 
-$BBP>]M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$,$"$C$?>l9g!$$=$N%?%9%/$NM%(B
-$B@hEY$,:F7W;;!&JQ99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$$=$N%?%9%/$N8=:_M%@hEY(B
-$B$,!$M%@hEY7Q>5%;%^%U%)$rBT$C$F$$$kCf$G:G9bM%@hEY$N%?%9%/$NM%@hEY$KEy$7(B
-$B$$>l9g$K!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$?%?%9%/$NM%@hEY$,:F7W;;$5$l!$(B
-$B$=$N7k2LF@$i$l$?CM$,$=$N%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g(B
-$B$K!$M%@hEY$NJQ99$,9T$o$l$k!%(B
+対象優先度継承セマフォを獲得しているタスクがあった場合，そのタスクの優
+先度が再計算・変更される場合がある．具体的には，そのタスクの現在優先度
+が，優先度継承セマフォを待っている中で最高優先度のタスクの優先度に等し
+い場合に，優先度継承セマフォを獲得していたタスクの優先度が再計算され，
+その結果得られた値がそのタスクの現在優先度よりも低い（値が大きい）場合
+に，優先度の変更が行われる．
 
-$BBP>]M%@hEY7Q>5%;%^%U%)$K$*$$$F>r7o@.N)$rBT$C$F$$$k%?%9%/$,$"$C$?>l9g$K(B
-$B$b!$K\%7%9%F%`%3!<%k$O@5>o=*N;$9$k$,!$BT$A>uBV$K$"$C$?%?%9%/$K$O%(%i!<(B 
-E_DLT $B$,JV$5$l$k!%(B
+対象優先度継承セマフォにおいて条件成立を待っているタスクがあった場合に
+も，本システムコールは正常終了するが，待ち状態にあったタスクにはエラー 
+E_DLT が返される．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
 
-(4) vsig_pis	$BM%@hEY7Q>5%;%^%U%);q8;2rJ|(B		   $B!J5!G=%3!<%I(B: -264$B!K(B
+(4) vsig_pis	優先度継承セマフォ資源解放		   （機能コード: -264）
 
     vsig_pis: Signal Priority Inheritance Semaphore
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vsig_pis(ID pisid);
 
-$B!Z2r@b![(B
-pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$KBP$7$F!$;q8;$r2rJ|$9$kA`:n$r9T$&!%(B
-$B6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F4{$KBT$C$F$$$k%?%9%/$,$"$l$P!$(B
-$BBT$A9TNs$N@hF,$N%?%9%/$r(B READY$B>uBV$K0\$9!%$3$N>l9g!$$=$NM%@hEY7Q>5%;%^(B
-$B%U%)$O3MF@$5$l$?>uBV$N$^$^$G$"$k!%0lJ}!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F(B
-$BBT$C$F$$$k%?%9%/$,L5$1$l$P!$$=$NM%@hEY7Q>5%;%^%U%)$,2rJ|$5$l$k!%(B
+【解説】
+pisid で示された優先度継承セマフォに対して，資源を解放する操作を行う．
+具体的には，対象優先度継承セマフォに対して既に待っているタスクがあれば，
+待ち行列の先頭のタスクを READY状態に移す．この場合，その優先度継承セマ
+フォは獲得された状態のままである．一方，対象優先度継承セマフォに対して
+待っているタスクが無ければ，その優先度継承セマフォが解放される．
 
-$B$3$N%7%9%F%`%3!<%k$r%?%9%/FHN)It$+$i8F$S=P$9$3$H$O$G$-$J$$!%8F$S=P$7$?(B
-$B>l9g!$(BE_CTX$B%(%i!<$H$J$k!%$^$?!$3MF@$5$l$F$$$J$$!$$J$$$7$O!$B>%?%9%/$K(B
-$B3MF@$5$l$F$$$kM%@hEY7Q>5%;%^%U%)$r2rJ|$7$h$&$H$7$?>l9g!$(BE_OBJ$B%(%i!<$H(B
-$B$J$k!%(B
+このシステムコールをタスク独立部から呼び出すことはできない．呼び出した
+場合，E_CTXエラーとなる．また，獲得されていない，ないしは，他タスクに
+獲得されている優先度継承セマフォを解放しようとした場合，E_OBJエラーと
+なる．
 
-$BM%@hEY7Q>5%;%^%U%)$r2rJ|$9$k$3$H$K$h$j!$K\%7%9%F%`%3!<%k$NH/9T%?%9%/$N(B
-$BM%@hEY$,:F7W;;!&JQ99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$H/9T%?%9%/$N8=:_M%@h(B
-$BEY$,!$2rJ|$7$?M%@hEY7Q>5%;%^%U%)$rBT$C$F$$$?Cf$G:G9bM%@hEY$N%?%9%/$NM%(B
-$B@hEY$KEy$7$$>l9g$K!$H/9T%?%9%/$NM%@hEY$,:F7W;;$5$l!$$=$N7k2LF@$i$l$?CM(B
-$B$,$=$N%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g$K!$M%@hEY$NJQ99$,(B
-$B9T$o$l$k!%(B
+優先度継承セマフォを解放することにより，本システムコールの発行タスクの
+優先度が再計算・変更される場合がある．具体的には，発行タスクの現在優先
+度が，解放した優先度継承セマフォを待っていた中で最高優先度のタスクの優
+先度に等しい場合に，発行タスクの優先度が再計算され，その結果得られた値
+がそのタスクの現在優先度よりも低い（値が大きい）場合に，優先度の変更が
+行われる．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
-    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$+$i$NH/9T!K(B
-    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)$,(B
-		$B3MF@$5$l$F$$$J$$!%$^$?$O!$B>$N%?%9%/$,3MF@$7$F$$$k!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
+    E_CTX	コンテキストエラー（タスク独立部からの発行）
+    E_OBJ	オブジェクトの状態が不正（pisid の優先度継承セマフォが
+		獲得されていない．または，他のタスクが獲得している）
 
-(5) vwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@(B		   $B!J5!G=%3!<%I(B: -261$B!K(B
-(6) vpreq_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%]!<%j%s%0!K(B	       $B!J(B-262$B!K(B
-(7) vtwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%?%$%`%"%&%HM-!K(B	       $B!J(B-263$B!K(B
+(5) vwai_pis	優先度継承セマフォ資源獲得		   （機能コード: -261）
+(6) vpreq_pis	優先度継承セマフォ資源獲得（ポーリング）	       （-262）
+(7) vtwai_pis	優先度継承セマフォ資源獲得（タイムアウト有）	       （-263）
 
     vwai_pis: Wait on Priority Inheritance Semaphore
    vpreq_pis: Poll and Request Priority Inheritance Semaphore
    vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
 
-$B!Z%Q%i%a!<%?!J(Bvwai_pis, vpreq_pis $B$N>l9g!K![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+【パラメータ（vwai_pis, vpreq_pis の場合）】
+    ID		pisid		優先度継承セマフォID
 
-$B!Z%Q%i%a!<%?!J(Bvtwai_pis $B$N>l9g!K![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
-    TMO		tmout		$B%?%$%`%"%&%H;XDj(B
+【パラメータ（vtwai_pis の場合）】
+    ID		pisid		優先度継承セマフォID
+    TMO		tmout		タイムアウト指定
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd = vwai_pis(ID pisid);
     ER ercd =vpreq_pis(ID pisid);
     ER ercd =vtwai_pis(ID pisid, TMO tmout);
 
-$B!Z2r@b![(B
-vwai_pis $B$G$O!$(Bpisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$+$i!$;q8;$r3MF@$9$k(B
-$BA`:n$r9T$&!%6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$,3MF@$5$l$F$$$J$$>l9g$K(B
-$B$O!$M%@hEY7Q>5%;%^%U%)$N3MF@$K@.8y$9$k!%$3$N>l9g!$K\%7%9%F%`%3!<%k$NH/(B
-$B9T%?%9%/$OBT$A>uBV$KF~$i$:!$<B9T$r7QB3$9$k!%0lJ}!"BP>]M%@hEY7Q>5%;%^%U%)(B
-$B$,3MF@$5$l$F$$$k>l9g$K$O!$K\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$OBT$A>uBV$K(B
-$BF~$k!%$9$J$o$A!$$=$NM%@hEY7Q>5%;%^%U%)$KBP$9$kBT$A9TNs$K$D$J$,$l$k!%(B
+【解説】
+vwai_pis では，pisid で示された優先度継承セマフォから，資源を獲得する
+操作を行う．具体的には，対象優先度継承セマフォが獲得されていない場合に
+は，優先度継承セマフォの獲得に成功する．この場合，本システムコールの発
+行タスクは待ち状態に入らず，実行を継続する．一方、対象優先度継承セマフォ
+が獲得されている場合には，本システムコールを発行したタスクは待ち状態に
+入る．すなわち，その優先度継承セマフォに対する待ち行列につながれる．
 
-$BK\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$,BT$A>uBV$KF~$k>l9g!$BP>]M%@hEY7Q>5%;(B
-$B%^%U%)$r3MF@$7$F$$$k%?%9%/$,!$H/9T%?%9%/$NM%@hEY$r7Q>5$9$k>l9g$,$"$k!%(B
-$B6qBNE*$K$O!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$,!$H/9T(B
-$B%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g$K!$M%@hEY$N7Q>5$,9T$o$l(B
-$B$k!%(B
+本システムコールを発行したタスクが待ち状態に入る場合，対象優先度継承セ
+マフォを獲得しているタスクが，発行タスクの優先度を継承する場合がある．
+具体的には，優先度継承セマフォを獲得しているタスクの現在優先度が，発行
+タスクの現在優先度よりも低い（値が大きい）場合に，優先度の継承が行われ
+る．
 
-vpreq_pis $B$O!$(Bwai_pis $B$+$iBT$A>uBV$KF~$k5!G=$r<h$j=|$$$?%7%9%F%`%3!<%k(B
-$B$G$"$k!%0lJ}!$(Bvtwai_pis $B$O!$(Bwai_pis $B$K%?%$%`%"%&%H$N5!G=$rIU$12C$($?%7(B
-$B%9%F%`%3!<%k$G$"$j!$(Btmout $B$K$h$jBT$A;~4V$N:GBgCM!J%?%$%`%"%&%HCM!K$r;X(B
-$BDj$9$k$3$H$,$G$-$k!%%]!<%j%s%0$d%?%$%`%"%&%H$N07$$$K$D$$$F$O!$B>$NF14|!&(B
-$BDL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
+vpreq_pis は，wai_pis から待ち状態に入る機能を取り除いたシステムコール
+である．一方，vtwai_pis は，wai_pis にタイムアウトの機能を付け加えたシ
+ステムコールであり，tmout により待ち時間の最大値（タイムアウト値）を指
+定することができる．ポーリングやタイムアウトの扱いについては，他の同期・
+通信オブジェクトと同様である．
 
-twai_pis $B$^$?$O(B vtwai_pis $B$K$h$C$FM%@hEY7Q>5%;%^%U%)BT$A>uBV$KF~$C$?%?(B
-$B%9%/$,!$(Brel_wai $B$NH/9T!$%?%$%`%"%&%H!J(Bvtwai_pis $B$N$_!K!$$J$$$7$OBP>]M%(B
-$B@hEY7Q>5%;%^%U%)$N:o=|$K$h$C$FBT$A2r=|$5$l$k>l9g$K!$$=$NM%@hEY7Q>5%;%^(B
-$B%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;!&JQ99$5$l$k>l9g$,$"$k!%6qBNE*(B
-$B$K$O!$$=$N%?%9%/$N8=:_M%@hEY$,!$BT$A2r=|$5$l$?%?%9%/$NM%@hEY$KEy$7$$>l(B
-$B9g$K!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;$5$l!$$=$N(B
-$B7k2LF@$i$l$?CM$,$=$N%?%9%/$N8=:_M%@hEY$HEy$7$/$J$$>l9g$K!$M%@hEY$NJQ99(B
-$B$,9T$o$l$k!%(B
+twai_pis または vtwai_pis によって優先度継承セマフォ待ち状態に入ったタ
+スクが，rel_wai の発行，タイムアウト（vtwai_pis のみ），ないしは対象優
+先度継承セマフォの削除によって待ち解除される場合に，その優先度継承セマ
+フォを獲得しているタスクの優先度が再計算・変更される場合がある．具体的
+には，そのタスクの現在優先度が，待ち解除されたタスクの優先度に等しい場
+合に，優先度継承セマフォを獲得しているタスクの優先度が再計算され，その
+結果得られた値がそのタスクの現在優先度と等しくない場合に，優先度の変更
+が行われる．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
-    E_PAR	$B%Q%i%a!<%?%(%i!<!J(Btmout <= (-2)$B!K(B
-    E_DLT	$BBT$A%*%V%8%'%/%H$,:o=|$5$l$?!JBT$A$N4V$KBP>]M%@hEY7Q>5(B
-		$B%;%^%U%)$,:o=|!K(B
-    E_RLWAI	$BBT$A>uBV6/@)2r=|!JBT$A$N4V$K(B rel_wai $B$r<u$1IU$1!K(B
-    E_TMOUT	$B%]!<%j%s%0<:GT$^$?$O%?%$%`%"%&%H(B
-    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$^$?$O%G%#%9%Q%C%A6X;_(B
-		$B>uBV$G<B9T!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
+    E_PAR	パラメータエラー（tmout <= (-2)）
+    E_DLT	待ちオブジェクトが削除された（待ちの間に対象優先度継承
+		セマフォが削除）
+    E_RLWAI	待ち状態強制解除（待ちの間に rel_wai を受け付け）
+    E_TMOUT	ポーリング失敗またはタイムアウト
+    E_CTX	コンテキストエラー（タスク独立部またはディスパッチ禁止
+		状態で実行）
 
-(8) vref_pis	$BM%@hEY7Q>5%;%^%U%)>uBV;2>H(B		   $B!J5!G=%3!<%I(B: -260$B!K(B
+(8) vref_pis	優先度継承セマフォ状態参照		   （機能コード: -260）
 
     vref_pis: Refer Priority Inheritance Semaphore Status
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
-    T_RPIS*	pk_rpis		$BM%@hEY7Q>5%;%^%U%)>uBV$rJV$9%Q%1%C%H%"%I%l%9(B
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_RPIS*	pk_rpis		優先度継承セマフォ状態を返すパケットアドレス
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-  pk_rpis $B$NFbMF(B
-    VP		exinf		$B3HD%>pJs(B
-    BOOL_ID	wtsk		$BBT$A%?%9%/$NM-L5(B
-    BOOL_ID	pistsk		$B3MF@%?%9%/$NM-L5(B
+  pk_rpis の内容
+    VP		exinf		拡張情報
+    BOOL_ID	wtsk		待ちタスクの有無
+    BOOL_ID	pistsk		獲得タスクの有無
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
 
-$B!Z2r@b![(B
-pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$N3F<o$N>uBV$r;2>H$7!$%j%?!<%s%Q%i%a!<(B
-$B%?$H$7$FBT$A%?%9%/$NM-L5!J(Bwtsk$B!K!$3MF@%?%9%/$NM-L5!J(Bpistsk$B!K!$3HD%>pJs(B 
-$B!J(Bexinf$B!K$rJV$9!%(B
+【解説】
+pisid で示された優先度継承セマフォの各種の状態を参照し，リターンパラメー
+タとして待ちタスクの有無（wtsk），獲得タスクの有無（pistsk），拡張情報 
+（exinf）を返す．
 
-wtsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$GBT$C$F$$$k%?%9%/$NM-L5$r<($9!%BT$A%?(B
-$B%9%/$,L5$$>l9g$O(B wtsk = FALSE = 0 $B$H$J$k!%BT$A%?%9%/$,$"$k>l9g!$(Bwtsk 
-$B$K$OBT$A9TNs$N@hF,$N%?%9%/$N(B ID $B$rJV$9!%(B
+wtsk は，この優先度継承セマフォで待っているタスクの有無を示す．待ちタ
+スクが無い場合は wtsk = FALSE = 0 となる．待ちタスクがある場合，wtsk 
+には待ち行列の先頭のタスクの ID を返す．
 
-pistsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM-L5$r<($9!%3M(B
-$BF@%?%9%/$,L5$$>l9g$O(B pistsk = FALSE = 0 $B$H$J$k!%3MF@%?%9%/$,$"$k>l9g!$(B
-pistsk $B$K$O3MF@%?%9%/$N(B ID $B$rJV$9!%(B
+pistsk は，この優先度継承セマフォを獲得しているタスクの有無を示す．獲
+得タスクが無い場合は pistsk = FALSE = 0 となる．獲得タスクがある場合，
+pistsk には獲得タスクの ID を返す．
 
-vref_pis $B$GBP>]M%@hEY7Q>5%;%^%U%)$,B8:_$7$J$$>l9g$K$O!$(BE_NOEXS$B%(%i!<$H(B
-$B$J$k!%(B
+vref_pis で対象優先度継承セマフォが存在しない場合には，E_NOEXSエラーと
+なる．
 
-$B$I$s$J>l9g$G$b!$(Bwtsk = FALSE $B$H(B pistsk != FALSE $B$N>/$J$/$H$b0lJ}$O@.$j(B
-$BN)$D!%(B
+どんな場合でも，wtsk = FALSE と pistsk != FALSE の少なくとも一方は成り
+立つ．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
 
 
-$B#3!%;EMM(B2 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$N;EMM(B
+３．仕様2 における優先度継承セマフォ機能の仕様
 
-$B;EMM(B2 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$G$O!$M%@hEY7Q>5%;%^%U%)$r2rJ|$7$?(B
-$B>l9g$K!$%?%9%/$NM%@hEY$r=i4|M%@hEY$KLa$9!%$3$l$O!$B>$NM%@hEY7Q>5%;%^%U%)(B
-$B$r3MF@$7$F$$$k>l9g$K$b0lN'$K9T$o$l$k$N$G!$J#?t$NM%@hEY7Q>5%;%^%U%)$r3M(B
-$BF@$7$F$$$k>l9g$K@5$7$$F0:n$r9T$o$;$k$K$O!$3MF@$7$F$$$k$9$Y$F$NM%@hEY7Q(B
-$B>5%;%^%U%)$r%G%#%9%Q%C%A6X;_>uBV$G0lEY$K2rJ|$9$kI,MW$,$"$k!%(B
+仕様2 における優先度継承セマフォ機能では，優先度継承セマフォを解放した
+場合に，タスクの優先度を初期優先度に戻す．これは，他の優先度継承セマフォ
+を獲得している場合にも一律に行われるので，複数の優先度継承セマフォを獲
+得している場合に正しい動作を行わせるには，獲得しているすべての優先度継
+承セマフォをディスパッチ禁止状態で一度に解放する必要がある．
 
-$BM%@hEY7Q>5%;%^%U%)$r3MF@(B/$B2rJ|$9$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99(B
-$B$7$F$b!$M%@hEY7Q>5%;%^%U%)$N5!G=$K$h$C$FM%@hEY$,JQ99$5$l$k$H!$(Bchg_pri 
-$B$G@_Dj$7$?M%@hEY$OL58z$K$J$k!%$D$^$j!$(Bchg_pri $B$O%?%9%/$N8=:_M%@hEY$r0l(B
-$B;~E*$KJQ99$9$k$b$N$H$$$&$3$H$K$J$k!%M%@hEY7Q>5%;%^%U%)5!G=$N<BAu$K(B 
-chg_pri $B$,;H$o$l$F$$$k$H9M$($k$o$+$j$d$9$$$+$b$7$l$J$$!%(B
+優先度継承セマフォを獲得/解放するタスクの優先度を chg_pri によって変更
+しても，優先度継承セマフォの機能によって優先度が変更されると，chg_pri 
+で設定した優先度は無効になる．つまり，chg_pri はタスクの現在優先度を一
+時的に変更するものということになる．優先度継承セマフォ機能の実装に 
+chg_pri が使われていると考えるわかりやすいかもしれない．
 
-$BM%@hEY7Q>5%;%^%U%)$rBT$C$F$$$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99$7(B
-$B$?>l9g!$$=$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;!&JQ(B
-$B99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$M%@hEY$rJQ99$5$l$?%?%9%/$NJQ998e$NM%@h(B
-$BEY$,!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$h$j$b9b$$!JCM(B
-$B$,>.$5$$!K>l9g$K!$M%@hEY$NJQ99$,9T$o$l$k!%(B
+優先度継承セマフォを待っているタスクの優先度を chg_pri によって変更し
+た場合，その優先度継承セマフォを獲得しているタスクの優先度が再計算・変
+更される場合がある．具体的には，優先度を変更されたタスクの変更後の優先
+度が，優先度継承セマフォを獲得しているタスクの現在優先度よりも高い（値
+が小さい）場合に，優先度の変更が行われる．
 
-(1) vcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.(B			   $B!J5!G=%3!<%I(B: -257$B!K(B
+(1) vcre_pis	優先度継承セマフォ生成			   （機能コード: -257）
 
     vcre_pis: Create Priority Inheritance Semaphore
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
-    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
 
-$B!Z2r@b![(B
-vcre_pis $B$G$O!$(Bpisid $B$G;XDj$5$l$?(B ID$BHV9f$r;}$DM%@hEY7Q>5%;%^%U%)$r@8@.(B
-$B$9$k!%6qBNE*$K$O!$@8@.$9$k%;%^%U%)$KBP$7$F4IM}%V%m%C%/$r3d$jIU$1!$%;%^(B
-$B%U%)$N=i4|CM$r(B 1 $B$K=i4|2=$9$k!%(B
+【解説】
+vcre_pis では，pisid で指定された ID番号を持つ優先度継承セマフォを生成
+する．具体的には，生成するセマフォに対して管理ブロックを割り付け，セマ
+フォの初期値を 1 に初期化する．
 
-ID$BHV9f$N@5Ii$N07$$$d;HMQ$G$-$J$$HO0O!$$=$l$i$N>l9g$N%(%i!<%3!<%I!$3HD%(B
-$B>pJs!J(Bexinf$B!K$N07$$$K$D$$$F$O!$B>$NF14|!&DL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
+ID番号の正負の扱いや使用できない範囲，それらの場合のエラーコード，拡張
+情報（exinf）の扱いについては，他の同期・通信オブジェクトと同様である．
 
-pisatr $B$O!$2<0LB&$,%7%9%F%`B0@-$rI=$7!$>e0LB&$,%$%s%W%j%a%s%H0MB8B0@-(B
-$B$rI=$9!%(Bpisatr $B$N%7%9%F%`B0@-$NItJ,$G$O!$<!$N$h$&$J;XDj$r9T$&!%(B
+pisatr は，下位側がシステム属性を表し，上位側がインプリメント依存属性
+を表す．pisatr のシステム属性の部分では，次のような指定を行う．
 
 	sematr := TA_TPRI
 
-	    TA_TPRI	$BBT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g(B
+	    TA_TPRI	待ちタスクのキューイングは優先度順
 
-$BM%@hEY7Q>5%;%^%U%)$G$O!$BT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g$G$J$$$H0UL#(B
-$B$,$J$$$?$a!$(BFIFO $B%-%e!<%$%s%0$OMQ0U$7$F$$$J$$!%$=$N$?$a!$(BTA_TPRI $B$r;X(B
-$BDj$7$J$/$F$bM%@hEY=g$N%-%e!<%$%s%0$K$J$k$,!$B>$NF14|!&DL?.%*%V%8%'%/%H(B
-$B$H$NE}0l@-$N$?$a$K!$(BTA_TPRI $B$r;XDj$7$F$b$h$$$3$H$K$7$F$$$k!%(B
+優先度継承セマフォでは，待ちタスクのキューイングは優先度順でないと意味
+がないため，FIFO キューイングは用意していない．そのため，TA_TPRI を指
+定しなくても優先度順のキューイングになるが，他の同期・通信オブジェクト
+との統一性のために，TA_TPRI を指定してもよいことにしている．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_RSATR	$BM=LsB0@-!J(Bpisatr $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!JF10l(BID$BHV9f$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,4{$KB8:_!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_RSATR	予約属性（pisatr が不正あるいは利用できない）
+    E_OBJ	オブジェクトの状態が不正（同一ID番号の優先度継承セマフォ
+		が既に存在）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
 
-(2) vvcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.!J(BID$B<+F03dEv!K(B	   $B!J5!G=%3!<%I(B: -259$B!K(B
+(2) vvcre_pis	優先度継承セマフォ生成（ID自動割当）	   （機能コード: -259）
 
     vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
 
-$B!Z%Q%i%a!<%?![(B
-    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
+【パラメータ】
+    T_CPIS*	pk_cpis		優先度継承セマフォ生成情報
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B@8@.$7$?M%@hEY7Q>5%;%^%U%)$N(BID, $B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		生成した優先度継承セマフォのID, エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vvcre_pis(T_CPIS *pk_cpis);
 
-$B!Z2r@b![(B
-ID$BHV9f$r;XDj$;$:$KM%@hEY7Q>5%;%^%U%)$r@8@.$7!$@8@.$7$?M%@hEY7Q>5%;%^%U%)(B
-$B$N(B ID$B!JI,$:@5$NCM!K$r(B ercd $B$KJV$9!%(Bercd $B$,Ii$N>l9g$O!$%(%i!<%3!<%I$rI=(B
-$B$9!%3d$jEv$F2DG=$J(B ID $B$,$J$$>l9g!$(BEV_FULL$B%(%i!<$H$J$k!%$=$NB>$K$D$$$F(B
-$B$O!$(Bvcre_pis $B$HF1$8!%(B
+【解説】
+ID番号を指定せずに優先度継承セマフォを生成し，生成した優先度継承セマフォ
+の ID（必ず正の値）を ercd に返す．ercd が負の場合は，エラーコードを表
+す．割り当て可能な ID がない場合，EV_FULLエラーとなる．その他について
+は，vcre_pis と同じ．
 
-(3) vdel_pis	$BM%@hEY7Q>5%;%^%U%):o=|(B			   $B!J5!G=%3!<%I(B: -258$B!K(B
+(3) vdel_pis	優先度継承セマフォ削除			   （機能コード: -258）
 
     vdel_pis: Delete Priority Inheritance Semaphore
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vdel_pis(ID pisid);
 
-$B!Z2r@b![(B
-pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$r:o=|$9$k!%(B
+【解説】
+pisid で示された優先度継承セマフォを削除する．
 
-$BK\%7%9%F%`%3!<%k$NH/9T$K$h$j!$BP>]M%@hEY7Q>5%;%^%U%)$N4IM}%V%m%C%/MQ$N(B
-$BNN0h$O2rJ|$5$l$k!%$^$?!$$3$N%7%9%F%`%3!<%k$,=*N;$7$?8e$O!$F1$8(B ID$BHV9f(B
-$B$NM%@hEY7Q>5%;%^%U%)$r:F$S@8@.$9$k$3$H$,$G$-$k!%(B
+本システムコールの発行により，対象優先度継承セマフォの管理ブロック用の
+領域は解放される．また，このシステムコールが終了した後は，同じ ID番号
+の優先度継承セマフォを再び生成することができる．
 
-$BBP>]M%@hEY7Q>5%;%^%U%)$K$*$$$F>r7o@.N)$rBT$C$F$$$k%?%9%/$,$"$C$?>l9g$K(B
-$B$b!$K\%7%9%F%`%3!<%k$O@5>o=*N;$9$k$,!$BT$A>uBV$K$"$C$?%?%9%/$K$O%(%i!<(B 
-E_DLT $B$,JV$5$l$k!%(B
+対象優先度継承セマフォにおいて条件成立を待っているタスクがあった場合に
+も，本システムコールは正常終了するが，待ち状態にあったタスクにはエラー 
+E_DLT が返される．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
 
-(4) vsig_pis	$BM%@hEY7Q>5%;%^%U%);q8;JV5Q(B		   $B!J5!G=%3!<%I(B: -264$B!K(B
+(4) vsig_pis	優先度継承セマフォ資源返却		   （機能コード: -264）
 
     vsig_pis: Signal Priority Inheritance Semaphore
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vsig_pis(ID pisid);
 
-$B!Z2r@b![(B
-pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$KBP$7$F!$;q8;$r2rJ|$9$kA`:n$r9T$&!%(B
-$B6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F4{$KBT$C$F$$$k%?%9%/$,$"$l$P!$(B
-$BBT$A9TNs$N@hF,$N%?%9%/$r(B READY$B>uBV$K0\$9!%$3$N>l9g!$$=$NM%@hEY7Q>5%;%^(B
-$B%U%)$O3MF@$5$l$?>uBV$N$^$^$G$"$k!%0lJ}!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F(B
-$BBT$C$F$$$k%?%9%/$,L5$1$l$P!$$=$NM%@hEY7Q>5%;%^%U%)$,2rJ|$5$l$k!%(B
+【解説】
+pisid で示された優先度継承セマフォに対して，資源を解放する操作を行う．
+具体的には，対象優先度継承セマフォに対して既に待っているタスクがあれば，
+待ち行列の先頭のタスクを READY状態に移す．この場合，その優先度継承セマ
+フォは獲得された状態のままである．一方，対象優先度継承セマフォに対して
+待っているタスクが無ければ，その優先度継承セマフォが解放される．
 
-$B$3$N%7%9%F%`%3!<%k$r%?%9%/FHN)It$+$i8F$S=P$9$3$H$O$G$-$J$$!%8F$S=P$7$?(B
-$B>l9g!$(BE_CTX$B%(%i!<$H$J$k!%$^$?!$3MF@$5$l$F$$$J$$!$$J$$$7$O!$B>%?%9%/$K(B
-$B3MF@$5$l$F$$$kM%@hEY7Q>5%;%^%U%)$r2rJ|$7$h$&$H$7$?>l9g!$(BE_OBJ$B%(%i!<$H(B
-$B$J$k!%(B
+このシステムコールをタスク独立部から呼び出すことはできない．呼び出した
+場合，E_CTXエラーとなる．また，獲得されていない，ないしは，他タスクに
+獲得されている優先度継承セマフォを解放しようとした場合，E_OBJエラーと
+なる．
 
-$BM%@hEY7Q>5%;%^%U%)$r2rJ|$9$k$3$H$K$h$j!$%?%9%/$NM%@hEY$O!$I,MW$J>l9g$K(B
-$B=i4|M%@hEY$KLa$5$l$k!%6qBNE*$K$O!$%?%9%/$NM%@hEY$,=i4|M%@hEY$h$j$b9b$$(B
-$B>l9g$K$N$_!$=i4|M%@hEY$KLa$9=hM}$,9T$o$l$k!%(B
+優先度継承セマフォを解放することにより，タスクの優先度は，必要な場合に
+初期優先度に戻される．具体的には，タスクの優先度が初期優先度よりも高い
+場合にのみ，初期優先度に戻す処理が行われる．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
-    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$+$i$NH/9T!K(B
-    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)$,(B
-		$B3MF@$5$l$F$$$J$$!%$^$?$O!$B>$N%?%9%/$,3MF@$7$F$$$k!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
+    E_CTX	コンテキストエラー（タスク独立部からの発行）
+    E_OBJ	オブジェクトの状態が不正（pisid の優先度継承セマフォが
+		獲得されていない．または，他のタスクが獲得している）
 
-(5) vwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@(B		   $B!J5!G=%3!<%I(B: -261$B!K(B
-(6) vpreq_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%]!<%j%s%0!K(B	       $B!J(B-262$B!K(B
-(7) vtwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%?%$%`%"%&%HM-!K(B	       $B!J(B-263$B!K(B
+(5) vwai_pis	優先度継承セマフォ資源獲得		   （機能コード: -261）
+(6) vpreq_pis	優先度継承セマフォ資源獲得（ポーリング）	       （-262）
+(7) vtwai_pis	優先度継承セマフォ資源獲得（タイムアウト有）	       （-263）
 
     vwai_pis: Wait on Priority Inheritance Semaphore
    vpreq_pis: Poll and Request Priority Inheritance Semaphore
    vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
 
-$B!Z%Q%i%a!<%?!J(Bvwai_pis, vpreq_pis $B$N>l9g!K![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+【パラメータ（vwai_pis, vpreq_pis の場合）】
+    ID		pisid		優先度継承セマフォID
 
-$B!Z%Q%i%a!<%?!J(Bvtwai_pis $B$N>l9g!K![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
-    TMO		tmout		$B%?%$%`%"%&%H;XDj(B
+【パラメータ（vtwai_pis の場合）】
+    ID		pisid		優先度継承セマフォID
+    TMO		tmout		タイムアウト指定
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd = vwai_pis(ID pisid);
     ER ercd =vpreq_pis(ID pisid);
     ER ercd =vtwai_pis(ID pisid, TMO tmout);
 
-$B!Z2r@b![(B
-vwai_pis $B$G$O!$(Bpisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$+$i!$;q8;$r3MF@$9$k(B
-$BA`:n$r9T$&!%6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$,3MF@$5$l$F$$$J$$>l9g$K(B
-$B$O!$M%@hEY7Q>5%;%^%U%)$N3MF@$K@.8y$9$k!%$3$N>l9g!$K\%7%9%F%`%3!<%k$NH/(B
-$B9T%?%9%/$OBT$A>uBV$KF~$i$:!$<B9T$r7QB3$9$k!%0lJ}!"BP>]M%@hEY7Q>5%;%^%U%)(B
-$B$,3MF@$5$l$F$$$k>l9g$K$O!$K\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$OBT$A>uBV$K(B
-$BF~$k!%$9$J$o$A!$$=$NM%@hEY7Q>5%;%^%U%)$KBP$9$kBT$A9TNs$K$D$J$,$l$k!%(B
+【解説】
+vwai_pis では，pisid で示された優先度継承セマフォから，資源を獲得する
+操作を行う．具体的には，対象優先度継承セマフォが獲得されていない場合に
+は，優先度継承セマフォの獲得に成功する．この場合，本システムコールの発
+行タスクは待ち状態に入らず，実行を継続する．一方、対象優先度継承セマフォ
+が獲得されている場合には，本システムコールを発行したタスクは待ち状態に
+入る．すなわち，その優先度継承セマフォに対する待ち行列につながれる．
 
-$BK\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$,BT$A>uBV$KF~$k>l9g!$BP>]M%@hEY7Q>5%;(B
-$B%^%U%)$r3MF@$7$F$$$k%?%9%/$,!$H/9T%?%9%/$NM%@hEY$r7Q>5$9$k>l9g$,$"$k!%(B
-$B6qBNE*$K$O!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$,!$H/9T(B
-$B%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g$K!$M%@hEY$N7Q>5$,9T$o$l(B
-$B$k!%(B
+本システムコールを発行したタスクが待ち状態に入る場合，対象優先度継承セ
+マフォを獲得しているタスクが，発行タスクの優先度を継承する場合がある．
+具体的には，優先度継承セマフォを獲得しているタスクの現在優先度が，発行
+タスクの現在優先度よりも低い（値が大きい）場合に，優先度の継承が行われ
+る．
 
-vpreq_pis $B$O!$(Bwai_pis $B$+$iBT$A>uBV$KF~$k5!G=$r<h$j=|$$$?%7%9%F%`%3!<%k(B
-$B$G$"$k!%0lJ}!$(Bvtwai_pis $B$O!$(Bwai_pis $B$K%?%$%`%"%&%H$N5!G=$rIU$12C$($?%7(B
-$B%9%F%`%3!<%k$G$"$j!$(Btmout $B$K$h$jBT$A;~4V$N:GBgCM!J%?%$%`%"%&%HCM!K$r;X(B
-$BDj$9$k$3$H$,$G$-$k!%%]!<%j%s%0$d%?%$%`%"%&%H$N07$$$K$D$$$F$O!$B>$NF14|!&(B
-$BDL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
+vpreq_pis は，wai_pis から待ち状態に入る機能を取り除いたシステムコール
+である．一方，vtwai_pis は，wai_pis にタイムアウトの機能を付け加えたシ
+ステムコールであり，tmout により待ち時間の最大値（タイムアウト値）を指
+定することができる．ポーリングやタイムアウトの扱いについては，他の同期・
+通信オブジェクトと同様である．
 
-twai_pis $B$^$?$O(B vtwai_pis $B$K$h$C$FM%@hEY7Q>5%;%^%U%)BT$A>uBV$KF~$C$?%?(B
-$B%9%/$,!$(Brel_wai $B$NH/9T!$%?%$%`%"%&%H!J(Bvtwai_pis $B$N$_!K!$$J$$$7$OBP>]M%(B
-$B@hEY7Q>5%;%^%U%)$N:o=|$K$h$C$FBT$A2r=|$5$l$?>l9g$G$b!$$=$NM%@hEY7Q>5%;(B
-$B%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$OJQ99$5$l$J$$!%$=$N$?$a!$M%@hEY7Q>5(B
-$B%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,9b$9$.$kCM$K@_Dj$5$l!$$=$N7k2L!$(B
-$BBT$A2r=|$5$l$?%?%9%/$N<B9T$,CY$l$k>l9g$,$"$k!%(B
+twai_pis または vtwai_pis によって優先度継承セマフォ待ち状態に入ったタ
+スクが，rel_wai の発行，タイムアウト（vtwai_pis のみ），ないしは対象優
+先度継承セマフォの削除によって待ち解除された場合でも，その優先度継承セ
+マフォを獲得しているタスクの優先度は変更されない．そのため，優先度継承
+セマフォを獲得しているタスクの優先度が高すぎる値に設定され，その結果，
+待ち解除されたタスクの実行が遅れる場合がある．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
-    E_PAR	$B%Q%i%a!<%?%(%i!<!J(Btmout <= (-2)$B!K(B
-    E_DLT	$BBT$A%*%V%8%'%/%H$,:o=|$5$l$?!JBT$A$N4V$KBP>]M%@hEY7Q>5(B
-		$B%;%^%U%)$,:o=|!K(B
-    E_RLWAI	$BBT$A>uBV6/@)2r=|!JBT$A$N4V$K(B rel_wai $B$r<u$1IU$1!K(B
-    E_TMOUT	$B%]!<%j%s%0<:GT$^$?$O%?%$%`%"%&%H(B
-    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$^$?$O%G%#%9%Q%C%A6X;_(B
-		$B>uBV$G<B9T!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）
+    E_PAR	パラメータエラー（tmout <= (-2)）
+    E_DLT	待ちオブジェクトが削除された（待ちの間に対象優先度継承
+		セマフォが削除）
+    E_RLWAI	待ち状態強制解除（待ちの間に rel_wai を受け付け）
+    E_TMOUT	ポーリング失敗またはタイムアウト
+    E_CTX	コンテキストエラー（タスク独立部またはディスパッチ禁止
+		状態で実行）
 
-(8) vref_pis	$BM%@hEY7Q>5%;%^%U%)>uBV;2>H(B		   $B!J5!G=%3!<%I(B: -260$B!K(B
+(8) vref_pis	優先度継承セマフォ状態参照		   （機能コード: -260）
 
     vref_pis: Refer Priority Inheritance Semaphore Status
 
-$B!Z%Q%i%a!<%?![(B
-    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
-    T_RPIS*	pk_rpis		$BM%@hEY7Q>5%;%^%U%)>uBV$rJV$9%Q%1%C%H%"%I%l%9(B
+【パラメータ】
+    ID		pisid		優先度継承セマフォID
+    T_RPIS*	pk_rpis		優先度継承セマフォ状態を返すパケットアドレス
 
-$B!Z%j%?!<%s%Q%i%a!<%?![(B
-    ER		ercd		$B%(%i!<%3!<%I(B
+【リターンパラメータ】
+    ER		ercd		エラーコード
 
-  pk_rpis $B$NFbMF(B
-    VP		exinf		$B3HD%>pJs(B
-    BOOL_ID	wtsk		$BBT$A%?%9%/$NM-L5(B
-    BOOL_ID	pistsk		$B3MF@%?%9%/$NM-L5(B
+  pk_rpis の内容
+    VP		exinf		拡張情報
+    BOOL_ID	wtsk		待ちタスクの有無
+    BOOL_ID	pistsk		獲得タスクの有無
 
-$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
+【C言語インタフェース】
     ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
 
-$B!Z2r@b![(B
-pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$N3F<o$N>uBV$r;2>H$7!$%j%?!<%s%Q%i%a!<(B
-$B%?$H$7$FBT$A%?%9%/$NM-L5!J(Bwtsk$B!K!$3MF@%?%9%/$NM-L5!J(Bpistsk$B!K!$3HD%>pJs(B 
-$B!J(Bexinf$B!K$rJV$9!%(B
+【解説】
+pisid で示された優先度継承セマフォの各種の状態を参照し，リターンパラメー
+タとして待ちタスクの有無（wtsk），獲得タスクの有無（pistsk），拡張情報 
+（exinf）を返す．
 
-wtsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$GBT$C$F$$$k%?%9%/$NM-L5$r<($9!%BT$A%?(B
-$B%9%/$,L5$$>l9g$O(B wtsk = FALSE = 0 $B$H$J$k!%BT$A%?%9%/$,$"$k>l9g!$(Bwtsk 
-$B$K$OBT$A9TNs$N@hF,$N%?%9%/$N(B ID $B$rJV$9!%(B
+wtsk は，この優先度継承セマフォで待っているタスクの有無を示す．待ちタ
+スクが無い場合は wtsk = FALSE = 0 となる．待ちタスクがある場合，wtsk 
+には待ち行列の先頭のタスクの ID を返す．
 
-pistsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM-L5$r<($9!%3M(B
-$BF@%?%9%/$,L5$$>l9g$O(B pistsk = FALSE = 0 $B$H$J$k!%3MF@%?%9%/$,$"$k>l9g!$(B
-pistsk $B$K$O3MF@%?%9%/$N(B ID $B$rJV$9!%(B
+pistsk は，この優先度継承セマフォを獲得しているタスクの有無を示す．獲
+得タスクが無い場合は pistsk = FALSE = 0 となる．獲得タスクがある場合，
+pistsk には獲得タスクの ID を返す．
 
-vref_pis $B$GBP>]M%@hEY7Q>5%;%^%U%)$,B8:_$7$J$$>l9g$K$O!$(BE_NOEXS$B%(%i!<$H(B
-$B$J$k!%(B
+vref_pis で対象優先度継承セマフォが存在しない場合には，E_NOEXSエラーと
+なる．
 
-$B$I$s$J>l9g$G$b!$(Bwtsk = FALSE $B$H(B pistsk != FALSE $B$N>/$J$/$H$b0lJ}$O@.$j(B
-$BN)$D!%(B
+どんな場合でも，wtsk = FALSE と pistsk != FALSE の少なくとも一方は成り
+立つ．
 
-$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
-    E_OK	$B@5>o=*N;(B
-    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
-    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
-		$B$,B8:_$7$F$$$J$$!K(B
-    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
-		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+【エラーコード（ercd）】
+    E_OK	正常終了
+    E_ID	不正ID番号（pisid が不正あるいは利用できない）
+    E_NOEXS	オブジェクトが存在していない（pisid の優先度継承セマフォ
+		が存在していない）
+    E_OACV	オブジェクトアクセス権違反（システムオブジェクトをアク
+		セスする権利を持たない環境からの発行で pisid < (-4)）

@@ -37,12 +37,12 @@
 #include <itis_syslog.h>
 
 /*
- *  $B%(%i!<%a%C%;!<%8@8@.MQ(B
+ *  エラーメッセージ生成用
  */
 extern char	*itron_strerror(ER);
 
 /*
- *  $B%(%i!<%a%C%;!<%8$r=PNO$7!$%?%9%/$+$iH4$1$k(B
+ *  エラーメッセージを出力し，タスクから抜ける
  */
 void
 panic(const char *prompt, ER ercd)

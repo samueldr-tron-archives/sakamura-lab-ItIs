@@ -37,7 +37,7 @@
 #define	_ITIS_SCINT_
 
 /*
- *  CPU$B0MB8$N%7%9%F%`%3!<%kL>(B/$B%Q%i%a!<%?L>$N@_Dj(B
+ *  CPU依存のシステムコール名/パラメータ名の設定
  */
 #define chg_iXX	chg_ims
 #define ref_iXX	ref_ims

@@ -37,31 +37,31 @@
 #define _SYSTASK_
 
 /*
- *  ItIs$B%7%9%F%`%?%9%/(B $BI8=`%$%s%/%k!<%I%U%!%$%k(B
+ *  ItIsシステムタスク 標準インクルードファイル
  */
 
 /*
- *  ItIs$B%"%W%j%1!<%7%g%sI8=`%$%s%/%k!<%I%U%!%$%k(B
+ *  ItIsアプリケーション標準インクルードファイル
  */
 #include <itis_services.h>
 #include <itis_syslog.h>
 
 /*
- *  $B%7%9%F%`9=@.@_Dj%U%!%$%k(B
+ *  システム構成設定ファイル
  */
 #include "config.h"
 #include "cpu_conf.h"
 #include "sys_conf.h"
 
 /*
- *  $B3HD%(BSVC $B$r;H$&$+$I$&$+$NDj5A(B
+ *  拡張SVC を使うかどうかの定義
  */
 #ifdef NUM_SVC
 #define USE_EXTENDED_SVC
 #endif
 
 /*
- *  $B3HD%(BSVC $B4X78$NDj5A(B
+ *  拡張SVC 関係の定義
  */
 
 #ifdef USE_EXTENDED_SVC
@@ -73,7 +73,7 @@
 #endif /* USE_EXTENDED_SVC */
 
 /*
- *  $B3HD%(BSVC $B$N=PF~8}$N%G%U%)%k%H=hM}(B
+ *  拡張SVC の出入口のデフォルト処理
  */
 #ifndef ENTER_EXTENDED_SVC
 #define ENTER_EXTENDED_SVC	((void) 0)
@@ -84,18 +84,18 @@
 #endif
 
 /*
- *  $B%7%9%F%`$GMxMQ$9$k;q8;$NDj5A(B
+ *  システムで利用する資源の定義
  */
 
 /*
- *  $B=i4|2=%?%9%/4XO"$NDj5A(B
+ *  初期化タスク関連の定義
  */
 extern void	init_task(int);
 #define TSK_INIT_CTSK \
 		((T_CTSK) { 0, TA_HLNG, init_task, MIN_PRI, 8192 })
 
 /*
- *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P4XO"$NDj5A(B
+ *  シリアルインタフェースドライバ関連の定義
  */
 extern void	serial_startup(int portid);
 extern int	serial_init(int portid);
@@ -105,7 +105,7 @@ extern int	serial_write(int portid, char *buf, unsigned int len);
 extern int	serial_ioctl(int portid, int req, int arg);
 
 /*
- *  $B%7%9%F%`%m%0%?%9%/4XO"$NDj5A(B
+ *  システムログタスク関連の定義
  */
 extern void	logtask_startup(int portid);
 
@@ -113,20 +113,20 @@ extern void	log_task(int);
 #define TSK_LOG_CTSK \
 		((T_CTSK) { 0, TA_HLNG, log_task, 5, 8192 })
 
-#define	MBF_LOG_BUFSZ	2048		/* $B%m%0MQ%a%C%;!<%8%P%C%U%!$N%5%$%:(B */
-#define	MBF_LOG_MAXMSZ	256		/* $B%m%0%a%C%;!<%8$N:GBgD9(B */
+#define	MBF_LOG_BUFSZ	2048		/* ログ用メッセージバッファのサイズ */
+#define	MBF_LOG_MAXMSZ	256		/* ログメッセージの最大長 */
 #define MBF_LOG_CMBF \
 		((T_CMBF) { 0, 0, MBF_LOG_BUFSZ, MBF_LOG_MAXMSZ })
 
 /*
- *  $B=i4|5/F0%?%9%/4XO"$NDj5A(B
+ *  初期起動タスク関連の定義
  */
 extern void	first_task(int);
 #define TSK_FIRST_CTSK \
 		((T_CTSK) { 0, TA_HLNG, first_task, 20, 8192 })
 
 /*
- *  BSD UNIX$BMQ(B $B%N%s%V%m%C%-%s%0(BI/O $B4XO"$NDj5A(B
+ *  BSD UNIX用 ノンブロッキングI/O 関連の定義
  */
 extern void	bsd_sigio_startup(void);
 

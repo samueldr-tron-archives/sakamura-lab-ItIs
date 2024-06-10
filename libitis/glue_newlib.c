@@ -34,9 +34,9 @@
  */
 
 /*
- *  newlib $BBP1~$NDc%l%Y%kF~=PNO%k!<%A%s(B
+ *  newlib 対応の低レベル入出力ルーチン
  *
- *  ItIs $BMQ$N(B libgloss $B$KBP1~$7$F$$$k!%(B
+ *  ItIs 用の libgloss に対応している．
  */
 
 #ifdef LINK_KERNEL

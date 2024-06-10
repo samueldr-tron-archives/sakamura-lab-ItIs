@@ -37,14 +37,14 @@
 #define _H32SBC_
 
 /*
- *  H32SBC$B%7%9%F%`(B CPU$B%\!<%I$N%O!<%I%&%'%";q8;$NDj5A(B
+ *  H32SBCシステム CPUボードのハードウェア資源の定義
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
+typedef volatile byte	IOREG;		/* I/Oレジスタの型 */
 
 /*
- *  ACI (Asynchronous Communication Interface) $B$N%l%8%9%?(B
+ *  ACI (Asynchronous Communication Interface) のレジスタ
  */
 
 #define	ACI0_DATA	((IOREG *) 0xffef0803)
@@ -58,7 +58,7 @@ typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
 #define	ACI1_COMMAND	((IOREG *) 0xffef0c0f)
 
 /*
- *  IRC (Interrupt Request Controller) $B$N%l%8%9%?(B
+ *  IRC (Interrupt Request Controller) のレジスタ
  */
 
 #define	IRC_LMR(n)	((IOREG *) (0xffef03ff+(n)*4))
@@ -71,23 +71,23 @@ typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
 #define	IRC_BMR		((IOREG *) 0xffef0433)
 #define	IRC_BRR		((IOREG *) 0xffef0437)
 
-#define	LIR0_BIT	0x01		/* $B%m!<%+%k3d9~$_(B 0 */
-#define	LIR1_BIT	0x02		/* $B%m!<%+%k3d9~$_(B 1 */
-#define	LIR2_BIT	0x04		/* $B%m!<%+%k3d9~$_(B 2 */
-#define	LIR3_BIT	0x08		/* $B%m!<%+%k3d9~$_(B 3 */
-#define	LIR4_BIT	0x10		/* $B%m!<%+%k3d9~$_(B 4 */
-#define	LIR5_BIT	0x20		/* $B%m!<%+%k3d9~$_(B 5 */
-#define	LIR6_BIT	0x40		/* $B%m!<%+%k3d9~$_(B 6 */
+#define	LIR0_BIT	0x01		/* ローカル割込み 0 */
+#define	LIR1_BIT	0x02		/* ローカル割込み 1 */
+#define	LIR2_BIT	0x04		/* ローカル割込み 2 */
+#define	LIR3_BIT	0x08		/* ローカル割込み 3 */
+#define	LIR4_BIT	0x10		/* ローカル割込み 4 */
+#define	LIR5_BIT	0x20		/* ローカル割込み 5 */
+#define	LIR6_BIT	0x40		/* ローカル割込み 6 */
 
-#define	BIR0_BIT	0x01		/* $B%P%93d9~$_(B 0 */
-#define	BIR1_BIT	0x02		/* $B%P%93d9~$_(B 1 */
-#define	BIR2_BIT	0x04		/* $B%P%93d9~$_(B 2 */
-#define	BIR3_BIT	0x08		/* $B%P%93d9~$_(B 3 */
-#define	BIR4_BIT	0x10		/* $B%P%93d9~$_(B 4 */
-#define	BIR5_BIT	0x20		/* $B%P%93d9~$_(B 5 */
-#define	BIR6_BIT	0x40		/* $B%P%93d9~$_(B 6 */
+#define	BIR0_BIT	0x01		/* バス割込み 0 */
+#define	BIR1_BIT	0x02		/* バス割込み 1 */
+#define	BIR2_BIT	0x04		/* バス割込み 2 */
+#define	BIR3_BIT	0x08		/* バス割込み 3 */
+#define	BIR4_BIT	0x10		/* バス割込み 4 */
+#define	BIR5_BIT	0x20		/* バス割込み 5 */
+#define	BIR6_BIT	0x40		/* バス割込み 6 */
 
-#define	INT_VECTOR(n)	(0x40+(n))	/* $B%l%Y%k(Bn $B$N3d9~$_$N%Y%/%?HV9f(B */
+#define	INT_VECTOR(n)	(0x40+(n))	/* レベルn の割込みのベクタ番号 */
 
 Inline void
 cpu_wait_irc(void)
@@ -137,7 +137,7 @@ irc_read(IOREG *addr)
 }
 
 /*
- *  PI/T (Parallel Interface Timer) $B$N%l%8%9%?(B
+ *  PI/T (Parallel Interface Timer) のレジスタ
  */
 
 #define	PIT_PGCR	((IOREG *) 0xffef0003)
@@ -169,7 +169,7 @@ irc_read(IOREG *addr)
 #define	PIT_TSR		((IOREG *) 0xffef006b)
 
 /*
- *  $BDcB.$N(B I/O$B%G%P%$%9$rA`:n$9$k$?$a$N4X?t(B
+ *  低速の I/Oデバイスを操作するための関数
  */
 
 Inline void
@@ -208,7 +208,7 @@ io_and_assign(IOREG *addr, byte val)
 }
 
 /*
- *  EMS $B%b%K%?8F$S=P$7%k!<%A%s(B
+ *  EMS モニタ呼び出しルーチン
  */
 
 Inline void

@@ -38,25 +38,25 @@
 #include "task.h"
 
 /*
- *  $B%m%0%?%9%/$NJQ?t(B
+ *  ログタスクの変数
  *
- *  $B%?%9%/$NJQ?t$r%+!<%M%k$,;2>H$9$k$H$$$&Nc30E*$J=hM}$K$J$C$F$$$k!%(B
+ *  タスクの変数をカーネルが参照するという例外的な処理になっている．
  */
-extern int	logtask_alive;		/* $B%m%0%?%9%/$,F0$$$F$$$k$+(B */
-extern int	log_msg_maxmsz;		/* $B%m%0%a%C%;!<%8$N:GBgD9(B */
+extern int	logtask_alive;		/* ログタスクが動いているか */
+extern int	log_msg_maxmsz;		/* ログメッセージの最大長 */
 
 /*
- *  $B%7%9%F%`%m%0MQ%a%C%;!<%8%P%C%U%!$X$NAw?.(B (messagebuf.c)
+ *  システムログ用メッセージバッファへの送信 (messagebuf.c)
  */
 extern ER	log_snd_mbf(VP msg, INT msgsz);
 
 /*
- *  $B%+!<%M%kMQ4J0W(B vsprintf$B4X?t(B (vsprintf.c)
+ *  カーネル用簡易 vsprintf関数 (vsprintf.c)
  */
 extern int	itis_vsprintf(char *buf, const char *format, va_list ap);
 
 /*
- *  $B%+!<%M%kMQ%7%9%F%`%m%0=PNOMQ%i%$%V%i%j(B
+ *  カーネル用システムログ出力用ライブラリ
  */
 
 static int	i_logmask = LOG_UPTO(LOG_NOTICE);
@@ -66,10 +66,10 @@ static int	i_logmask = LOG_UPTO(LOG_NOTICE);
 static char	i_syslog_buf[FORMAT_BUFSIZ];
 
 /*
- *  $B%m%0%a%C%;!<%8$N=PNO(B
+ *  ログメッセージの出力
  *
- *  $B%m%0%?%9%/$,F0$$$F$$$k>l9g$O!$%m%0%a%C%;!<%8%P%C%U%!$XAw$k!%F0$$$F(B
- *  $B$$$J$$>l9g$O!$D>@\Dc%l%Y%k$N=PNO%k!<%A%s$r;H$C$F=PNO$9$k!%(B
+ *  ログタスクが動いている場合は，ログメッセージバッファへ送る．動いて
+ *  いない場合は，直接低レベルの出力ルーチンを使って出力する．
  */
 static void
 i_syslog_send(const char *string, int len)
@@ -96,7 +96,7 @@ i_syslog_send(const char *string, int len)
 }
 
 /*
- *  $B%+!<%M%kMQ(B syslog $B4X?tK\BN(B
+ *  カーネル用 syslog 関数本体
  */
 void
 i_syslog(int priority, const char *format, ...)
@@ -118,7 +118,7 @@ i_syslog(int priority, const char *format, ...)
 }
 
 /*
- *  $B%+!<%M%kMQ$N(B assert$B%^%/%m$N%a%C%;!<%8=PNO(B
+ *  カーネル用の assertマクロのメッセージ出力
  */
 
 #ifndef NDEBUG

@@ -36,11 +36,11 @@
 #define	_M68K_INSN_
 
 /*
- *  $B@)8f%l%8%9%?$NA`:n4X?t(B
+ *  制御レジスタの操作関数
  */
 
 /*
- *  SR $B$N8=:_CM$NFI$_=P$7(B
+ *  SR の現在値の読み出し
  */
 Inline VH
 current_sr(void)
@@ -52,12 +52,12 @@ current_sr(void)
 }
 
 /*
- *  SR $B$N8=:_CM$NJQ99(B
+ *  SR の現在値の変更
  *
- *  clobber$B%j%9%H$K(B memory $B$rF~$l$F$$$k$N$O!$(Bset_sr $B$ND>8e$K%?%9%/%G%#(B
- *  $B%9%Q%C%A$,5/$3$j!$M=4|$7$J$$%a%b%j%(%j%"$,=q$-49$($i$l$k2DG=@-$,$"(B
- *  $B$k$3$H$r%3%s%Q%$%i$KCN$i$;$k$?$a$G$"$k!%6qBNE*$K$O!$%(%i!<%3!<%I$r(B
- *  $BF~$l$kJQ?t$,LdBj$K$J$k!%(B
+ *  clobberリストに memory を入れているのは，set_sr の直後にタスクディ
+ *  スパッチが起こり，予期しないメモリエリアが書き換えられる可能性があ
+ *  ることをコンパイラに知らせるためである．具体的には，エラーコードを
+ *  入れる変数が問題になる．
  */
 Inline void
 set_sr(VH sr)
@@ -66,7 +66,7 @@ set_sr(VH sr)
 }
 
 /*
- *  $B3d9~$_%^%9%/>uBV$rFbItI=8=$GJV$9!%(B
+ *  割込みマスク状態を内部表現で返す．
  */
 Inline INT
 current_intmask(void)
@@ -75,7 +75,7 @@ current_intmask(void)
 }
 
 /*
- *  NMI $B$r=|$/$9$Y$F$N3d9~$_$r6X;_$9$k!%(B
+ *  NMI を除くすべての割込みを禁止する．
  */
 Inline void
 disint(void)
@@ -84,8 +84,8 @@ disint(void)
 }
 
 /*
- *  current_intmask $B$,JV$7$?3d9~$_%^%9%/>uBV$rEO$7$F!$3d9~$_6X;_A0$N>u(B
- *  $BBV$KLa$9!%(B
+ *  current_intmask が返した割込みマスク状態を渡して，割込み禁止前の状
+ *  態に戻す．
  */
 Inline void
 enaint(INT intmask)
@@ -94,15 +94,15 @@ enaint(INT intmask)
 }
 
 /*
- *  intmask $B$+$i!$(BCPU$B%m%C%/Cf$+$I$&$+$rH=JL$9$k!%%m%C%/Cf$G$"$k>l9g$K(B
- *  $B??$H$J$k!%(B
+ *  intmask から，CPUロック中かどうかを判別する．ロック中である場合に
+ *  真となる．
  */
 #define intmask_lock(intmask)	((intmask) > 0)
 
 /*
- *  IPM $B$N8=:_CM$NFI$_=P$7(B
+ *  IPM の現在値の読み出し
  *
- *  IPM $B$NCM$H$7$F!$(B0 $B0J>e(B 7 $B0J2<$NCM$,JV$k!%(B
+ *  IPM の値として，0 以上 7 以下の値が返る．
  */
 Inline INT
 current_ipm(void)
@@ -111,9 +111,9 @@ current_ipm(void)
 }
 
 /*
- *  IPM $B$N8=:_CM$NJQ99(B
+ *  IPM の現在値の変更
  *
- *  ipm $B$O!$(B0 $B0J>e(B 7 $B0J2<$G$"$k$3$H!%(B
+ *  ipm は，0 以上 7 以下であること．
  */
 Inline void
 set_ipm(INT ipm)
@@ -122,27 +122,27 @@ set_ipm(INT ipm)
 }
 
 /*
- *  $BNc304XO"$NDj5A(B
+ *  例外関連の定義
  */
 
-#define EXCVEC_AFAULT	0x02		/* Access Fault $B$N%Y%/%?HV9f(B */
+#define EXCVEC_AFAULT	0x02		/* Access Fault のベクタ番号 */
 
-#define EXCVEC_TRAP1	0x21		/* TRAP #1 $B$N%Y%/%?HV9f(B */
-#define EXCVEC_TRAP2	0x22		/* TRAP #2 $B$N%Y%/%?HV9f(B */
-#define EXCVEC_TRAP6	0x26		/* TRAP #6 $B$N%Y%/%?HV9f(B */
-#define EXCVEC_TRAP7	0x27		/* TRAP #7 $B$N%Y%/%?HV9f(B */
+#define EXCVEC_TRAP1	0x21		/* TRAP #1 のベクタ番号 */
+#define EXCVEC_TRAP2	0x22		/* TRAP #2 のベクタ番号 */
+#define EXCVEC_TRAP6	0x26		/* TRAP #6 のベクタ番号 */
+#define EXCVEC_TRAP7	0x27		/* TRAP #7 のベクタ番号 */
 
 /*
- *  $BNc30%Y%/%?%F!<%V%k$N9=B$$NDj5A(B
+ *  例外ベクタテーブルの構造の定義
  */
 typedef struct exc_vector_entry {
-	FP	exchdr;			/* $BNc30%O%s%I%i$N%"%I%l%9(B */
+	FP	exchdr;			/* 例外ハンドラのアドレス */
 } EXCVE;
 
 /*
- *  $B%Y%/%?%Y!<%9%l%8%9%?(B (VBR) $B$N@_Dj(B
+ *  ベクタベースレジスタ (VBR) の設定
  *
- *  $B=i4|2==hM}$NCf$G;H$&$?$a$N4X?t!%(B
+ *  初期化処理の中で使うための関数．
  */
 Inline void
 set_vbr(EXCVE *vbr)
@@ -151,11 +151,11 @@ set_vbr(EXCVE *vbr)
 }
 
 /*
- *  $B%Y%/%?%Y!<%9%l%8%9%?(B (VBR) $B$N8=:_CM$NFI$_=P$7(B
+ *  ベクタベースレジスタ (VBR) の現在値の読み出し
  *
- *  EXCVT_ITIS $B$,Dj5A$5$l$F$$$k;~$O!$=i4|2==hM}$NCf$G(B VBR $B$r(B EXCVT_ITIS
- *  $B$K@_Dj$9$k$N$G!$(BEXCVT_ITIS $B$rJV$;$P$h$$!%$=$&$G$J$$>l9g$O!$(BCPU $B$N(B 
- *  VBR $B%l%8%9%?$rFI$_=P$9!%(B
+ *  EXCVT_ITIS が定義されている時は，初期化処理の中で VBR を EXCVT_ITIS
+ *  に設定するので，EXCVT_ITIS を返せばよい．そうでない場合は，CPU の 
+ *  VBR レジスタを読み出す．
  */
 #ifdef EXCVT_ITIS
 #define current_vbr()	((EXCVE *) EXCVT_ITIS)
@@ -173,9 +173,9 @@ Inline EXCVE
 #endif /* EXCVT_ITIS */
 
 /*
- *  $BNc30%O%s%I%i$N@_Dj(B
+ *  例外ハンドラの設定
  *
- *  $B%Y%/%H%kHV9f(B excvec $B$NNc30%O%s%I%i3+;OHVCO$r(B exchdr $B$K@_Dj$9$k!%(B
+ *  ベクトル番号 excvec の例外ハンドラ開始番地を exchdr に設定する．
  */
 Inline void
 define_exc(INT excvec, FP exchdr)
@@ -186,10 +186,10 @@ define_exc(INT excvec, FP exchdr)
 }
 
 /*
- *  $B%a%b%j%V%m%C%/A`:n%i%$%V%i%j(B
+ *  メモリブロック操作ライブラリ
  *
- *  $B4X?t$N;EMM$O!$(BANSI C $B%i%$%V%i%j$N;EMM$HF1$8!%I8=`%i%$%V%i%j$N$b$N$r(B
- *  $B;H$C$?J}$,8zN($,NI$$2DG=@-$,$"$k!%(B
+ *  関数の仕様は，ANSI C ライブラリの仕様と同じ．標準ライブラリのものを
+ *  使った方が効率が良い可能性がある．
  */
 
 Inline VP

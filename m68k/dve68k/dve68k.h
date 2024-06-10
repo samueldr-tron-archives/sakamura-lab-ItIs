@@ -36,15 +36,15 @@
 #define _DVE68K_
 
 /*
- *  DVE68K/40 CPU$B%\!<%I$N%O!<%I%&%'%";q8;$NDj5A(B
+ *  DVE68K/40 CPUボードのハードウェア資源の定義
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
+typedef volatile byte	IOREG;		/* I/Oレジスタの型 */
 typedef volatile int	LIOREG;
 
 /*
- *  $BDcB.$N(B I/O$B%G%P%$%9$rA`:n$9$k$?$a$N4X?t(B
+ *  低速の I/Oデバイスを操作するための関数
  */
 
 Inline void
@@ -74,7 +74,7 @@ io_write(IOREG *addr, byte val)
 }
 
 /*
- *  DGA-001 $B$N%l%8%9%?(B
+ *  DGA-001 のレジスタ
  */
 
 #define DGA_CSR0_1	((IOREG *) 0xfff44001)
@@ -94,22 +94,22 @@ io_write(IOREG *addr, byte val)
 #define DGA_IFR3	((LIOREG *) 0xfff4407c)
 
 /*
- *  DGA $B$N3d9~$_%l%Y%k@_Dj$N$?$a$NDj5A(B
+ *  DGA の割込みレベル設定のための定義
  */
 
-#define	IRQ_NMI		(0x7)		/* $B%N%s%^%9%+%V%k3d9~$_(B */
-#define	IRQ_LEVEL6	(0x6)		/* $B3d9~$_%l%Y%k(B6 */
-#define	IRQ_LEVEL5	(0x5)		/* $B3d9~$_%l%Y%k(B5 */
-#define	IRQ_LEVEL4	(0x4)		/* $B3d9~$_%l%Y%k(B4 */
-#define	IRQ_LEVEL3	(0x3)		/* $B3d9~$_%l%Y%k(B3 */
-#define	IRQ_LEVEL2	(0x2)		/* $B3d9~$_%l%Y%k(B2 */
-#define	IRQ_LEVEL1	(0x1)		/* $B3d9~$_%l%Y%k(B1 */
+#define	IRQ_NMI		(0x7)		/* ノンマスカブル割込み */
+#define	IRQ_LEVEL6	(0x6)		/* 割込みレベル6 */
+#define	IRQ_LEVEL5	(0x5)		/* 割込みレベル5 */
+#define	IRQ_LEVEL4	(0x4)		/* 割込みレベル4 */
+#define	IRQ_LEVEL3	(0x3)		/* 割込みレベル3 */
+#define	IRQ_LEVEL2	(0x2)		/* 割込みレベル2 */
+#define	IRQ_LEVEL1	(0x1)		/* 割込みレベル1 */
 
-#define ABTIL_BIT	(24)		/* $B%"%\!<%H3d9~$_(B */
-#define SQRIL_BIT	(8)		/* SRQ $B3d9~$_(B */
+#define ABTIL_BIT	(24)		/* アボート割込み */
+#define SQRIL_BIT	(8)		/* SRQ 割込み */
 
-#define TT0IL_BIT	(16)		/* $B%?%$%^(B0 $B3d9~$_(B */
-#define GP0IL_BIT	(0)		/* $B%7%j%"%k(BI/O $B3d9~$_(B */
+#define TT0IL_BIT	(16)		/* タイマ0 割込み */
+#define GP0IL_BIT	(0)		/* シリアルI/O 割込み */
 
 Inline void
 dga_set_ilv(LIOREG *addr, int shift, int val)
@@ -118,30 +118,30 @@ dga_set_ilv(LIOREG *addr, int shift, int val)
 } 
 
 /*
- *  $B3d9~$_%Y%/%H%k$NDj5A(B
+ *  割込みベクトルの定義
  */
 
-#define	G0I_VEC		(0x40)		/* $B%0%k!<%W(B0 $B3d9~$_%Y%/%H%k(B */
-#define	G1I_VEC		(0x48)		/* $B%0%k!<%W(B1 $B3d9~$_%Y%/%H%k(B */
-#define	SWI_VEC		(0X50)		/* $B%=%U%H%&%'%"3d9~$_%Y%/%H%k(B */
-#define	SPRI_VEC	(0x40)		/* $B%9%W%j%"%93d9~$_%Y%/%H%k(B */
+#define	G0I_VEC		(0x40)		/* グループ0 割込みベクトル */
+#define	G1I_VEC		(0x48)		/* グループ1 割込みベクトル */
+#define	SWI_VEC		(0X50)		/* ソフトウェア割込みベクトル */
+#define	SPRI_VEC	(0x40)		/* スプリアス割込みベクトル */
 
-#define ABT_VEC		(G0I_VEC + 6)	/* $B%"%\!<%H3d9~$_%Y%/%H%k(B */
-#define SQR_VEC		(G0I_VEC + 2)	/* SQR $B3d9~$_%Y%/%H%k(B */
-#define	TT0_VEC		(G1I_VEC + 4)	/* $B%?%$%^(B0 $B3d9~$_%Y%/%H%k(B */
-#define	GP0_VEC		(G1I_VEC + 0)	/* $B%7%j%"%k(BI/O $B3d9~$_%Y%/%H%k(B */
+#define ABT_VEC		(G0I_VEC + 6)	/* アボート割込みベクトル */
+#define SQR_VEC		(G0I_VEC + 2)	/* SQR 割込みベクトル */
+#define	TT0_VEC		(G1I_VEC + 4)	/* タイマ0 割込みベクトル */
+#define	GP0_VEC		(G1I_VEC + 0)	/* シリアルI/O 割込みベクトル */
 
 /*
- *  $B3d9~$_@)8f%S%C%H$NDj5A(B
+ *  割込み制御ビットの定義
  */
 
-#define ABT_BIT		(0x40000000)	/* $B%"%\!<%H3d9~$_%S%C%H(B */
-#define SQR_BIT		(0x04000000)	/* SQR $B3d9~$_%S%C%H(B */
-#define	TT0_BIT		(0x00100000)	/* $B%?%$%^(B0 $B3d9~$_%S%C%H(B */
-#define	GP0_BIT		(0x00010000)	/* $B%7%j%"%k(BI/O $B3d9~$_%S%C%H(B */
+#define ABT_BIT		(0x40000000)	/* アボート割込みビット */
+#define SQR_BIT		(0x04000000)	/* SQR 割込みビット */
+#define	TT0_BIT		(0x00100000)	/* タイマ0 割込みビット */
+#define	GP0_BIT		(0x00010000)	/* シリアルI/O 割込みビット */
 
 /*
- *  MPSC ($B&L(BPD72001-11) $B$N%l%8%9%?(B
+ *  MPSC (μPD72001-11) のレジスタ
  */
 
 #define	MPSC_DATAA	((IOREG *) 0xfff45003)
@@ -149,7 +149,7 @@ dga_set_ilv(LIOREG *addr, int shift, int val)
 #define	MPSC_DATAB	((IOREG *) 0xfff4500b)
 #define	MPSC_CNTRLB	((IOREG *) 0xfff4500f)
 
-#define	MPSC_CR0	0x00		/* MPSC $B%3%s%H%m!<%k%l%8%9%?(B */
+#define	MPSC_CR0	0x00		/* MPSC コントロールレジスタ */
 #define	MPSC_CR1	0x01
 #define	MPSC_CR2	0x02
 #define	MPSC_CR3	0x03
@@ -160,7 +160,7 @@ dga_set_ilv(LIOREG *addr, int shift, int val)
 #define	MPSC_CR14	0x0e
 #define	MPSC_CR15	0x0f
 
-#define	MPSC_SR0	0x00		/* MPSC $B%9%F!<%?%9%l%8%9%?(B */
+#define	MPSC_SR0	0x00		/* MPSC ステータスレジスタ */
 
 Inline byte
 mpsc_read(IOREG *addr, int reg)
@@ -183,11 +183,11 @@ mpsc_write_brg(IOREG *addr, int reg, int val, int brg2, int brg1)
 	io_write(addr, val);
 	io_write(addr, brg2);
 	io_write(addr, brg1);
-	(void) io_read(addr);		/* $B%@%_!<%j!<%I(B */
+	(void) io_read(addr);		/* ダミーリード */
 }
 
 /*
- *  $B%b%K%?8F$S=P$7%k!<%A%s(B
+ *  モニタ呼び出しルーチン
  */
 
 Inline void

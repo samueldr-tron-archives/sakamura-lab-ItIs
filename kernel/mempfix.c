@@ -41,7 +41,7 @@
 #ifdef USE_MPF
 
 /*
- *  $B8GDjD9%a%b%j%W!<%k4IM}%V%m%C%/$NDj5A(B
+ *  固定長メモリプール管理ブロックの定義
  */
 
 typedef struct free_list {
@@ -49,17 +49,17 @@ typedef struct free_list {
 } FREEL;
 
 typedef struct fix_memorypool_control_block {
-	QUEUE	wait_queue;	/* $B%a%b%j%W!<%kBT$A%-%e!<(B */
-	ID	mpfid;		/* $B8GDjD9%a%b%j%W!<%k(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	mpfatr;		/* $B%a%b%j%W!<%kB0@-(B */
-	INT	mpfcnt;		/* $B%a%b%j%W!<%kA4BN$N%V%m%C%/?t(B */
-	INT	blfsz;		/* $B8GDjD9%a%b%j%V%m%C%/$N%5%$%:(B */
-	INT	mpfsz;		/* $B%a%b%j%W!<%kA4BN$N%5%$%:(B */
-	INT	frbcnt;		/* $B6u$-NN0h$N%V%m%C%/?t(B */
-	VP	mempool;	/* $B%a%b%j%W!<%k$N@hF,%"%I%l%9(B */
-	VP	unused;		/* $BL$;HMQNN0h$N@hF,(B */
-	FREEL	*freelist;	/* $B6u$-%V%m%C%/$N%j%9%H(B */
+	QUEUE	wait_queue;	/* メモリプール待ちキュー */
+	ID	mpfid;		/* 固定長メモリプールID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	mpfatr;		/* メモリプール属性 */
+	INT	mpfcnt;		/* メモリプール全体のブロック数 */
+	INT	blfsz;		/* 固定長メモリブロックのサイズ */
+	INT	mpfsz;		/* メモリプール全体のサイズ */
+	INT	frbcnt;		/* 空き領域のブロック数 */
+	VP	mempool;	/* メモリプールの先頭アドレス */
+	VP	unused;		/* 未使用領域の先頭 */
+	FREEL	*freelist;	/* 空きブロックのリスト */
 } MPFCB;
 
 static MPFCB	mpfcb_table[NUM_MPFID];
@@ -67,14 +67,14 @@ static MPFCB	mpfcb_table[NUM_MPFID];
 #define get_mpfcb(id)	(&(mpfcb_table[INDEX_MPF(id)]))
 
 /*
- *  $BL$;HMQ$N8GDjD9%a%b%j%W!<%k4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用の固定長メモリプール管理ブロックのリスト
  */
 #ifndef _i_vcre_mpf
 QUEUE	free_mpfcb;
 #endif /* _i_vcre_mpf */
 
 /* 
- *  $B8GDjD9%a%b%j%W!<%k4IM}%V%m%C%/$N=i4|2=(B
+ *  固定長メモリプール管理ブロックの初期化
  */
 void
 fix_memorypool_initialize(void)
@@ -100,7 +100,7 @@ fix_memorypool_initialize(void)
 }
 
 /*
- *  $B8GDjD9%a%b%j%W!<%k4IM}MQ%k!<%A%s(B
+ *  固定長メモリプール管理用ルーチン
  */
 
 #define MINSIZE		(sizeof(FREEL))
@@ -113,13 +113,13 @@ mempool_end(MPFCB *mpfcb)
 }
 
 /*
- *  $B8GDjD9%a%b%j%W!<%kBT$A;EMM$NDj5A(B
+ *  固定長メモリプール待ち仕様の定義
  */
 static WSPEC wspec_mpf_tfifo = { TTW_MPF, 0, 0 };
 static WSPEC wspec_mpf_tpri = { TTW_MPF, obj_chg_pri, 0 };
 
 /*
- *  $B8GDjD9%a%b%j%W!<%k4IM}5!G=(B
+ *  固定長メモリプール管理機能
  */
 
 #if !defined(_i_cre_mpf) || !defined(_i_vcre_mpf)

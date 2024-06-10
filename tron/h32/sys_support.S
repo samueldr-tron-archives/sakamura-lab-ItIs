@@ -41,38 +41,38 @@
 #include "tron_defs.h"
 
 /*
- *  H32SBC$B%7%9%F%`MQ%9%?!<%H%"%C%W%b%8%e!<%k(B
+ *  H32SBCシステム用スタートアップモジュール
  */
 	.text
 	.align 1
 	.globl ___sys_init
 ___sys_init:
 h32_start:
-	mov r0, r13			/* $BLa$jHVCO$r(B R13 $B$KJ]B8(B */
+	mov r0, r13			/* 戻り番地を R13 に保存 */
 	stc @PSW, r0
-	and #0x1fffffff, r0		/* SMRNG $B$r(B 0 $B$K@_Dj(B */
+	and #0x1fffffff, r0		/* SMRNG を 0 に設定 */
 	ldc r0, @PSW
-	mov #STACKTOP, sp		/* $B%9%?%C%/%]%$%s%?(B (SPI) $B$N=i4|2=(B */
-	mov #0, fp			/* $B%U%l!<%`%]%$%s%?$N=i4|2=(B */
+	mov #STACKTOP, sp		/* スタックポインタ (SPI) の初期化 */
+	mov #0, fp			/* フレームポインタの初期化 */
 
-	ldc #1, @G200_IBA0		/* Gmicro/200 $B$+(B 300 $B$NH=JL(B */
-	stc @G200_IBA0, r0		/* ($B$"$^$j@5$7$$J}K!$G$O$J$$(B) */
+	ldc #1, @G200_IBA0		/* Gmicro/200 か 300 の判別 */
+	stc @G200_IBA0, r0		/* (あまり正しい方法ではない) */
 	cmp #0, r0
 	beq gm_300
-gm_200:					/* Gmicro/200 $B$N>l9g(B */
+gm_200:					/* Gmicro/200 の場合 */
 	ldc #0x700, @G200_DCCW 		/* store buffer OFF, others ON */
-					/* all cache ON $B$O(B 0xf00 */
+					/* all cache ON は 0xf00 */
 	bra h32_start1
-gm_300:					/* Gmicro/300 $B$N>l9g(B */
+gm_300:					/* Gmicro/300 の場合 */
 	ldc #0xb03, @G300_RBCW		/* all cache ON */
 h32_start1:
-	ldcpid #7			/* $B%3%W%m%;%C%5(BID $B$r(B 7 $B$K(B */
-					/* ($B%3%W%m%;%C%5$r;H$o$J$$(B) */
-	bsr ___rawio_init		/* $B%i%$%V%i%j$N=i4|2=(B */
+	ldcpid #7			/* コプロセッサID を 7 に */
+					/* (コプロセッサを使わない) */
+	bsr ___rawio_init		/* ライブラリの初期化 */
 	jmp @r13
 
 /*
- *  $BDc%l%Y%k%a%b%j%(%j%"3NJ]%k!<%A%s(B
+ *  低レベルメモリエリア確保ルーチン
  *
  *  void *sbrk(int size)
  */
@@ -80,16 +80,16 @@ h32_start1:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	mov @_break, r1			/* _break $B$N8=:_CM$r<h$j=P$9(B */
+	mov @_break, r1			/* _break の現在値を取り出す */
 	add r1, r0
-	bxs sbrk_overflow		/* $B%a%b%j%U%k$N%A%'%C%/(B */
+	bxs sbrk_overflow		/* メモリフルのチェック */
 	cmpu #HEAPLIMIT, r0
 	bgt sbrk_overflow
-	mov r0, @_break			/* _break $B$N99?7(B */
-	mov r1, r0			/* $B99?7A0$N(B _break $B$NCM$rJV$9(B */
+	mov r0, @_break			/* _break の更新 */
+	mov r1, r0			/* 更新前の _break の値を返す */
 	rts
 sbrk_overflow:
-	mov #-1, r0			/* $B%*!<%P!<%U%m!<$N>l9g$O(B NADR */
+	mov #-1, r0			/* オーバーフローの場合は NADR */
 	rts
 
 	.data

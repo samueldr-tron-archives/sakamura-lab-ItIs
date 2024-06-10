@@ -34,7 +34,7 @@
  */
 
 /* 
- *  $B$=$NB>$N%7%9%F%`%3!<%k(B
+ *  その他のシステムコール
  */
 
 #include "itis_kernel.h"
@@ -43,7 +43,7 @@
 #include "patchlevel.h"
 
 /*
- *  $B%7%9%F%`>uBV;2>H(B
+ *  システム状態参照
  */
 
 #ifndef _i_ref_sys
@@ -76,7 +76,7 @@ i_ref_sys(T_RSYS *pk_rsys)
 #endif /* _i_ref_sys */
 
 /*
- *  $B%3%s%U%#%0%l!<%7%g%s>pJs;2>H(B
+ *  コンフィグレーション情報参照
  */
 
 #ifndef _i_ref_cfg
@@ -90,20 +90,20 @@ i_ref_cfg(T_RCFG *pk_rcfg)
 #endif /* _i_ref_cfg */
 
 /*
- *  $B3HD%(BSVC $B4IM}5!G=(B
+ *  拡張SVC 管理機能
  */
 
 #ifdef USE_SVC
 
 /*
- *  $B3HD%(BSVC $B4IM}%V%m%C%/$NDj5A(B
+ *  拡張SVC 管理ブロックの定義
  */
 
-typedef ER	(*SVC)();	/* $B3HD%(BSVC$B%O%s%I%i%"%I%l%9$N7?(B */
+typedef ER	(*SVC)();	/* 拡張SVCハンドラアドレスの型 */
 
 typedef struct extended_svc_control_block {
-	ATR	svcatr;		/* $B3HD%(BSVC$B%O%s%I%iB0@-(B */
-	SVC	svchdr;		/* $B3HD%(BSVC$B%O%s%I%i%"%I%l%9(B */
+	ATR	svcatr;		/* 拡張SVCハンドラ属性 */
+	SVC	svchdr;		/* 拡張SVCハンドラアドレス */
 } SVCCB;
 
 SVCCB	svccb_table[NUM_SVC];
@@ -113,7 +113,7 @@ SVCCB	svccb_table[NUM_SVC];
 extern ER	no_support(void);
 
 /* 
- *  $B3HD%(BSVC $B4IM}%V%m%C%/$N=i4|2=(B
+ *  拡張SVC 管理ブロックの初期化
  */
 void
 extended_svc_initialize(void)
@@ -126,7 +126,7 @@ extended_svc_initialize(void)
 }
 
 /*
- *  $B3HD%(BSVC $B$NDj5A(B
+ *  拡張SVC の定義
  */
 
 #ifndef _i_def_svc
@@ -158,10 +158,10 @@ i_def_svc(FN s_fncd, T_DSVC *pk_dsvc)
 #endif /* _i_def_svc */
 
 /*
- *  $B3HD%(BSVC$B%O%s%I%i$X$NJ,4t%k!<%A%s(B
+ *  拡張SVCハンドラへの分岐ルーチン
  *
- *  s_fncd $B$G;XDj$9$k3HD%(BSVC$B%O%s%I%i$XJ,4t$9$k!%(Bientry.s $B$NCf$+$i8F$P(B
- *  $B$l$k!%(Bctxtsk->sysmode $B$K!$=`%?%9%/It<B9TCf$G$"$k$3$H$r5-O?$9$k!%(B
+ *  s_fncd で指定する拡張SVCハンドラへ分岐する．ientry.s の中から呼ば
+ *  れる．ctxtsk->sysmode に，準タスク部実行中であることを記録する．
  */
 ER
 svc_ientry(INT par1, INT par2, INT par3, INT par4, INT par5, INT par6,
@@ -189,7 +189,7 @@ svc_ientry(INT par1, INT par2, INT par3, INT par4, INT par5, INT par6,
 #endif /* USE_SVC */
 
 /*
- *  $B%P!<%8%g%s>pJs;2>H(B
+ *  バージョン情報参照
  */
 
 #ifndef _i_get_ver
@@ -197,15 +197,15 @@ svc_ientry(INT par1, INT par2, INT par3, INT par4, INT par5, INT par6,
 SYSCALL ER
 i_get_ver(T_VER *pk_ver)
 {
-	pk_ver->maker = 0x0000;		/* $B<B83MQ%7%9%F%`(B */
-	pk_ver->id = 0x5004;		/* ($B?<$$0UL#$O$J$$(B) */
-	pk_ver->spver = 0x5302;		/* $B&L(BITRON, Ver.3.02 */
+	pk_ver->maker = 0x0000;		/* 実験用システム */
+	pk_ver->id = 0x5004;		/* (深い意味はない) */
+	pk_ver->spver = 0x5302;		/* μITRON, Ver.3.02 */
 	pk_ver->prver = (MAJOR_REL << 12) + (MINOR_REL << 4) + PATCH_LEVEL;
 					/* Release X.YY.Z */
 	memset(pk_ver->prno, 0, sizeof(pk_ver->prno));
-					/* ($BL$;HMQ(B) */
-	pk_ver->cpu = CPU_CODE;		/* CPU$B%3!<%I(B (cpu_conf.h $B$GDj5A(B) */
-	pk_ver->var = 0xc000;		/* $B%l%Y%k(BE */
+					/* (未使用) */
+	pk_ver->cpu = CPU_CODE;		/* CPUコード (cpu_conf.h で定義) */
+	pk_ver->var = 0xc000;		/* レベルE */
 	return(E_OK);
 }
 

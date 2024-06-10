@@ -34,56 +34,56 @@
  */
 
 /*
- *  $B%7%9%F%`9=@.@_Dj%U%!%$%k(B
+ *  システム構成設定ファイル
  */
 
 /*
- *  $B%j%=!<%9(BID $B$N?t!$HO0O!$L>A0$NDj5A(B
+ *  リソースID の数，範囲，名前の定義
  */
 resource = {
 	/*
-	 *  $B%*%V%8%'%/%H(BID $B$N>e8B$NDj5A(B
+	 *  オブジェクトID の上限の定義
 	 */
-	max_tskid = 32;		/* $B%?%9%/(BID $B$N>e8B(B */
-	max_semid = 64;		/* $B%;%^%U%)(BID $B$N>e8B(B */
-	max_flgid = 8;		/* $B%$%Y%s%H%U%i%0(BID $B$N>e8B(B */
-	max_mbxid = 32;		/* $B%a%$%k%\%C%/%9(BID $B$N>e8B(B */
-	max_mbfid = 8;		/* $B%a%C%;!<%8%P%C%U%!(BID $B$N>e8B(B */
-	max_porid = 8;		/* $B%i%s%G%VMQ%]!<%H(BID $B$N>e8B(B */
-	max_pisid = 32;		/* $BM%@hEY7Q>5%;%^%U%)(BID $B$N>e8B(B */
-	max_mplid = 4;		/* $B2DJQD9%a%b%j%W!<%k(BID $B$N>e8B(B */
-	max_mpfid = 4;		/* $B8GDjD9%a%b%j%W!<%k(BID $B$N>e8B(B */
+	max_tskid = 32;		/* タスクID の上限 */
+	max_semid = 64;		/* セマフォID の上限 */
+	max_flgid = 8;		/* イベントフラグID の上限 */
+	max_mbxid = 32;		/* メイルボックスID の上限 */
+	max_mbfid = 8;		/* メッセージバッファID の上限 */
+	max_porid = 8;		/* ランデブ用ポートID の上限 */
+	max_pisid = 32;		/* 優先度継承セマフォID の上限 */
+	max_mplid = 4;		/* 可変長メモリプールID の上限 */
+	max_mpfid = 4;		/* 固定長メモリプールID の上限 */
 
 	/*
-	 *  $B%7%9%F%`MQ%*%V%8%'%/%H(BID $B$NL>A0$H?t$NDj5A(B
+	 *  システム用オブジェクトID の名前と数の定義
 	 */
-	sys_tskid {		/* $B%7%9%F%`%?%9%/$NDj5A(B */
+	sys_tskid {		/* システムタスクの定義 */
 		TSK_INIT;
 		TSK_LOG;
 		TSK_FIRST;
 	};
-	sys_semid {		/* $B%7%9%F%`%;%^%U%)$NDj5A(B */
+	sys_semid {		/* システムセマフォの定義 */
 		SEM_SERIAL1_IN;
 		SEM_SERIAL1_OUT;
 		SEM_SERIAL2_IN;
 		SEM_SERIAL2_OUT;
 	};
-	sys_mplid {		/* $B%7%9%F%`2DJQD9%a%b%j%W!<%k$NDj5A(B */
+	sys_mplid {		/* システム可変長メモリプールの定義 */
 		MPL_XSCHEME;
 	};
 
 	/*
-	 *  $B%+!<%M%kMQ%*%V%8%'%/%H$N?t$NDj5A(B
+	 *  カーネル用オブジェクトの数の定義
 	 *
-	 *  $B%+!<%M%k$,MQ$$$k%*%V%8%'%/%H$N?t$NDj5A!%(BID $B$,(B -4$B!A(B0 $B$N%j%6!<(B
-	 *  $B%VNN0h$+$i<h$i$l$k!%%a%C%;!<%8%P%C%U%!(B ($B%7%9%F%`%m%0MQ(B, $B%G(B
-	 *  $B%P%C%0MQ(B) $B$H2DJQD9%a%b%j%W!<%k(B ($B%7%9%F%`MQ(B) $B$N$_Dj5A$G$-$k!%(B
+	 *  カーネルが用いるオブジェクトの数の定義．ID が -4〜0 のリザー
+	 *  ブ領域から取られる．メッセージバッファ (システムログ用, デ
+	 *  バッグ用) と可変長メモリプール (システム用) のみ定義できる．
 	 */
 	num_kernel_mbf = 2;
 	num_kernel_mpl = 1;
 
 	/*
-	 *  $B$=$NB>$N;q8;$N?t(B
+	 *  その他の資源の数
 	 */
 	num_cyc = 20;
 	num_alm = 20;
@@ -91,7 +91,7 @@ resource = {
 };
 
 /*
- *  $BM%@hEYCM$NHO0O$NDj5A(B
+ *  優先度値の範囲の定義
  */
 priority = {
 	min_pri = 1;
@@ -99,54 +99,54 @@ priority = {
 };
 
 /*
- *  $B%(%i!<%A%'%C%/;EMM$NDj5A(B
+ *  エラーチェック仕様の定義
  */
 errorcheck = {
-	chk_nospt = 1;		/* E_NOSPT $B$r%A%'%C%/$9$k(B */
-	chk_rsatr = 1;		/* E_RSATR $B$r%A%'%C%/$9$k(B */
-	chk_par = 1;		/* E_PAR $B$r%A%'%C%/$9$k(B */
-	chk_id = 1;		/* E_ID $B$r%A%'%C%/$9$k(B */
-	chk_oacv = 1;		/* E_OACV $B$r%A%'%C%/$9$k(B */
-	chk_ctx = 1;		/* $BDL>o$N(B E_CTX $B$r%A%'%C%/$9$k(B */
-	chk_ctx1 = 1;		/* $BH/9T85$KJV$i$J$$(B E_CTX $B$r%A%'%C%/$9$k(B */
-	chk_ctx2 = 1;		/* $BCWL?E*$J(B E_CTX $B;~$K%7%9%F%`%@%&%s$5$;$k(B */
-	chk_self = 1;		/* $BBP>]$,<+%?%9%/$N(B E_OBJ $B$r%A%'%C%/$9$k(B */
+	chk_nospt = 1;		/* E_NOSPT をチェックする */
+	chk_rsatr = 1;		/* E_RSATR をチェックする */
+	chk_par = 1;		/* E_PAR をチェックする */
+	chk_id = 1;		/* E_ID をチェックする */
+	chk_oacv = 1;		/* E_OACV をチェックする */
+	chk_ctx = 1;		/* 通常の E_CTX をチェックする */
+	chk_ctx1 = 1;		/* 発行元に返らない E_CTX をチェックする */
+	chk_ctx2 = 1;		/* 致命的な E_CTX 時にシステムダウンさせる */
+	chk_self = 1;		/* 対象が自タスクの E_OBJ をチェックする */
 };
 
 /*
- *  $B<+%?%9%/$KBP$9$k6/@)BT$A$r5v$9$+$NDj5A(B
+ *  自タスクに対する強制待ちを許すかの定義
  */
 use_suspend_self = 1;
 
 /*
- *  $B=`%?%9%/It$r;H$&$+$NDj5A(B
+ *  準タスク部を使うかの定義
  *
- *  $B=`%?%9%/It$r;H$&>l9g$KDj5A$9$k!%3HD%(BSVC $B$r;H$&>l9g$K$O!$<+F0E*$KDj(B
- *  $B5A$5$l$k!%(B
+ *  準タスク部を使う場合に定義する．拡張SVC を使う場合には，自動的に定
+ *  義される．
  */
 use_qtsk_portion = 1;
 
 /*
- *  $B%*%V%8%'%/%H(BID/$B%j%=!<%9HV9f(B $B<+F03dEv5!G=$r;H$&$+$NDj5A(B
+ *  オブジェクトID/リソース番号 自動割当機能を使うかの定義
  */
 use_auto_id = 1;
 
 /*
- *  $B%G%P%C%0%5%]!<%H5!G=$r;H$&$+$NDj5A(B
+ *  デバッグサポート機能を使うかの定義
  */
 use_debug_support = 1;
 
 /*
- *  $B@-G=I>2AMQ%7%9%F%`;~9o;2>H5!G=(B (vget_tim) $B$r;H$&$+$NDj5A(B
+ *  性能評価用システム時刻参照機能 (vget_tim) を使うかの定義
  */
 use_vget_tim = 1;
 
 /*
- *  $BM%@hEY7Q>5%;%^%U%)$N;EMM(B (1 $B$^$?$O(B 2)
+ *  優先度継承セマフォの仕様 (1 または 2)
  */
 prisem_spec = 1;
 
 /*
- *  $B%?%9%/IUB0%a%$%k%\%C%/%9$r;H$&$+$NDj5A(B
+ *  タスク付属メイルボックスを使うかの定義
  */
 use_task_mailbox = 1;

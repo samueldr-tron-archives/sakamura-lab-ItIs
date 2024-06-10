@@ -37,37 +37,37 @@
 #define _TIMER_
 
 /*
- *  $B%?%$%^%b%8%e!<%k(B
+ *  タイマモジュール
  */
 
 #include "queue.h"
 
 /* 
- *  $B%?%$%^%$%Y%s%H%V%m%C%/$NDj5A(B
+ *  タイマイベントブロックの定義
  */
 
-typedef void	(*CBACK)(VP);	/* $B%3!<%k%P%C%/4X?t$N7?(B */
+typedef void	(*CBACK)(VP);	/* コールバック関数の型 */
 
 typedef struct timer_event_block {
-	QUEUE	queue;		/* $B%?%$%^%$%Y%s%H%-%e!<(B */
-	SYSTIME	time;		/* $B%$%Y%s%H;~9o(B */
-	CBACK	callback;	/* $B%3!<%k%P%C%/4X?t(B */
-	VP	arg;		/* $B%3!<%k%P%C%/4X?t$XEO$90z?t(B */
+	QUEUE	queue;		/* タイマイベントキュー */
+	SYSTIME	time;		/* イベント時刻 */
+	CBACK	callback;	/* コールバック関数 */
+	VP	arg;		/* コールバック関数へ渡す引数 */
 } TMEB;
 
 /*
- *  $B8=:_;~9o(B ($B%=%U%H%&%'%"%/%m%C%/(B)
+ *  現在時刻 (ソフトウェアクロック)
  */
 extern SYSTIME	current_time;
 
 /*
- *  $B%?%$%^$N=i4|2=$HDd;_(B
+ *  タイマの初期化と停止
  */
 extern void	timer_initialize(void);
 extern void	timer_shutdown(void);
 
 /*
- *  $B%?%$%^%$%Y%s%H$N%?%$%^%-%e!<$X$NEPO?(B
+ *  タイマイベントのタイマキューへの登録
  */
 extern void	timer_insert(TMEB *event, TMO tmout,
 				CBACK callback, VP arg);
@@ -77,7 +77,7 @@ extern void	timer_insert_rel(TMEB *event, SYSTIME *time,
 				CBACK callback, VP arg);
 
 /*
- *  $B%?%$%^%-%e!<$+$i$N:o=|(B
+ *  タイマキューからの削除
  */
 Inline void
 timer_delete(TMEB *event)

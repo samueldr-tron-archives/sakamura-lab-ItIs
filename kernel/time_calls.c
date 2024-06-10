@@ -40,7 +40,7 @@
 #include "check.h"
 
 /*
- *  $B;~4V4IM}5!G=(B
+ *  時間管理機能
  */
 
 #ifndef _i_set_tim
@@ -96,22 +96,22 @@ i_dly_tsk(DLYTIME dlytim)
 #endif /* _i_dly_tsk */
 
 /*
- *  $B<~4|5/F0%O%s%I%i(B
+ *  周期起動ハンドラ
  */
 
 #ifdef USE_CYC
 
 /*
- *  $B<~4|5/F0%O%s%I%i4IM}%V%m%C%/$NDj5A(B
+ *  周期起動ハンドラ管理ブロックの定義
  */
 
 typedef struct cyclic_handler_control_block {
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	cycatr;		/* $B<~4|5/F0%O%s%I%iB0@-(B */
-	FP	cychdr;		/* $B<~4|5/F0%O%s%I%i%"%I%l%9(B */
-	UINT	cycact;		/* $B<~4|5/F0%O%s%I%i3h@->uBV(B */
-	CYCTIME	cyctim;		/* $B<~4|5/F0;~4V4V3V(B */
-	TMEB	cyctmeb;	/* $B%?%$%^%$%Y%s%H%V%m%C%/(B */
+	VP	exinf;		/* 拡張情報 */
+	ATR	cycatr;		/* 周期起動ハンドラ属性 */
+	FP	cychdr;		/* 周期起動ハンドラアドレス */
+	UINT	cycact;		/* 周期起動ハンドラ活性状態 */
+	CYCTIME	cyctim;		/* 周期起動時間間隔 */
+	TMEB	cyctmeb;	/* タイマイベントブロック */
 } CYCCB;
 
 CYCCB	cyccb_table[NUM_CYC];
@@ -119,14 +119,14 @@ CYCCB	cyccb_table[NUM_CYC];
 #define get_cyccb(no)	(&(cyccb_table[(no)-1]))
 
 /*
- *  $BL$;HMQ$N<~4|5/F0%O%s%I%i4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用の周期起動ハンドラ管理ブロックのリスト
  */
 #ifndef _i_vdef_cyc
 QUEUE	free_cyccb;
 #endif /* _i_vdef_cyc */
 
 /*
- *  $B<~4|5/F0%O%s%I%i4IM}%V%m%C%/$N=i4|2=(B
+ *  周期起動ハンドラ管理ブロックの初期化
  */
 void
 cyclichandler_initialize(void)
@@ -147,7 +147,7 @@ cyclichandler_initialize(void)
 }
 
 /*
- *  $B<~4|5/F0%O%s%I%i5/F0%k!<%A%s(B
+ *  周期起動ハンドラ起動ルーチン
  */
 static void
 call_cychdr(CYCCB *cyccb)
@@ -296,20 +296,20 @@ i_ref_cyc(T_RCYC* pk_rcyc, HNO cycno)
 #endif /* USE_CYC */
 
 /*
- *  $B%"%i!<%`%O%s%I%i(B
+ *  アラームハンドラ
  */
 
 #ifdef USE_ALM
 
 /*
- *  $B%"%i!<%`%O%s%I%i4IM}%V%m%C%/$NDj5A(B
+ *  アラームハンドラ管理ブロックの定義
  */
 
 typedef struct alarm_handler_control_block {
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	almatr;		/* $B%"%i!<%`%O%s%I%iB0@-(B */
-	FP	almhdr;		/* $B%"%i!<%`%O%s%I%i%"%I%l%9(B */
-	TMEB	almtmeb;	/* $B%?%$%^%$%Y%s%H%V%m%C%/(B */
+	VP	exinf;		/* 拡張情報 */
+	ATR	almatr;		/* アラームハンドラ属性 */
+	FP	almhdr;		/* アラームハンドラアドレス */
+	TMEB	almtmeb;	/* タイマイベントブロック */
 } ALMCB;
 
 ALMCB	almcb_table[NUM_ALM];
@@ -317,14 +317,14 @@ ALMCB	almcb_table[NUM_ALM];
 #define get_almcb(no)	(&(almcb_table[(no)-1]))
 
 /*
- *  $BL$;HMQ$N%"%i!<%`%O%s%I%i4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用のアラームハンドラ管理ブロックのリスト
  */
 #ifndef _i_vdef_alm
 QUEUE	free_almcb;
 #endif /* _i_vdef_alm */
 
 /*
- *  $B%"%i!<%`%O%s%I%i4IM}%V%m%C%/$N=i4|2=(B
+ *  アラームハンドラ管理ブロックの初期化
  */
 void
 alarmhandler_initialize(void)
@@ -345,7 +345,7 @@ alarmhandler_initialize(void)
 }
 
 /*
- *  $B%"%i!<%`%O%s%I%i5/F0%k!<%A%s(B
+ *  アラームハンドラ起動ルーチン
  */
 static void
 call_almhdr(ALMCB *almcb)

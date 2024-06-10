@@ -36,7 +36,7 @@
 #include <itis_services.h>
 
 /*
- *  $B%(%i!<%a%C%;!<%8J8;zNs$rJV$94X?t(B
+ *  エラーメッセージ文字列を返す関数
  */
 char *
 itron_strerror(ER ercd)

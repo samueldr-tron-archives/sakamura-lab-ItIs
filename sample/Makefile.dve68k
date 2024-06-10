@@ -34,37 +34,37 @@
 # 
 
 #
-#  $B%?!<%2%C%HDj5A(B (CPU$BL>(B, $B%7%9%F%`L>(B)
+#  ターゲット定義 (CPU名, システム名)
 #
 CPU = m68k
 SYS = dve68k
 
 #
-#  $B6&DLDj5A(B
+#  共通定義
 #
 include ../$(CPU)/Makefile.config
 
 #
-#  $B%3%s%Q%$%i%*%W%7%g%s$NDj5A(B
+#  コンパイラオプションの定義
 #
 INCLUDES = -I. -I../include -I../include/$(CPU) -I../$(CPU) -I../$(CPU)/$(SYS)
 CFLAGS := -DITIS -DLINK_KERNEL -msoft-float $(INCLUDES) $(CFLAGS)
 LDFLAGS = -N -msoft-float
 
 #
-#  $B%G!<%?%;%/%7%g%s$N=i4|2==hM}$r9T$&$+$I$&$+$NDj5A(B
+#  データセクションの初期化処理を行うかどうかの定義
 #
 IDATA = true
 #IDATA = false
 
 #
-#  $B3F%;%0%a%s%H$N3+;O%"%I%l%9$NDj5A(B
+#  各セグメントの開始アドレスの定義
 #
 TEXT_START_ADDRESS=00010000
 DATA_START_ADDRESS=00100000
 
 #
-#  $B=i4|5/F0%?%9%/$NDj5A(B
+#  初期起動タスクの定義
 #
 FIRST_TASK = scheme
 #FIRST_TASK = sample1
@@ -87,7 +87,7 @@ else
 endif
 
 #
-#  $B%7%9%F%`%?%9%/(B ($B%7%9%F%`%?%9%/MQ%i%$%V%i%j$r4^$`(B) $B$NDj5A(B
+#  システムタスク (システムタスク用ライブラリを含む) の定義
 #
 STASK_DIR = ../systask:../libitis
 STASK_ASMOBJS =
@@ -97,7 +97,7 @@ STASK_COBJS = inittask.o serial.o logtask.o \
 STASK_CFLAGS = -I../systask
 
 #
-#  $B%+!<%M%k4X78$NDj5A(B
+#  カーネル関係の定義
 #
 KERNEL = ../kernel
 KERNEL_DIR = ../$(CPU):../$(CPU)/$(SYS):$(KERNEL)
@@ -111,11 +111,11 @@ KERNEL_COBJS = startup.o cpu_util.o sys_util.o \
 KERNEL_CFLAGS = -I$(KERNEL)
 
 #
-#  $B%?!<%2%C%H%U%!%$%k(B
+#  ターゲットファイル
 #
 all: itis.bin
 
-# $B0J2<$OJT=8$7$J$$$3$H(B
+# 以下は編集しないこと
 
 SRCDIR = $(KERNEL_DIR):$(STASK_DIR):$(FTASK_DIR)
 
@@ -193,7 +193,7 @@ depend: config.h offset.h
 		$(FTASK_ASMOBJS:.o=.S) $(FTASK_COBJS:.o=.c) >> Makefile
 
 #
-#  $B%3%s%Q%$%k%k!<%k$NDj5A(B
+#  コンパイルルールの定義
 #
 $(KERNEL_ALL_COBJS): %.o: %.c
 	$(CC) -c $(KERNEL_CFLAGS) $(CFLAGS) $<
@@ -227,7 +227,7 @@ $(FTASK_ASMOBJS): %.o: %.S
 endif
 
 #
-#  $B%G%U%)%k%H%3%s%Q%$%k%k!<%k$r>e=q$-(B
+#  デフォルトコンパイルルールを上書き
 #
 %.o: %.c
 	@echo "*** Default compile rules should not be used."

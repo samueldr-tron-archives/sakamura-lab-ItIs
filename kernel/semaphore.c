@@ -41,16 +41,16 @@
 #ifdef USE_SEM
 
 /*
- *  $B%;%^%U%)4IM}%V%m%C%/$NDj5A(B
+ *  セマフォ管理ブロックの定義
  */
 
 typedef struct semaphore_control_block {
-	QUEUE	wait_queue;	/* $B%;%^%U%)BT$A%-%e!<(B */
-	ID	semid;		/* $B%;%^%U%)(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	sematr;		/* $B%;%^%U%)B0@-(B */
-	INT	semcnt;		/* $B%;%^%U%)8=:_%+%&%s%HCM(B */
-	INT	maxsem;		/* $B%;%^%U%):GBg%+%&%s%HCM(B */
+	QUEUE	wait_queue;	/* セマフォ待ちキュー */
+	ID	semid;		/* セマフォID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	sematr;		/* セマフォ属性 */
+	INT	semcnt;		/* セマフォ現在カウント値 */
+	INT	maxsem;		/* セマフォ最大カウント値 */
 } SEMCB;
 
 static SEMCB	semcb_table[NUM_SEMID];
@@ -58,14 +58,14 @@ static SEMCB	semcb_table[NUM_SEMID];
 #define get_semcb(id)	(&(semcb_table[INDEX_SEM(id)]))
 
 /*
- *  $BL$;HMQ$N%;%^%U%)4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用のセマフォ管理ブロックのリスト
  */
 #ifndef _i_vcre_sem
 QUEUE	free_semcb;
 #endif /* _i_vcre_sem */
 
 /* 
- *  $B%;%^%U%)4IM}%V%m%C%/$N=i4|2=(B
+ *  セマフォ管理ブロックの初期化
  */
 void
 semaphore_initialize(void)
@@ -91,13 +91,13 @@ semaphore_initialize(void)
 }
 
 /*
- *  $B%;%^%U%)BT$A;EMM$NDj5A(B
+ *  セマフォ待ち仕様の定義
  */
 static WSPEC wspec_sem_tfifo = { TTW_SEM, 0, 0 };
 static WSPEC wspec_sem_tpri = { TTW_SEM, obj_chg_pri, 0 };
 
 /*
- *  $B%;%^%U%)4IM}5!G=(B
+ *  セマフォ管理機能
  */
 
 #if !defined(_i_cre_sem) || !defined(_i_vcre_sem)

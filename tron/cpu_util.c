@@ -36,7 +36,7 @@
 #include "itis_kernel.h"
 
 /*
- *  EIT$B%O%s%I%i$NDj5A(B
+ *  EITハンドラの定義
  */
 extern void	trapa_ientry(void);
 #ifndef TRON_NO_DI
@@ -47,13 +47,13 @@ extern void	z_ret_int(void);
 #endif /* TRON_NO_DI */
 
 /*
- *  $B%?!<%2%C%H(BCPU$B0MB8$N=i4|2=%k!<%A%s(B
+ *  ターゲットCPU依存の初期化ルーチン
  */
 void
 cpu_initialize(void)
 {
 	/*
-	 *  EIT$B%Y%/%?%F!<%V%k$N=i4|2=(B
+	 *  EITベクタテーブルの初期化
 	 */
 #ifdef EITVB_ITIS
 	memcpy(EITVB_ITIS, EITVB_ORIG, EITVT_LEN);
@@ -61,7 +61,7 @@ cpu_initialize(void)
 #endif /* EITVB_ITIS */
 
 	/*
-	 *  EIT$B%O%s%I%i$NDj5A(B
+	 *  EITハンドラの定義
 	 */
 	define_eit(EITVEC_TRAPA1, EITATR(1, 15), trapa_ientry);
 #ifndef TRON_NO_DI
@@ -73,7 +73,7 @@ cpu_initialize(void)
 }
 
 /*
- *  $B%?!<%2%C%H(BCPU$B0MB8$N=*N;=hM}%k!<%A%s(B
+ *  ターゲットCPU依存の終了処理ルーチン
  */
 void
 cpu_shutdown(void)

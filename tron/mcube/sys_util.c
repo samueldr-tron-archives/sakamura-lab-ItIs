@@ -37,29 +37,29 @@
 #include "mcube.h"
 
 /*
- *  $B%?!<%2%C%H%7%9%F%`0MB8$N=i4|2=%k!<%A%s(B
+ *  ターゲットシステム依存の初期化ルーチン
  */
 void
 sys_initialize(void)
 {
 	/*
-	 *  IRC $B$N=i4|2=(B
+	 *  IRC の初期化
 	 */
-	irc_assign(IRC1_IMR, 0x7e);	/* ABORT$B0J30$NA43d9~$_$r%^%9%/(B */
+	irc_assign(IRC1_IMR, 0x7e);	/* ABORT以外の全割込みをマスク */
 	irc_assign(IRC1_BMR, 0x7f);
 	irc_assign(IRC2_IMR, 0x7f);
 
-	irc_assign(IRC1_VMR, 0x7f);	/* $B%*!<%H%Y%/%?%b!<%I$K@_Dj(B */
+	irc_assign(IRC1_VMR, 0x7f);	/* オートベクタモードに設定 */
 	irc_assign(IRC1_VNR, IRC2_VECTOR_BASE);
-	irc_assign(IRC2_VMR, 0x00);	/* IRC$B%Y%/%?%b!<%I$K@_Dj(B */
+	irc_assign(IRC2_VMR, 0x00);	/* IRCベクタモードに設定 */
 	irc_assign(IRC2_VSR, 0x00);
 	irc_assign(IRC2_VNR, IRC2_VECTOR_BASE);
 }
 
 /*
- *  $B%?!<%2%C%H%7%9%F%`$N=*N;%k!<%A%s(B
+ *  ターゲットシステムの終了ルーチン
  *
- *  ItIs $B$N%7%9%F%`$r=*N;$9$k;~$K;H$&!%DL>o$O%b%K%?8F$S=P$7$G<B8=$9$k!%(B
+ *  ItIs のシステムを終了する時に使う．通常はモニタ呼び出しで実現する．
  */
 void
 sys_exit(void)
@@ -69,10 +69,10 @@ sys_exit(void)
 }
 
 /*
- *  $B%?!<%2%C%H%7%9%F%`$NJ8;z=PNO%k!<%A%s(B
+ *  ターゲットシステムの文字出力ルーチン
  *
- *  $B%m%0%?%9%/$,F0$$$F$$$J$$;~$K!$%7%9%F%`$+$i$N%a%C%;!<%8$r=PNO$9$k$?(B
- *  $B$a$K;H$&!%DL>o$O%b%K%?8F$S=P$7$G<B8=$9$k!%(B
+ *  ログタスクが動いていない時に，システムからのメッセージを出力するた
+ *  めに使う．通常はモニタ呼び出しで実現する．
  */
 int
 sys_write(const char *buf, unsigned int len)

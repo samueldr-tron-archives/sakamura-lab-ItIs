@@ -41,17 +41,17 @@
 #ifdef USE_POR
 
 /*
- *  $B%i%s%G%VMQ%]!<%H4IM}%V%m%C%/$NDj5A(B
+ *  ランデブ用ポート管理ブロックの定義
  */
 
 typedef struct port_control_block {
-	QUEUE	call_queue;	/* $B%]!<%H8F=PBT$A%-%e!<(B */
-	ID	porid;		/* $B%]!<%H(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	poratr;		/* $B%]!<%HB0@-(B */
-	QUEUE	accept_queue;	/* $B%]!<%H<uIUBT$A%-%e!<(B */
-	INT	maxcmsz;	/* $B8F=P%a%C%;!<%8$N:GBgD9(B */
-	INT	maxrmsz;	/* $BJVEz%a%C%;!<%8$N:GBgD9(B */
+	QUEUE	call_queue;	/* ポート呼出待ちキュー */
+	ID	porid;		/* ポートID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	poratr;		/* ポート属性 */
+	QUEUE	accept_queue;	/* ポート受付待ちキュー */
+	INT	maxcmsz;	/* 呼出メッセージの最大長 */
+	INT	maxrmsz;	/* 返答メッセージの最大長 */
 } PORCB;
 
 static PORCB	porcb_table[NUM_PORID];
@@ -59,14 +59,14 @@ static PORCB	porcb_table[NUM_PORID];
 #define get_porcb(id)	(&(porcb_table[INDEX_POR(id)]))
 
 /*
- *  $BL$;HMQ$N%]!<%H4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用のポート管理ブロックのリスト
  */
 #ifndef _i_vcre_por
 QUEUE	free_porcb;
 #endif /* _i_vcre_por */
 
 /* 
- *  $B%]!<%H4IM}%V%m%C%/$N=i4|2=(B
+ *  ポート管理ブロックの初期化
  */
 void
 rendezvous_initialize()
@@ -92,7 +92,7 @@ rendezvous_initialize()
 }
 
 /*
- *  $B%i%s%G%VHV9f4IM}%k!<%A%s(B
+ *  ランデブ番号管理ルーチン
  */
 #define RDVNO_SHIFT	16
 
@@ -119,14 +119,14 @@ get_tskid_rdvno(RNO rdvno)
 }
 
 /*
- *  $B%i%s%G%VBT$A;EMM$NDj5A(B
+ *  ランデブ待ち仕様の定義
  */
 static WSPEC wspec_cal = { TTW_CAL, 0, 0 };
 static WSPEC wspec_acp = { TTW_ACP, 0, 0 };
 static WSPEC wspec_rdv = { TTW_RDV, 0, 0 };
 
 /*
- *  $B%i%s%G%VMQ%]!<%H4IM}5!G=(B
+ *  ランデブ用ポート管理機能
  */
 
 #if !defined(_i_cre_por) || !defined(_i_vcre_por)

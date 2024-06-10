@@ -41,44 +41,44 @@
 #include "tron_defs.h"
 
 /*
- *  TVME-150 CPU$B%\!<%I>e$N%l%8%9%?%"%I%l%9$NDj5A(B
+ *  TVME-150 CPUボード上のレジスタアドレスの定義
  */
-#define TVME_STAT0	0xfffb0020	/* $B%9%F!<%?%9%l%8%9%?(B0 */
-#define TVME_STAT1	0xfffb0021	/* $B%9%F!<%?%9%l%8%9%?(B1 */
-#define TVME_STAT2	0xfffb0022	/* $B%9%F!<%?%9%l%8%9%?(B2 */
-#define TVME_CNTL1	0xfffb0029	/* $B%3%s%H%m!<%k%l%8%9%?(B1 */
-#define TVME_CNTL2	0xfffb002b	/* $B%3%s%H%m!<%k%l%8%9%?(B2 */
+#define TVME_STAT0	0xfffb0020	/* ステータスレジスタ0 */
+#define TVME_STAT1	0xfffb0021	/* ステータスレジスタ1 */
+#define TVME_STAT2	0xfffb0022	/* ステータスレジスタ2 */
+#define TVME_CNTL1	0xfffb0029	/* コントロールレジスタ1 */
+#define TVME_CNTL2	0xfffb002b	/* コントロールレジスタ2 */
 
 /*
- *  TVME-150 CPU$B%\!<%IMQ(B $B%9%?!<%H%"%C%W%b%8%e!<%k(B
+ *  TVME-150 CPUボード用 スタートアップモジュール
  */
 	.text
 	.align 1
 	.globl ___sys_init
 ___sys_init:
 tvme_start:
-	mov r0, r13			/* $BLa$jHVCO$r(B R13 $B$KJ]B8(B */
+	mov r0, r13			/* 戻り番地を R13 に保存 */
 	stc @PSW, r0
-	and #0x1ff09fff, r0		/* SMRNG=0, IMASK=0, PRNG=0 $B$K@_Dj(B */
+	and #0x1ff09fff, r0		/* SMRNG=0, IMASK=0, PRNG=0 に設定 */
 	ldc r0, @PSW
-	mov #STACKTOP, sp		/* $B%9%?%C%/%]%$%s%?(B (SPI) $B$N=i4|2=(B */
-	mov #0, fp			/* $B%U%l!<%`%]%$%s%?$N=i4|2=(B */
+	mov #STACKTOP, sp		/* スタックポインタ (SPI) の初期化 */
+	mov #0, fp			/* フレームポインタの初期化 */
 
-	mov #0x30, @TVME_CNTL1.b	/* $B%3%s%H%m!<%k%l%8%9%?(B1 $B$N=i4|2=(B */
-	mov @TVME_STAT1.b, r0.b		/* $B%a%$%k%\%C%/%9%"%I%l%9$H(B */
-	and #0x1f, r0.b			/*	VME$B%b!<%I$N=i4|2=(B */
+	mov #0x30, @TVME_CNTL1.b	/* コントロールレジスタ1 の初期化 */
+	mov @TVME_STAT1.b, r0.b		/* メイルボックスアドレスと */
+	and #0x1f, r0.b			/*	VMEモードの初期化 */
 	sha #2, r0.b
 	or #0x03, r0.b
 	mov r0.b, @TVME_CNTL2.b
 
 	ldc #0xf00, @G200_DCCW		/* all cache ON */
-	ldcpid #7			/* $B%3%W%m%;%C%5(BID $B$r(B 7 $B$K(B */
-					/* ($B%3%W%m%;%C%5$r;H$o$J$$(B) */
-	bsr ___rawio_init		/* $B%i%$%V%i%j$N=i4|2=(B */
+	ldcpid #7			/* コプロセッサID を 7 に */
+					/* (コプロセッサを使わない) */
+	bsr ___rawio_init		/* ライブラリの初期化 */
 	jmp @r13
 
 /*
- *  $BDc%l%Y%k%a%b%j%(%j%"3NJ]%k!<%A%s(B
+ *  低レベルメモリエリア確保ルーチン
  *
  *  void *sbrk(int size)
  */
@@ -86,16 +86,16 @@ tvme_start:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	mov @_break, r1			/* _break $B$N8=:_CM$r<h$j=P$9(B */
+	mov @_break, r1			/* _break の現在値を取り出す */
 	add r1, r0
-	bxs sbrk_overflow		/* $B%a%b%j%U%k$N%A%'%C%/(B */
+	bxs sbrk_overflow		/* メモリフルのチェック */
 	cmpu #HEAPLIMIT, r0
 	bgt sbrk_overflow
-	mov r0, @_break			/* _break $B$N99?7(B */
-	mov r1, r0			/* $B99?7A0$N(B _break $B$rJV$9(B */
+	mov r0, @_break			/* _break の更新 */
+	mov r1, r0			/* 更新前の _break を返す */
 	rts
 sbrk_overflow:
-	mov #-1, r0			/* $B%*!<%P!<%U%m!<$N>l9g$O(B NADR */
+	mov #-1, r0			/* オーバーフローの場合は NADR */
 	rts
 
 	.data

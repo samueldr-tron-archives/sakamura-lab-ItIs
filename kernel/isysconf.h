@@ -37,43 +37,43 @@
 #define _ISYSCONF_
 
 /*
- *  $B%7%9%F%`9=@.@_Dj%U%!%$%k$KBP$9$k%G%U%)%k%HCM$NDj5A(B
+ *  システム構成設定ファイルに対するデフォルト値の定義
  */
 
 /*
- *  $B%7%9%F%`%a%b%j%W!<%k%5%$%:$N%G%U%)%k%HCM(B
+ *  システムメモリプールサイズのデフォルト値
  */
 #ifndef SYS_MPL_SIZE
 #define SYS_MPL_SIZE	0x60000
 #endif /* SYS_MPL_SIZE */
 
 /*
- *  $BM%@hEY7Q>5%;%^%U%)$N;EMM$N%G%U%)%k%HCM(B
+ *  優先度継承セマフォの仕様のデフォルト値
  */
 #ifndef PRISEM_SPEC
 #define PRISEM_SPEC	1
 #endif /* PRISEM_SPEC */
 
 /*
- *  $B%7%9%F%`9=@.$K4X$9$kJd=uDj5A(B
+ *  システム構成に関する補助定義
  */
 
 /*
- *  $B%7%9%F%`%a%b%j%W!<%k$r;H$&$+$I$&$+$NDj5A(B
+ *  システムメモリプールを使うかどうかの定義
  */
 #if defined(NUM_MPLID) && CHK_MPLID(TMPL_OS)
 #define USE_TMPL_OS
 #endif
 
 /*
- *  $B%7%9%F%`%m%0MQ%a%C%;!<%8%P%C%U%!$r;H$&$+$I$&$+$NDj5A(B
+ *  システムログ用メッセージバッファを使うかどうかの定義
  */
 #if defined(NUM_MBFID) && CHK_MBFID(TMBF_OS)
 #define USE_TMBF_OS
 #endif
 
 /*
- *  $BM%@hEY7Q>5%;%^%U%)$N;EMM$K4XO"$9$kDj5A(B
+ *  優先度継承セマフォの仕様に関連する定義
  */
 #ifdef NUM_PISID
 
@@ -90,17 +90,17 @@
 #endif /* NUM_PISID */
 
 /*
- *  $B%?%9%/BT$A2r=|;~$N=hM}%U%C%/$r;H$&$+$I$&$+$NDj5A(B
+ *  タスク待ち解除時の処理フックを使うかどうかの定義
  *
- *  $B;EMM(B1 $B$NM%@hEY7Q>5%;%^%U%)$r;H$&>l9g$K$O!$%?%9%/BT$A2r=|;~$N=hM}%U%C(B
- *  $B%/$,I,MW!%(B
+ *  仕様1 の優先度継承セマフォを使う場合には，タスク待ち解除時の処理フッ
+ *  クが必要．
  */
 #ifdef PRISEM_SPEC1
 #define USE_REL_WAI_HOOK
 #endif /* PRISEM_SPEC1 */
 
 /*
- *  $B;HMQ$7$J$$5!G=%V%m%C%/$N7hDj(B
+ *  使用しない機能ブロックの決定
  */
 
 #ifdef NUM_SEMID
@@ -148,7 +148,7 @@
 #endif
 
 /*
- *  $B;HMQ$7$J$$%7%9%F%`%3!<%k$K4X$9$kDj5A(B
+ *  使用しないシステムコールに関する定義
  */
 
 #ifndef USE_SEM

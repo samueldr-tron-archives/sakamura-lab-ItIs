@@ -34,7 +34,7 @@
  */
 
 /*
- *  $B%?%9%/IUB0F14|5!G=(B
+ *  タスク付属同期機能
  */
 
 #include <limits.h>
@@ -175,7 +175,7 @@ i_frsm_tsk(ID tskid)
 #endif /* _i_frsm_tsk */
 
 /*
- *  $B5/>2BT$A;EMM$NDj5A(B
+ *  起床待ち仕様の定義
  */
 #if !defined(_i_slp_tsk) || !defined(_i_tslp_tsk) || !defined(_i_wup_tsk)
 static WSPEC wspec_slp = { TTW_SLP, 0, 0 };

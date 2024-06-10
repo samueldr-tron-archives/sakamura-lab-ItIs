@@ -36,7 +36,7 @@
 #include "itis_kernel.h"
 
 /*
- *  $B%?!<%2%C%H0MB84X?t(B
+ *  ターゲット依存関数
  */
 void
 sys_initialize(void)

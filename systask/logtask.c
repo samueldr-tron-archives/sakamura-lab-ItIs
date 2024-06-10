@@ -34,25 +34,25 @@
  */
 
 /*
- *  $B%7%9%F%`%m%0%?%9%/(B
+ *  システムログタスク
  */
 
 #include <stdarg.h>
 #include "systask.h"
 
 /*
- *  $B%m%0%?%9%/$NJQ?t(B
+ *  ログタスクの変数
  */
-int	logtask_alive = 0;	/* $B%m%0%?%9%/$,F0$$$F$$$k$+(B */
-int	log_msg_maxmsz;		/* $B%m%0%a%C%;!<%8$N:GBgD9(B */
+int	logtask_alive = 0;	/* ログタスクが動いているか */
+int	log_msg_maxmsz;		/* ログメッセージの最大長 */
 
 /*
- *  $BA0J};2>H@k8@(B
+ *  前方参照宣言
  */
 ER	svc_syslog_send(const char *string, int len);
 
 /*
- *  $B%m%0%?%9%/$N5/F0$H=i4|2=!$3HD%(BSVC$B$NDj5A(B
+ *  ログタスクの起動と初期化，拡張SVCの定義
  */
 void
 logtask_startup(int portid)
@@ -73,11 +73,11 @@ logtask_startup(int portid)
 }
 
 /*
- *  $B%m%0%?%9%/$NK\BN(B
+ *  ログタスクの本体
  */
 
-static int	logtask_portid;			/* $B%m%0=PNO%]!<%HHV9f(B */
-static char	logtask_buf[MBF_LOG_MAXMSZ+1];	/* $B%m%0%?%9%/MQ%P%C%U%!(B */
+static int	logtask_portid;			/* ログ出力ポート番号 */
+static char	logtask_buf[MBF_LOG_MAXMSZ+1];	/* ログタスク用バッファ */
 
 void
 log_task(int portid)
@@ -96,10 +96,10 @@ log_task(int portid)
 }
 
 /*
- *  $B3HD%(BSVC$B%O%s%I%iK\BN(B
+ *  拡張SVCハンドラ本体
  *
- *  $B%m%0%?%9%/$,F0$$$F$$$k>l9g$O!$%m%0%a%C%;!<%8%P%C%U%!$XAw$k!%F0$$$F(B
- *  $B$$$J$$>l9g$O!$D>@\Dc%l%Y%k$NJ8;z=PNO%k!<%A%s$r;H$C$F=PNO$9$k!%(B
+ *  ログタスクが動いている場合は，ログメッセージバッファへ送る．動いて
+ *  いない場合は，直接低レベルの文字出力ルーチンを使って出力する．
  */
 
 ER

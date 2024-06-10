@@ -37,11 +37,11 @@
 #define	_SVC_FNCODE_
 
 /*
- *  $B3HD%(BSVC$B$N5!G=%3!<%I$NDj5A(B
+ *  拡張SVCの機能コードの定義
  */
 
 /*
- *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P$N8F$S=P$7(B
+ *  シリアルインタフェースドライバの呼び出し
  */
 #define SVC_SERIAL_INIT		1
 #define SVC_SERIAL_READ		2
@@ -50,7 +50,7 @@
 #define SVC_SERIAL_SHUTDOWN	5
 
 /*
- *  $B%7%9%F%`%m%0%?%9%/$X$N=PNO(B
+ *  システムログタスクへの出力
  */
 #define SVC_SYSLOG_SEND		6
 

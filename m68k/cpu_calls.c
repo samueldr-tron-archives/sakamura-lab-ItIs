@@ -33,7 +33,7 @@
  */
 
 /* 
- *  CPU $B$K0MB8$9$k%7%9%F%`%3!<%k(B
+ *  CPU に依存するシステムコール
  */
 
 #include "itis_kernel.h"
@@ -41,7 +41,7 @@
 #include "check.h"
 
 /*
- *  $B%G%#%9%Q%C%A$N6X;_(B/$B5v2D5!G=(B
+ *  ディスパッチの禁止/許可機能
  */
 
 #ifndef _i_dis_dsp
@@ -71,7 +71,7 @@ i_ena_dsp(void)
 #endif /* _i_ena_dsp */
 
 /*
- *  $B3d9~$_4IM}5!G=(B
+ *  割込み管理機能
  */
 
 #ifndef _i_def_int
@@ -111,13 +111,13 @@ i_def_int(UINT dintno, T_DINT *pk_dint)
 }
 
 /*
- *  $B3d9~$_%O%s%I%i5/F0$N$?$a$N9b5i8@8lBP1~%k!<%A%s(B
+ *  割込みハンドラ起動のための高級言語対応ルーチン
  */
 __asm__(".text				\n"
 "	.align 1			\n"
 "_inthdr_startup:			\n"
 "	movem.l d0-d1/a0-a1, -(sp)	\n"
-"	move.w (22,sp), d0		\n"	/* $B%Y%/%?%*%U%;%C%H$rFI$`(B */
+"	move.w (22,sp), d0		\n"	/* ベクタオフセットを読む */
 "	and.l #0x0fff, d0		\n"
 "	jsr ([_hll_exc_table-8,d0])	\n"
 "	movem.l (sp)+, d0-d1/a0-a1	\n"
@@ -126,7 +126,7 @@ __asm__(".text				\n"
 #endif /* _i_def_int */
 
 /*
- *  $B3d9~$_$N6X;_(B/$B5v2D5!G=(B
+ *  割込みの禁止/許可機能
  */
 
 #ifndef _i_loc_cpu
@@ -157,7 +157,7 @@ i_unl_cpu(void)
 #endif /* _i_unl_cpu */
 
 /*
- *  IPM (Interrupt Priority Mask) $B$N@_Dj(B/$B;2>H5!G=(B
+ *  IPM (Interrupt Priority Mask) の設定/参照機能
  */
 
 #ifndef _i_chg_ipm
@@ -189,13 +189,13 @@ i_ref_ipm(UINT *p_ipm)
 #endif /* _i_ref_ipm */
 
 /* 
- *  $B%G%P%C%0%5%]!<%H5!G=(B
+ *  デバッグサポート機能
  */
 
 #ifdef USE_DEBUG_SUPPORT
 
 /*
- *  $B%?%9%/$N%l%8%9%?FbMF$N@_Dj!$;2>H(B
+ *  タスクのレジスタ内容の設定，参照
  */
 
 #ifndef _i_vset_reg

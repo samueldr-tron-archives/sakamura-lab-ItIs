@@ -41,17 +41,17 @@
 #ifdef USE_TASK_MAILBOX
 
 /*
- *  $B%a%C%;!<%8A`:nMQ%^%/%m(B
+ *  メッセージ操作用マクロ
  */
 #define nextmsg(msg)	*((T_MSG **) &((msg)->msgque[0]))
 
 /*
- *  $B%?%9%/IUB0%a%$%k%\%C%/%9BT$A;EMM$NDj5A(B
+ *  タスク付属メイルボックス待ち仕様の定義
  */
 static WSPEC wspec_tmb_tfifo = { TTW_TMB, 0, 0 };
 
 /*
- *  $B%?%9%/IUB0%a%$%k%\%C%/%94IM}5!G=(B
+ *  タスク付属メイルボックス管理機能
  */
 
 #ifndef _i_vsnd_tmb

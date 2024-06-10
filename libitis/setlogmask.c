@@ -37,7 +37,7 @@
 #include <itis_syslog.h>
 
 /*
- *  $B%7%9%F%`%m%0%^%9%/$N@_Dj(B
+ *  システムログマスクの設定
  */
 
 extern int	__logmask;

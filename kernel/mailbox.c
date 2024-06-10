@@ -41,23 +41,23 @@
 #ifdef USE_MBX
 
 /*
- *  $B%a%$%k%\%C%/%94IM}%V%m%C%/$NDj5A(B
+ *  メイルボックス管理ブロックの定義
  *
- *  mq_head $B$O!$%a%C%;!<%8%-%e!<$N:G=i$N%a%C%;!<%8$r;X$9%]%$%s%?$G!$%a%C(B
- *  $B%;!<%8%-%e!<$,6u$N>l9g$K$O(B NULL $B$K$J$C$F$$$k!%(B
+ *  mq_head は，メッセージキューの最初のメッセージを指すポインタで，メッ
+ *  セージキューが空の場合には NULL になっている．
  *
- *  mq_tail $B$O!$%a%C%;!<%8%-%e!<$,6u$G$J$$>l9g$K%a%C%;!<%8%-%e!<$NKvHx(B
- *  $B$r;X$9%]%$%s%?$G!$%a%C%;!<%8%-%e!<$,6u$N>l9g$NCM$OJ]>Z$5$l$J$$!%%a%C(B
- *  $B%;!<%8$N%-%e!<%$%s%0$,(B FIFO $B$N>l9g(B (TA_MFIFO) $B$K$N$_;H$o$l$k!%(B
+ *  mq_tail は，メッセージキューが空でない場合にメッセージキューの末尾
+ *  を指すポインタで，メッセージキューが空の場合の値は保証されない．メッ
+ *  セージのキューイングが FIFO の場合 (TA_MFIFO) にのみ使われる．
  */
 
 typedef struct mailbox_control_block {
-	QUEUE	wait_queue;	/* $B%a%$%k%\%C%/%9BT$A%-%e!<(B */
-	ID	mbxid;		/* $B%a%$%k%\%C%/%9(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	mbxatr;		/* $B%a%$%k%\%C%/%9B0@-(B */
-	T_MSG	*mq_head;	/* $B%a%C%;!<%8%-%e!<$N@hF,(B */
-	T_MSG	*mq_tail;	/* $B%a%C%;!<%8%-%e!<$NKvHx(B */
+	QUEUE	wait_queue;	/* メイルボックス待ちキュー */
+	ID	mbxid;		/* メイルボックスID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	mbxatr;		/* メイルボックス属性 */
+	T_MSG	*mq_head;	/* メッセージキューの先頭 */
+	T_MSG	*mq_tail;	/* メッセージキューの末尾 */
 } MBXCB;
 
 static MBXCB	mbxcb_table[NUM_MBXID];
@@ -65,14 +65,14 @@ static MBXCB	mbxcb_table[NUM_MBXID];
 #define get_mbxcb(id)	(&(mbxcb_table[INDEX_MBX(id)]))
 
 /*
- *  $BL$;HMQ$N%a%$%k%\%C%/%94IM}%V%m%C%/$N%j%9%H(B
+ *  未使用のメイルボックス管理ブロックのリスト
  */
 #ifndef _i_vcre_mbx
 QUEUE	free_mbxcb;
 #endif /* _i_vcre_mbx */
 
 /* 
- *  $B%a%$%k%\%C%/%94IM}%V%m%C%/$N=i4|2=(B
+ *  メイルボックス管理ブロックの初期化
  */
 void mailbox_initialize()
 {
@@ -97,12 +97,12 @@ void mailbox_initialize()
 }
 
 /*
- *  $B%a%C%;!<%8A`:nMQ%^%/%m(B
+ *  メッセージ操作用マクロ
  */
 #define nextmsg(msg)	*((T_MSG **) &((msg)->msgque[0]))
 
 /*
- *  $BM%@hEY%Y!<%9$N%a%C%;!<%8%-%e!<$NA`:n(B
+ *  優先度ベースのメッセージキューの操作
  */
 Inline void
 queue_insert_mpri(T_MSG *pk_msg, T_MSG **head)
@@ -133,13 +133,13 @@ queue_insert_mpri(T_MSG *pk_msg, T_MSG **head)
 }
 
 /*
- *  $B%a%$%k%\%C%/%9BT$A;EMM$NDj5A(B
+ *  メイルボックス待ち仕様の定義
  */
 static WSPEC wspec_mbx_tfifo = { TTW_MBX, 0, 0 };
 static WSPEC wspec_mbx_tpri = { TTW_MBX, obj_chg_pri, 0 };
 
 /*
- *  $B%a%$%k%\%C%/%94IM}5!G=(B
+ *  メイルボックス管理機能
  */
 
 #if !defined(_i_cre_mbx) || !defined(_i_vcre_mbx)

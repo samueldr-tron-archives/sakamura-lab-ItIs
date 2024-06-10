@@ -1,7 +1,7 @@
 
-		  $B!a(B BSD UNIX $B>e$G$NF0:n4D6-(B $B!a(B
+		  ＝ BSD UNIX 上での動作環境 ＝
 
-	    $B!J(BRelease 1.4$B&BBP1~!$:G=*99?7(B: 6-Jul-1998$B!K(B
+	    （Release 1.4β対応，最終更新: 6-Jul-1998）
 
 ------------------------------------------------------------------------ 
 	ItIs - An ITRON Implementation for Research and Education
@@ -34,340 +34,340 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- * TRON $B$O(B The Real-time Operating system Nucleus $B$NN,>N$G$9!%(B
- * ITRON $B$O(B Industrial TRON $B$NN,>N$G$9!%(B
- * $B&L(BITRON $B$O(B Micro Industrial TRON $B$NN,>N$G$9!%(B
- * ItIs $B$O(B ITRON Implementation by Sakamura Lab $B$NN,>N$G$9!%(B
+ * TRON は The Real-time Operating system Nucleus の略称です．
+ * ITRON は Industrial TRON の略称です．
+ * μITRON は Micro Industrial TRON の略称です．
+ * ItIs は ITRON Implementation by Sakamura Lab の略称です．
 ------------------------------------------------------------------------
 
 
-$B#1!%(BBSD UNIX$B>e$G$NF0:n4D6-$N35MW(B
+１．BSD UNIX上での動作環境の概要
 
-ItIs $B$N%7%_%e%l!<%7%g%s4D6-$H$7$F!$(BBSD UNIX$B>e$GF0:n$9$k@_Dj$rMQ0U$7$F(B
-$B$$$k!%$3$N%7%_%e%l!<%7%g%s4D6-$O!$(BBSD UNIX $B$N(B 1$B$D$N%W%m%;%9$NCf$GJ#?t(B
-$B$N%?%9%/$r@Z$jBX$($FF0:n$5$;$k$b$N$G!$(BBSD UNIX$B>e$N%9%l%C%I%i%$%V%i%j$H(B
-$B$7$F;H$&$3$H$b$G$-$k!%(B
-
-
-1.1. $B%5%]!<%H$7$F$$$J$$5!G=(B
-
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$G$O!$(BItIs $B$,;}$C$F$$$k5!G=$NFb!$0J2<(B
-$B$N5!G=$O%5%]!<%H$7$F$$$J$$!%(B
-
-$B!&%=%U%H%&%'%"3d9~$_$K$h$k%7%9%F%`%3!<%k8F$S=P$7(B
-$B!&(Bdef_int $B%7%9%F%`%3!<%k(B
-$B!&3HD%(BSVC$B5!G=$H=`%?%9%/It(B
-$B!&(Bvset_reg, vget_reg $B%7%9%F%`%3!<%k(B
-$B!&@-G=I>2AMQ%7%9%F%`;~9o;2>H5!G=(B
+ItIs のシミュレーション環境として，BSD UNIX上で動作する設定を用意して
+いる．このシミュレーション環境は，BSD UNIX の 1つのプロセスの中で複数
+のタスクを切り替えて動作させるもので，BSD UNIX上のスレッドライブラリと
+して使うこともできる．
 
 
-1.2. $B%?!<%2%C%H%7%9%F%`$H0\?"(B
+1.1. サポートしていない機能
 
-$B8=;~E@$G$O!$%?!<%2%C%H%7%9%F%`$H$7$F(B Sparc $B%W%m%;%C%5>e$N(B SunOS 4.X
-$B!J(BSunOS 4.1.4 $B$GF0:n3NG'!K$H(B x86 $B%W%m%;%C%5>e$G$N(B FreeBSD$B!J(BFreeBSD
-2.2.6 $B$GF0:n3NG'!K$N$_$r%5%]!<%H$7$F$$$k$,!$B>$N(B BSD UNIX $B$X$N0\?"$b2D(B
-$BG=$G$"$k!%(BBSD UNIX $B$K0MB8$7$?5!G=$rMxMQ$7$F$$$k$?$a!$B>$N7ONs$N(B UNIX 
-$B$X$N0\?"$O<j4V$,$+$+$k$b$N$H;W$o$l$k!%(B
+BSD UNIX上のシミュレーション環境では，ItIs が持っている機能の内，以下
+の機能はサポートしていない．
 
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$N<BAu$K$"$?$C$F!$2<$NJ88%$r;29M$K$7$?!%(B
-$BB>$N(B BSD UNIX $B$X$N0\?"$N:]$K$O!$;29M$K$J$kJ88%$G$"$m$&!%(B
+・ソフトウェア割込みによるシステムコール呼び出し
+・def_int システムコール
+・拡張SVC機能と準タスク部
+・vset_reg, vget_reg システムコール
+・性能評価用システム時刻参照機能
 
-[1] $B0BG\9-B?(B, $B>>1:IRM:(B,$B!V0\?"@-$KM%$l$?7ZNL%W%m%;%9%i%$%V%i%j$N<BAuK!!W(B,
+
+1.2. ターゲットシステムと移植
+
+現時点では，ターゲットシステムとして Sparc プロセッサ上の SunOS 4.X
+（SunOS 4.1.4 で動作確認）と x86 プロセッサ上での FreeBSD（FreeBSD
+2.2.6 で動作確認）のみをサポートしているが，他の BSD UNIX への移植も可
+能である．BSD UNIX に依存した機能を利用しているため，他の系列の UNIX 
+への移植は手間がかかるものと思われる．
+
+BSD UNIX上のシミュレーション環境の実装にあたって，下の文献を参考にした．
+他の BSD UNIX への移植の際には，参考になる文献であろう．
+
+[1] 安倍広多, 松浦敏雄,「移植性に優れた軽量プロセスライブラリの実装法」,
 Proc. 21st JUS UNIX Symposium, pp. 77-89, 1993.
 
 
-1.3. $B%7%9%F%`%3!<%k%$%s%?%U%'!<%9(B
+1.3. システムコールインタフェース
 
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$G$O!$%7%_%e%l!<%7%g%s4D6-$r9=@.$9$k$9(B
-$B$Y$F$N%W%m%0%i%`!J%?%9%/It!$%?%9%/FHN)It!$%+!<%M%k$NFbIt!K$,F1$8<B9T%l(B
-$B%Y%k$G<B9T$5$l$k!%$=$N$?$a!$%?%9%/It$H=`%?%9%/It$N6hJL$O0UL#$,$J$/!$=`(B
-$B%?%9%/It$*$h$S3HD%(BSVC$B5!G=$O%5%]!<%H$7$F$$$J$$!%(B
+BSD UNIX上のシミュレーション環境では，シミュレーション環境を構成するす
+べてのプログラム（タスク部，タスク独立部，カーネルの内部）が同じ実行レ
+ベルで実行される．そのため，タスク部と準タスク部の区別は意味がなく，準
+タスク部および拡張SVC機能はサポートしていない．
 
-$B%7%9%F%`%3!<%k$N8F$S=P$7J}$H$7$F$O!$%5%V%k!<%A%s%3!<%k$K$h$kJ}K!$N$_$r(B
-$B%5%]!<%H$7!$%7%9%F%`%3!<%k%$%s%?%U%'!<%9$O!$(BC$B8@8l$N%3!<%j%s%0%3%s%Y%s(B
-$B%7%g%s$=$N$^$^$K$J$C$F$$$k!%(B
-
-
-1.4. $B3d9~$_(B
-
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$G$O!$%7%0%J%k$,3d9~$_$KBP1~$9$k!%%7%0(B
-$B%J%k%O%s%I%i$O3d9~$_%O%s%I%i$H$7$F07$o$l!$%7%0%J%k%^%9%/$,3d9~$_%^%9%/(B
-$B$KBP1~$9$k!%%f!<%6$,%7%0%J%k%O%s%I%i$rDj5A$9$k$3$H$b2DG=$G$"$k$,!$0lDj(B
-$B$N%k!<%k$K=>$&$3$H$,I,MW$G$"$k!%(B
-
-BSD UNIX $B$N%7%0%J%k$NFb!$(BSIGUSR2 $B$O%?%9%/%G%#%9%Q%C%A=hM}$N$?$a$KMQ$$(B
-$B$F$$$k$?$a!$%f!<%6$,MxMQ$9$k$3$H$O$G$-$J$$!%$^$?!$(BSIGALRM $B$O%+!<%M%kFb(B
-$B$N%?%$%^3d9~$_$H$7$FMQ$$$F$$$k!%@_Dj$K$h$C$F$O!$(BSIGIO $B$N%O%s%I%i$b%+!<(B
-$B%M%kFb$GDj5A$5$l$k!J(BSIGIO $B$N07$$$K$D$$$F$O#3>O$r;2>H!K!%(B
+システムコールの呼び出し方としては，サブルーチンコールによる方法のみを
+サポートし，システムコールインタフェースは，C言語のコーリングコンベン
+ションそのままになっている．
 
 
-1.5. $B%a%b%j4IM}(B
+1.4. 割込み
 
-$BI8=`$N@_Dj$G$O!$%M%$%F%#%V4D6-$HF1MM$K!$%+!<%M%k$,I,MW$H$9$k3F<o$NNN0h(B
-$B$O%7%9%F%`%a%b%j%W!<%k$+$i3NJ](B/$B2rJ|$5$l$k!%%7%9%F%`%a%b%j%W!<%k$NNN0h(B
-$B$O!$(BOS$BI8=`$N(B sbrk$B%7%9%F%`%3!<%k$K$h$C$F3NJ]$5$l$k!%%7%9%F%`9=@.%U%!%$(B
-$B%k$G!$%7%9%F%`%a%b%j%W!<%k$r;H$o$J$$@_Dj$K$9$k!J(Bnum_kernel_mpl $B$r(B 0 $B$K(B
-$B$9$k!K$3$H$G!$%7%9%F%`%a%b%j%W!<%k$+$iNN0h$r3NJ](B/$B2rJ|$9$kBe$o$j$K!$(BOS 
-$BI8=`$N(B malloc$B!$(Bfree $B%i%$%V%i%j$,;H$o$l$k!%(B
+BSD UNIX上のシミュレーション環境では，シグナルが割込みに対応する．シグ
+ナルハンドラは割込みハンドラとして扱われ，シグナルマスクが割込みマスク
+に対応する．ユーザがシグナルハンドラを定義することも可能であるが，一定
+のルールに従うことが必要である．
 
-$B%a%b%j$NJ]8nB0@-$rJQ99$9$k$?$a$N(B mprotect$B%7%9%F%`%3!<%k$r(B OS $B$,%5%]!<(B
-$B%H$7$F$$$k>l9g$K$O!$%?%9%/$,MQ$$$k%9%?%C%/$N2<$N(B 1$B%Z!<%8J,$NNN0h$r%"%/(B
-$B%;%96X;_NN0h$K@_Dj$7!$%9%?%C%/0n$l$N8!=P$r2DG=$K$7$F$$$k!%%"%/%;%96X;_(B
-$B$K$9$kNN0h$NJ,$rJd$&$?$a$K!$%9%?%C%/NN0h$OB?$a$N%5%$%:$r3NJ]$7$F$$$k!%(B
-$B$=$N$?$a!$%7%9%F%`%a%b%j%W!<%k$N;HMQNL$O!$%M%$%F%#%V4D6-$H$O0lCW$7$J$$(B 
-$B!J%G%U%)%k%H(B/$B:G>.$N%7%9%F%`%9%?%C%/%5%$%:$b0[$J$k$?$a!$%7%9%F%`%a%b%j(B
-$B%W!<%k$N;HMQNL$,0lCW$7$J$/$J$k$N$O$d$`$rF@$J$$!K!%(B
+BSD UNIX のシグナルの内，SIGUSR2 はタスクディスパッチ処理のために用い
+ているため，ユーザが利用することはできない．また，SIGALRM はカーネル内
+のタイマ割込みとして用いている．設定によっては，SIGIO のハンドラもカー
+ネル内で定義される（SIGIO の扱いについては３章を参照）．
 
 
-1.6. $B;~4V4IM}(B
+1.5. メモリ管理
 
-$B<~4|3d9~$_$N4V3V$O(B 10$B%_%jIC$rI8=`$H$7$F$$$k$,!$%?!<%2%C%H0MB8$N%?%$%^(B
-$B%b%8%e!<%k$N$_$N=$@5$GJQ99$G$-$k!%%7%_%e%l!<%7%g%s4D6-A4BN$,(B 1$B$D$N%W%m(B
-$B%;%9$H$7$F<B9T$5$l$k$?$a!$%7%_%e%l!<%7%g%s4D6-A4BN$K3d$jEv$F$i$l$k(B CPU
-$B;~4V$,(B UNIX $B$N%9%1%8%e!<%i$K$h$C$F7h$a$i$l$k!%$=$N$?$a!$9b$$;~4V@:EY$r(B
-$B4|BT$9$k$3$H$O$G$-$J$$!%(B
+標準の設定では，ネイティブ環境と同様に，カーネルが必要とする各種の領域
+はシステムメモリプールから確保/解放される．システムメモリプールの領域
+は，OS標準の sbrkシステムコールによって確保される．システム構成ファイ
+ルで，システムメモリプールを使わない設定にする（num_kernel_mpl を 0 に
+する）ことで，システムメモリプールから領域を確保/解放する代わりに，OS 
+標準の malloc，free ライブラリが使われる．
 
-$B;~4V$rI=$9%Q%i%a!<%?!J(BSYSTIME$B!$(BCYCTIME$B!$(BALMTIME$B!$(BDLYTIME$B!$(BTMO $B7?$N$b$N!K(B
-$B$N4p=`;~4V$O!$$9$Y$F(B 1$B%_%jIC$G$"$k!%(B
+メモリの保護属性を変更するための mprotectシステムコールを OS がサポー
+トしている場合には，タスクが用いるスタックの下の 1ページ分の領域をアク
+セス禁止領域に設定し，スタック溢れの検出を可能にしている．アクセス禁止
+にする領域の分を補うために，スタック領域は多めのサイズを確保している．
+そのため，システムメモリプールの使用量は，ネイティブ環境とは一致しない 
+（デフォルト/最小のシステムスタックサイズも異なるため，システムメモリ
+プールの使用量が一致しなくなるのはやむを得ない）．
 
 
-$B#2!%%7%9%F%`%3!<%k;EMM$N0c$$(B
+1.6. 時間管理
 
-$B0J2<$G$O!$(BBSD UNIX$B>e$G$N%7%_%e%l!<%7%g%s4D6-$G$N!$3F%7%9%F%`%3!<%k$N;E(B
-$BMM$N0c$$$K$D$$$F=R$Y$k!%(B
+周期割込みの間隔は 10ミリ秒を標準としているが，ターゲット依存のタイマ
+モジュールのみの修正で変更できる．シミュレーション環境全体が 1つのプロ
+セスとして実行されるため，シミュレーション環境全体に割り当てられる CPU
+時間が UNIX のスケジューラによって決められる．そのため，高い時間精度を
+期待することはできない．
 
-(1) cre_tsk		$B%?%9%/@8@.(B
+時間を表すパラメータ（SYSTIME，CYCTIME，ALMTIME，DLYTIME，TMO 型のもの）
+の基準時間は，すべて 1ミリ秒である．
 
-$B!&%?%9%/$rF0:n$5$;$kF0:n%b!<%I$r;XDj$9$k5!G=$O$J$$!%(B
 
-$B!&%f!<%6%9%?%C%/$H%7%9%F%`%9%?%C%/$N6hJL$O$J$$!%N><T$N%5%$%:$r2C$($?%5(B
-$B%$%:$N%9%?%C%/NN0h$,3NJ]$5$l$k!%(B
+２．システムコール仕様の違い
 
-(2) dis_dsp		$B%G%#%9%Q%C%A6X;_(B
+以下では，BSD UNIX上でのシミュレーション環境での，各システムコールの仕
+様の違いについて述べる．
 
-$B!&(Bdis_dsp $B$O!$%7%0%J%k%^%9%/$r(B SIGUSR2 $B%7%0%J%k$N$_%^%9%/$7$?>uBV$K@_(B
-$BDj$9$k!%(B
+(1) cre_tsk		タスク生成
 
-(3) ena_dsp		$B%G%#%9%Q%C%A5v2D(B
+・タスクを動作させる動作モードを指定する機能はない．
 
-$B!&(Bena_dsp $B$O!$$9$Y$F$N%7%0%J%k%^%9%/$r2r=|$7$?>uBV$K@_Dj$9$k!%(B
+・ユーザスタックとシステムスタックの区別はない．両者のサイズを加えたサ
+イズのスタック領域が確保される．
 
-(4) def_int		$B3d9~$_%O%s%I%iDj5A(B
+(2) dis_dsp		ディスパッチ禁止
 
-$B!&%5%]!<%H$7$F$$$J$$!%(B
+・dis_dsp は，シグナルマスクを SIGUSR2 シグナルのみマスクした状態に設
+定する．
 
-(5) loc_cpu		$B3d9~$_$H%G%#%9%Q%C%A$N6X;_(B
+(3) ena_dsp		ディスパッチ許可
 
-$B!&(Bloc_cpu $B$O!$$9$Y$F$N%7%0%J%k$r%^%9%/$7$?>uBV$K@_Dj$9$k!%(B
+・ena_dsp は，すべてのシグナルマスクを解除した状態に設定する．
 
-(6) unl_cpu		$B3d9~$_$H%G%#%9%Q%C%A$N5v2D(B
+(4) def_int		割込みハンドラ定義
 
-$B!&(Bunl_cpu $B$O!$$9$Y$F$N%7%0%J%k%^%9%/$r2r=|$7$?>uBV$K@_Dj$9$k!%(B
+・サポートしていない．
 
-(7) chg_iXX		$B3d9~$_%^%9%/JQ99(B
+(5) loc_cpu		割込みとディスパッチの禁止
 
-$B!&L>>N$O(B chg_ims $B$H$7$F$$$k!%(B
+・loc_cpu は，すべてのシグナルをマスクした状態に設定する．
 
-$B!&(Bchg_ims $B$O!$%7%0%J%k%^%9%/$r;XDj$7$?CM$K@_Dj$9$k!%%?%9%/FHN)It$+$i8F(B
-$B$S=P$7$?>l9g$K$O!$(BSIGUSR2 $B%7%0%J%k$N%^%9%/$r2r=|$9$k$3$H$O$G$-$J$$!J2r(B
-$B=|$7$h$&$H$9$k$H!$(BE_PAR $B%(%i!<$K$J$k!K!%$^$?!$(BSIGUSR2 $B0J30$N%7%0%J%k$r(B
-$B%^%9%/$7$?>uBV$K@_Dj$9$k>l9g$K$O!$(BSIGUSR2 $B$b%^%9%/$7$?>uBV$K$7$J$1$l$P(B
-$B$J$i$J$$!J(BSIGUSR2 $B$r%^%9%/$7$J$$>l9g!$(BE_PAR $B%(%i!<$K$J$k!K!%(B
+(6) unl_cpu		割込みとディスパッチの許可
 
-$B!&@_Dj$7$?%7%0%J%k%^%9%/$NCM$H!$(Bref_sys $B$G;2>H$G$-$k%?%9%/It$N%7%9%F%`(B
-$B>uBV!J(Bsysstat$B!K$N4X78$O0J2<$N$h$&$K$J$k!%(B
+・unl_cpu は，すべてのシグナルマスクを解除した状態に設定する．
 
-	$B%7%0%J%k%^%9%/(B		sysstat
+(7) chg_iXX		割込みマスク変更
+
+・名称は chg_ims としている．
+
+・chg_ims は，シグナルマスクを指定した値に設定する．タスク独立部から呼
+び出した場合には，SIGUSR2 シグナルのマスクを解除することはできない（解
+除しようとすると，E_PAR エラーになる）．また，SIGUSR2 以外のシグナルを
+マスクした状態に設定する場合には，SIGUSR2 もマスクした状態にしなければ
+ならない（SIGUSR2 をマスクしない場合，E_PAR エラーになる）．
+
+・設定したシグナルマスクの値と，ref_sys で参照できるタスク部のシステム
+状態（sysstat）の関係は以下のようになる．
+
+	シグナルマスク		sysstat
 	--------------------------------
-	SIGUSR2 $B0J30$b%^%9%/(B	TTS_LOC
-	SIGUSR2 $B$N$_%^%9%/(B	TTS_DDSP
-	$B$9$Y$F2r=|(B		TTS_TSK
+	SIGUSR2 以外もマスク	TTS_LOC
+	SIGUSR2 のみマスク	TTS_DDSP
+	すべて解除		TTS_TSK
 
-(8) ref_iXX		$B3d9~$_%^%9%/;2>H(B
+(8) ref_iXX		割込みマスク参照
 
-$B!&L>>N$O(B ref_ims $B$H$7$F$$$k!%(B
+・名称は ref_ims としている．
 
-$B!&(Bref_ims $B$O!$%7%0%J%k%^%9%/$N8=:_CM$rFI$_=P$9%7%9%F%`%3!<%k$G$"$k!%(B
+・ref_ims は，シグナルマスクの現在値を読み出すシステムコールである．
 
-(9) get_ver		$B%P!<%8%g%s;2>H(B
+(9) get_ver		バージョン参照
 
-$B!&(BCPU$B>pJs$O(B 0x0000$B!J(BCPU $B$rFCDj$7$J$$!K$K$J$k!%$3$l$O!$(BCPU $B$N5!G=$r$=$N(B
-$B$^$^;H$C$F$$$k$o$1$G$O$J$$$?$a!$@53N$J(B CPU$B>pJs$rJV$90U5A$,Dc$$$?$a$G$"(B
-$B$k!%(B
+・CPU情報は 0x0000（CPU を特定しない）になる．これは，CPU の機能をその
+まま使っているわけではないため，正確な CPU情報を返す意義が低いためであ
+る．
 
-(10) def_svc		$B3HD%(BSVC$B%O%s%I%iDj5A(B
+(10) def_svc		拡張SVCハンドラ定義
 
-$B!&%5%]!<%H$7$F$$$J$$!%(B
+・サポートしていない．
 
-(11) vset_reg		$B%?%9%/$N%l%8%9%?FbMF@_Dj(B
-(12) vget_reg		$B%?%9%/$N%l%8%9%?FbMF;2>H(B
+(11) vset_reg		タスクのレジスタ内容設定
+(12) vget_reg		タスクのレジスタ内容参照
 
-$B!&%5%]!<%H$7$F$$$J$$!%(B
+・サポートしていない．
 
-(13) vget_tim		$B@-G=I>2AMQ%7%9%F%`;~9o;2>H(B
+(13) vget_tim		性能評価用システム時刻参照
 
-$B!&%5%]!<%H$7$F$$$J$$!%(B
-
-
-$B#3!%%N%s%V%m%C%-%s%0(BI/O
-
-3.1. $B%N%s%V%m%C%-%s%0(BI/O $B$NI,MW@-(B
-
-ItIs $B$N%7%_%e%l!<%7%g%s4D6-A4BN$,(B 1$B$D$N%W%m%;%9$H$7$FF0:n$7$F$$$k$?$a!$(B
-ItIs $B$N%?%9%/$+$i(B UNIX $B%+!<%M%kFb$G%V%m%C%/$9$k%7%9%F%`%3!<%k$r8F$S=P(B
-$B$7$?>l9g!$%7%_%e%l!<%7%g%s4D6-A4BN$,%V%m%C%/$5$l!$B>$N%?%9%/$r<B9T$9$k(B
-$B$3$H$,$G$-$J$/$J$k!J87L)$K$O!$%V%m%C%/Cf$K%7%0%J%k$r<u$1<h$C$?>l9g$K$O!$(B
-$B%V%m%C%/$,2r=|$5$l$F<B9T$r7QB3$G$-$k!K!%$=$N$?$a!$(BUNIX $B%+!<%M%kFb$G$N%V(B
-$B%m%C%/$,5/$3$i$J$$$h$&$K!$DcB.$N(B I/O$B%"%/%;%9$O!$%N%s%V%m%C%-%s%0%b!<%I(B
-$B$G9T$&I,MW$,$"$k!%(B
-
-BSD UNIX $B$N%N%s%V%m%C%-%s%0(BI/O$B%b!<%I$G$O!$DL>o$G$"$l$P%+!<%M%kCf$G%V%m%C(B
-$B%/$5$l$k$h$&$J(B read/write$B%7%9%F%`%3!<%k$+$i$b$9$0$K%j%?!<%s$7$F$/$k(B 
-$B!J$3$N;~!$$3$l$i$N%7%9%F%`%3!<%k$O(B EWOULDBLOCK $B%(%i!<$rJs9p$9$k!K!%$5$i(B
-$B$KHsF14|(BI/O$B%b!<%I$rJ;MQ$9$k$H!$$=$l$i$N%7%9%F%`%3!<%k$r8F$S=P$7$F$b%V(B
-$B%m%C%/$5$l$J$$>u67$K$J$C$?;~$K!$(BUNIX$B%+!<%M%k$O(B SIGIO $B%7%0%J%k$r;H$C$F(B
-$B$=$N$3$H$r%W%m%;%9$KCN$i$;$k!%(B
+・サポートしていない．
 
 
-3.2. ItIs $B$K$*$1$k%5%]!<%H(B
+３．ノンブロッキングI/O
 
-BSD UNIX $B$N%N%s%V%m%C%-%s%0(BI/O $B$r(B ItIs $B$N%?%9%/$+$iMxMQ$9$k$?$a$K$O!$(B
-SIGIO $B$rJa$^$($k%7%0%J%k%O%s%I%i$rDj5A$7!$Ja$^$($?%7%0%J%k$r2?$i$+$N7A(B
-$B$G%?%9%/$KDLCN$9$kI,MW$,$"$k!%$=$N$?$a$N<jCJ$H$7$F!$(BItIs $B$G$O!$(BSIGIO 
-$B%7%0%J%k$NH/@8$K$h$j8F$S=P$5$l$k%3!<%k%P%C%/4X?t$rEPO?$9$k5!G=$rMQ0U$7(B
-$B$F$$$k!%(B
+3.1. ノンブロッキングI/O の必要性
 
-$B6qBNE*$K$O!$(BSIGIO $B%7%0%J%k$K$h$j%3!<%k%P%C%/4X?t$r<B9T$5$;$?$$>l9g$K$O!$(B
-SIGIO $BDLCN%$%Y%s%H%V%m%C%/!J(BSIGIOEB$B!K$rMQ0U$7!$$=$N(B callback $B%U%#!<%k(B
-$B%I$K%3!<%k%P%C%/4X?t$X$N%]%$%s%?!$(Barg $B%U%#!<%k%I$K%3!<%k%P%C%/4X?t$XEO(B
-$B$90z?t$r@_Dj$7!$(Beneuque_sigioeb $B$rMQ$$$F(B SIGIO $BDLCN%$%Y%s%H%-%e!<$KEP(B
-$BO?$9$k!%(BSIGIO $B%7%0%J%k$,H/@8$9$k$H!$EPO?$7$?%3!<%k%P%C%/4X?t$,$9$Y$F8F(B
-$B$S=P$5$l$k!%%3!<%k%P%C%/4X?t$,(B 0 $B$rJV$9$H!$4XO"$9$k(B SIGIO $BDLCN%$%Y%s%H(B
-$B%V%m%C%/$O%-%e!<$KEPO?$5$l$?$^$^$H$J$j!$B3$/(B SIGIO $B%7%0%J%k$G:F$SF1$8(B
-$B%3!<%k%P%C%/4X?t$,8F$S=P$5$l$k!%%3!<%k%P%C%/4X?t$,(B 0 $B0J30$rJV$9$H!$(B
-SIGIO $BDLCN%$%Y%s%H%V%m%C%/$O%-%e!<$+$i:o=|$5$l!$%3!<%k%P%C%/4X?t$O$=$l(B
-$B0J9_8F$S=P$5$l$J$/$J$k!J(Binclude/bsd_sigio.h$B!$(Bsystask/bsd_sigio.c$B!K!%(B
+ItIs のシミュレーション環境全体が 1つのプロセスとして動作しているため，
+ItIs のタスクから UNIX カーネル内でブロックするシステムコールを呼び出
+した場合，シミュレーション環境全体がブロックされ，他のタスクを実行する
+ことができなくなる（厳密には，ブロック中にシグナルを受け取った場合には，
+ブロックが解除されて実行を継続できる）．そのため，UNIX カーネル内でのブ
+ロックが起こらないように，低速の I/Oアクセスは，ノンブロッキングモード
+で行う必要がある．
 
-$B%N%s%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$O!$%3!<%k%P%C%/4X?t$r8F$S=P$9$?(B
-$B$a$K!$FbIt$G%?%9%/$r(B 1$B$D!J(Btskid = TSK_BSD_SIGIO$B!K$H!$(BSIGIO $BDLCN%$%Y%s(B
-$B%H%-%e!<$KBP$9$kGSB>%"%/%;%9$N$?$a$K%;%^%U%)$r(B 1$B$D!J(Bsemid =
-SEM_BSD_SIGIO$B!K$rMQ$$$F$$$k!%%N%s%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$r(B
-$BMQ$$$k$?$a$K$O!$%7%9%F%`9=@.@_Dj%U%!%$%k$G!$FbIt$GMQ$$$k%?%9%/$*$h$S%;(B
-$B%^%U%)$,;H$($k$h$&$K@_Dj$7$J$1$l$P$J$i$J$$!%(B
+BSD UNIX のノンブロッキングI/Oモードでは，通常であればカーネル中でブロッ
+クされるような read/writeシステムコールからもすぐにリターンしてくる 
+（この時，これらのシステムコールは EWOULDBLOCK エラーを報告する）．さら
+に非同期I/Oモードを併用すると，それらのシステムコールを呼び出してもブ
+ロックされない状況になった時に，UNIXカーネルは SIGIO シグナルを使って
+そのことをプロセスに知らせる．
 
 
-3.3. $B%N%s%V%m%C%-%s%0(BI/O $B%i%$%V%i%j(B
+3.2. ItIs におけるサポート
 
-ItIs $B>e$N%?%9%/$,%N%s%V%m%C%-%s%0(BI/O $B$r;H$&$N$r%5%]!<%H$9$k%i%$%V%i%j(B
-$B$H$7$F!$(Bnb_open$B!$(Bnb_close$B!$(Bnb_read$B!$(Bnb_write $B$rMQ0U$7$F$$$k(B
-$B!J(Blibitis/bsd_nbio.c$B!K!%$3$NCf$G!$(Bnb_close $B$O!$C1$K(B close $B$r8F$S=P$9$@(B
-$B$1$N4X?t$G$"$k!%(B
+BSD UNIX のノンブロッキングI/O を ItIs のタスクから利用するためには，
+SIGIO を捕まえるシグナルハンドラを定義し，捕まえたシグナルを何らかの形
+でタスクに通知する必要がある．そのための手段として，ItIs では，SIGIO 
+シグナルの発生により呼び出されるコールバック関数を登録する機能を用意し
+ている．
 
-$B$3$l$i$N%i%$%V%i%j$NLdBjE@$H$7$F!$(Berrno $B$,@5$7$/07$($J$$$3$H$,$"$k!%(B
-UNIX $B$N%7%9%F%`%3!<%k%$%s%?%U%'!<%9$G$O!$%7%9%F%`%3!<%k$,%(%i!<$r5/$3(B
-$B$7$?;~$N%(%i!<$N860x$O(B errno $BJQ?t$K@_Dj$5$l$k$3$H$K$J$C$F$$$k$,!$$3$N(B
-$BJQ?t$O%W%m%;%9A4BN$G(B 1$B$D$7$+$J$/!$3F%?%9%/$G6&DL$H$J$C$F$7$^$&$?$a!$$"(B
-$B$k%?%9%/$,8F$S=P$7$?%7%9%F%`%3!<%k$,JV$9(B errno $B$rB>$N%?%9%/$,=q$-49$((B
-$B$F$7$^$&$*$=$l$,$"$k!%(B
+具体的には，SIGIO シグナルによりコールバック関数を実行させたい場合には，
+SIGIO 通知イベントブロック（SIGIOEB）を用意し，その callback フィール
+ドにコールバック関数へのポインタ，arg フィールドにコールバック関数へ渡
+す引数を設定し，eneuque_sigioeb を用いて SIGIO 通知イベントキューに登
+録する．SIGIO シグナルが発生すると，登録したコールバック関数がすべて呼
+び出される．コールバック関数が 0 を返すと，関連する SIGIO 通知イベント
+ブロックはキューに登録されたままとなり，続く SIGIO シグナルで再び同じ
+コールバック関数が呼び出される．コールバック関数が 0 以外を返すと，
+SIGIO 通知イベントブロックはキューから削除され，コールバック関数はそれ
+以降呼び出されなくなる（include/bsd_sigio.h，systask/bsd_sigio.c）．
 
-$B$3$NLdBj$rKI$0$?$a$K!$%7%9%F%`%3!<%k$,JV$9(B errno $B$r;XDj$7$?NN0h$K3JG<(B
-$B$9$k%N%s%V%m%C%-%s%0(BI/O$B%i%$%V%i%j$H$7$F!$(Bnbe_open$B!$(Bnbe_close$B!$(Bnbe_read$B!$(B
-nbe_write$B$rMQ0U$7$F$$$k!J(Blibitis/bsd_nbeio.c$B!K!%(B
-
-$B0lHL$K!$(Bread/write$B%7%9%F%`%3!<%k$r;H$&%?%9%/$O!$%7%0%J%k$K$h$k%7%9%F%`(B
-$B%3!<%k<B9T$NCfCG$r<($9(B EINTR $B%(%i!<$KBP=h$9$kI,MW$,$"$k$,!$%N%s%V%m%C(B
-$B%-%s%0(BI/O$B%b!<%I$N;~$K(B EINTR $B%(%i!<$,5/$3$k$+$I$&$+$OITL@$G$"$k!%(BItIs 
-$B$NFbIt$G$O!$$9$Y$F$N%7%0%J%k$r%^%9%/$7$F(B read/write$B%7%9%F%`%3!<%k$r8F(B
-$B$S=P$9$?$a!J$3$N$h$&$K$7$J$$$H!$(Berrno $B$NCM$,B>$N%?%9%/$K$h$C$F=q$-49$((B
-$B$i$l$k$*$=$l$,$"$k!K!$$3$l$i$N%i%$%V%i%jCf$G(B EINTR $B%(%i!<$O5/$3$i$J$$(B
-$B$H9M$($F%A%'%C%/$7$F$$$J$$!%(B
-
-
-3.4. $B5?;w%7%j%"%k%I%i%$%P(B
-
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$r!$%M%$%F%#%V4D6-$H$J$k$Y$/6a$$$b$N$H(B
-$B$9$k$?$a$K!$%M%$%F%#%V4D6-$N%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P$HF1Ey$N5!G=(B
-$B$r;}$D5?;w%7%j%"%k%I%i%$%P$rMQ0U$7$F$$$k!J(Bsystask/bsd_serial.c$B!K!%5?;w(B
-$B%7%j%"%k%I%i%$%P$O!$>e$G=R$Y$?%N%s%V%m%C%-%s%0(BI/O $B$N5!G=$rMQ$$$F!$%7%j(B
-$B%"%k%]!<%H$KBP$9$kF~=PNO$r!$I8=`F~=PNO$KBP$7$F9T$&$b$N$G$"$k!%(B
+ノンブロッキングI/O サポートモジュールは，コールバック関数を呼び出すた
+めに，内部でタスクを 1つ（tskid = TSK_BSD_SIGIO）と，SIGIO 通知イベン
+トキューに対する排他アクセスのためにセマフォを 1つ（semid =
+SEM_BSD_SIGIO）を用いている．ノンブロッキングI/O サポートモジュールを
+用いるためには，システム構成設定ファイルで，内部で用いるタスクおよびセ
+マフォが使えるように設定しなければならない．
 
 
-$B#4!%%$%s%9%H!<%k!&$=$NB>(B
+3.3. ノンブロッキングI/O ライブラリ
 
-4.1. $B%$%s%9%H!<%k(B
+ItIs 上のタスクがノンブロッキングI/O を使うのをサポートするライブラリ
+として，nb_open，nb_close，nb_read，nb_write を用意している
+（libitis/bsd_nbio.c）．この中で，nb_close は，単に close を呼び出すだ
+けの関数である．
 
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$r%$%s%9%H!<%k$9$k$K$O!$(BItIs $B$NI8=`%j(B
-$B%j!<%9$K4^$^$l$k0J30$K!$0J2<$N%D!<%k$,I,MW$G$"$k!%(B
+これらのライブラリの問題点として，errno が正しく扱えないことがある．
+UNIX のシステムコールインタフェースでは，システムコールがエラーを起こ
+した時のエラーの原因は errno 変数に設定されることになっているが，この
+変数はプロセス全体で 1つしかなく，各タスクで共通となってしまうため，あ
+るタスクが呼び出したシステムコールが返す errno を他のタスクが書き換え
+てしまうおそれがある．
 
-    GNU C$B%3%s%Q%$%i!J(BGCC, $BF0:n3NG'$O(B SunOS $B$G$O(B egcs-1.0.1 release
-				  $B!?(B FreeBSD $B$G$O(B 2.7.2.1$B!K(B
-    perl 4$B!JF0:n3NG'$O(B 4.036$B!K(B
-    GNU Make$B!JF0:n3NG'$O(B 3.75$B!K(B
+この問題を防ぐために，システムコールが返す errno を指定した領域に格納
+するノンブロッキングI/Oライブラリとして，nbe_open，nbe_close，nbe_read，
+nbe_writeを用意している（libitis/bsd_nbeio.c）．
 
-$BI8=`E*$J%$%s%9%H!<%k<j=g$O0J2<$NDL$j$G$"$k!%(B
+一般に，read/writeシステムコールを使うタスクは，シグナルによるシステム
+コール実行の中断を示す EINTR エラーに対処する必要があるが，ノンブロッ
+キングI/Oモードの時に EINTR エラーが起こるかどうかは不明である．ItIs 
+の内部では，すべてのシグナルをマスクして read/writeシステムコールを呼
+び出すため（このようにしないと，errno の値が他のタスクによって書き換え
+られるおそれがある），これらのライブラリ中で EINTR エラーは起こらない
+と考えてチェックしていない．
 
-$B:G=i$K!$(BItIs $B$rE83+$7$?%G%#%l%/%H%j$K!$%*%V%8%'%/%H%U%!%$%k$rCV$/$?$a(B
-$B$N%G%#%l%/%H%j$r:n$k!J%G%#%l%/%H%jL>$O2?$G$b$h$$!K!%(B
+
+3.4. 疑似シリアルドライバ
+
+BSD UNIX上のシミュレーション環境を，ネイティブ環境となるべく近いものと
+するために，ネイティブ環境のシリアルインタフェースドライバと同等の機能
+を持つ疑似シリアルドライバを用意している（systask/bsd_serial.c）．疑似
+シリアルドライバは，上で述べたノンブロッキングI/O の機能を用いて，シリ
+アルポートに対する入出力を，標準入出力に対して行うものである．
+
+
+４．インストール・その他
+
+4.1. インストール
+
+BSD UNIX上のシミュレーション環境をインストールするには，ItIs の標準リ
+リースに含まれる以外に，以下のツールが必要である．
+
+    GNU Cコンパイラ（GCC, 動作確認は SunOS では egcs-1.0.1 release
+				  ／ FreeBSD では 2.7.2.1）
+    perl 4（動作確認は 4.036）
+    GNU Make（動作確認は 3.75）
+
+標準的なインストール手順は以下の通りである．
+
+最初に，ItIs を展開したディレクトリに，オブジェクトファイルを置くため
+のディレクトリを作る（ディレクトリ名は何でもよい）．
 
     % mkdir BSD
     % cd BSD
 
-sample $B$+$i!$E,Ev$J(B Makefile $B$H(B config.def $B$r%3%T!<$7!$FbMF$r:n$j$?$$(B
-$B%+!<%M%kMQ$KJT=8$9$k!%(B
+sample から，適当な Makefile と config.def をコピーし，内容を作りたい
+カーネル用に編集する．
 
     % cp ../sample/Makefile.XXX Makefile
     % cp ../sample/config.def.bsd config.def
     % emacs Makefile config.def
 
-FreeBSD $BMQ$N(B Makefile $B$O!$(BMakefile.sunos4 $B$N(B "SYS = sunos4" $B$H$$$&9T$r(B 
-"SYS = freebsd" $B$HCV$-49$($F:n$l$P$h$$!J(Bconfig.def $B$O(B BSD UNIX $B>e$NF0(B
-$B:n4D6-$G6&DL!K!%(B
+FreeBSD 用の Makefile は，Makefile.sunos4 の "SYS = sunos4" という行を 
+"SYS = freebsd" と置き換えて作ればよい（config.def は BSD UNIX 上の動
+作環境で共通）．
 
-Makefile $B$N0MB84X78Dj5AIt$r:n$C$F$+$i!$%*%V%8%'%/%H$r:n$k!%(B
+Makefile の依存関係定義部を作ってから，オブジェクトを作る．
 
     % gmake depend
     % gmake itis
 
 
-4.2. $B5?;w%7%j%"%k%I%i%$%P;HMQ>e$NCm0U(B
+4.2. 疑似シリアルドライバ使用上の注意
 
-$B5?;w%7%j%"%k%I%i%$%P$O!$I8=`F~NO$r%N%s%V%m%C%-%s%0$N(B RAW$B%b!<%I$K@_Dj$9(B
-$B$k!%I8=`F~NO$r%N%s%V%m%C%-%s%0$N(B RAW$B%b!<%I$K@_Dj$7$?$^$^$N>uBV$G%W%m%0(B
-$B%i%`$r=*N;$9$k$H!$%7%'%k$,@5$7$/F0:n$7$J$/$J$k!%$=$N$?$a!$(BItIs $B$r=*N;(B
-$B$9$kA0$KI,$:I8=`F~NO$r85$N>uBV$KLa$9I,MW$,$"$k$,!$%W%m%;%9$r=*N;$5$;$k(B
-$B%7%0%J%k$O?tB?$/$"$j!$$=$N$9$Y$F$K$OBP=h$7$F$$$J$$!%$^$?!$%f!<%6%W%m%0(B
-$B%i%`$GJa$^$($k$3$H$N$G$-$J$$%7%0%J%k$b$"$j!$40A4$KBP=h$9$k$3$H$OIT2DG=(B
-$B$G$"$k!%(B
+疑似シリアルドライバは，標準入力をノンブロッキングの RAWモードに設定す
+る．標準入力をノンブロッキングの RAWモードに設定したままの状態でプログ
+ラムを終了すると，シェルが正しく動作しなくなる．そのため，ItIs を終了
+する前に必ず標準入力を元の状態に戻す必要があるが，プロセスを終了させる
+シグナルは数多くあり，そのすべてには対処していない．また，ユーザプログ
+ラムで捕まえることのできないシグナルもあり，完全に対処することは不可能
+である．
 
 
-4.3. $B%G%P%C%,;HMQ>e$N%R%s%H(B
+4.3. デバッガ使用上のヒント
 
-BSD UNIX$B>e$N%7%_%e%l!<%7%g%s4D6-$O!$(BUNIX$B>e$N%7%s%\%j%C%/%G%P%C%,$HAH$_(B
-$B9g$o$;$F;H$&$3$H$G!$(BItIs $B$rMQ$$$?%7%9%F%`$N%G%P%C%0$KNO$rH/4x$9$k$o$1(B
-$B$@$,!$%G%P%C%,$HAH$_9g$o$;$F;H$&>e$G!$(BItIs $B$,%?%9%/@Z$jBX$($K(B SIGUSR2
-$B%7%0%J%k$r;H$C$F$$$k$?$a$K!$%?%9%/@Z$jBX$($NEY$K%G%P%C%,$K@)8f$,La$C$F(B
-$B$7$^$&$H$$$&LdBj$,$"$k!%(BGNU $B%7%s%\%j%C%/%G%P%C%,!J(BGDB$B!K$N>l9g$K$O!$<!(B
-$B$N%3%^%s%I$K$h$j%G%P%C%,$,(B SIGUSR2 $B$rJa$^$($J$$$h$&$K@_Dj$9$k$3$H$,$G(B
-$B$-$k!%(B
+BSD UNIX上のシミュレーション環境は，UNIX上のシンボリックデバッガと組み
+合わせて使うことで，ItIs を用いたシステムのデバッグに力を発揮するわけ
+だが，デバッガと組み合わせて使う上で，ItIs がタスク切り替えに SIGUSR2
+シグナルを使っているために，タスク切り替えの度にデバッガに制御が戻って
+しまうという問題がある．GNU シンボリックデバッガ（GDB）の場合には，次
+のコマンドによりデバッガが SIGUSR2 を捕まえないように設定することがで
+きる．
 
     (gdb) handle SIGUSR2 nostop noprint
 
-$B$3$N%3%^%s%I$r!$(B.gdbinit $B$K@_Dj$7$F$*$/$HJXMx$G$"$k!%(B
+このコマンドを，.gdbinit に設定しておくと便利である．
 
-$B$^$?!$>r7oIU%V%l!<%/%]%$%s%H$r%5%]!<%H$7$F$$$k%G%P%C%,$N>l9g$O!$FCDj$N(B
-$B%?%9%/$,FCDj$N%"%I%l%9$r<B9T$7$?>l9g$K8B$C$F<B9T$rDd;_$5$;$k$3$H$,$G$-(B
-$B$k!JDd;_$9$k$N$O!$%7%9%F%`A4BN$G!$FCDj$N%?%9%/$@$1$G$O$J$$!K!%Nc$($P!$(B
-GDB $B$N>l9g$K$O!$<!$N%3%^%s%I$K$h$j!$(BID $B$,(B TSKID $B$N%?%9%/$,4X?t(B FUNC $B$r(B
-$B8F$S=P$7$?>l9g$K$N$_<B9T$rDd;_$5$;$k$3$H$,$G$-$k!J87L)$K$O!$$3$N;XDjJ}(B
-$BK!$G$O!$(BID $B$,(B TSKID $B$N%?%9%/$,<B9TCf$K5/F0$5$l$?3d9~$_%O%s%I%i$,(B FUNC 
-$B$r8F$S=P$7$?>l9g$K$bDd;_$9$k!K!%(B
+また，条件付ブレークポイントをサポートしているデバッガの場合は，特定の
+タスクが特定のアドレスを実行した場合に限って実行を停止させることができ
+る（停止するのは，システム全体で，特定のタスクだけではない）．例えば，
+GDB の場合には，次のコマンドにより，ID が TSKID のタスクが関数 FUNC を
+呼び出した場合にのみ実行を停止させることができる（厳密には，この指定方
+法では，ID が TSKID のタスクが実行中に起動された割込みハンドラが FUNC 
+を呼び出した場合にも停止する）．
 
     (gdb) break FUNC if ctxtsk->tskid==TSKID
 
 
-4.4. $B%P%0(B
+4.4. バグ
 
-$B860x$O40A4$K$O$o$+$C$F$$$J$$$,!$(BFreeBSD $B$G$O!$%G%P%C%,$+$i$N%7%s%0%k%9(B
-$B%F%C%W$,$&$^$/F0:n$7$J$$!%6qBNE*$K$O!$(B1$BL?Na?J$`A0$K!J(BSIGALM $B$d(B SIGIO 
-$B$K$h$j!K%7%0%J%k%O%s%I%i$,5/F0$7$F$7$^$&!%(BSunOS $B$G$O$&$^$/F0:n$9$k$?$a!$(B
-FreeBSD $B$N%+!<%M%k$J$$$7$O(B GDB $B$NLdBj$H;W$o$l$k!%(B
+原因は完全にはわかっていないが，FreeBSD では，デバッガからのシングルス
+テップがうまく動作しない．具体的には，1命令進む前に（SIGALM や SIGIO 
+により）シグナルハンドラが起動してしまう．SunOS ではうまく動作するため，
+FreeBSD のカーネルないしは GDB の問題と思われる．

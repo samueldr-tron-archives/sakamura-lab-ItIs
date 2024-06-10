@@ -34,7 +34,7 @@
  */
 
 /*
- *  $B%?%9%/4IM}5!G=(B
+ *  タスク管理機能
  */
 
 #include "itis_kernel.h"
@@ -44,11 +44,11 @@
 #include "cpu_task.h"
 
 /*
- *  $B%9%?%C%/%(%j%"$N<hF@(B/$BJV5Q(B
+ *  スタックエリアの取得/返却
  *
- *  $B%9%?%C%/%(%j%"$r<hF@(B/$BJV5Q$9$k:]$KFC<l$JA`:n$,I,MW$J>l9g$K$O!$%7%9(B
- *  $B%F%`0MB8It$G(B USE_MPROTECT_STACK $B$*$h$S(B sys_get_stack/sys_rel_stack
- *  $B$rDj5A$7!$(Bsys_get_blk/sys_rel_blk $B$KBe$($FMQ$$$k!%(B
+ *  スタックエリアを取得/返却する際に特殊な操作が必要な場合には，シス
+ *  テム依存部で USE_MPROTECT_STACK および sys_get_stack/sys_rel_stack
+ *  を定義し，sys_get_blk/sys_rel_blk に代えて用いる．
  */
 #ifdef USE_MPROTECT_STACK
 extern VP	sys_get_stack(INT size);
@@ -59,7 +59,7 @@ extern void	sys_rel_stack(VP blk);
 #endif /* USE_MPROTECT_STACK */
 
 /*
- *  $B%?%9%/$N@8@.$H:o=|(B
+ *  タスクの生成と削除
  */
 
 #if !defined(_i_cre_tsk) || !defined(_i_vcre_tsk)
@@ -290,7 +290,7 @@ i_del_tsk(ID tskid)
 #endif /* _i_del_tsk */
 
 /*
- *  $B%?%9%/$N5/F0$H=*N;(B
+ *  タスクの起動と終了
  */
 
 #ifndef _i_sta_tsk
@@ -350,14 +350,14 @@ i_ext_tsk(void)
 {
 #ifdef DORMANT_STACK_SIZE
 	/*
-	 *  make_dormant $B$G!$;HMQCf$N%9%?%C%/$rGK2u$7$J$$$h$&$K!$%9%?%C(B
-	 *  $B%/>e$K%@%_!<%(%j%"$r3NJ]$9$k!%(B
+	 *  make_dormant で，使用中のスタックを破壊しないように，スタッ
+	 *  ク上にダミーエリアを確保する．
 	 */
 	(void) alloca(DORMANT_STACK_SIZE);
 #endif /* DORMANT_STACK_SIZE */
 
 	/*
-	 *  $B%3%s%F%-%9%H%(%i!<$N=hM}!%(B
+	 *  コンテキストエラーの処理．
 	 */
 #ifdef CHK_CTX2
 	if (in_indp()) {
@@ -385,7 +385,7 @@ SYSCALL void
 i_exd_tsk(void)
 {
 	/*
-	 *  $B%3%s%F%-%9%H%(%i!<$N=hM}!%(B
+	 *  コンテキストエラーの処理．
 	 */
 #ifdef CHK_CTX2
 	if (in_indp()) {
@@ -403,9 +403,9 @@ i_exd_tsk(void)
 	_ter_tsk(ctxtsk);
 
 	/*
-	 *  $B$3$3$G(B _del_tsk $B$r8F$VJ}K!$O!$%^%k%A%W%m%;%C%5%7%9%F%`$N>l(B
-	 *  $B9g$G!$B>$N%W%m%;%C%5$H%7%9%F%`%a%b%j%W!<%k$r6&M-$7$F$$$k>l(B
-	 *  $B9g$K$O@5$7$/$J$$!%(B
+	 *  ここで _del_tsk を呼ぶ方法は，マルチプロセッサシステムの場
+	 *  合で，他のプロセッサとシステムメモリプールを共有している場
+	 *  合には正しくない．
 	 */
 	_del_tsk(ctxtsk);
 
@@ -443,7 +443,7 @@ i_ter_tsk(ID tskid)
 #endif /* _i_ter_tsk */
 
 /*
- *  $B%?%9%/M%@hEY$NJQ99(B
+ *  タスク優先度の変更
  */
 #ifndef _i_chg_pri
 
@@ -475,7 +475,7 @@ i_chg_pri(ID tskid, PRI tskpri)
 #endif /* _i_chg_pri */
 
 /*
- *  $B%l%G%#%-%e!<$N2sE>(B
+ *  レディキューの回転
  */
 #ifndef _i_rot_rdq
 
@@ -503,7 +503,7 @@ i_rot_rdq(PRI tskpri)
 #endif /* _i_rot_rdq */
 
 /*
- *  $BB>%?%9%/$NBT$A>uBV2r=|(B
+ *  他タスクの待ち状態解除
  */
 #ifndef _i_rel_wai
 
@@ -538,7 +538,7 @@ i_rel_wai(ID tskid)
 #endif /* _i_rel_wai */
 
 /*
- *  $B<+%?%9%/$N%?%9%/(BID$B;2>H(B
+ *  自タスクのタスクID参照
  */
 #ifndef _i_get_tid
 
@@ -552,7 +552,7 @@ i_get_tid(ID* p_tskid)
 #endif /* _i_get_tid */
 
 /*
- *  $B%?%9%/>uBV;2>H(B
+ *  タスク状態参照
  */
 #ifndef _i_ref_tsk
 

@@ -37,10 +37,10 @@
 #define	_QUEUE_
 
 /*
- *  $B%@%V%k%j%s%/%-%e!<(B
+ *  ダブルリンクキュー
  * 
- *  $B%@%V%k%j%s%/%-%e!<$N9=B$$O!$(BTRON$B;EMM%A%C%W$N%-%e!<A`:nL?Na$,07$&7A(B
- *  $B<0$K$"$o$;$F$"$k!%(B
+ *  ダブルリンクキューの構造は，TRON仕様チップのキュー操作命令が扱う形
+ *  式にあわせてある．
  */
 typedef struct queue {
 	struct queue *next;
@@ -48,11 +48,11 @@ typedef struct queue {
 } QUEUE;
 
 /*
- *  $B%-%e!<A`:n%i%$%V%i%j(B
+ *  キュー操作ライブラリ
  */
 
 /*
- *  $B%-%e!<$N=i4|2=(B
+ *  キューの初期化
  */
 Inline void
 queue_initialize(QUEUE *queue)
@@ -61,10 +61,10 @@ queue_initialize(QUEUE *queue)
 }
 
 /*
- *  $B%-%e!<$X%(%s%H%j$rA^F~(B
+ *  キューへエントリを挿入
  *
- *  queue $B$ND>A0$K(B entry $B$rA^F~$9$k!%(Bqueue $B$,%-%e!<%X%C%@$r;X$9>l9g$K$O!$(B
- *  $B%-%e!<$N:G8eHx$K(B entry $B$rA^F~$9$k$3$H$K$J$k!%(B
+ *  queue の直前に entry を挿入する．queue がキューヘッダを指す場合には，
+ *  キューの最後尾に entry を挿入することになる．
  */
 Inline void
 queue_insert(QUEUE *entry, QUEUE *queue)
@@ -80,9 +80,9 @@ queue_insert(QUEUE *entry, QUEUE *queue)
 }
 
 /*
- *  $B%-%e!<$+$i%(%s%H%j$r:o=|(B
+ *  キューからエントリを削除
  *
- *  entry $B$r%-%e!<$+$i:o=|$9$k!%(B
+ *  entry をキューから削除する．
  */
 Inline void
 queue_delete(QUEUE *entry)
@@ -98,11 +98,11 @@ queue_delete(QUEUE *entry)
 }
 
 /*
- *  $B%-%e!<$N@hF,$N%(%s%H%j$N<h$j=P$7(B
+ *  キューの先頭のエントリの取り出し
  *
- *  queue $B$ND>8e$N%(%s%H%j$r%-%e!<$+$i:o=|$7!$:o=|$7$?%(%s%H%j$rJV$9!%(B
- *  queue $B$,%-%e!<%X%C%@$r;X$9>l9g$K$O!$%-%e!<$N@hF,$N%(%s%H%j$r<h$j=P(B
- *  $B$9$3$H$K$J$k!%(B
+ *  queue の直後のエントリをキューから削除し，削除したエントリを返す．
+ *  queue がキューヘッダを指す場合には，キューの先頭のエントリを取り出
+ *  すことになる．
  */
 Inline QUEUE *
 queue_delete_next(QUEUE *queue)
@@ -121,11 +121,11 @@ queue_delete_next(QUEUE *queue)
 }
 
 /*
- *  $B%-%e!<Cf$N%(%s%H%j$N%5!<%A(B
+ *  キュー中のエントリのサーチ
  *
- *  queue $B$G<($9%-%e!<$+$i!$(Boffset $B$G<($9%U%#!<%k%I$,(B val $B$h$jBg$-$$$N(B
- *  $B%(%s%H%j$r%5!<%A$7!$$=$N%(%s%H%j$rJV$9!%3:Ev$9$k%(%s%H%j$,$J$$>l9g(B
- *  $B$O!$(Bqueue $B$rJV$9!%(B
+ *  queue で示すキューから，offset で示すフィールドが val より大きいの
+ *  エントリをサーチし，そのエントリを返す．該当するエントリがない場合
+ *  は，queue を返す．
  */
 Inline QUEUE *
 queue_search_gt(QUEUE *queue, INT val, INT offset)
@@ -154,7 +154,7 @@ queue_search_gt(QUEUE *queue, INT val, INT offset)
 }
 
 /*
- *  $B%-%e!<$,6u$+$I$&$+$N%A%'%C%/(B
+ *  キューが空かどうかのチェック
  */
 Inline BOOL
 queue_empty_p(QUEUE *queue)

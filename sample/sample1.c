@@ -34,49 +34,49 @@
  */
 
 /* 
- *  $B%5%s%W%k%W%m%0%i%`(B($B#1(B)
+ *  サンプルプログラム(１)
  *
- *  ItIs $B$N4pK\E*$JF0:n$r3NG'$9$k$?$a$N%5%s%W%k%W%m%0%i%`!%%+!<%M%k$H(B
- *  $B%j%s%/$7$F=i4|5/F0%?%9%/$H$7$FF0:n$5$;$k$3$H$b!$FHN)$K%j%s%/$7$FF0(B
- *  $B:n$5$;$k$3$H$b2DG=$G$"$k!%(B
+ *  ItIs の基本的な動作を確認するためのサンプルプログラム．カーネルと
+ *  リンクして初期起動タスクとして動作させることも，独立にリンクして動
+ *  作させることも可能である．
  *
- *  $B<B9T;~$NCm0U(B:
- *  (1) $B%5%s%W%k%W%m%0%i%`$N%a%$%s%?%9%/$r(B HIGH_PRIORITY $B$h$j9b$$M%@h(B
- *  	$BEY$G<B9T$9$k$3$H(B ($BG0$N$?$a%a%$%s%?%9%/$NM%@hEY$r(B MAIN_PRIORITY 
- *	$B$KJQ99$7$F$$$k(B)$B!%(B
- *  (2) $B%5%s%W%k%W%m%0%i%`$N%a%$%s%?%9%/$N(B ID $B$r!$%5%s%W%k%W%m%0%i%`Fb(B
- *  	$B$G@8@.$9$k%?%9%/$N(B ID (TASK1_ID$B!A(BTASK3_ID) $B$H$V$D$+$i$J$$$h$&(B
- *	$B$K$9$k$3$H!%(B
+ *  実行時の注意:
+ *  (1) サンプルプログラムのメインタスクを HIGH_PRIORITY より高い優先
+ *  	度で実行すること (念のためメインタスクの優先度を MAIN_PRIORITY 
+ *	に変更している)．
+ *  (2) サンプルプログラムのメインタスクの ID を，サンプルプログラム内
+ *  	で生成するタスクの ID (TASK1_ID〜TASK3_ID) とぶつからないよう
+ *	にすること．
  *
- *  $B%W%m%0%i%`$N35MW(B:
+ *  プログラムの概要:
  *
- *  $B%a%$%s%?%9%/$,5/F0$5$l$k$H!$%?%9%/(BID $B$,(B TASK1_ID$B!A(BTASK3_ID $B$N(B3$B$D$N(B
- *  $B%?%9%/$r=i4|M%@hEY(B 15 $B$G@8@.!&5/F0$9$k!%$3$l$i$NJBNs<B9T$5$l$k%?%9(B
- *  $B%/$O!$(BTASK_LOOP $B2s6u%k!<%W$r<B9T$9$kEY$K!$%?%9%/$,<B9TCf$G$"$k$3$H(B
- *  $B$r$"$i$o$9%a%C%;!<%8$rI=<($9$k!%(B
+ *  メインタスクが起動されると，タスクID が TASK1_ID〜TASK3_ID の3つの
+ *  タスクを初期優先度 15 で生成・起動する．これらの並列実行されるタス
+ *  クは，TASK_LOOP 回空ループを実行する度に，タスクが実行中であること
+ *  をあらわすメッセージを表示する．
  *
- *  3$B$D$N%?%9%/$r5/F0$7$?8e!$%a%$%s%?%9%/$O!$%3%s%=!<%k$+$i$NJ8;zF~NO(B
- *  $B$rBT$A(B ($BJ8;zF~NO$rBT$C$F$$$k4V$O!$5/F0$7$?%?%9%/$,<B9T$5$l$F$$$k(B)$B!$(B
- *  $BJ8;z$,F~NO$5$l$k$H!$F~NO$5$l$?J8;z$KBP1~$7$?=hM}$r<B9T$9$k!%F~NO$5(B
- *  $B$l$?J8;z$H=hM}$N4X78$O2<$NDL$j!%(BControl-C $B$,F~NO$5$l$k$H!$5/F0$7$?(B
- *  3$B$D$N%?%9%/$r=*N;!&:o=|$7!$%5%s%W%k%W%m%0%i%`$r=*N;$9$k!%(B
+ *  3つのタスクを起動した後，メインタスクは，コンソールからの文字入力
+ *  を待ち (文字入力を待っている間は，起動したタスクが実行されている)，
+ *  文字が入力されると，入力された文字に対応した処理を実行する．入力さ
+ *  れた文字と処理の関係は下の通り．Control-C が入力されると，起動した
+ *  3つのタスクを終了・削除し，サンプルプログラムを終了する．
  *
- *  '1' : $B0J9_$N%3%^%s%I$O%?%9%/(BID $B$,(B TASK1_ID $B$N%?%9%/$KBP$7$F9T$&(B
- *  '2' : $B0J9_$N%3%^%s%I$O%?%9%/(BID $B$,(B TASK2_ID $B$N%?%9%/$KBP$7$F9T$&(B
- *  '3' : $B0J9_$N%3%^%s%I$O%?%9%/(BID $B$,(B TASK3_ID $B$N%?%9%/$KBP$7$F9T$&(B
- *  '>' : $B%?%9%/$NM%@hEY$r(B HIGH_PRIORITY $B$K$9$k(B
- *  '=' : $B%?%9%/$NM%@hEY$r(B MID_PRIORITY $B$K$9$k(B
- *  '<' : $B%?%9%/$NM%@hEY$r(B LOW_PRIORITY $B$K$9$k(B
- *  's' : $B%?%9%/$r(B sus_tsk $B$K$h$j6/@)BT$A>uBV$K$9$k(B
- *  'm' : $B%?%9%/$N6/@)BT$A>uBV$r(B rsm_tsk $B$K$h$j2r=|$9$k(B
- *  'M' : $B%?%9%/$N6/@)BT$A>uBV$r(B frsm_tsk $B$K$h$j6/@)2r=|$9$k(B
- *  'r' : $B3FM%@hEY%l%Y%k$N%l%G%#%-%e!<$r2sE>$5$;$k(B
- *  'R' : $B%?%9%/$N>uBV$r;2>H!&I=<($9$k(B
- *  'a' : $B3FM%@hEY%l%Y%k$N%l%G%#%-%e!<$r2sE>$5$;$k<~4|5/F0%O%s%I%i$r(B2
- *	  $BIC<~4|$G5/F0$9$k(B
- *  'A' : $B<~4|5/F0%O%s%I%i$r2r=|$9$k(B
- *  'v' : $BH/9T$7$?%7%9%F%`%3!<%k$rI=<($9$k(B
- *  'q' : $BH/9T$7$?%7%9%F%`%3!<%k$rI=<($7$J$$(B ($B%G%U%)%k%H(B)
+ *  '1' : 以降のコマンドはタスクID が TASK1_ID のタスクに対して行う
+ *  '2' : 以降のコマンドはタスクID が TASK2_ID のタスクに対して行う
+ *  '3' : 以降のコマンドはタスクID が TASK3_ID のタスクに対して行う
+ *  '>' : タスクの優先度を HIGH_PRIORITY にする
+ *  '=' : タスクの優先度を MID_PRIORITY にする
+ *  '<' : タスクの優先度を LOW_PRIORITY にする
+ *  's' : タスクを sus_tsk により強制待ち状態にする
+ *  'm' : タスクの強制待ち状態を rsm_tsk により解除する
+ *  'M' : タスクの強制待ち状態を frsm_tsk により強制解除する
+ *  'r' : 各優先度レベルのレディキューを回転させる
+ *  'R' : タスクの状態を参照・表示する
+ *  'a' : 各優先度レベルのレディキューを回転させる周期起動ハンドラを2
+ *	  秒周期で起動する
+ *  'A' : 周期起動ハンドラを解除する
+ *  'v' : 発行したシステムコールを表示する
+ *  'q' : 発行したシステムコールを表示しない (デフォルト)
  */
 
 #include <itis_services.h>
@@ -86,26 +86,26 @@
 #include <svc_serial.h>
 #endif /* LINK_KERNEL */
 
-#define TASK_LOOP	2500000		/* $B%?%9%/Fb$G$N%k!<%W2s?t(B */
+#define TASK_LOOP	2500000		/* タスク内でのループ回数 */
 
-#define TASK1_ID	1		/* $BJBNs$K<B9T$5$l$k%?%9%/$N(BID */
+#define TASK1_ID	1		/* 並列に実行されるタスクのID */
 #define TASK2_ID	2
 #define TASK3_ID	3
 
-#define MAIN_PRIORITY	10		/* $B%a%$%s%?%9%/$NM%@hEY(B */
-#define HIGH_PRIORITY	14		/* $BJBNs$K<B9T$5$l$k%?%9%/$NM%@hEY(B */
+#define MAIN_PRIORITY	10		/* メインタスクの優先度 */
+#define HIGH_PRIORITY	14		/* 並列に実行されるタスクの優先度 */
 #define MID_PRIORITY	15
 #define LOW_PRIORITY	16
 
-#define	STACK_SIZE	8192		/* $B%?%9%/$N%9%?%C%/%5%$%:(B */
+#define	STACK_SIZE	8192		/* タスクのスタックサイズ */
 
-#define CYCNO		1		/* $B<~4|5/F0%O%s%I%i$NHV9f(B */
+#define CYCNO		1		/* 周期起動ハンドラの番号 */
 
-#define CONSOLE_PORT	0		/* $B%3%s%=!<%k$N%]!<%HHV9f(B */
+#define CONSOLE_PORT	0		/* コンソールのポート番号 */
 
 #ifdef LINK_KERNEL
 /*
- *  $B%+!<%M%k$H%j%s%/$7$F=i4|5/F0%?%9%/$H$7$FF0:n$5$;$k>l9g(B
+ *  カーネルとリンクして初期起動タスクとして動作させる場合
  */
 #define MAIN		first_task
 #define TSK_INIT	(-5)
@@ -113,7 +113,7 @@
 
 #else /* LINK_KERNEL */
 /*
- *  $BFHN)$K%j%s%/$7$FF0:n$5$;$k>l9g(B
+ *  独立にリンクして動作させる場合
  */
 #define MAIN		main
 #define FINISH()	exd_tsk()
@@ -121,7 +121,7 @@
 #endif /* LINK_KERNEL */
 
 /*
- *  $BJBNs$K<B9T$5$l$k%?%9%/(B
+ *  並列に実行されるタスク
  */
 void task(INT tskno)
 {
@@ -133,11 +133,11 @@ void task(INT tskno)
 		syslog(LOG_NOTICE, "task%d is running (%03d).   %s",
 				tskno, ++n, graph[tskno-1]);
 	}
-	exd_tsk();			/* $B$3$l$,<B9T$5$l$k$3$H$O$J$$(B */
+	exd_tsk();			/* これが実行されることはない */
 }
 
 /*
- *  $B%?%9%/$N@8@.$H5/F0(B
+ *  タスクの生成と起動
  */
 ER create_start_task(ID tskid, FP task, PRI tskpri, INT stacd)
 {
@@ -162,7 +162,7 @@ ER create_start_task(ID tskid, FP task, PRI tskpri, INT stacd)
 }
 
 /*
- *  $B%?%9%/$N6/@)=*N;$H:o=|(B
+ *  タスクの強制終了と削除
  */
 ER terminate_delete_task(ID tskid)
 {
@@ -181,7 +181,7 @@ ER terminate_delete_task(ID tskid)
 }
 
 /*
- *  $B%?%9%/>uBV$N;2>H$HI=<((B
+ *  タスク状態の参照と表示
  */
 void refer_task(ID tskid)
 {
@@ -197,10 +197,10 @@ void refer_task(ID tskid)
 }
 
 /*
- *  $B<~4|5/F0%O%s%I%i(B
+ *  周期起動ハンドラ
  *
- *  HIGH_PRIORITY, MID_PRIORITY, LOW_PRIORITY $B$N3FM%@hEY$N%l%G%#%-%e!<(B
- *  $B$r2sE>$5$;$k!%(B
+ *  HIGH_PRIORITY, MID_PRIORITY, LOW_PRIORITY の各優先度のレディキュー
+ *  を回転させる．
  */
 void cyclic_handler()
 {
@@ -210,7 +210,7 @@ void cyclic_handler()
 }
 
 /*
- *  $B%a%$%s%?%9%/(B
+ *  メインタスク
  */
 MAIN(INT stacd)
 {
@@ -231,7 +231,7 @@ MAIN(INT stacd)
 	pk_dcyc.cycatr = TA_HLNG;
 	pk_dcyc.cychdr = (FP) cyclic_handler;
 	pk_dcyc.cycact = TCY_ON;
-	pk_dcyc.cyctim = 2000;		/* 2$BIC(B */
+	pk_dcyc.cyctim = 2000;		/* 2秒 */
 
 	do {
 		serial_read(0, buf, 1);

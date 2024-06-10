@@ -34,21 +34,21 @@
 # 
 
 #
-#  $B%7%9%F%`9=@.Dj5A@8@.%W%m%0%i%`(B
+#  システム構成定義生成プログラム
 #
-#  $B%7%9%F%`9=@.@_Dj%U%!%$%k(B (config.def) $B$rFI$_9~$s$G!$0J2<$N%U%!%$%k$r(B
-#  $B@8@.$9$k!%(B
+#  システム構成設定ファイル (config.def) を読み込んで，以下のファイルを
+#  生成する．
 #
 #	config.h
 #
 
-#  $BBg0hJQ?t$N=i4|2=(B
+#  大域変数の初期化
 
 $line = "";
 $word = "";
 $lineno = 0;
 
-#  $B;z6g2r@O%k!<%A%s(B
+#  字句解析ルーチン
 
 sub getline {
 	$line = <>;
@@ -56,7 +56,7 @@ sub getline {
 }
 
 sub getword {
-	# $B6u9T$H6uGr$N%9%-%C%W(B
+	# 空行と空白のスキップ
 	$line =~ s/^[ \t]+//;
 	while ($line eq "") {
 		do getline();
@@ -65,7 +65,7 @@ sub getword {
 		$line =~ s/^[ \t]+//;
 	}
 
-	# $B%3%a%s%H$N%9%-%C%W(B
+	# コメントのスキップ
 	if ($line =~ /^\/\*/) {
 		while ($line !~ /\*\/(.*)$/) {
 			do getline();
@@ -77,34 +77,34 @@ sub getword {
 		return(do getword());
 	}
 
-	# $B8l$N@Z$j=P$7(B
+	# 語の切り出し
 	if ($line =~ /^([A-Za-z_][A-Za-z0-9_]*)(.*)$/) {
-		# $B<1JL;R(B
+		# 識別子
 		$word = $1;
 		$line = $2;
 	}
 	elsif ($line =~ /^(-?)0x([0-9A-Fa-f]+)(.*)$/) {
-		# 16$B?J?t(B
+		# 16進数
 		$word = hex($1.$2);
 		$line = $3;
 	}
 	elsif ($line =~ /^(-?[0-9]+)(.*)$/) {
-		# 10$B?J?t(B
+		# 10進数
 		$word = $1;
 		$line = $2;
 	}
 	else {
-		# $B$=$NB>$N5-9f(B
+		# その他の記号
 		$word = substr($line, 0, 1);
 		$line = substr($line, 1);
 	}
 
-	# $B>.J8;z$KJQ49(B ($BBgJ8;z$H>.J8;z$O6hJL$7$J$$(B)
+	# 小文字に変換 (大文字と小文字は区別しない)
 	$word =~ y/A-Z/a-z/;
 	return($word);
 }
 
-#  $B%(%i!<=PNO%k!<%A%s(B
+#  エラー出力ルーチン
 
 sub out_error {
 	if ($word) {
@@ -116,7 +116,7 @@ sub out_error {
 	exit(1);
 }
 
-#  $B<!$N8l$N%A%'%C%/(B
+#  次の語のチェック
 
 sub nextword {
 	local($next) = @_;
@@ -129,7 +129,7 @@ sub nextword {
 	}
 }
 
-#  $B%7%s%\%k$NDj5A(B
+#  シンボルの定義
 
 %resource_spec = (
 	"min_tskid", 1,
@@ -199,7 +199,7 @@ sub nextword {
 	"sys_mpl_size", 1,
 );
 
-#  $B%7%s%\%k%j%9%H$rFI$_9~$`(B
+#  シンボルリストを読み込む
 
 sub readsymlist {
 	local($symlist);
@@ -215,19 +215,19 @@ sub readsymlist {
 	return($symlist);
 }
 
-#  $B%7%s%\%k$NDj5A$rFI$_9~$`(B
+#  シンボルの定義を読み込む
 
 sub readvalue {
 	local($var, $varspec) = @_;
 
-	if ($varspec == 1) {			# $B?tCM$NFI$_9~$_(B
+	if ($varspec == 1) {			# 数値の読み込み
 		if ($word eq "=") {
 			do getword();
 			$val{$var} = $word;
 			do getword();
 		}
 	}
-	elsif ($varspec == 11) {		# $B%7%s%\%k%j%9%H$NFI$_9~$_(B
+	elsif ($varspec == 11) {		# シンボルリストの読み込み
 		if ($word eq "{") {
 			do getword();
 			$val{$var} = do readsymlist();
@@ -236,7 +236,7 @@ sub readvalue {
 	do nextword(";");
 }
 
-#  $BDj5A%F!<%V%k$rFI$_9~$`(B
+#  定義テーブルを読み込む
 
 sub readtable {
 	local($id, %spec) = @_;
@@ -254,7 +254,7 @@ sub readtable {
 }
 
 #
-#  $BDj5A%U%!%$%k$NFI$_9~$_(B
+#  定義ファイルの読み込み
 #
 
 do getword();
@@ -282,7 +282,7 @@ while ($word) {
 }
 
 #
-#  $B3F<o$NDj5A@8@.%k!<%A%s(B
+#  各種の定義生成ルーチン
 #
 
 sub out_object_def {
@@ -488,7 +488,7 @@ sub gen_flag_def {
 }
 
 #
-#  config.h $B$N@8@.(B
+#  config.h の生成
 #
 
 open(FILE, "> config.h");
@@ -500,7 +500,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# $B%*%V%8%'%/%H(BID $B$NHO0ODj5A$N@8@.(B
+# オブジェクトID の範囲定義の生成
 do gen_object_def("tsk", 0);
 do gen_object_def("sem", 0);
 do gen_object_def("flg", 0);
@@ -516,15 +516,15 @@ do gen_resnum_def("alm");
 do gen_resnum_def("svc");
 print FILE "\n";
 
-# $B3HD%(BSVC $B$r;H$&;~$O!$=`%?%9%/It$,I,MW(B
+# 拡張SVC を使う時は，準タスク部が必要
 if ($val{"resource\$num_svc"} > 0 && !$val{"use_qtsk_portion"}) {
 	$val{"use_qtsk_portion"} = 1;
 }
 
-# $BM%@hEYCM$NHO0ODj5A$N@8@.(B
+# 優先度値の範囲定義の生成
 do gen_priority_def();
 
-# $B%(%i!<%A%'%C%/;EMM$NDj5A$N@8@.(B
+# エラーチェック仕様の定義の生成
 do gen_errorcheck_def("nospt");
 do gen_errorcheck_def("rsatr");
 do gen_errorcheck_def("par");
@@ -536,7 +536,7 @@ do gen_errorcheck_def("ctx2");
 do gen_errorcheck_def("self");
 print FILE "\n";
 
-# $B$=$NB>$NDj5A$N@8@.(B
+# その他の定義の生成
 do gen_flag_def("use_suspend_self");
 do gen_flag_def("use_qtsk_portion");
 do gen_flag_def("use_auto_id");

@@ -41,24 +41,24 @@
 #include "tron_defs.h"
 
 /*
- *  MCUBE$BMQ%9%?!<%H%"%C%W%b%8%e!<%k(B
+ *  MCUBE用スタートアップモジュール
  */
 	.text
 	.align 1
 	.globl ___sys_init
 ___sys_init:
 mcube_start:
-	mov r0, r13			/* $BLa$jHVCO$r(B R13 $B$KJ]B8(B */
+	mov r0, r13			/* 戻り番地を R13 に保存 */
 	stc @PSW, r0
-	and #0x1fffffff, r0		/* SMRNG $B$r(B 0 $B$K@_Dj(B */
+	and #0x1fffffff, r0		/* SMRNG を 0 に設定 */
 	ldc r0, @PSW
-	mov #STACKTOP, sp		/* $B%9%?%C%/%]%$%s%?(B (SPI) $B$N=i4|2=(B */
-	mov #0, fp			/* $B%U%l!<%`%]%$%s%?$N=i4|2=(B */
-	bsr ___rawio_init		/* $B%i%$%V%i%j$N=i4|2=(B */
+	mov #STACKTOP, sp		/* スタックポインタ (SPI) の初期化 */
+	mov #0, fp			/* フレームポインタの初期化 */
+	bsr ___rawio_init		/* ライブラリの初期化 */
 	jmp @r13
 
 /*
- *  $BDc%l%Y%k%a%b%j%(%j%"3NJ]%k!<%A%s(B
+ *  低レベルメモリエリア確保ルーチン
  *
  *  void *sbrk(int size)
  */
@@ -66,16 +66,16 @@ mcube_start:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	mov @_break, r1			/* _break $B$N8=:_CM$r<h$j=P$9(B */
+	mov @_break, r1			/* _break の現在値を取り出す */
 	add r1, r0
-	bxs sbrk_overflow		/* $B%a%b%j%U%k$N%A%'%C%/(B */
+	bxs sbrk_overflow		/* メモリフルのチェック */
 	cmpu #HEAPLIMIT, r0
 	bgt sbrk_overflow
-	mov r0, @_break			/* _break $B$N99?7(B */
-	mov r1, r0			/* $B99?7A0$N(B _break $B$rJV$9(B */
+	mov r0, @_break			/* _break の更新 */
+	mov r1, r0			/* 更新前の _break を返す */
 	rts
 sbrk_overflow:
-	mov #-1, r0			/* $B%*!<%P!<%U%m!<$N>l9g$O(B NADR */
+	mov #-1, r0			/* オーバーフローの場合は NADR */
 	rts
 
 	.data

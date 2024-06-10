@@ -1,92 +1,92 @@
 
 	ItIs - An ITRON Implementation for Research and Education
-	(Phase4 Release1.4$B&B(B)
+	(Phase4 Release1.4β)
 
-ItIs$B!J(BITRON Implementation by Sakamura Lab$B!K$O!$El5~Bg3X(B $B:dB<8&5f<<$G(B
-$B8&5f!&650iMQ$K3+H/$,;O$a$i$l!$K-665;=Q2J3XBg3X(B $BAH$_9~$_%j%"%k%?%$%`%7(B
-$B%9%F%`8&5f<<$G3+H/$,B3$1$i$l$F$$$k!$&L(BITRON3.0$B;EMM$K=`5r$7$?%j%"%k%?%$(B
-$B%`%+!<%M%k$G$9!%8=%P!<%8%g%s$G!$%l%Y%k(BE $B$^$G$N$9$Y$F$N5!G=!J@\B35!G=$r(B
-$B=|$/!K$r<B8=$7$F$*$j!$$$$/$D$+$NFH<+$N3HD%5!G=$b;}$C$F$$$^$9!%:#8e=y!9(B
-$B$K!$&L(BITRON4.0$B;EMM=`5r$K=q$-D>$7$F$$$/M=Dj$G$9!%(B
+ItIs（ITRON Implementation by Sakamura Lab）は，東京大学 坂村研究室で
+研究・教育用に開発が始められ，豊橋技術科学大学 組み込みリアルタイムシ
+ステム研究室で開発が続けられている，μITRON3.0仕様に準拠したリアルタイ
+ムカーネルです．現バージョンで，レベルE までのすべての機能（接続機能を
+除く）を実現しており，いくつかの独自の拡張機能も持っています．今後徐々
+に，μITRON4.0仕様準拠に書き直していく予定です．
 
-$B%?!<%2%C%H(BCPU $B$H$7$F!$8=;~E@$G$O!$(B68040 $B$H(B TRON$B;EMM%A%C%W!J(BGmicro/200 
-$B$H(B Gmicro/300 $B$GF0:n3NG'!K$r%5%]!<%H$7$F$$$^$9!%(BCPU$B0MB8$NItJ,$rJ,N%$9(B
-$B$k$J$I!$B>$N(B CPU $B$X$N0\?"$K$D$$$F$b9MN8$7$F$$$^$9$,!$$I$NDxEY$N<j4V$,(B
-$B$+$+$k$+$O0\?"@h$N(B CPU $B$N%"!<%-%F%/%A%c$KBg$-$/0MB8$7$^$9!%$^$?!$5!G=(B
-$B$K8BDj$O$"$j$^$9$,!$(BBSD UNIX$B!J8=%P!<%8%g%s$G$O!$(BSunOS4.X $B$H(B FreeBSD $B$N(B
-$B$_%5%]!<%H!K>e$GF0:n$9$k%7%_%e%l!<%7%g%s4D6-$rMQ0U$7$F$$$^$9!%(B
+ターゲットCPU として，現時点では，68040 と TRON仕様チップ（Gmicro/200 
+と Gmicro/300 で動作確認）をサポートしています．CPU依存の部分を分離す
+るなど，他の CPU への移植についても考慮していますが，どの程度の手間が
+かかるかは移植先の CPU のアーキテクチャに大きく依存します．また，機能
+に限定はありますが，BSD UNIX（現バージョンでは，SunOS4.X と FreeBSD の
+みサポート）上で動作するシミュレーション環境を用意しています．
 
-ItIs $B$O!$%U%j!<%=%U%H%&%'%"$G$"$j!$G[I[<+M3$G$9!%(BItIs $B$N%[!<%`%Z!<%8$O!$(B
-$B0J2<$N(B URL $B$K$"$j$^$9!%(BItIs $B$NG[IU%-%C%H$N:G?7HG$O!$$3$N%Z!<%8$+$iF~<j(B
-$B$9$k$3$H$,$G$-$^$9!%(B
+ItIs は，フリーソフトウェアであり，配布自由です．ItIs のホームページは，
+以下の URL にあります．ItIs の配付キットの最新版は，このページから入手
+することができます．
 
 	http://www.ertl.ics.tut.ac.jp/ItIs/
 
-$B$3$N%Z!<%8$+$i$O!$I8=`G[IU%-%C%H!J(BItIs4-1.4.?.tar.Z$B!K$H(B DOS$BMQG[IU%-%C(B
-$B%H!J(BItIs4-1.4.?.lzh$B!K$rF~<j$G$-$^$9!%N><T$NFbMF$OF1$8$G$9!%(B
+このページからは，標準配付キット（ItIs4-1.4.?.tar.Z）と DOS用配付キッ
+ト（ItIs4-1.4.?.lzh）を入手できます．両者の内容は同じです．
 
-Release1.4$B&B$NG[I[%-%C%H$K$O!$(BItIs$B%+!<%M%k$NA4%=!<%9%j%9%H$,4^$^$l$F$$(B
-$B$^$9$,!$0lIt$N%7%9%F%`%?%9%/$N%=!<%9%3!<%I$d%+!<%M%k$rF0:n$5$;$k$?$a$K(B
-$BI,MW$J%D!<%kEy$O4^$^$l$F$$$^$;$s!%$3$l$i$,I,MW$J>l9g$d%P%$%J%jHG$NG[I[(B
-$B$r4uK>$5$l$k>l9g$O!$JLES$4AjCL2<$5$$!%(B
+Release1.4βの配布キットには，ItIsカーネルの全ソースリストが含まれてい
+ますが，一部のシステムタスクのソースコードやカーネルを動作させるために
+必要なツール等は含まれていません．これらが必要な場合やバイナリ版の配布
+を希望される場合は，別途ご相談下さい．
 
-	$BG[IU4uK>Ey(B:	itis@ertl.ics.tut.ac.jp
+	配付希望等:	itis@ertl.ics.tut.ac.jp
 
-$B<ALd$d%P%0%l%]!<%H$O$G$-$k8B$jEE;R%a%$%k$G$*4j$$$7$^$9!%EE;R%a%$%k%"%I(B
-$B%l%9$O!$0J2<$NDL$j$G$9!%$?$@$7!$C4Ev<T$NET9g$G?WB.$JJVEz$,$G$-$J$$>l9g(B
-$B$,$"$k$+$H;W$$$^$9$,!$$4N;>52<$5$$!%$^$?!$EEOC$K$h$kO"Mm$O$41sN82<$5$$!%(B
+質問やバグレポートはできる限り電子メイルでお願いします．電子メイルアド
+レスは，以下の通りです．ただし，担当者の都合で迅速な返答ができない場合
+があるかと思いますが，ご了承下さい．また，電話による連絡はご遠慮下さい．
 
-	$B<ALd(B:		itis-users@ertl.ics.tut.ac.jp
-	$B%P%0%l%]!<%H(B:	itis-bug@ertl.ics.tut.ac.jp
+	質問:		itis-users@ertl.ics.tut.ac.jp
+	バグレポート:	itis-bug@ertl.ics.tut.ac.jp
 
-$B$3$NFb!$(Bitis-users $B$O!$(BItIs $B$K6=L#$N$"$kJ}$N$?$a$N%a%$%j%s%0%j%9%H$G$9!%(B
-ItIs $B$K6=L#$N$"$kJ}$G$"$l$P$I$J$?$G$b;22C$G$-$^$9!%$*5$7Z$K;22C2<$5$$!%(B
-$B$^$?!$;E;v!&JY6/!&<qL#$rLd$o$:(B ITRON $B$K6=L#$r;}$D?M$N$?$a$N>pJs8r49!&(B
-$B5DO@$N>l$H$7$F!$(BITRON Club $B%a%$%j%s%0%j%9%H$rMQ0U$7$F$$$^$9!%$3$A$i$K(B
-$B$b!$$*5$7Z$K;22C2<$5$$!%%a%$%j%s%0%j%9%H$X$N;22CJ}K!$K$D$$$F$O!$%f!<%6(B
-$B%:%^%K%e%"%k$N(B 7$B>O$r;2>H2<$5$$!%(B
+この内，itis-users は，ItIs に興味のある方のためのメイリングリストです．
+ItIs に興味のある方であればどなたでも参加できます．お気軽に参加下さい．
+また，仕事・勉強・趣味を問わず ITRON に興味を持つ人のための情報交換・
+議論の場として，ITRON Club メイリングリストを用意しています．こちらに
+も，お気軽に参加下さい．メイリングリストへの参加方法については，ユーザ
+ズマニュアルの 7章を参照下さい．
 
-$B!v(B DOS$BMQG[IU%-%C%H$K4X$9$kCm0U(B
+＊ DOS用配付キットに関する注意
 
-$B!&(BDOS$BMQG[IU%-%C%H$O!$(BLHA $B$K$h$j%"!<%+%$%V(B/$B05=L$7$F:n$i$l$F$$$^$9!%(B
-$B!&(BItIs $B$N%=!<%9$G$O!$0lItD9$$%U%!%$%kL>$r;H$C$F$$$k$?$a!$(BDOS $B$N%U%!%$(B
-$B!!%k%7%9%F%`$KE83+$9$k$H%U%!%$%kL>$,ESCf$G@Z$l$F$7$^$$$^$9!%$^$?!$BgJ8(B
-$B!!;z(B/$B>.J8;z$N6hJL$b$J$/$J$j$^$9!%$?$@$7!$J#?t$N%U%!%$%k$,F1$8L>A0$K$J(B
-$B!!$k$3$H$O$J$$$h$&L>A0$,$D$1$F$"$j$^$9$N$G!$(BMINIFEST $B%U%!%$%k$r;2>H$7(B
-$B!!$F!$E,59FI$_49$($F2<$5$$!%(B
-$B!&2~9T%3!<%I!$4A;z%3!<%I$O(B DOS $B$NI8=`$KJQ49$7$F$"$j$^$9!%(B
+・DOS用配付キットは，LHA によりアーカイブ/圧縮して作られています．
+・ItIs のソースでは，一部長いファイル名を使っているため，DOS のファイ
+　ルシステムに展開するとファイル名が途中で切れてしまいます．また，大文
+　字/小文字の区別もなくなります．ただし，複数のファイルが同じ名前にな
+　ることはないよう名前がつけてありますので，MINIFEST ファイルを参照し
+　て，適宜読み換えて下さい．
+・改行コード，漢字コードは DOS の標準に変換してあります．
 
-$B!v(B Release1.3.4 $B"*(B Release1.4 $B$N<g$JJQ99E@(B
+＊ Release1.3.4 → Release1.4 の主な変更点
 
-$B!&(B68040 $B$N%5%]!<%H$rDI2C!%(B
-$B!&(BFreeBSD$B!J(Bx86$B!K$N%5%]!<%H$r$h$j40A4$K!%(B
+・68040 のサポートを追加．
+・FreeBSD（x86）のサポートをより完全に．
 
-$B!v(B Release1.3 $B"*(B Release1.3.4 $B$N<g$JJQ99E@(B
+＊ Release1.3 → Release1.3.4 の主な変更点
 
-$B!&%?%9%/IUB0%a%$%k%\%C%/%95!G=$rDI2C!%(B
-$B!&(BFreeBSD$B!J(Bx86$B!K$N%5%]!<%H$rDI2C!%(B
-$B!&%P%0%U%#%C%/%9!%(B
+・タスク付属メイルボックス機能を追加．
+・FreeBSD（x86）のサポートを追加．
+・バグフィックス．
 
-$B!v(B Release1.2 $B"*(B Release1.3 $B$N<g$JJQ99E@(B
+＊ Release1.2 → Release1.3 の主な変更点
 
-$B!&%?!<%2%C%H(BCPU $B$K0MB8$9$kItJ,$rJ,N%!%$3$l$KH<$C$F!$%G%#%l%/%H%j9=@.!$(B
-$B!!%U%!%$%k9=@.$rBgI}$KJQ99!%(B
-$B!&(BBSD UNIX$B>e$G$N%7%_%e%l!<%7%g%s4D6-$rDI2C!%(B
-$B!&M%@hEY7Q>5%;%^%U%)5!G=$rDI2C!%(B
-$B!&%a%$%k%\%C%/%95!G=$G%a%C%;!<%8%-%e!<$N4IM}J}K!$r%7%s%0%k%j%s%/$KJQ99!%(B
-$B!!$3$l$K$h$j!$%a%C%;!<%8M%@hEY$rF~$l$k%U%#!<%k%I$,0\F0$7$?$?$a!$M%@hEY=g(B
-$B!!$N%a%C%;!<%8%-%e!<%$%s%0$r;H$C$F$$$k%W%m%0%i%`$O!$:F%3%s%Q%$%k$,I,MW!%(B
-$B!&(Bref_tsk $B$,JV$9(B RUN$B>uBV$N2r<a$NJQ99!%(B
-$B!&3d9~$_%O%s%I%i$NDj5A2r=|$r%5%]!<%H!J%G%U%)%k%H$N@_Dj$G$O(B MCUBE $B$N$_!K!%(B
-$B!&(Bitron_errno $B$rGQ;_!%$3$l$KH<$$!$(Bsyscall $B%^%/%m$NDj5A$d!$(BItIs $B%?%9%/(B
-$B!!%5%]!<%H%i%$%V%i%jCf$N%(%i!<>pJsI=<(4X?t$N;EMM$rJQ99$7$?!%(B
-$B!&(BMCUBE $B$G!$(BTRON$B;EMM%-!<%\!<%I$N@\B3$r%5%]!<%H!%(B
-$B!&%P%0%U%#%C%/%9!%(B
+・ターゲットCPU に依存する部分を分離．これに伴って，ディレクトリ構成，
+　ファイル構成を大幅に変更．
+・BSD UNIX上でのシミュレーション環境を追加．
+・優先度継承セマフォ機能を追加．
+・メイルボックス機能でメッセージキューの管理方法をシングルリンクに変更．
+　これにより，メッセージ優先度を入れるフィールドが移動したため，優先度順
+　のメッセージキューイングを使っているプログラムは，再コンパイルが必要．
+・ref_tsk が返す RUN状態の解釈の変更．
+・割込みハンドラの定義解除をサポート（デフォルトの設定では MCUBE のみ）．
+・itron_errno を廃止．これに伴い，syscall マクロの定義や，ItIs タスク
+　サポートライブラリ中のエラー情報表示関数の仕様を変更した．
+・MCUBE で，TRON仕様キーボードの接続をサポート．
+・バグフィックス．
 
-$B!v(B Release1.1 $B"*(B Release1.2 $B$N<g$JJQ99E@(B
+＊ Release1.1 → Release1.2 の主な変更点
 
-$B!&(BID$B<+F03dEv5!G=!$%G%P%C%0%5%]!<%H5!G=$N0lIt!J(Bvset_reg, vget_reg$B!K!$@-(B
-$B!!G=I>2AMQ%7%9%F%`;~9o;2>H5!G=$rDI2C!%(B
-$B!&(Bref_tsk $B$,JV$9(B RUN$B>uBV$N2r<a$NJQ99!J%?%9%/FHN)It$+$i8F$P$l$?>l9g!K!%(B
-$B!&(Bref_sys $B$,JV$9>pJs$K(B runtskid, schedtskid $B$rDI2C!%(B
-$B!&%P%0%U%#%C%/%9!%(B
+・ID自動割当機能，デバッグサポート機能の一部（vset_reg, vget_reg），性
+　能評価用システム時刻参照機能を追加．
+・ref_tsk が返す RUN状態の解釈の変更（タスク独立部から呼ばれた場合）．
+・ref_sys が返す情報に runtskid, schedtskid を追加．
+・バグフィックス．

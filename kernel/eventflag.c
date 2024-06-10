@@ -41,14 +41,14 @@
 #ifdef USE_FLG
 
 /*
- *  $B%$%Y%s%H%U%i%04IM}%V%m%C%/$NDj5A(B
+ *  イベントフラグ管理ブロックの定義
  */
 typedef struct eventflag_control_block {
-	QUEUE	wait_queue;	/* $B%$%Y%s%H%U%i%0BT$A%-%e!<(B */
-	ID	flgid;		/* $B%$%Y%s%H%U%i%0(BID */
-	VP	exinf;		/* $B3HD%>pJs(B */
-	ATR	flgatr;		/* $B%$%Y%s%H%U%i%0B0@-(B */
-	UINT	flgptn;		/* $B%$%Y%s%H%U%i%08=:_%Q%?!<%s(B */
+	QUEUE	wait_queue;	/* イベントフラグ待ちキュー */
+	ID	flgid;		/* イベントフラグID */
+	VP	exinf;		/* 拡張情報 */
+	ATR	flgatr;		/* イベントフラグ属性 */
+	UINT	flgptn;		/* イベントフラグ現在パターン */
 } FLGCB;
 
 static FLGCB	flgcb_table[NUM_FLGID];
@@ -56,14 +56,14 @@ static FLGCB	flgcb_table[NUM_FLGID];
 #define get_flgcb(id)	(&(flgcb_table[INDEX_FLG(id)]))
     
 /*
- *  $BL$;HMQ$N%$%Y%s%H%U%i%04I4IM}%V%m%C%/$N%j%9%H(B
+ *  未使用のイベントフラグ管管理ブロックのリスト
  */
 #ifndef _i_vcre_flg
 QUEUE	free_flgcb;
 #endif /* _i_vcre_flg */
 
 /* 
- *  $B%$%Y%s%H%U%i%04IM}%V%m%C%/$N=i4|2=(B
+ *  イベントフラグ管理ブロックの初期化
  */
 void
 eventflag_initialize(void)
@@ -89,7 +89,7 @@ eventflag_initialize(void)
 }
 
 /*
- *  $B%$%Y%s%H%U%i%0BT$A2r=|>r7o$N%A%'%C%/(B
+ *  イベントフラグ待ち解除条件のチェック
  */
 Inline BOOL
 eventflag_cond(FLGCB *flgcb, UINT waiptn, UINT wfmode)
@@ -103,12 +103,12 @@ eventflag_cond(FLGCB *flgcb, UINT waiptn, UINT wfmode)
 }
 
 /*
- *  $B%$%Y%s%H%U%i%0BT$A;EMM$NDj5A(B
+ *  イベントフラグ待ち仕様の定義
  */
 static WSPEC wspec_flg = { TTW_FLG, 0, 0 };
 
 /*
- *  $B%$%Y%s%H%U%i%04IM}5!G=(B
+ *  イベントフラグ管理機能
  */
 
 #if !defined(_i_cre_flg) || !defined(_i_vcre_flg)

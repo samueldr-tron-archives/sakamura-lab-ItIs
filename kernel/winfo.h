@@ -37,86 +37,86 @@
 #define _WINFO_
 
 /*
- *  $BF14|!&DL?.%*%V%8%'%/%HKh$KI,MW$JBT$A>pJs$NDj5A(B
+ *  同期・通信オブジェクト毎に必要な待ち情報の定義
  */
 
 /*
- *  $B%$%Y%s%H%U%i%0BT$A(B (TTW_FLG)
+ *  イベントフラグ待ち (TTW_FLG)
  */
 typedef struct {
-	UINT	waiptn;		/* $BBT$A%S%C%H%Q%?!<%s(B */
-	UINT	wfmode;		/* $BBT$A%b!<%I(B */
-	UINT	*p_flgptn;	/* $BBT$A2r=|;~%S%C%H%Q%?!<%s$rF~$l$k%"%I%l%9(B */
+	UINT	waiptn;		/* 待ちビットパターン */
+	UINT	wfmode;		/* 待ちモード */
+	UINT	*p_flgptn;	/* 待ち解除時ビットパターンを入れるアドレス */
 } WINFO_FLG;
 
 /*
- *  $B%a%$%k%\%C%/%9BT$A(B (TTW_MBX)
+ *  メイルボックス待ち (TTW_MBX)
  */
 typedef struct {
-	T_MSG	**ppk_msg;	/* $B%a%C%;!<%8%Q%1%C%H$N@hF,$rF~$l$k%"%I%l%9(B */
+	T_MSG	**ppk_msg;	/* メッセージパケットの先頭を入れるアドレス */
 } WINFO_MBX;
 
 /*
- *  $B%a%C%;!<%8%P%C%U%!<u?.(B/$BAw?.BT$A(B (TTW_MBF, TTW_SMBF)
+ *  メッセージバッファ受信/送信待ち (TTW_MBF, TTW_SMBF)
  */
 typedef struct {
-	VP	msg;		/* $B<u?.%a%C%;!<%8$rF~$l$k%"%I%l%9(B */
-	INT	*p_msgsz;	/* $B<u?.%a%C%;!<%8$N%5%$%:$rF~$l$k%"%I%l%9(B */
+	VP	msg;		/* 受信メッセージを入れるアドレス */
+	INT	*p_msgsz;	/* 受信メッセージのサイズを入れるアドレス */
 } WINFO_MBF;
 
 typedef struct {
-	VP	msg;		/* $BAw?.%a%C%;!<%8$N@hF,%"%I%l%9(B */
-	INT	msgsz;		/* $BAw?.%a%C%;!<%8$N%5%$%:(B */
+	VP	msg;		/* 送信メッセージの先頭アドレス */
+	INT	msgsz;		/* 送信メッセージのサイズ */
 } WINFO_SMBF;
 
 /*
- *  $B%i%s%G%V8F=P(B/$B<uIU(B/$B=*N;BT$A(B (TTW_CAL, TTW_ACP, TTW_RDV)
+ *  ランデブ呼出/受付/終了待ち (TTW_CAL, TTW_ACP, TTW_RDV)
  */
 typedef struct {
-	UINT	calptn;		/* $B8F=PB&A*Br>r7o$rI=$9%S%C%H%Q%?!<%s(B */
-	VP	msg;		/* $B%a%C%;!<%8$rF~$l$k%"%I%l%9(B */
-	INT	cmsgsz;		/* $B8F=P%a%C%;!<%8$N%5%$%:(B */
-	INT	*p_rmsgsz;	/* $BJVEz%a%C%;!<%8$N%5%$%:$rF~$l$k%"%I%l%9(B */
+	UINT	calptn;		/* 呼出側選択条件を表すビットパターン */
+	VP	msg;		/* メッセージを入れるアドレス */
+	INT	cmsgsz;		/* 呼出メッセージのサイズ */
+	INT	*p_rmsgsz;	/* 返答メッセージのサイズを入れるアドレス */
 } WINFO_CAL;
 
 typedef struct {
-	UINT	acpptn;		/* $B<uIUB&A*Br>r7o$rI=$9%S%C%H%Q%?!<%s(B */
-	VP	msg;		/* $B8F=P%a%C%;!<%8$rF~$l$k%"%I%l%9(B */
-	RNO	*p_rdvno;	/* $B%i%s%G%VHV9f$rF~$l$k%"%I%l%9(B */
-	INT	*p_cmsgsz;	/* $B8F=P%a%C%;!<%8$N%5%$%:$rF~$l$k%"%I%l%9(B */
+	UINT	acpptn;		/* 受付側選択条件を表すビットパターン */
+	VP	msg;		/* 呼出メッセージを入れるアドレス */
+	RNO	*p_rdvno;	/* ランデブ番号を入れるアドレス */
+	INT	*p_cmsgsz;	/* 呼出メッセージのサイズを入れるアドレス */
 } WINFO_ACP;
 
 typedef struct {
-	RNO	rdvno;		/* $B%i%s%G%VHV9f(B */
-	VP	msg;		/* $B%a%C%;!<%8$rF~$l$k%"%I%l%9(B */
-	INT	maxrmsz;	/* $BJVEz%a%C%;!<%8$N:GBgD9(B */
-	INT	*p_rmsgsz;	/* $BJVEz%a%C%;!<%8$N%5%$%:$rF~$l$k%"%I%l%9(B */
+	RNO	rdvno;		/* ランデブ番号 */
+	VP	msg;		/* メッセージを入れるアドレス */
+	INT	maxrmsz;	/* 返答メッセージの最大長 */
+	INT	*p_rmsgsz;	/* 返答メッセージのサイズを入れるアドレス */
 } WINFO_RDV;
 
 /*
- *  $B%?%9%/IUB0%a%$%k%\%C%/%9BT$A(B (TTW_TMB)
+ *  タスク付属メイルボックス待ち (TTW_TMB)
  */
 typedef struct {
-	T_MSG	**ppk_msg;	/* $B%a%C%;!<%8%Q%1%C%H$N@hF,$rF~$l$k%"%I%l%9(B */
+	T_MSG	**ppk_msg;	/* メッセージパケットの先頭を入れるアドレス */
 } WINFO_TMB;
 
 /*
- *  $B2DJQD9%a%b%j%W!<%kBT$A(B (TTW_MPL)
+ *  可変長メモリプール待ち (TTW_MPL)
  */
 typedef struct {
-	INT	blksz;		/* $B%a%b%j%V%m%C%/%5%$%:(B */
-	VP	*p_blk;		/* $B%a%b%j%V%m%C%/$N@hF,$rF~$l$k%"%I%l%9(B */
+	INT	blksz;		/* メモリブロックサイズ */
+	VP	*p_blk;		/* メモリブロックの先頭を入れるアドレス */
 } WINFO_MPL;
 
 /*
- *  $B8GDjD9%a%b%j%W!<%kBT$A(B (TTW_MPF)
+ *  固定長メモリプール待ち (TTW_MPF)
  */
 typedef struct {
-	VP	*p_blf;		/* $B%a%b%j%V%m%C%/$N@hF,$rF~$l$k%"%I%l%9(B */
+	VP	*p_blf;		/* メモリブロックの先頭を入れるアドレス */
 } WINFO_MPF;
 
 /*
- *  $B%?%9%/%3%s%H%m!<%k%V%m%C%/Cf$K;}$DBT$A>pJs$NDj5A(B
+ *  タスクコントロールブロック中に持つ待ち情報の定義
  */
 typedef union {
 #ifdef USE_FLG
@@ -146,13 +146,13 @@ typedef union {
 } WINFO;
 
 /*
- *  $BBT$A;EMM9=B$BN$NDj5A(B
+ *  待ち仕様構造体の定義
  */
 
 typedef const struct {
-	UINT	tskwait;			/* $BBT$AMW0x(B */
-	void	(*chg_pri_hook)(TCB *, INT);	/* $B%?%9%/M%@hEYJQ99;~$N=hM}(B */
-	void	(*rel_wai_hook)(TCB *);		/* $B%?%9%/BT$A2r=|;~$N=hM}(B */
+	UINT	tskwait;			/* 待ち要因 */
+	void	(*chg_pri_hook)(TCB *, INT);	/* タスク優先度変更時の処理 */
+	void	(*rel_wai_hook)(TCB *);		/* タスク待ち解除時の処理 */
 } WSPEC;
 
 #endif /* _WINFO_ */

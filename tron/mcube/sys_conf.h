@@ -37,42 +37,42 @@
 #define _SYS_CONF_
 
 /*
- *  ItIs $BF0:n;~$N%a%b%j%^%C%W(B ($B%G%U%)%k%H;~(B)
+ *  ItIs 動作時のメモリマップ (デフォルト時)
  *
- *	80000000 - 8000ffff	ROM$B%b%K%?%o!<%/%(%j%"(B
- *	80020000 -		$B%+!<%M%k%3!<%INN0h(B
- *		 - 8007efff	$B%?%9%/FHN)ItMQ%9%?%C%/NN0h(B (ItIs $B$N(B SPI)
- *	8007f000 - 8007ffff	EIT$B%Y%/%?%F!<%V%k(B ($B<B:]$O$3$NH>J,$N$_;HMQ(B)
- *	80080000 - 800fffff	$B%+!<%M%k%G!<%?NN0h(B ($BBg$-$/$9$k$3$H$b2DG=(B)
- *	80100000 -		$BL$;HMQ(B ($B%f!<%6%W%m%0%i%`NN0h(B)
- *		 - 80ffffff	ROM$B%b%K%?$N=i4|(BSPI ($B?t%P%$%H2u$5$l$k(B)
+ *	80000000 - 8000ffff	ROMモニタワークエリア
+ *	80020000 -		カーネルコード領域
+ *		 - 8007efff	タスク独立部用スタック領域 (ItIs の SPI)
+ *	8007f000 - 8007ffff	EITベクタテーブル (実際はこの半分のみ使用)
+ *	80080000 - 800fffff	カーネルデータ領域 (大きくすることも可能)
+ *	80100000 -		未使用 (ユーザプログラム領域)
+ *		 - 80ffffff	ROMモニタの初期SPI (数バイト壊される)
  */
 
 /*
- *  $B%9%?%C%/%(%j%"!$%R!<%W%(%j%"$NDj5A(B
+ *  スタックエリア，ヒープエリアの定義
  *
- *  _end $B$O!$%W%m%0%i%`$G;HMQ$9$k%G!<%?%(%j%"$N:G8e$N<!$NHVCO!%(B
+ *  _end は，プログラムで使用するデータエリアの最後の次の番地．
  */
-#define STACKTOP	0x8007f000	/* $B%?%9%/FHN)ItMQ%9%?%C%/$N=i4|CM(B */
-#define HEAPTOP		_end		/* $B%R!<%W%(%j%"$N@hF,(B */
-#define HEAPLIMIT	0x80100000	/* $B%R!<%W%(%j%"$N>e8B(B */
+#define STACKTOP	0x8007f000	/* タスク独立部用スタックの初期値 */
+#define HEAPTOP		_end		/* ヒープエリアの先頭 */
+#define HEAPLIMIT	0x80100000	/* ヒープエリアの上限 */
 
 /*
- *  EIT$B%Y%/%?%F!<%V%k4XO"$NDj5A(B
+ *  EITベクタテーブル関連の定義
  *
- *  MCUBE $B$N(B ROM$B%b%K%?(B (BMS) $B$G$O!$(BEIT$B%Y%/%?%F!<%V%k$r(B FFFFF000 $BHVCO$+(B
- *  $B$i(B ROM $B$KCV$$$F$$$k!%$=$3$G!$(BItIs $B5/F0;~$K!$(BEIT$B%Y%/%?%F!<%V%k$r(B RAM 
- *  $B>e$K:n$kI,MW$,$"$k!%(BEITVB_ITIS $BHVCO$K!$(BEIT$B%Y%/%?%F!<%V%k$N=i4|@_Dj(B
- *  $B$r(B ROM $B$+$i%3%T!<$7$F;H$&!%(B
+ *  MCUBE の ROMモニタ (BMS) では，EITベクタテーブルを FFFFF000 番地か
+ *  ら ROM に置いている．そこで，ItIs 起動時に，EITベクタテーブルを RAM 
+ *  上に作る必要がある．EITVB_ITIS 番地に，EITベクタテーブルの初期設定
+ *  を ROM からコピーして使う．
  */
 #define EITVB_ORIG	((EITVE *) 0xfffff000)
 #define EITVB_ITIS	((EITVE *) 0x8007f000)
 #define EITVT_LEN	0x800
 
 /*
- *  $B%7%9%F%`%?%9%/$K4X$9$kDj5A(B
+ *  システムタスクに関する定義
  */
-#define	CONSOLE_PORT	1	/* $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B */
-#define	LOGTASK_PORT	1	/* $B%7%9%F%`%m%0$r=PNO$9$k%7%j%"%k%]!<%HHV9f(B */
+#define	CONSOLE_PORT	1	/* コンソール用に用いるシリアルポート番号 */
+#define	LOGTASK_PORT	1	/* システムログを出力するシリアルポート番号 */
 
 #endif /* _SYS_CONF_ */

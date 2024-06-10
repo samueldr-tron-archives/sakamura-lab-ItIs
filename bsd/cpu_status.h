@@ -37,25 +37,25 @@
 #define	_CPU_STATUS_
 
 /* 
- *  BSD UNIX $B0MB8Dj5A(B
+ *  BSD UNIX 依存定義
  */
 
 /* 
- *  BSD UNIX $BI8=`%$%s%/%k!<%I%U%!%$%k(B
+ *  BSD UNIX 標準インクルードファイル
  */
 #include <signal.h>
 #include <setjmp.h>
 
 /*
- *  $B%7%0%J%k%^%9%/$NDj5A(B
+ *  シグナルマスクの定義
  *
- *  $B%?%9%/%G%#%9%Q%C%A%c5/F0MQ$K(B SIGUSR2 $B$r;H$&!%(B
+ *  タスクディスパッチャ起動用に SIGUSR2 を使う．
  *
- *  $BDL>o$N%?%9%/It<B9TCf$O%7%0%J%k%^%9%/$O(B 0 ($B$9$Y$F$N%7%0%J%k%^%9%/$,(B 
- *  $B2r=|$5$l$?>uBV(B) $B$K$J$C$F$$$k!%%G%#%9%Q%C%A6X;_>uBV$G$O(B SIGUSR2 $B$r(B 
- *  $B%^%9%/$7!$3d9~$_$*$h$S%G%#%9%Q%C%A6X;_>uBV$G$O$9$Y$F$N%7%0%J%k$r%^(B
- *  $B%9%/$9$k!%%?%9%/FHN)It<B9TCf$O!$>/$J$/$H$b(B SIGUSR2 $B$r%^%9%/$7$J$1(B
- *  $B$l$P$J$i$J$$!%(B
+ *  通常のタスク部実行中はシグナルマスクは 0 (すべてのシグナルマスクが 
+ *  解除された状態) になっている．ディスパッチ禁止状態では SIGUSR2 を 
+ *  マスクし，割込みおよびディスパッチ禁止状態ではすべてのシグナルをマ
+ *  スクする．タスク独立部実行中は，少なくとも SIGUSR2 をマスクしなけ
+ *  ればならない．
  */
 #define SIGMASK_TASK	(0)
 #define SIGMASK_DDSP	(sigmask(SIGUSR2))
@@ -63,10 +63,10 @@
 #define SIGMASK_INDP	(sigmask(SIGUSR2))
 
 /*
- *  $B8=:_;HMQCf$N%9%?%C%/$rD4$Y$k(B
+ *  現在使用中のスタックを調べる
  *
- *  $B%?%9%/FHN)It<B9TCf$O!$%7%0%J%k%9%?%C%/$r;H$&$3$H$K$7$F!$%7%0%J%k%9(B
- *  $B%?%C%/$r;H$C$F$$$k$+$I$&$+$G!$%?%9%/FHN)It$rH=JL$9$k!%(B
+ *  タスク独立部実行中は，シグナルスタックを使うことにして，シグナルス
+ *  タックを使っているかどうかで，タスク独立部を判別する．
  */
 Inline int
 current_stack()
@@ -86,7 +86,7 @@ current_stack()
 }
 
 /*
- *  $B%/%j%F%#%+%k%;%/%7%g%sDj5AMQ%^%/%m(B
+ *  クリティカルセクション定義用マクロ
  */
 
 #define BEGIN_CRITICAL_SECTION	{ int mask = sigblock(SIGMASK_LOC);
@@ -95,51 +95,51 @@ current_stack()
 #define DISABLE_INTERRUPT	{ sigblock(SIGMASK_LOC); }
 
 /*
- *  $B%7%9%F%`>uBVH=JLMQ%^%/%m(B
+ *  システム状態判別用マクロ
  */
 
 /*
- *  in_indp(): $B%7%9%F%`%3!<%k$,!$%?%9%/FHN)It$+$i8F$P$l$?$+$rH=JL$9$k$?(B
- *  $B$a$N%^%/%m!%(B
+ *  in_indp(): システムコールが，タスク独立部から呼ばれたかを判別するた
+ *  めのマクロ．
  *
- *  $B%7%0%J%k%9%?%C%/$r;H$C$F$$$k$+$I$&$+$GH=CG$9$k!%(B
+ *  シグナルスタックを使っているかどうかで判断する．
  */
 #define in_indp()	(current_stack())
 
 /*
- *  in_ddsp(): $B%7%9%F%`%3!<%k$,%G%#%9%Q%C%A6X;_Cf$K8F$P$l$?$+$rH=JL$9$k(B
- *  $B$?$a$N%^%/%m!%%?%9%/FHN)It$b!$%G%#%9%Q%C%A6X;_Cf$K4^$`!%(B
+ *  in_ddsp(): システムコールがディスパッチ禁止中に呼ばれたかを判別する
+ *  ためのマクロ．タスク独立部も，ディスパッチ禁止中に含む．
  *
- *  SIGUSR2 $B$,%^%9%/$5$l$F$$$k$+$I$&$+$GH=CG$9$k!%(B
+ *  SIGUSR2 がマスクされているかどうかで判断する．
  */
 #define in_ddsp()	(sigblock(0) & SIGMASK_DDSP)
 
 /*
- *  in_loc(): $B%7%9%F%`%3!<%k$,(B CPU$B%m%C%/Cf$K8F$P$l$?$+$rH=JL$9$k$?$a$N(B
- *  $B%^%/%m!%%?%9%/FHN)It$b!$(BCPU$B%m%C%/Cf$K4^$`!%(B
+ *  in_loc(): システムコールが CPUロック中に呼ばれたかを判別するための
+ *  マクロ．タスク独立部も，CPUロック中に含む．
  *
- *  SIGUSR2 $B0J30$N$$$:$l$+$N%7%0%J%k$,%^%9%/$5$l$F$$$k>l9g$K!$(BCPU$B%m%C(B
- *  $B%/Cf$G$"$k$HH=CG$9$k!%%?%9%/FHN)It$G$O!$(BSIGUSR2 $B0J30$N$$$:$l$+$N%7(B
- *  $B%0%J%k$,%^%9%/$5$l$F$$$k$O$:!%(B
+ *  SIGUSR2 以外のいずれかのシグナルがマスクされている場合に，CPUロッ
+ *  ク中であると判断する．タスク独立部では，SIGUSR2 以外のいずれかのシ
+ *  グナルがマスクされているはず．
  */
 #define in_loc()	(sigblock(0) & ~SIGMASK_DDSP)
 
 /*
- *  in_sysmode(): $B%7%9%F%`%3!<%k$,%7%9%F%`%j%=!<%9$r%"%/%;%9$G$-$k>uBV$+(B
- *  $B$i8F$P$l$?$+$rH=JL$9$k$?$a$N%^%/%m!%(BE_OACV$B%(%i!<$N%A%'%C%/$KMQ$$$k!%(B
+ *  in_sysmode(): システムコールがシステムリソースをアクセスできる状態か
+ *  ら呼ばれたかを判別するためのマクロ．E_OACVエラーのチェックに用いる．
  *
- *  ctxtsk $B$N(B sysmode$B%U%#!<%k%I$r8+$FH=JL$9$kI,MW$,$"$k!%(B
+ *  ctxtsk の sysmodeフィールドを見て判別する必要がある．
  */
 #define	in_sysmode()	(in_indp() || ctxtsk->sysmode)
 
 /*
- *  in_qtsk(): $B%7%9%F%`%3!<%k$,!$=`%?%9%/It$r<B9TCf$+$i8F$P$l$?$+$rH=JL(B
- *  $B$9$k$?$a$N%^%/%m!%%?%9%/FHN)It$H$O6hJL$7$J$$$N$G!$(Bin_indp() $B$,(B FALSE 
- *  $B$N;~$K$N$_;H$&$3$H!%(B
+ *  in_qtsk(): システムコールが，準タスク部を実行中から呼ばれたかを判別
+ *  するためのマクロ．タスク独立部とは区別しないので，in_indp() が FALSE 
+ *  の時にのみ使うこと．
  *
- *  $B$3$NH=JL$r2DG=$K$9$k$?$a$K!$(BTCB $BCf$K(B isysmode$B%U%#!<%k%I$rMQ0U$9$k!%(B
- *  USE_QTSK_PORTION $B$,Dj5A$5$l$F$$$J$$>l9g$K$O!$=`%?%9%/It$O;H$o$l$J$$(B
- *  $B$N$G!$>o$K(B FALSE $B$H$9$k!%(B
+ *  この判別を可能にするために，TCB 中に isysmodeフィールドを用意する．
+ *  USE_QTSK_PORTION が定義されていない場合には，準タスク部は使われない
+ *  ので，常に FALSE とする．
  */
 #ifdef USE_QTSK_PORTION
 #define in_qtsk()	(ctxtsk->sysmode > ctxtsk->isysmode)
@@ -148,16 +148,16 @@ current_stack()
 #endif /* USE_QTSK_PORTION */
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A%c5/F0%k!<%A%s(B
+ *  タスクディスパッチャ起動ルーチン
  */
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A%c(B
+ *  タスクディスパッチャ
  */
 extern void dispatch_handler();
 
 /*
- *  $B%?%9%/%G%#%9%Q%C%A%c$N5/F0MW5a$r=P$9!%(B
+ *  タスクディスパッチャの起動要求を出す．
  */
 Inline void
 dispatch_request(void)
@@ -166,11 +166,11 @@ dispatch_request(void)
 }
 
 /*
- *  $B8=:_$N%?%9%/$N%3%s%F%-%9%H$r<N$F$F!$<!$K<B9T$9$Y$-%?%9%/$X6/@)E*$K(B
- *  $B%G%#%9%Q%C%A$9$k!%(B
+ *  現在のタスクのコンテキストを捨てて，次に実行すべきタスクへ強制的に
+ *  ディスパッチする．
  *
- *  $B%7%9%F%`5/F0;~$*$h$S(B ext_tsk, ext_tsk $B$N=hM}$GMQ$$$k!%(Bctxtsk $B$,A0(B
- *  $BJ};2>H$K$J$k$?$a!$(Bforce_dispatch $BK\BN$O!$%^%/%m$H$7$FDj5A$9$k!%(B
+ *  システム起動時および ext_tsk, ext_tsk の処理で用いる．ctxtsk が前
+ *  方参照になるため，force_dispatch 本体は，マクロとして定義する．
  */
 Inline void
 _force_dispatch(void)
@@ -199,11 +199,11 @@ _force_dispatch(void)
 }
 
 /*
- *  $B%?%9%/%3%s%F%-%9%H%V%m%C%/$NDj5A(B
+ *  タスクコンテキストブロックの定義
  */
 typedef struct {
-	INT	stacd;		/* $B%?%9%/5/F0%3!<%I(B */
-	jmp_buf	env;		/* CPU$B%3%s%F%-%9%H(B */
+	INT	stacd;		/* タスク起動コード */
+	jmp_buf	env;		/* CPUコンテキスト */
 } CTXB;
 
 #endif /* _CPU_STATUS_ */

@@ -37,12 +37,12 @@
 #include <itis_syslog.h>
 
 /*
- *  $B%(%i!<%a%C%;!<%8$N@8@.(B
+ *  エラーメッセージの生成
  */
 extern char	*itron_strerror(ER);
 
 /*
- *  $B%(%i!<%a%C%;!<%8$N=PNO(B
+ *  エラーメッセージの出力
  */
 void
 itis_perror(const char *file, int line, const char *expr, ER ercd)

@@ -37,14 +37,14 @@
 #define _MCUBE_
 
 /*
- *  MCUBE $B4pK\%\!<%I$N%O!<%I%&%'%";q8;$NDj5A(B
+ *  MCUBE 基本ボードのハードウェア資源の定義
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
+typedef volatile byte	IOREG;		/* I/Oレジスタの型 */
 
 /*
- *  $BDcB.$N(B I/O$B%G%P%$%9$rA`:n$9$k$?$a$N4X?t(B
+ *  低速の I/Oデバイスを操作するための関数
  */
 
 Inline void
@@ -73,7 +73,7 @@ io_write(IOREG *addr, byte val)
 }
 
 /*
- *  IRC (MB92421) $B$N%l%8%9%?(B
+ *  IRC (MB92421) のレジスタ
  */
 
 #define	IRC1_LMR(n)	((IOREG *) (0xffbffd3f+(n)*4))
@@ -96,23 +96,23 @@ io_write(IOREG *addr, byte val)
 #define	IRC2_BMR	((IOREG *) 0xffbffdb3)
 #define	IRC2_BRR	((IOREG *) 0xffbffdb7)
 
-#define	LIR0_BIT	0x01		/* $B%m!<%+%k3d9~$_(B 0 */
-#define	LIR1_BIT	0x02		/* $B%m!<%+%k3d9~$_(B 1 */
-#define	LIR2_BIT	0x04		/* $B%m!<%+%k3d9~$_(B 2 */
-#define	LIR3_BIT	0x08		/* $B%m!<%+%k3d9~$_(B 3 */
-#define	LIR4_BIT	0x10		/* $B%m!<%+%k3d9~$_(B 4 */
-#define	LIR5_BIT	0x20		/* $B%m!<%+%k3d9~$_(B 5 */
-#define	LIR6_BIT	0x40		/* $B%m!<%+%k3d9~$_(B 6 */
+#define	LIR0_BIT	0x01		/* ローカル割込み 0 */
+#define	LIR1_BIT	0x02		/* ローカル割込み 1 */
+#define	LIR2_BIT	0x04		/* ローカル割込み 2 */
+#define	LIR3_BIT	0x08		/* ローカル割込み 3 */
+#define	LIR4_BIT	0x10		/* ローカル割込み 4 */
+#define	LIR5_BIT	0x20		/* ローカル割込み 5 */
+#define	LIR6_BIT	0x40		/* ローカル割込み 6 */
 
-#define	BIR0_BIT	0x01		/* $B%P%93d9~$_(B 0 */
-#define	BIR1_BIT	0x02		/* $B%P%93d9~$_(B 1 */
-#define	BIR2_BIT	0x04		/* $B%P%93d9~$_(B 2 */
-#define	BIR3_BIT	0x08		/* $B%P%93d9~$_(B 3 */
-#define	BIR4_BIT	0x10		/* $B%P%93d9~$_(B 4 */
-#define	BIR5_BIT	0x20		/* $B%P%93d9~$_(B 5 */
-#define	BIR6_BIT	0x40		/* $B%P%93d9~$_(B 6 */
+#define	BIR0_BIT	0x01		/* バス割込み 0 */
+#define	BIR1_BIT	0x02		/* バス割込み 1 */
+#define	BIR2_BIT	0x04		/* バス割込み 2 */
+#define	BIR3_BIT	0x08		/* バス割込み 3 */
+#define	BIR4_BIT	0x10		/* バス割込み 4 */
+#define	BIR5_BIT	0x20		/* バス割込み 5 */
+#define	BIR6_BIT	0x40		/* バス割込み 6 */
 
-#define	IRC1_VECTOR(n)	(0x40+(n))	/* $B%l%Y%k(Bn $B$N3d9~$_$N%Y%/%?HV9f(B */
+#define	IRC1_VECTOR(n)	(0x40+(n))	/* レベルn の割込みのベクタ番号 */
 #define IRC2_VECTOR_BASE 0x80
 #define	IRC2_VECTOR(n)	(IRC2_VECTOR_BASE+(n))
 
@@ -162,7 +162,7 @@ irc_read(IOREG *addr)
 }
 
 /*
- *  $B%?%$%^(B (MB89254) $B$N%l%8%9%?(B
+ *  タイマ (MB89254) のレジスタ
  */
 
 #define TMR_CNT0	((IOREG *) 0xffbffee3)
@@ -196,14 +196,14 @@ tmr_write(IOREG *addr, byte val)
 }
 
 /*
- *  SCC (Z85C30) $B$N%l%8%9%?(B
+ *  SCC (Z85C30) のレジスタ
  */
 #define	SCC_CNTRLB	((IOREG *) 0xffbfff03)
 #define	SCC_DATAB	((IOREG *) 0xffbfff07)
 #define	SCC_CNTRLA	((IOREG *) 0xffbffef3)
 #define	SCC_DATAA	((IOREG *) 0xffbffef7)
 
-#define	SCC_WR0		0x00		/* SCC $B=q$-9~$_%l%8%9%?(B */
+#define	SCC_WR0		0x00		/* SCC 書き込みレジスタ */
 #define	SCC_WR1		0x01
 #define	SCC_WR2		0x02
 #define	SCC_WR3		0x03
@@ -217,7 +217,7 @@ tmr_write(IOREG *addr, byte val)
 #define	SCC_WR14	0x0e
 #define	SCC_WR15	0x0f
 
-#define	SCC_RR0		0x00		/* SCC $BFI$_=P$7%l%8%9%?(B */
+#define	SCC_RR0		0x00		/* SCC 読み出しレジスタ */
 
 Inline byte
 scc_read(IOREG *addr, int reg)
@@ -234,7 +234,7 @@ scc_write(IOREG *addr, int reg, int val)
 }
 
 /*
- *  $B%b%K%?8F$S=P$7%k!<%A%s(B
+ *  モニタ呼び出しルーチン
  */
 
 Inline void

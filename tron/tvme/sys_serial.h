@@ -37,70 +37,70 @@
 #define _SYS_SERIAL_
 
 /*
- *  TVME-150 CPU$B%\!<%IMQ(B $BDc%l%Y%k%7%j%"%k(BI/O $B4XO"$NDj5A(B
+ *  TVME-150 CPUボード用 低レベルシリアルI/O 関連の定義
  */
 
 #include "tvme150.h"
 
 /*
- *  $B%7%j%"%k%]!<%H$N%O!<%I%&%'%"0MB8>pJs$NDj5A(B
+ *  シリアルポートのハードウェア依存情報の定義
  */
 typedef struct raw_serial_port_descripter {
-	BOOL	*initflag;	/* $B=i4|2=:Q%U%i%0$X$N%]%$%s%?(B */
-	IOREG	*data;		/* $B%G!<%?%l%8%9%?$NHVCO(B */
-	IOREG	*cntrl;		/* $B%3%s%H%m!<%k%l%8%9%?$NHVCO(B */
+	BOOL	*initflag;	/* 初期化済フラグへのポインタ */
+	IOREG	*data;		/* データレジスタの番地 */
+	IOREG	*cntrl;		/* コントロールレジスタの番地 */
 
-	byte	com_reset;	/* $B%]!<%H%j%;%C%H%3%^%s%I(B */
-	byte	mode3_def;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B (WR3) */
-	byte	mode4_def;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B (WR4) */
-	byte	mode5_def;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B (WR5) */
-	byte	mode12_def;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B (WR12) */
-	byte	mode13_def;	/* $B%G%U%)!<%k%H$N%b!<%I@_DjCM(B (WR13) */
+	byte	com_reset;	/* ポートリセットコマンド */
+	byte	mode3_def;	/* デフォールトのモード設定値 (WR3) */
+	byte	mode4_def;	/* デフォールトのモード設定値 (WR4) */
+	byte	mode5_def;	/* デフォールトのモード設定値 (WR5) */
+	byte	mode12_def;	/* デフォールトのモード設定値 (WR12) */
+	byte	mode13_def;	/* デフォールトのモード設定値 (WR13) */
 } RPORT;
 
 /*
- *  SCC$B%3%s%H%m!<%k%l%8%9%?$N@_DjCM(B
+ *  SCCコントロールレジスタの設定値
  */
 
-#define MODE4_DEF	0x44		/* $B%9%H%C%W%S%C%H(B 1bit, $B%Q%j%F%#$J$7(B */
-#define MODE3_DEF	0xc1		/* $B%G!<%?(B 8bit, $B<u?.%$%M!<%V%k(B */
-#define MODE3_INIT_MASK	0xfe		/* $B<u?.%G%#%9%(!<%V%k(B */
-#define MODE5_DEF	0xea		/* $B%G!<%?(B 8bit, $BAw?.%$%M!<%V%k(B */
-#define MODE5_INIT_MASK	0x75		/* $BAw?.%G%#%9%(!<%V%k(B */
+#define MODE4_DEF	0x44		/* ストップビット 1bit, パリティなし */
+#define MODE3_DEF	0xc1		/* データ 8bit, 受信イネーブル */
+#define MODE3_INIT_MASK	0xfe		/* 受信ディスエーブル */
+#define MODE5_DEF	0xea		/* データ 8bit, 送信イネーブル */
+#define MODE5_INIT_MASK	0x75		/* 送信ディスエーブル */
 
 #define MODE10_DEF	0x00		/* NRZ */
-#define MODE11_DEF	0x56		/* $B%/%m%C%/$K4X$9$k@_Dj(B */
+#define MODE11_DEF	0x56		/* クロックに関する設定 */
 #define MODE12_DEF	24		/* 9600bps */
 #define MODE13_DEF	0		/* 9600bps */
-#define MODE14_DEF	0x03		/* $B%\!<%l!<%H%8%'%M%l!<%?(B */
+#define MODE14_DEF	0x03		/* ボーレートジェネレータ */
 
-#define MODE1_DEF	0x13		/* $B3F3d9~$_$r5v2D(B */
-#define MODE1_DOWN	0x00		/* $BA43d9~$_$r6X;_(B */
-#define MODE15_DEF	0x00		/* $B$=$NB>$N3d9~$_$N6X;_(B */
-#define MODE9_INIT	0x02		/* $B%^%9%?!<3d9~$_6X;_(B */
-#define MODE9_DEF	0x0a		/* $B%^%9%?!<3d9~$_5v2D(B */
-#define MODE9_DOWN	0x02		/* $B%^%9%?!<3d9~$_6X;_(B */
+#define MODE1_DEF	0x13		/* 各割込みを許可 */
+#define MODE1_DOWN	0x00		/* 全割込みを禁止 */
+#define MODE15_DEF	0x00		/* その他の割込みの禁止 */
+#define MODE9_INIT	0x02		/* マスター割込み禁止 */
+#define MODE9_DEF	0x0a		/* マスター割込み許可 */
+#define MODE9_DOWN	0x02		/* マスター割込み禁止 */
 
 /*
- *  $B3d9~$_%Y%/%?$H%O%s%I%i%"%I%l%9$N<h$j=P$7(B
+ *  割込みベクタとハンドラアドレスの取り出し
  */
 #define raw_int_vector(p)	INT_VECTOR(3)
 #define raw_int_handler(p)	int_handler_scc
 
 /*
- *  $B3d9~$_%O%s%I%i$N%(%s%H%j(B ($BA0J}@k8@(B)
+ *  割込みハンドラのエントリ (前方宣言)
  */
 static void	int_handler_scc(void);
 
 static void	serial_int_handler(int portid);
 
 /*
- *  $BDc%l%Y%k%]!<%H>pJs4IM}%V%m%C%/$N=i4|CM(B
+ *  低レベルポート情報管理ブロックの初期値
  */
 
-#define NUM_PORT	2	/* $B%5%]!<%H$9$k%7%j%"%k%]!<%H$N?t(B */
+#define NUM_PORT	2	/* サポートするシリアルポートの数 */
 
-static BOOL	initflag[2] = { 0, -1 } ;	/* $B=i4|2=:Q%U%i%0(B */
+static BOOL	initflag[2] = { 0, -1 } ;	/* 初期化済フラグ */
 
 #define RAWPORT1	{ &initflag[0], SCC_DATAA, SCC_CNTRLA,		\
 			  0x80, MODE3_DEF, MODE4_DEF, MODE5_DEF,	\
@@ -110,7 +110,7 @@ static BOOL	initflag[2] = { 0, -1 } ;	/* $B=i4|2=:Q%U%i%0(B */
 			  MODE12_DEF, MODE13_DEF }
 
 /*
- *  $B%7%j%"%k(B I/O $B%]!<%H$N=i4|2=(B
+ *  シリアル I/O ポートの初期化
  */
 Inline BOOL
 raw_port_init(RPORT *p)
@@ -118,9 +118,9 @@ raw_port_init(RPORT *p)
 	byte	n;
 
 	/*
-	 *  SCC $B$N@_Dj(B
+	 *  SCC の設定
 	 */
-	io_write(p->cntrl, SCC_WR0);			/* WR0 $B;XDj(B */
+	io_write(p->cntrl, SCC_WR0);			/* WR0 指定 */
 	if (*(p->initflag) == 0) {
 		scc_write(p->cntrl, SCC_WR9, p->com_reset);
 
@@ -140,36 +140,36 @@ raw_port_init(RPORT *p)
 	}
 
 	/*
-	 *  interrupt handler $B$N@_Dj(B
+	 *  interrupt handler の設定
 	 */
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
 		scb_assign(SCB_R0, 3);
-		scb_assign(SCB_R1, 0x04);		/* $B%l%Y%k%H%j%,(B */
-		scb_or_assign(SCB_R3, LRQ3_BIT);	/* $B3d9~$_%^%9%/2r=|(B */
+		scb_assign(SCB_R1, 0x04);		/* レベルトリガ */
+		scb_or_assign(SCB_R3, LRQ3_BIT);	/* 割込みマスク解除 */
 	}
 
 	/*
-	 *  SCC $B$N3d9~$_4X78$N@_Dj(B
+	 *  SCC の割込み関係の設定
 	 */
 	scc_write(p->cntrl, SCC_WR15, MODE15_DEF);
 	scc_write(p->cntrl, SCC_WR1, MODE1_DEF);
 	io_write(p->cntrl, 0x28);
 	scc_write(p->cntrl, SCC_WR9, MODE9_DEF);
 
-	*(p->initflag) = 1;				/* $B=i4|2=%U%i%0@_Dj(B */
+	*(p->initflag) = 1;				/* 初期化フラグ設定 */
 	return(0);
 }
 
 /*
- *  $B%7%j%"%k(B I/O $B%]!<%H$N%7%c%C%H%@%&%s(B
+ *  シリアル I/O ポートのシャットダウン
  */
 Inline void
 raw_port_shutdown(RPORT *p)
 {
-	*(p->initflag) = -1;				/* $B=i4|2=%U%i%0@_Dj(B */
+	*(p->initflag) = -1;				/* 初期化フラグ設定 */
 
 	/*
-	 *  SCC $B$N3d9~$_4X78$N@_Dj(B
+	 *  SCC の割込み関係の設定
 	 */
 	scc_write(p->cntrl, SCC_WR1, MODE1_DOWN);
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
@@ -177,15 +177,15 @@ raw_port_shutdown(RPORT *p)
 	}
 
 	/*
-	 *  interrupt handler $B$N@_Dj(B
+	 *  interrupt handler の設定
 	 */
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
-		scb_and_assign(SCB_R3, ~LRQ3_BIT);	/* $B3d9~$_%^%9%/@_Dj(B */
+		scb_and_assign(SCB_R3, ~LRQ3_BIT);	/* 割込みマスク設定 */
 	}
 }
 
 /*
- *  $B3d9~$_%O%s%I%i$N%(%s%H%j(B
+ *  割込みハンドラのエントリ
  */
 static void
 int_handler_scc(void)
@@ -199,7 +199,7 @@ int_handler_scc(void)
 }
 
 /*
- *  $B3d9~$_%/%j%"=hM}(B
+ *  割込みクリア処理
  */
 Inline void
 raw_port_clear_int(RPORT *p)
@@ -208,7 +208,7 @@ raw_port_clear_int(RPORT *p)
 }
 
 /*
- *  $BJ8;z$r<u?.$7$?$+!)(B
+ *  文字を受信したか？
  */
 Inline BOOL
 raw_port_getready(RPORT *p)
@@ -217,7 +217,7 @@ raw_port_getready(RPORT *p)
 }
 
 /*
- *  $BJ8;z$rAw?.$G$-$k$+!)(B
+ *  文字を送信できるか？
  */
 Inline BOOL
 raw_port_putready(RPORT *p)
@@ -226,7 +226,7 @@ raw_port_putready(RPORT *p)
 }
 
 /*
- *  $B<u?.$7$?J8;z$N<h$j=P$7(B
+ *  受信した文字の取り出し
  */
 Inline byte
 raw_port_getchar(RPORT *p)
@@ -235,7 +235,7 @@ raw_port_getchar(RPORT *p)
 }
 
 /*
- *  $BAw?.$9$kJ8;z$N=q$-9~$_(B
+ *  送信する文字の書き込み
  */
 Inline void
 raw_port_putchar(RPORT *p, byte c)
@@ -244,7 +244,7 @@ raw_port_putchar(RPORT *p, byte c)
 }
 
 /*
- *  $BAw?.@)8f4X?t(B
+ *  送信制御関数
  */
 Inline void
 raw_port_sendstart(RPORT *p)

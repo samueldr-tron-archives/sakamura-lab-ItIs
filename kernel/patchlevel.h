@@ -36,8 +36,8 @@
 #ifndef _PATCHLEVEL_
 #define _PATCHLEVEL_
 
-#define MAJOR_REL	1	/* $B%a%8%c!<%j%j!<%9HV9f(B */
-#define MINOR_REL	4	/* $B%^%$%J!<%j%j!<%9HV9f(B */
-#define PATCH_LEVEL	0	/* $B%Q%C%A%l%Y%k(B */
+#define MAJOR_REL	1	/* メジャーリリース番号 */
+#define MINOR_REL	4	/* マイナーリリース番号 */
+#define PATCH_LEVEL	0	/* パッチレベル */
 
 #endif /* _PATCHLEVEL_ */

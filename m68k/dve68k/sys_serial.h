@@ -36,68 +36,68 @@
 #define _SYS_SERIAL_
 
 /*
- *  DVE68K/40 CPU$B%\!<%IMQ(B $BDc%l%Y%k%7%j%"%k(BI/O $B4XO"$NDj5A(B
+ *  DVE68K/40 CPUボード用 低レベルシリアルI/O 関連の定義
  */
 
 #include "dve68k.h"
 
 /*
- *  $B%7%j%"%k%]!<%H$N%O!<%I%&%'%"0MB8>pJs$NDj5A(B
+ *  シリアルポートのハードウェア依存情報の定義
  */
 typedef struct raw_serial_port_descripter {
-	INT	*initflag;	/* $B=i4|2=:Q%U%i%0$X$N%]%$%s%?(B */
-	IOREG	*data;		/* $B%G!<%?%l%8%9%?$NHVCO(B */
-	IOREG	*cntrl;		/* $B%3%s%H%m!<%k%l%8%9%?$NHVCO(B */
-	BOOL	sendflag;	/* $BAw?.3d9~$_%$%M!<%V%k%U%i%0(B */
+	INT	*initflag;	/* 初期化済フラグへのポインタ */
+	IOREG	*data;		/* データレジスタの番地 */
+	IOREG	*cntrl;		/* コントロールレジスタの番地 */
+	BOOL	sendflag;	/* 送信割込みイネーブルフラグ */
 
-	byte	cr3_def;	/* $B%G%U%)!<%k%H$N@_DjCM(B (CR3) */
-	byte	cr4_def;	/* $B%G%U%)!<%k%H$N@_DjCM(B (CR4) */
-	byte	cr5_def;	/* $B%G%U%)!<%k%H$N@_DjCM(B (CR5) */
-	byte	brg2_def;	/* $B%G%U%)!<%k%H$N@_DjCM(B ($B%\!<%l!<%H2<0L(B) */
-	byte	brg1_def;	/* $B%G%U%)!<%k%H$N@_DjCM(B ($B%\!<%l!<%H>e0L(B) */
+	byte	cr3_def;	/* デフォールトの設定値 (CR3) */
+	byte	cr4_def;	/* デフォールトの設定値 (CR4) */
+	byte	cr5_def;	/* デフォールトの設定値 (CR5) */
+	byte	brg2_def;	/* デフォールトの設定値 (ボーレート下位) */
+	byte	brg1_def;	/* デフォールトの設定値 (ボーレート上位) */
 } RPORT;
 
 /*
- *  MPSC$B%3%s%H%m!<%k%l%8%9%?$N@_DjCM(B
+ *  MPSCコントロールレジスタの設定値
  */
 
-#define MPSC_RESET	0x18		/* $B%]!<%H%j%;%C%H%3%^%s%I(B */
+#define MPSC_RESET	0x18		/* ポートリセットコマンド */
 #define MPSC_EOI	0x38		/* EOI (End of Interrupt) */
 
-#define CR3_DEF		0xc1		/* $B%G!<%?(B 8bit, $B<u?.%$%M!<%V%k(B */
-#define CR4_DEF		0x44		/* $B%9%H%C%W%S%C%H(B 1bit, $B%Q%j%F%#$J$7(B */
-#define CR5_DEF		0xea		/* $B%G!<%?(B 8bit, $BAw?.%$%M!<%V%k(B */
-#define BRG2_DEF	0x1e		/* 9600bps ($B2<0L(B) */
-#define BRG1_DEF	0x00		/* 9600bps ($B>e0L(B) */
+#define CR3_DEF		0xc1		/* データ 8bit, 受信イネーブル */
+#define CR4_DEF		0x44		/* ストップビット 1bit, パリティなし */
+#define CR5_DEF		0xea		/* データ 8bit, 送信イネーブル */
+#define BRG2_DEF	0x1e		/* 9600bps (下位) */
+#define BRG1_DEF	0x00		/* 9600bps (上位) */
 
 #define CR10_DEF	0x00		/* NRZ */
-#define CR14_DEF	0x07		/* $B%\!<%l!<%H%8%'%M%l!<%?%$%M!<%V%k(B */
-#define CR15_DEF	0x56		/* $B%\!<%l!<%H%8%'%M%l!<%?;HMQ(B */
+#define CR14_DEF	0x07		/* ボーレートジェネレータイネーブル */
+#define CR15_DEF	0x56		/* ボーレートジェネレータ使用 */
 
-#define CR1_ALL		0x12		/* $BA43d9~$_$r5v2D(B */
-#define CR1_RECV	0x10		/* $B<u?.3d9~$_$N$_5v2D(B */
-#define CR1_DOWN	0x00		/* $BA43d9~$_$r6X;_(B */
+#define CR1_ALL		0x12		/* 全割込みを許可 */
+#define CR1_RECV	0x10		/* 受信割込みのみ許可 */
+#define CR1_DOWN	0x00		/* 全割込みを禁止 */
 
 /*
- *  $B3d9~$_%Y%/%?$H%O%s%I%i%"%I%l%9$N<h$j=P$7(B
+ *  割込みベクタとハンドラアドレスの取り出し
  */
 #define raw_int_vector(p)	GP0_VEC
 #define raw_int_handler(p)	int_handler_mpsc
 
 /*
- *  $B3d9~$_%O%s%I%i$N%(%s%H%j(B ($BA0J}@k8@(B)
+ *  割込みハンドラのエントリ (前方宣言)
  */
 static void	int_handler_mpsc(void);
 
 static void	serial_int_handler(int portid);
 
 /*
- *  $BDc%l%Y%k%]!<%H>pJs4IM}%V%m%C%/$N=i4|CM(B
+ *  低レベルポート情報管理ブロックの初期値
  */
 
-#define NUM_PORT	2	/* $B%5%]!<%H$9$k%7%j%"%k%]!<%H$N?t(B */
+#define NUM_PORT	2	/* サポートするシリアルポートの数 */
 
-static BOOL	initflag[2] = { 0, 0 } ;	/* $B=i4|2=:Q%U%i%0(B */
+static BOOL	initflag[2] = { 0, 0 } ;	/* 初期化済フラグ */
 
 #define RAWPORT1	{ &initflag[0], MPSC_DATAA, MPSC_CNTRLA, 0,	\
 			  CR3_DEF, CR4_DEF, CR5_DEF, BRG2_DEF, BRG1_DEF }
@@ -105,7 +105,7 @@ static BOOL	initflag[2] = { 0, 0 } ;	/* $B=i4|2=:Q%U%i%0(B */
 			  CR3_DEF, CR4_DEF, CR5_DEF, BRG2_DEF, BRG1_DEF }
 
 /*
- *  $B%7%j%"%k(B I/O $B%]!<%H$N=i4|2=(B
+ *  シリアル I/O ポートの初期化
  */
 Inline BOOL
 raw_port_init(RPORT *p)
@@ -113,7 +113,7 @@ raw_port_init(RPORT *p)
 	byte	n;
 
 	/*
-	 *  MPSC $B$N@_Dj(B
+	 *  MPSC の設定
 	 */
 	io_write(p->cntrl, MPSC_RESET);
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
@@ -132,42 +132,42 @@ raw_port_init(RPORT *p)
 	mpsc_write(p->cntrl, MPSC_CR5, p->cr5_def);
 
 	/*
-	 *  $B3d9~$_4XO"$N@_Dj(B
+	 *  割込み関連の設定
 	 */
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
 		dga_set_ilv(DGA_CSR25, GP0IL_BIT, IRQ_LEVEL6);
-						/* $B3d9~$_%l%Y%k@_Dj(B */
-		*DGA_CSR21 |= GP0_BIT;		/* $B3d9~$_%^%9%/2r=|(B */
+						/* 割込みレベル設定 */
+		*DGA_CSR21 |= GP0_BIT;		/* 割込みマスク解除 */
 	}
 
-	*(p->initflag) = 1;			/* $B=i4|2=%U%i%0@_Dj(B */
+	*(p->initflag) = 1;			/* 初期化フラグ設定 */
 	return(0);
 }
 
 /*
- *  $B%7%j%"%k(B I/O $B%]!<%H$N%7%c%C%H%@%&%s(B
+ *  シリアル I/O ポートのシャットダウン
  */
 Inline void
 raw_port_shutdown(RPORT *p)
 {
-	*(p->initflag) = -1;			/* $B=i4|2=%U%i%0@_Dj(B */
+	*(p->initflag) = -1;			/* 初期化フラグ設定 */
 
 	/*
-	 *  MPSC $B$N3d9~$_4X78$N@_Dj(B
+	 *  MPSC の割込み関係の設定
 	 */
 	mpsc_write(p->cntrl, MPSC_CR1, CR1_DOWN);
 	p->sendflag = 0;
 
 	/*
-	 *  $B3d9~$_4XO"$N@_Dj(B
+	 *  割込み関連の設定
 	 */
 	if (initflag[0] <= 0 && initflag[1] <= 0) {
-		*DGA_CSR21 &= ~GP0_BIT;		/* $B3d9~$_%^%9%/@_Dj(B */
+		*DGA_CSR21 &= ~GP0_BIT;		/* 割込みマスク設定 */
 	}
 }
 
 /*
- *  $B3d9~$_%O%s%I%i$N%(%s%H%j(B
+ *  割込みハンドラのエントリ
  */
 static void
 int_handler_mpsc(void)
@@ -182,7 +182,7 @@ int_handler_mpsc(void)
 }
 
 /*
- *  $B3d9~$_%/%j%"=hM}(B
+ *  割込みクリア処理
  */
 Inline void
 raw_port_clear_int(RPORT *p)
@@ -190,7 +190,7 @@ raw_port_clear_int(RPORT *p)
 }
 
 /*
- *  $BJ8;z$r<u?.$7$?$+!)(B
+ *  文字を受信したか？
  */
 Inline BOOL
 raw_port_getready(RPORT *p)
@@ -199,7 +199,7 @@ raw_port_getready(RPORT *p)
 }
 
 /*
- *  $BJ8;z$rAw?.$G$-$k$+!)(B
+ *  文字を送信できるか？
  */
 Inline BOOL
 raw_port_putready(RPORT *p)
@@ -208,7 +208,7 @@ raw_port_putready(RPORT *p)
 }
 
 /*
- *  $B<u?.$7$?J8;z$N<h$j=P$7(B
+ *  受信した文字の取り出し
  */
 Inline byte
 raw_port_getchar(RPORT *p)
@@ -217,7 +217,7 @@ raw_port_getchar(RPORT *p)
 }
 
 /*
- *  $BAw?.$9$kJ8;z$N=q$-9~$_(B
+ *  送信する文字の書き込み
  */
 Inline void
 raw_port_putchar(RPORT *p, byte c)
@@ -226,7 +226,7 @@ raw_port_putchar(RPORT *p, byte c)
 }
 
 /*
- *  $BAw?.@)8f4X?t(B
+ *  送信制御関数
  */
 Inline void
 raw_port_sendstart(RPORT *p)

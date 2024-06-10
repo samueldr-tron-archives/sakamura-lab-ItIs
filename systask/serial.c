@@ -34,7 +34,7 @@
  */
 
 /*
- *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P(B
+ *  シリアルインタフェースドライバ
  */
 
 #include "systask.h"
@@ -44,12 +44,12 @@
 #define	assert(exp)
 
 /*
- *  $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B
+ *  コンソール用に用いるシリアルポート番号
  */
 static int	console_portid;
 
 /*
- *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P$N5/F0(B
+ *  シリアルインタフェースドライバの起動
  */
 void
 serial_startup(int portid)
@@ -69,7 +69,7 @@ serial_startup(int portid)
 }
 
 /*
- *  $B%7%j%"%k%]!<%H4IM}%V%m%C%/$NDj5A(B
+ *  シリアルポート管理ブロックの定義
  */
 
 typedef struct ioctl_descripter {
@@ -79,37 +79,37 @@ typedef struct ioctl_descripter {
 	int	flowc;
 } IOCTL;
 
-#define	SERIAL_BUFSZ	256	/* $B%7%j%"%k%$%s%?%U%'!<%9MQ%P%C%U%!$N%5%$%:(B */
+#define	SERIAL_BUFSZ	256	/* シリアルインタフェース用バッファのサイズ */
 
 #define	inc(x)		(((x)+1 < SERIAL_BUFSZ) ? (x)+1 : 0)
 #define	INC(x)		((++(x) < SERIAL_BUFSZ) ? (x) : ((x) = 0))
 
 typedef struct serial_port_control_block {
-	int	init_flag;	/* $B=i4|2=:Q$+!)(B */
-	RPORT	rawport;	/* $B%O!<%I%&%'%"0MB8>pJs(B */
-	char	*in_buffer;	/* $B<u?.%P%C%U%!%(%j%"$N@hF,(B */
-	ID	in_sem_id;	/* $B<u?.%P%C%U%!4IM}MQ%;%^%U%)$N(B ID */
-	int	in_read_ptr;	/* $B<u?.%P%C%U%!FI$_=P$7%]%$%s%?(B */
-	int	in_write_ptr;	/* $B<u?.%P%C%U%!=q$-9~$_%]%$%s%?(B */
-	char	*out_buffer;	/* $BAw?.%P%C%U%!%(%j%"$N@hF,(B */
-	ID	out_sem_id;	/* $BAw?.%P%C%U%!4IM}MQ%;%^%U%)$N(B ID */
-	int	out_read_ptr;	/* $BAw?.%P%C%U%!FI$_=P$7%]%$%s%?(B */
-	int	out_write_ptr;	/* $BAw?.%P%C%U%!=q$-9~$_%]%$%s%?(B */
-	IOCTL	ctl;		/* ioctl $B$K$h$k@_DjFbMF(B */
-	BOOL	send_enabled;	/* $BAw?.$r%$%M!<%V%k$7$F$"$k$+!)(B */
-	BOOL	ixon_stopped;	/* STOP $B$r<u$1<h$C$?>uBV$+!)(B */
-	BOOL	ixoff_stopped;	/* $BAj<j$K(B STOP $B$rAw$C$?>uBV$+!)(B */
-	char	ixoff_send;	/* $BAj<j$K(B START/STOP $B$rAw$k$+!)(B */
+	int	init_flag;	/* 初期化済か？ */
+	RPORT	rawport;	/* ハードウェア依存情報 */
+	char	*in_buffer;	/* 受信バッファエリアの先頭 */
+	ID	in_sem_id;	/* 受信バッファ管理用セマフォの ID */
+	int	in_read_ptr;	/* 受信バッファ読み出しポインタ */
+	int	in_write_ptr;	/* 受信バッファ書き込みポインタ */
+	char	*out_buffer;	/* 送信バッファエリアの先頭 */
+	ID	out_sem_id;	/* 送信バッファ管理用セマフォの ID */
+	int	out_read_ptr;	/* 送信バッファ読み出しポインタ */
+	int	out_write_ptr;	/* 送信バッファ書き込みポインタ */
+	IOCTL	ctl;		/* ioctl による設定内容 */
+	BOOL	send_enabled;	/* 送信をイネーブルしてあるか？ */
+	BOOL	ixon_stopped;	/* STOP を受け取った状態か？ */
+	BOOL	ixoff_stopped;	/* 相手に STOP を送った状態か？ */
+	char	ixoff_send;	/* 相手に START/STOP を送るか？ */
 } SPCB;
 
 /*
- *  $B%b%8%e!<%kFb$G;H$&4X?t(B
+ *  モジュール内で使う関数
  */
 static char	serial_read_one(SPCB *p);
 static void	serial_write_one(SPCB *p, char c);
 
 /*
- *  $B%7%j%"%k%]!<%H4IM}%V%m%C%/$NDj5A$H=i4|2=(B
+ *  シリアルポート管理ブロックの定義と初期化
  */
 
 SPCB spcb_table[NUM_PORT] = {
@@ -135,7 +135,7 @@ SPCB spcb_table[NUM_PORT] = {
 #define get_spcb_def(portid)	get_spcb((portid) ? (portid) : console_portid)
 
 /*
- *  $B%]!<%H$N=i4|2=(B
+ *  ポートの初期化
  */
 
 int
@@ -146,7 +146,7 @@ serial_init(int portid)
 	T_DINT	pk_dint;
 	ER	ercd = E_OK;
 
-	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
+	if (sysstat() & TTS_INDP) {		/* コンテキストのチェック */
 		return(E_CTX);
 	}
 	if (!(1 <= portid && portid <= NUM_PORT)) {
@@ -154,14 +154,14 @@ serial_init(int portid)
 	}
 
 	p = get_spcb(portid);
-	if (p->init_flag) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
+	if (p->init_flag) {			/* 初期化済かのチェック */
 		return(E_OK);
 	}
 
 	ENTER_EXTENDED_SVC;
 
 	/*
-	 *  $B%P%C%U%!NN0h$N3NJ](B ($B%7%9%F%`%a%b%j%W!<%k$+$i<h$k(B)
+	 *  バッファ領域の確保 (システムメモリプールから取る)
 	 */
 	if (pget_blk(&buffer, TMPL_OS, SERIAL_BUFSZ * 2) != E_OK) {
 		ercd = E_NOMEM;
@@ -171,7 +171,7 @@ serial_init(int portid)
 	p->out_buffer = ((char *) buffer) + SERIAL_BUFSZ;
 
 	/*
-	 *  $BJQ?t$N=i4|2=(B
+	 *  変数の初期化
 	 */
 	p->in_read_ptr = p->in_write_ptr = 0;
 	p->out_read_ptr = p->out_write_ptr = 0;
@@ -179,14 +179,14 @@ serial_init(int portid)
 	p->ixoff_send = 0;
 
 	/*
-	 *  $B3d9~$_%O%s%I%i$NDj5A(B
+	 *  割込みハンドラの定義
 	 */
 	pk_dint.intatr = TA_HLNG;
 	pk_dint.inthdr = raw_int_handler(&(p->rawport));
 	syscall(def_int(raw_int_vector(&(p->rawport)), &pk_dint));
 
 	/*
-	 *  $B%;%^%U%)$N@8@.(B
+	 *  セマフォの生成
 	 */
 	syscall(cre_sem(p->in_sem_id,
 		&((T_CSEM) { 0, TA_TPRI, 0, SERIAL_BUFSZ-1 })));
@@ -194,7 +194,7 @@ serial_init(int portid)
 		&((T_CSEM) { 0, TA_TPRI, SERIAL_BUFSZ-1, SERIAL_BUFSZ-1 })));
 
 	/*
-	 *  $B%O!<%I%&%'%"0MB8$N=i4|2=(B
+	 *  ハードウェア依存の初期化
 	 */
 	syscall(loc_cpu());
 	if (raw_port_init(&(p->rawport))) {
@@ -213,10 +213,10 @@ serial_init(int portid)
 }
 
 /*
- *  $B%]!<%H$N%7%c%C%H%@%&%s(B
+ *  ポートのシャットダウン
  *
- *  flush $B$,(B TRUE $B$N>l9g$O!$%7%j%"%k%]!<%H$X$NAw?.%P%C%U%!$,6u$K$J$k$^(B
- *  $B$GBT$D!%(B
+ *  flush が TRUE の場合は，シリアルポートへの送信バッファが空になるま
+ *  で待つ．
  */
 
 #define	MAX_FLUSH_LOOP	1000000
@@ -227,22 +227,22 @@ serial_shutdown(int portid, int flush)
 	SPCB	*p;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
+	if (sysstat() & TTS_INDP) {		/* コンテキストのチェック */
 		return(E_CTX);
 	}
 	if (!(1 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
+		return(E_PAR);			/* ポート番号のチェック */
 	}
 
 	p = get_spcb(portid);
-	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
+	if (!(p->init_flag)) {			/* 初期化済かのチェック */
 		return(E_OBJ);
 	}
 
 	ENTER_EXTENDED_SVC;
 
 	/*
-	 *  $B%P%C%U%!$N%U%i%C%7%e=hM}(B
+	 *  バッファのフラッシュ処理
 	 */
 	if (flush) {
 		for (i = 0; i < MAX_FLUSH_LOOP; i++) {
@@ -253,20 +253,20 @@ serial_shutdown(int portid, int flush)
 	}
 
 	/*
-	 *  $B%O!<%I%&%'%"0MB8$N%7%c%C%H%@%&%s=hM}(B
+	 *  ハードウェア依存のシャットダウン処理
 	 */
 	syscall(loc_cpu());
 	raw_port_shutdown(&(p->rawport));
 	syscall(unl_cpu());
 
 	/*
-	 *  $B%;%^%U%)$N:o=|(B
+	 *  セマフォの削除
 	 */
 	syscall(del_sem(p->in_sem_id));
 	syscall(del_sem(p->out_sem_id));
 
 	/*
-	 *  $B%P%C%U%!NN0h$N2rJ|(B
+	 *  バッファ領域の解放
 	 */
 	syscall(rel_blk(TMPL_OS, p->in_buffer));
 
@@ -277,7 +277,7 @@ serial_shutdown(int portid, int flush)
 }
 
 /*
- *  $B%U%m!<%3%s%H%m!<%k4X78$NDj5A(B
+ *  フローコントロール関係の定義
  */
 #define	STOP	'\023'		/* Control-S */
 #define	START	'\021'		/* Control-Q */
@@ -290,7 +290,7 @@ serial_shutdown(int portid, int flush)
 			 (p->in_read_ptr + SERIAL_BUFSZ - p->in_write_ptr))
 
 /*
- *  $B%f!<%F%#%j%F%#%k!<%A%s(B
+ *  ユーティリティルーチン
  */
 
 Inline BOOL
@@ -308,7 +308,7 @@ enable_send(SPCB *p, char c)
 }
 
 /*
- *  $B%7%j%"%k%]!<%H$+$i$N<u?.(B
+ *  シリアルポートからの受信
  */
 
 int
@@ -318,15 +318,15 @@ serial_read(int portid, char *buf, unsigned int len)
 	char	c;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
+	if (sysstat() & TTS_INDP) {		/* コンテキストのチェック */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
+		return(E_PAR);			/* ポート番号のチェック */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
+	if (!(p->init_flag)) {			/* 初期化済かのチェック */
 		return(E_OBJ);
 	}
 
@@ -372,7 +372,7 @@ serial_read_one(SPCB *p)
 }
 
 /*
- *  $B%7%j%"%k%]!<%H$X$NAw?.(B
+ *  シリアルポートへの送信
  */
 
 int
@@ -381,15 +381,15 @@ serial_write(int portid, char *buf, unsigned int len)
 	SPCB	*p;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
+	if (sysstat() & TTS_INDP) {		/* コンテキストのチェック */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
+		return(E_PAR);			/* ポート番号のチェック */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
+	if (!(p->init_flag)) {			/* 初期化済かのチェック */
 		return(E_OBJ);
 	}
 
@@ -424,7 +424,7 @@ serial_write_one(SPCB *p, char c)
 }
 
 /*
- *  $B%7%j%"%k%]!<%H$N@)8f(B
+ *  シリアルポートの制御
  */
 
 int
@@ -433,15 +433,15 @@ serial_ioctl(int portid, int req, int arg)
 	SPCB	*p;
 	ER	ercd = E_OK;
 
-	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
+	if (sysstat() & TTS_INDP) {		/* コンテキストのチェック */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
+		return(E_PAR);			/* ポート番号のチェック */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
+	if (!(p->init_flag)) {			/* 初期化済かのチェック */
 		return(E_OBJ);
 	}
 
@@ -475,7 +475,7 @@ serial_ioctl(int portid, int req, int arg)
 }
 
 /*
- *  $B%7%j%"%k%]!<%H3d9~$_%O%s%I%i(B
+ *  シリアルポート割込みハンドラ
  */
 
 static void
@@ -501,7 +501,7 @@ serial_int_handler(int portid)
 			}
 		}
 		else if (inc(p->in_write_ptr) == p->in_read_ptr) {
-			/* $B%P%C%U%!%U%k$N>l9g!$<u?.$7$?J8;z$r<N$F$k!%(B*/
+			/* バッファフルの場合，受信した文字を捨てる．*/
 		}
 		else {
 			*(p->in_buffer + p->in_write_ptr) = c;
@@ -530,7 +530,7 @@ serial_int_handler(int portid)
 		}
 		else if (p->ixon_stopped
 				|| p->out_read_ptr == p->out_write_ptr) {
-			/* $BAw?.Dd;_(B */
+			/* 送信停止 */
 			raw_port_sendstop(&(p->rawport));
 			p->send_enabled = 0;
 		}

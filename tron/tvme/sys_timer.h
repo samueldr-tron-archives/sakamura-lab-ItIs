@@ -37,47 +37,47 @@
 #define _SYS_TIMER_
 
 /*
- *  $B%O!<%I%&%'%"0MB8%?%$%^%b%8%e!<%k(B
+ *  ハードウェア依存タイマモジュール
  *
- *  $B$3$N%b%8%e!<%kFb$G!$0J2<$NDj?t$*$h$S4X?t$rDj5A$7$J$1$l$P$J$i$J$$!%(B
+ *  このモジュール内で，以下の定数および関数を定義しなければならない．
  * 
- *  TIMER_PERIOD : $B%?%$%^3d9~$_$N<~4|(B ($BC10L$O(B msec)$B!%(BItIs $B$G$NI8=`CM$O(B 
- *  1msec $B$G$"$k$,!$%?%$%^3d9~$_$K$h$k%*!<%P%X%C%I$r>.$5$/$7$?$$>l9g$K(B
- *  $B$O!$$b$C$HD9$$<~4|$K@_Dj$7$F$b$h$$!%$b$A$m$s!$%?%$%`%"%&%H;~4V$J$I(B
- *  $B$NJ,2rEY$OAF$/$J$k(B ($BC10L$OJQ$o$i$J$$(B)$B!%(B
+ *  TIMER_PERIOD : タイマ割込みの周期 (単位は msec)．ItIs での標準値は 
+ *  1msec であるが，タイマ割込みによるオーバヘッドを小さくしたい場合に
+ *  は，もっと長い周期に設定してもよい．もちろん，タイムアウト時間など
+ *  の分解度は粗くなる (単位は変わらない)．
  *
- *  void start_hw_timer() : $B%?%$%^$r=i4|2=$7!$<~4|E*$J%?%$%^3d9~$_$r3+(B
- *  $B;O$5$;$k!%(B
+ *  void start_hw_timer() : タイマを初期化し，周期的なタイマ割込みを開
+ *  始させる．
  *
- *  void clear_hw_timer_interupt(void) : $B%?%$%^3d9~$_MW5a$r%/%j%"$9$k!%(B
- *  $B%?%$%^3d9~$_%O%s%I%i$N:G=i$G8F$P$l$k!%(B
+ *  void clear_hw_timer_interupt(void) : タイマ割込み要求をクリアする．
+ *  タイマ割込みハンドラの最初で呼ばれる．
  *
- *  void terminate_hw_timer(void) : $B%?%$%^$NF0:n$rDd;_$5$;$k!%%7%9%F%`(B
- *  $BDd;_;~$K8F$P$l$k!%(B
+ *  void terminate_hw_timer(void) : タイマの動作を停止させる．システム
+ *  停止時に呼ばれる．
  */
 
 #include "tvme150.h"
 
 /*
- *  $B%?%$%^3d9~$_$N<~4|(B ($BC10L$O(B msec)
+ *  タイマ割込みの周期 (単位は msec)
  */
 #define TIMER_PERIOD	1
 
 /*
- *  $B%?%$%^CM$NFbItI=8=$N7?(B
+ *  タイマ値の内部表現の型
  */
 typedef unsigned int	TICK;
 
 /*
- *  $B%?%$%^CM$NFbItI=8=$H(B msec $BC10L$H$NJQ49(B
+ *  タイマ値の内部表現と msec 単位との変換
  *
- *  TVME-150 CPU$B%\!<%I$G$O!$%?%$%^$O(B 0.5$B&L(Bsec $BKh$K%+%&%s%H%"%C%W$9$k!%(B
+ *  TVME-150 CPUボードでは，タイマは 0.5μsec 毎にカウントアップする．
  */
 #define TIMER_TICK	2000
 #define TO_TICK(msec)	((msec) * TIMER_TICK)
 
 /*
- *  $B%?%$%^CM$NFbItI=8=$H&L(Bsec $BC10L$H$NJQ49(B
+ *  タイマ値の内部表現とμsec 単位との変換
  */
 #if TIMER_TICK <= 1000
 #define TO_USEC(tick)	((tick) * (1000 / TIMER_TICK))
@@ -86,24 +86,24 @@ typedef unsigned int	TICK;
 #endif
 
 /*
- *  $B@-G=I>2AMQ%7%9%F%`;~9o$r<h$j=P$9:]$N=hM};~4V$N8+@Q$jCM(B ($BC10L$OFbItI=8=(B)
+ *  性能評価用システム時刻を取り出す際の処理時間の見積り値 (単位は内部表現)
  */
 #define GET_TOLERANCE	(TIMER_TICK / 5)
 
 /*
- *  $B@_Dj$G$-$k:GBg$N%?%$%^<~4|(B ($BC10L$OFbItI=8=(B)
+ *  設定できる最大のタイマ周期 (単位は内部表現)
  *
- *  $BFbItI=8=$G(B 0xffff $B$OLs(B 32msec$B!%(B
+ *  内部表現で 0xffff は約 32msec．
  */
 #define MAX_TICK	((TICK) 0xffff)
 
 /*
- *  $B%"%;%s%V%i%l%Y%k$N%?%$%^%O%s%I%i(B
+ *  アセンブラレベルのタイマハンドラ
  */
 extern void	timer_handler_startup(void);
 
 /*
- *  $B%?%$%^$N%9%?!<%H=hM}(B
+ *  タイマのスタート処理
  */
 Inline void
 start_hw_timer()
@@ -111,61 +111,61 @@ start_hw_timer()
 	TICK	t = TO_TICK(TIMER_PERIOD);
 
 	/*
-	 *  $B3d9~$_%O%s%I%i$NDj5A(B
+	 *  割込みハンドラの定義
 	 */
 	define_eit(INT_VECTOR(2), EITATR(0, 15), timer_handler_startup);
 
 	/*
-	 *  interrupt handler $B$N@_Dj(B
+	 *  interrupt handler の設定
 	 */
 	scb_assign(SCB_R0, 2);
-	scb_assign(SCB_R1, 0x04);		/* $B%l%Y%k%H%j%,%b!<%I(B */
-	scb_or_assign(SCB_R3, LRQ2_BIT);	/* $B3d9~$_%^%9%/2r=|(B */
+	scb_assign(SCB_R1, 0x04);		/* レベルトリガモード */
+	scb_or_assign(SCB_R3, LRQ2_BIT);	/* 割込みマスク解除 */
 
 	/*
-	 *  CIO $B$N@_Dj(B
+	 *  CIO の設定
 	 */
 	cio_write(CIOA_MICR, cio_read(CIOA_MICR) | 0x80);
 	cio_write(CIOA_MCCR, cio_read(CIOA_MCCR) | 0x40);
 	cio_write(CIOA_CTMSR1, 0x80);
-	assert(t <= MAX_TICK);			/* $B%?%$%^>e8BCM$N%A%'%C%/(B */
+	assert(t <= MAX_TICK);			/* タイマ上限値のチェック */
 	cio_write(CIOA_CTTCR1H, (t >> 8) & 0xff);
 	cio_write(CIOA_CTTCR1L, t & 0xff);
-	cio_write(CIOA_CTCSR1, 0x20);		/* $B3d9~$_MW5a$r%/%j%"(B */
-	cio_write(CIOA_CTCSR1, 0xc6);		/* $B%?%$%^$r%9%?!<%H$5$;$k(B */
+	cio_write(CIOA_CTCSR1, 0x20);		/* 割込み要求をクリア */
+	cio_write(CIOA_CTCSR1, 0xc6);		/* タイマをスタートさせる */
 }
 
 /*
- *  $B%?%$%^3d9~$_$N%/%j%"(B
+ *  タイマ割込みのクリア
  */
 Inline void
 clear_hw_timer_interrupt(void)
 {
-	cio_write(CIOA_CTCSR1, 0x24);		/* $B3d9~$_MW5a$r%/%j%"(B */
+	cio_write(CIOA_CTCSR1, 0x24);		/* 割込み要求をクリア */
 }
 
 /*
- *  $B%?%$%^$NDd;_=hM}(B
+ *  タイマの停止処理
  */
 Inline void
 terminate_hw_timer(void)
 {
-	cio_write(CIOA_CTCSR1, 0xe0);		/* $B3d9~$_$r6X;_(B */
-	cio_write(CIOA_CTCSR1, 0x20);		/* $B3d9~$_MW5a$r%/%j%"(B */
-	scb_and_assign(SCB_R3, ~LRQ2_BIT);	/* $B3d9~$_%^%9%/@_Dj(B */
+	cio_write(CIOA_CTCSR1, 0xe0);		/* 割込みを禁止 */
+	cio_write(CIOA_CTCSR1, 0x20);		/* 割込み要求をクリア */
+	scb_and_assign(SCB_R3, ~LRQ2_BIT);	/* 割込みマスク設定 */
 }
 
 /*
- *  $B%?%$%^$N8=:_CM$NFI$_$@$7(B
+ *  タイマの現在値の読みだし
  *
- *  $B3d9~$_6X;_6h4VCf$G8F$S=P$9$3$H!%(B
+ *  割込み禁止区間中で呼び出すこと．
  */
 Inline TICK
 get_current_hw_time(void)
 {
 	byte	ccr1h, ccr1l;
 
-	cio_write(CIOA_CTCSR1, 0x0c);		/* $B%?%$%^CMFI$_=P$73+;O(B */
+	cio_write(CIOA_CTCSR1, 0x0c);		/* タイマ値読み出し開始 */
 	ccr1h = cio_read(CIOA_CTCCR1H);
 	ccr1l = cio_read(CIOA_CTCCR1L);
 	return(TO_TICK(TIMER_PERIOD) - ((ccr1h << 8) + ccr1l));

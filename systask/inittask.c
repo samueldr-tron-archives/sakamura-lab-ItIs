@@ -34,16 +34,16 @@
  */
 
 /*
- *  $B=i4|2=%?%9%/(B
+ *  初期化タスク
  */
 
 #include "systask.h"
 
 /*
- *  $BI,MW$J%7%9%F%`%?%9%/$*$h$S=i4|5/F0%?%9%/$r5/F0$9$k!%6qBNE*$K$O!$AH(B
- *  $B$_9~$`$Y$-%7%9%F%`%?%9%/$*$h$S%I%i%$%P$H!$=i4|5/F0%?%9%/$r5/F0$9$k!%(B
- *  $B0J>e$N=hM}$r=*$($k$H!$(Bslp_tsk $B$K$h$jBT$A>uBV$KF~$k!%%7%9%F%`A4BN$r(B
- *  $B0BA4$KDd;_$5$;$k>l9g$K$O!$=i4|2=%?%9%/$r(B wup_tsk $B$G5/>2$5$;$k!%(B
+ *  必要なシステムタスクおよび初期起動タスクを起動する．具体的には，組
+ *  み込むべきシステムタスクおよびドライバと，初期起動タスクを起動する．
+ *  以上の処理を終えると，slp_tsk により待ち状態に入る．システム全体を
+ *  安全に停止させる場合には，初期化タスクを wup_tsk で起床させる．
  */
 void
 init_task(INT stacd)
@@ -51,30 +51,30 @@ init_task(INT stacd)
 	syslog(LOG_NOTICE, "init: I'm now starting up some tasks.....");
 
 	/*
-	 *  BSD UNIX$BMQ(B $B%N%s%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$N5/F0(B
+	 *  BSD UNIX用 ノンブロッキングI/O サポートモジュールの起動
 	 *
-	 *  $B%7%j%"%k%$%s%?%U%'!<%9$h$j@h$K5/F0$9$k$Y$-!%(B
+	 *  シリアルインタフェースより先に起動するべき．
 	 */
 #if defined(TSK_BSD_SIGIO) && defined(SEM_BSD_SIGIO)
 	bsd_sigio_startup();
 #endif
 
 	/*
-	 *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P$N5/F0(B
+	 *  シリアルインタフェースドライバの起動
 	 */
 #ifdef CONSOLE_PORT
 	serial_startup(CONSOLE_PORT);
 #endif
 
 	/*
-	 *  $B%7%9%F%`%m%0%?%9%/$N5/F0(B
+	 *  システムログタスクの起動
 	 */
 #ifdef LOGTASK_PORT
 	logtask_startup(LOGTASK_PORT);
 #endif
 
 	/*
-	 *  $B=i4|5/F0%?%9%/$N5/F0(B
+	 *  初期起動タスクの起動
 	 */
 #ifdef TSK_FIRST
 	syscall(cre_tsk(TSK_FIRST, &TSK_FIRST_CTSK));
@@ -82,13 +82,13 @@ init_task(INT stacd)
 #endif
 
 	/*
-	 *  $B=i4|2==hM}40N;(B
+	 *  初期化処理完了
 	 */
 	syslog(LOG_NOTICE, "init: initialize OK.");
 	syscall(slp_tsk());
 
 	/*
-	 *  $B%7%9%F%`Dd;_=hM}(B
+	 *  システム停止処理
 	 */
 #ifdef CONSOLE_PORT
 	serial_shutdown(CONSOLE_PORT, 1);
