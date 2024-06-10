@@ -1,15 +1,14 @@
 
-		 —Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ÌŽd—l 
+		$B!a(B $BM%@hEY7Q>5%;%^%U%)5!G=$N;EMM(B $B!a(B
 
-	     (Release 1.3ƒÀ‘Î‰žCÅIXV: 17-Feb-1995)
-
-    * TRON ‚Í The Real-time Operating system Nucleus ‚Ì—ªÌ‚Å‚·D
-    * ITRON ‚Í Industrial TRON ‚Ì—ªÌ‚Å‚·D
+	    $B!J(BRelease 1.4$B&BBP1~!$:G=*99?7(B: 18-Jun-1998$B!K(B
 
 ------------------------------------------------------------------------ 
-	    ItIs - ITRON Implementation by Sakamura Lab
+	ItIs - An ITRON Implementation for Research and Education
 
-Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+				Toyohashi Univ. of Technology, JAPAN
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -19,53 +18,58 @@ are met:
 2. Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
-3. Neither the name of the University nor the names of the laboratory
+3. Neither the name of the universities nor the names of the laboratories
    may be used to endorse or promote products derived from this software
    without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
 IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ * TRON $B$O(B The Real-time Operating system Nucleus $B$NN,>N$G$9!%(B
+ * ITRON $B$O(B Industrial TRON $B$NN,>N$G$9!%(B
+ * $B&L(BITRON $B$O(B Micro Industrial TRON $B$NN,>N$G$9!%(B
+ * ItIs $B$O(B ITRON Implementation by Sakamura Lab $B$NN,>N$G$9!%(B
 ------------------------------------------------------------------------
 
 
-‚PD—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‚Â‚¢‚Ä
+$B#1!%M%@hEY7Q>5%;%^%U%)$K$D$$$F(B
 
-—Dæ“xŒp³‚Æ‚ÍC—Dæ“x‹t“]‚ªãŒÀ‚È‚­‘±‚­‚±‚Æ (unbounded priority
-inversion) ‚ð–h‚®‚½‚ß‚ÌŽd‘g‚Ý‚Å‚ ‚éD—Dæ“x‹t“]‚Æ‚ÍC—Dæ“x‚Ì‚‚¢ƒ^ƒX
-ƒN‚ðŽÀs‚·‚×‚«‚Å‚ ‚é‚É‚à‚©‚©‚í‚ç‚¸C‰½‚ç‚©‚Ì——R‚É‚æ‚è—Dæ“x‚Ì’á‚¢ƒ^ƒX
-ƒN‚ªŽÀs‚³‚ê‚Ä‚¢‚éó‘Ô‚ð‚¢‚¤D—Dæ“x‹t“]‚ÍCu–{—ˆŽÀs‚·‚×‚«ƒ^ƒXƒN‚ªŽÀ
-s‚³‚ê‚È‚¢v‚Æ‚¢‚¤ˆÓ–¡‚ÅD‚Ü‚µ‚­‚È‚¢ó‘Ô‚Å‚ ‚é‚ªCƒŠƒ\[ƒX§–ñ‚Ì–â‘è‚É
-‚æ‚èCˆêŽž“I‚É‹N‚±‚é‚±‚Æ‚Í”ð‚¯‚ç‚ê‚È‚¢D‚»‚±‚ÅC—Dæ“x‹t“]‚ð’Z‚¢ŽžŠÔ‚É
-‰Ÿ‚¦‚éŽd‘g‚Ý‚Å‚ ‚é—Dæ“xŒp³‚ªd—v‚É‚È‚éD
+$BM%@hEY7Q>5$H$O!$M%@hEY5UE>$,>e8B$J$/B3$/$3$H!J(Bunbounded priority
+inversion$B!K$rKI$0$?$a$N;EAH$_$G$"$k!%M%@hEY5UE>$H$O!$M%@hEY$N9b$$%?%9(B
+$B%/$r<B9T$9$Y$-$G$"$k$K$b$+$+$o$i$:!$2?$i$+$NM}M3$K$h$jM%@hEY$NDc$$%?%9(B
+$B%/$,<B9T$5$l$F$$$k>uBV$r$$$&!%M%@hEY5UE>$O!$!VK\Mh<B9T$9$Y$-%?%9%/$,<B(B
+$B9T$5$l$J$$!W$H$$$&0UL#$G9%$^$7$/$J$$>uBV$G$"$k$,!$%j%=!<%9@)Ls$NLdBj$K(B
+$B$h$j!$0l;~E*$K5/$3$k$3$H$OHr$1$i$l$J$$!%$=$3$G!$M%@hEY5UE>$rC;$$;~4V$K(B
+$B2!$($k;EAH$_$G$"$kM%@hEY7Q>5$,=EMW$K$J$k!%(B
 
-—Dæ“xŒp³‚ÌƒRƒ“ƒZƒvƒg‚ðˆêŒ¾‚Å‚¢‚¤‚ÆCu‘¼‚Ìƒ^ƒXƒN‚ð‘Ò‚½‚¹‚Ä‚¢‚éƒ^ƒXƒN
-‚ÍC‘Ò‚½‚³‚ê‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ðŒp³‚·‚év‚Æ‚¢‚¤‚±‚Æ‚É‚È‚éD‚»‚Ì‚½‚ßC
-–{—ˆ‚ÍC‘Ò‚¿‚ð”º‚¤ƒ^ƒXƒNŠÔ“¯ŠúE’ÊM‹@”\‚·‚×‚Ä‚ÉŠÖ˜A‚·‚é‚±‚Æ‚É‚È‚éD
+$BM%@hEY7Q>5$N%3%s%;%W%H$r0l8@$G$$$&$H!$!VB>$N%?%9%/$rBT$?$;$F$$$k%?%9%/(B
+$B$O!$BT$?$5$l$F$$$k%?%9%/$NM%@hEY$r7Q>5$9$k!W$H$$$&$3$H$K$J$k!%$=$N$?$a!$(B
+$BK\Mh$O!$BT$A$rH<$&%?%9%/4VF14|!&DL?.5!G=$9$Y$F$K4XO"$9$k$3$H$K$J$k!%(B
 
-ITRONŽd—l‚É—Dæ“xŒp³‚ðŽæ‚èž‚Þ•û–@‚Í‚¢‚­‚Â‚©l‚¦‚ç‚ê‚é‚ªCItIs ‚Å‚Í‚»
-‚ÌŒŸ“¢‚ÌˆêŠÑ‚Æ‚µ‚ÄC—Dæ“xŒp³‹@”\‚ðŽ‚Á‚½ƒZƒ}ƒtƒH‚ðƒTƒ|[ƒg‚µ‚Ä‚¢‚éD
-‚±‚ê‚ð—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÆŒÄ‚ÔD—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ÌŽd—l‚ðŒŸ“¢‚µ‚Ä
-‚¢‚­‚ÆC—‘z“I‚¾‚ªŽÀ‘••‰‰×‚ª‘å‚«‚¢ (ŽÀsŒø—¦‚ªˆ«‚¢, ƒJ[ƒlƒ‹ƒTƒCƒY‚ª‘å
-‚«‚¢) Žd—l‚ÆCŽÀ‘••‰‰×‚ÍŒy‚¢‚ªŽg—p‚É‚ ‚½‚Á‚Ä§–ñ‚ª‚ ‚éŽd—l‚ªl‚¦‚ç‚ê‚éD
-‚Ç‚¿‚ç‚ÌŽd—l‚ª—Ç‚¢‚©‚ÍCƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚É‚à‚æ‚èˆêŠT‚É‚ÍŒˆ‚ß‚ç‚ê‚È‚¢‚½
-‚ßCItIs ‚ÌŒ»ƒo[ƒWƒ‡ƒ“‚Å‚Í‚»‚Ì—¼•û‚ÌŽd—l‚ðƒTƒ|[ƒg‚µ‚Ä‚¢‚éD
+ITRON$B;EMM$KM%@hEY7Q>5$r<h$j9~$`J}K!$O$$$/$D$+9M$($i$l$k$,!$(BItIs $B$G$O$=(B
+$B$N8!F$$N0l4S$H$7$F!$M%@hEY7Q>55!G=$r;}$C$?%;%^%U%)$r%5%]!<%H$7$F$$$k!%(B
+$B$3$l$rM%@hEY7Q>5%;%^%U%)$H8F$V!%M%@hEY7Q>5%;%^%U%)5!G=$N;EMM$r8!F$$7$F(B
+$B$$$/$H!$M}A[E*$@$,<BAuIi2Y$,Bg$-$$!J<B9T8zN($,0-$$(B, $B%+!<%M%k%5%$%:$,Bg(B
+$B$-$$!K;EMM$H!$<BAuIi2Y$O7Z$$$,;HMQ$K$"$?$C$F@)Ls$,$"$k;EMM$,9M$($i$l$k!%(B
+$B$I$A$i$N;EMM$,NI$$$+$O!$%"%W%j%1!<%7%g%s$K$b$h$j0l35$K$O7h$a$i$l$J$$$?(B
+$B$a!$(BItIs $B$N8=%P!<%8%g%s$G$O$=$NN>J}$N;EMM$r%5%]!<%H$7$F$$$k!%(B
 
-ItIs ‚Å‚ÍC‘OŽÒ‚Ì (—‘z“I‚¾‚ªŒø—¦‚ªˆ«‚¢•û‚Ì) Žd—l‚ðŽd—l1CŒãŽÒ‚Ì (Œø—¦
-‚Í—Ç‚¢‚ª§–ñ‚ª‚ ‚é•û‚Ì) Žd—l‚ðŽd—l2 ‚ÆŒÄ‚ÔD‚Ç‚¿‚ç‚ÌŽd—l‚ð—p‚¢‚é‚©‚ÍC
-ƒVƒXƒeƒ€\¬Ý’èƒtƒ@ƒCƒ‹’†‚Ì prisem_spec ‚ÅŽw’è‚·‚éDƒfƒtƒHƒ‹ƒg‚ÍCŽd
-—l1 ‚Å‚ ‚éD
+ItIs $B$G$O!$A0<T$N!JM}A[E*$@$,8zN($,0-$$J}$N!K;EMM$r;EMM(B1$B!$8e<T$N!J8zN((B
+$B$ONI$$$,@)Ls$,$"$kJ}$N!K;EMM$r;EMM(B2 $B$H8F$V!%$I$A$i$N;EMM$rMQ$$$k$+$O!$(B
+$B%7%9%F%`9=@.@_Dj%U%!%$%kCf$N(B prisem_spec $B$G;XDj$9$k!%%G%U%)%k%H$O!$;E(B
+$BMM(B1 $B$G$"$k!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÉŠÖ‚·‚éÚ‚µ‚¢‹c˜_‚É‚Â‚¢‚Ä‚ÍCˆÈ‰º‚ÌŽQl•¶Œ£‚ðŽQÆ‚³
-‚ê‚½‚¢D
+$BM%@hEY7Q>5%;%^%U%)$K4X$9$k>\$7$$5DO@$K$D$$$F$O!$0J2<$N;29MJ88%$r;2>H$5(B
+$B$l$?$$!%(B
 
 [1] L. Sha, R. Rajkumar, and J. P. Lehoczky, "Priority Inheritance
 Protocols: An Approach to Real-Time Synchronization," IEEE Trans. 
@@ -77,551 +81,551 @@ Proc. 11th TRON Project International Symposium, pp. 106-113, IEEE CS
 Press, Dec. 1994.
 
 
-‚QDŽd—l1 ‚É‚¨‚¯‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ÌŽd—l
+$B#2!%;EMM(B1 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$N;EMM(B
 
-Žd—l1 ‚É‚¨‚¯‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚Å‚ÍCchg_pri ‚ðŽg‚í‚È‚¢ê‡‚Ìƒ^ƒX
-ƒN‚Ì—Dæ“x‚ÍC‚»‚Ìƒ^ƒXƒN‚Ì‰Šú—Dæ“x‚ÆC‚»‚Ìƒ^ƒXƒN‚ªŠl“¾‚µ‚Ä‚¢‚é—Dæ“x
-Œp³ƒZƒ}ƒtƒH‚ð‘Ò‚Á‚Ä‚¢‚é’†‚ÅÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚Ì—Dæ“x‚Æ‚ÌC‚‚¢ (’l‚ª
-¬‚³‚¢) •û‚ÉÝ’è‚³‚ê‚éD‚»‚Ì‚½‚ß‚É OS ‚ÍCƒ^ƒXƒN‚ªŠl“¾‚µ‚Ä‚¢‚é—Dæ“xŒp
-³ƒZƒ}ƒtƒH‚ÌƒŠƒXƒg‚ðŠÇ—‚µ‚Ä‚¢‚éD
+$B;EMM(B1 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$G$O!$(Bchg_pri $B$r;H$o$J$$>l9g$N%?%9(B
+$B%/$NM%@hEY$O!$$=$N%?%9%/$N=i4|M%@hEY$H!$$=$N%?%9%/$,3MF@$7$F$$$kM%@hEY(B
+$B7Q>5%;%^%U%)$rBT$C$F$$$kCf$G:G9bM%@hEY$N%?%9%/$NM%@hEY$H$N!$9b$$!JCM$,(B
+$B>.$5$$!KJ}$K@_Dj$5$l$k!%$=$N$?$a$K(B OS $B$O!$%?%9%/$,3MF@$7$F$$$kM%@hEY7Q(B
+$B>5%;%^%U%)$N%j%9%H$r4IM}$7$F$$$k!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾/‰ð•ú‚·‚éƒ^ƒXƒN‚Ì—Dæ“x‚ð chg_pri ‚É‚æ‚Á‚Ä•ÏX
-‚µ‚Ä‚àC—Dæ“xŒp³ƒZƒ}ƒtƒH‚Ì‹@”\‚É‚æ‚Á‚Ä—Dæ“x‚ª•ÏX‚³‚ê‚é‚ÆCchg_pri 
-‚ÅÝ’è‚µ‚½—Dæ“x‚Í–³Œø‚É‚È‚éD‚Â‚Ü‚èCchg_pri ‚Íƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚ðˆê
-Žž“I‚É•ÏX‚·‚é‚à‚Ì‚Æ‚¢‚¤‚±‚Æ‚É‚È‚éD—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ÌŽÀ‘•‚É 
-chg_pri ‚ªŽg‚í‚ê‚Ä‚¢‚é‚Æl‚¦‚é‚í‚©‚è‚â‚·‚¢‚©‚à‚µ‚ê‚È‚¢D
+$BM%@hEY7Q>5%;%^%U%)$r3MF@(B/$B2rJ|$9$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99(B
+$B$7$F$b!$M%@hEY7Q>5%;%^%U%)$N5!G=$K$h$C$FM%@hEY$,JQ99$5$l$k$H!$(Bchg_pri 
+$B$G@_Dj$7$?M%@hEY$OL58z$K$J$k!%$D$^$j!$(Bchg_pri $B$O%?%9%/$N8=:_M%@hEY$r0l(B
+$B;~E*$KJQ99$9$k$b$N$H$$$&$3$H$K$J$k!%M%@hEY7Q>5%;%^%U%)5!G=$N<BAu$K(B 
+chg_pri $B$,;H$o$l$F$$$k$H9M$($k$o$+$j$d$9$$$+$b$7$l$J$$!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ð chg_pri ‚É‚æ‚Á‚Ä•ÏX‚µ
-‚½ê‡C‚»‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZE•Ï
-X‚³‚ê‚éê‡‚ª‚ ‚éD‹ï‘Ì“I‚É‚ÍCŽŸ‚Ì 2‚Â‚ÌƒP[ƒX‚ÅC—Dæ“x‚Ì•ÏX‚ªs‚í
-‚ê‚éD(1) —Dæ“x‚ð•ÏX‚³‚ê‚½ƒ^ƒXƒN‚Ì•ÏXŒã‚Ì—Dæ“x‚ªC—Dæ“xŒp³ƒZƒ}ƒtƒH
-‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚æ‚è‚à‚‚¢ (’l‚ª¬‚³‚¢) ê‡D(2) —Dæ
-“x‚ª•ÏX‚³‚ê‚½ƒ^ƒXƒN‚Ì•ÏX‘O‚Ì—Dæ“x‚ªC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢
-‚éƒ^ƒXƒN‚Ì—Dæ“x‚É“™‚µ‚¢ê‡‚ÉC‚»‚Ìƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZ‚³‚êC‚»‚ÌŒ‹
-‰Ê“¾‚ç‚ê‚½’l‚ªŒ»Ý—Dæ“x‚Æ“™‚µ‚­‚È‚¢ê‡D
+$BM%@hEY7Q>5%;%^%U%)$rBT$C$F$$$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99$7(B
+$B$?>l9g!$$=$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;!&JQ(B
+$B99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$<!$N(B 2$B$D$N%1!<%9$G!$M%@hEY$NJQ99$,9T$o(B
+$B$l$k!%(B(1) $BM%@hEY$rJQ99$5$l$?%?%9%/$NJQ998e$NM%@hEY$,!$M%@hEY7Q>5%;%^%U%)(B
+$B$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$h$j$b9b$$!JCM$,>.$5$$!K>l9g!%(B(2) $BM%@h(B
+$BEY$,JQ99$5$l$?%?%9%/$NJQ99A0$NM%@hEY$,!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$(B
+$B$k%?%9%/$NM%@hEY$KEy$7$$>l9g$K!$$=$N%?%9%/$NM%@hEY$,:F7W;;$5$l!$$=$N7k(B
+$B2LF@$i$l$?CM$,8=:_M%@hEY$HEy$7$/$J$$>l9g!%(B
 
-Žd—l1 ‚Å‚ÍCext_tsk, exd_tsk, ter_tsk ‚É‚æ‚èƒ^ƒXƒN‚ªI—¹‚·‚éê‡Cƒ^ƒX
-ƒN‚ªŠl“¾‚µ‚Ä‚¢‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÍCOS ‚É‚æ‚Á‚ÄŽ©“®“I‚É‰ð•ú‚³‚ê‚éD
+$B;EMM(B1 $B$G$O!$(Bext_tsk, exd_tsk, ter_tsk $B$K$h$j%?%9%/$,=*N;$9$k>l9g!$%?%9(B
+$B%/$,3MF@$7$F$$$?M%@hEY7Q>5%;%^%U%)$O!$(BOS $B$K$h$C$F<+F0E*$K2rJ|$5$l$k!%(B
 
-(1) vcre_pis	—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬			    (‹@”\ƒR[ƒh: -257)
+(1) vcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.(B			   $B!J5!G=%3!<%I(B: -257$B!K(B
 
     vcre_pis: Create Priority Inheritance Semaphore
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
-    T_CPIS*	pk_cpis		—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬î•ñ
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
 
-y‰ðàz
-vcre_pis ‚Å‚ÍCpisid ‚ÅŽw’è‚³‚ê‚½ ID”Ô†‚ðŽ‚Â—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð¶¬
-‚·‚éD‹ï‘Ì“I‚É‚ÍC¶¬‚·‚éƒZƒ}ƒtƒH‚É‘Î‚µ‚ÄŠÇ—ƒuƒƒbƒN‚ðŠ„‚è•t‚¯CƒZƒ}
-ƒtƒH‚Ì‰Šú’l‚ð 1 ‚É‰Šú‰»‚·‚éD
+$B!Z2r@b![(B
+vcre_pis $B$G$O!$(Bpisid $B$G;XDj$5$l$?(B ID$BHV9f$r;}$DM%@hEY7Q>5%;%^%U%)$r@8@.(B
+$B$9$k!%6qBNE*$K$O!$@8@.$9$k%;%^%U%)$KBP$7$F4IM}%V%m%C%/$r3d$jIU$1!$%;%^(B
+$B%U%)$N=i4|CM$r(B 1 $B$K=i4|2=$9$k!%(B
 
-ID”Ô†‚Ì³•‰‚Ìˆµ‚¢‚âŽg—p‚Å‚«‚È‚¢”ÍˆÍC‚»‚ê‚ç‚Ìê‡‚ÌƒGƒ‰[ƒR[ƒhCŠg’£
-î•ñ (exinf) ‚Ìˆµ‚¢‚É‚Â‚¢‚Ä‚ÍC‘¼‚Ì“¯ŠúE’ÊMƒIƒuƒWƒFƒNƒg‚Æ“¯—l‚Å‚ ‚éD
+ID$BHV9f$N@5Ii$N07$$$d;HMQ$G$-$J$$HO0O!$$=$l$i$N>l9g$N%(%i!<%3!<%I!$3HD%(B
+$B>pJs!J(Bexinf$B!K$N07$$$K$D$$$F$O!$B>$NF14|!&DL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
 
-pisatr ‚ÍC‰ºˆÊ‘¤‚ªƒVƒXƒeƒ€‘®«‚ð•\‚µCãˆÊ‘¤‚ªƒCƒ“ƒvƒŠƒƒ“ƒgˆË‘¶‘®«
-‚ð•\‚·Dpisatr ‚ÌƒVƒXƒeƒ€‘®«‚Ì•”•ª‚Å‚ÍCŽŸ‚Ì‚æ‚¤‚ÈŽw’è‚ðs‚¤D
+pisatr $B$O!$2<0LB&$,%7%9%F%`B0@-$rI=$7!$>e0LB&$,%$%s%W%j%a%s%H0MB8B0@-(B
+$B$rI=$9!%(Bpisatr $B$N%7%9%F%`B0@-$NItJ,$G$O!$<!$N$h$&$J;XDj$r9T$&!%(B
 
 	sematr := TA_TPRI
 
-	    TA_TPRI	‘Ò‚¿ƒ^ƒXƒN‚ÌƒLƒ…[ƒCƒ“ƒO‚Í—Dæ“x‡
+	    TA_TPRI	$BBT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚Å‚ÍC‘Ò‚¿ƒ^ƒXƒN‚ÌƒLƒ…[ƒCƒ“ƒO‚Í—Dæ“x‡‚Å‚È‚¢‚ÆˆÓ–¡
-‚ª‚È‚¢‚½‚ßCFIFO ƒLƒ…[ƒCƒ“ƒO‚Í—pˆÓ‚µ‚Ä‚¢‚È‚¢D‚»‚Ì‚½‚ßCTA_TPRI ‚ðŽw
-’è‚µ‚È‚­‚Ä‚à—Dæ“x‡‚ÌƒLƒ…[ƒCƒ“ƒO‚É‚È‚é‚ªC‘¼‚Ì“¯ŠúE’ÊMƒIƒuƒWƒFƒNƒg
-‚Æ‚Ì“ˆê«‚Ì‚½‚ß‚ÉCTA_TPRI ‚ðŽw’è‚µ‚Ä‚à‚æ‚¢‚±‚Æ‚É‚µ‚Ä‚¢‚éD
+$BM%@hEY7Q>5%;%^%U%)$G$O!$BT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g$G$J$$$H0UL#(B
+$B$,$J$$$?$a!$(BFIFO $B%-%e!<%$%s%0$OMQ0U$7$F$$$J$$!%$=$N$?$a!$(BTA_TPRI $B$r;X(B
+$BDj$7$J$/$F$bM%@hEY=g$N%-%e!<%$%s%0$K$J$k$,!$B>$NF14|!&DL?.%*%V%8%'%/%H(B
+$B$H$NE}0l@-$N$?$a$K!$(BTA_TPRI $B$r;XDj$7$F$b$h$$$3$H$K$7$F$$$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_RSATR	—\–ñ‘®« (pisatr ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_OBJ	ƒIƒuƒWƒFƒNƒg‚Ìó‘Ô‚ª•s³ (“¯ˆêID”Ô†‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ªŠù‚É‘¶Ý)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_RSATR	$BM=LsB0@-!J(Bpisatr $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!JF10l(BID$BHV9f$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,4{$KB8:_!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
 
-(2) vvcre_pis	—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬ (IDŽ©“®Š„“–)	    (‹@”\ƒR[ƒh: -259)
+(2) vvcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.!J(BID$B<+F03dEv!K(B	   $B!J5!G=%3!<%I(B: -259$B!K(B
 
     vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
 
-yƒpƒ‰ƒ[ƒ^z
-    T_CPIS*	pk_cpis		—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬î•ñ
+$B!Z%Q%i%a!<%?![(B
+    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		¶¬‚µ‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌID, ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B@8@.$7$?M%@hEY7Q>5%;%^%U%)$N(BID, $B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vvcre_pis(T_CPIS *pk_cpis);
 
-y‰ðàz
-ID”Ô†‚ðŽw’è‚¹‚¸‚É—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð¶¬‚µC¶¬‚µ‚½—Dæ“xŒp³ƒZƒ}ƒtƒH
-‚Ì ID (•K‚¸³‚Ì’l) ‚ð ercd ‚É•Ô‚·Dercd ‚ª•‰‚Ìê‡‚ÍCƒGƒ‰[ƒR[ƒh‚ð•\
-‚·DŠ„‚è“–‚Ä‰Â”\‚È ID ‚ª‚È‚¢ê‡CEV_FULLƒGƒ‰[‚Æ‚È‚éD‚»‚Ì‘¼‚É‚Â‚¢‚Ä
-‚ÍCvcre_pis ‚Æ“¯‚¶D
+$B!Z2r@b![(B
+ID$BHV9f$r;XDj$;$:$KM%@hEY7Q>5%;%^%U%)$r@8@.$7!$@8@.$7$?M%@hEY7Q>5%;%^%U%)(B
+$B$N(B ID$B!JI,$:@5$NCM!K$r(B ercd $B$KJV$9!%(Bercd $B$,Ii$N>l9g$O!$%(%i!<%3!<%I$rI=(B
+$B$9!%3d$jEv$F2DG=$J(B ID $B$,$J$$>l9g!$(BEV_FULL$B%(%i!<$H$J$k!%$=$NB>$K$D$$$F(B
+$B$O!$(Bvcre_pis $B$HF1$8!%(B
 
-(3) vdel_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHíœ			    (‹@”\ƒR[ƒh: -258)
+(3) vdel_pis	$BM%@hEY7Q>5%;%^%U%):o=|(B			   $B!J5!G=%3!<%I(B: -258$B!K(B
 
     vdel_pis: Delete Priority Inheritance Semaphore
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vdel_pis(ID pisid);
 
-y‰ðàz
-pisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðíœ‚·‚éD
+$B!Z2r@b![(B
+pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$r:o=|$9$k!%(B
 
-–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì”­s‚É‚æ‚èC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŠÇ—ƒuƒƒbƒN—p‚Ì
-—Ìˆæ‚Í‰ð•ú‚³‚ê‚éD‚Ü‚½C‚±‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ªI—¹‚µ‚½Œã‚ÍC“¯‚¶ ID”Ô†
-‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðÄ‚Ñ¶¬‚·‚é‚±‚Æ‚ª‚Å‚«‚éD
+$BK\%7%9%F%`%3!<%k$NH/9T$K$h$j!$BP>]M%@hEY7Q>5%;%^%U%)$N4IM}%V%m%C%/MQ$N(B
+$BNN0h$O2rJ|$5$l$k!%$^$?!$$3$N%7%9%F%`%3!<%k$,=*N;$7$?8e$O!$F1$8(B ID$BHV9f(B
+$B$NM%@hEY7Q>5%;%^%U%)$r:F$S@8@.$9$k$3$H$,$G$-$k!%(B
 
-‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ª‚ ‚Á‚½ê‡C‚»‚Ìƒ^ƒXƒN‚Ì—D
-æ“x‚ªÄŒvŽZE•ÏX‚³‚ê‚éê‡‚ª‚ ‚éD‹ï‘Ì“I‚É‚ÍC‚»‚Ìƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x
-‚ªC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‘Ò‚Á‚Ä‚¢‚é’†‚ÅÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚Ì—Dæ“x‚É“™‚µ
-‚¢ê‡‚ÉC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚½ƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZ‚³‚êC
-‚»‚ÌŒ‹‰Ê“¾‚ç‚ê‚½’l‚ª‚»‚Ìƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚æ‚è‚à’á‚¢ (’l‚ª‘å‚«‚¢) ê‡
-‚ÉC—Dæ“x‚Ì•ÏX‚ªs‚í‚ê‚éD
+$BBP>]M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$,$"$C$?>l9g!$$=$N%?%9%/$NM%(B
+$B@hEY$,:F7W;;!&JQ99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$$=$N%?%9%/$N8=:_M%@hEY(B
+$B$,!$M%@hEY7Q>5%;%^%U%)$rBT$C$F$$$kCf$G:G9bM%@hEY$N%?%9%/$NM%@hEY$KEy$7(B
+$B$$>l9g$K!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$?%?%9%/$NM%@hEY$,:F7W;;$5$l!$(B
+$B$=$N7k2LF@$i$l$?CM$,$=$N%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g(B
+$B$K!$M%@hEY$NJQ99$,9T$o$l$k!%(B
 
-‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‚¨‚¢‚ÄðŒ¬—§‚ð‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚ª‚ ‚Á‚½ê‡‚É
-‚àC–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Í³íI—¹‚·‚é‚ªC‘Ò‚¿ó‘Ô‚É‚ ‚Á‚½ƒ^ƒXƒN‚É‚ÍƒGƒ‰[ 
-E_DLT ‚ª•Ô‚³‚ê‚éD
+$BBP>]M%@hEY7Q>5%;%^%U%)$K$*$$$F>r7o@.N)$rBT$C$F$$$k%?%9%/$,$"$C$?>l9g$K(B
+$B$b!$K\%7%9%F%`%3!<%k$O@5>o=*N;$9$k$,!$BT$A>uBV$K$"$C$?%?%9%/$K$O%(%i!<(B 
+E_DLT $B$,JV$5$l$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
 
-(4) vsig_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹‰ð•ú		    (‹@”\ƒR[ƒh: -264)
+(4) vsig_pis	$BM%@hEY7Q>5%;%^%U%);q8;2rJ|(B		   $B!J5!G=%3!<%I(B: -264$B!K(B
 
     vsig_pis: Signal Priority Inheritance Semaphore
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vsig_pis(ID pisid);
 
-y‰ðàz
-pisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚µ‚ÄCŽ‘Œ¹‚ð‰ð•ú‚·‚é‘€ì‚ðs‚¤D
-‹ï‘Ì“I‚É‚ÍC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚µ‚ÄŠù‚É‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚ª‚ ‚ê‚ÎC
-‘Ò‚¿s—ñ‚Ìæ“ª‚Ìƒ^ƒXƒN‚ð READYó‘Ô‚ÉˆÚ‚·D‚±‚Ìê‡C‚»‚Ì—Dæ“xŒp³ƒZƒ}
-ƒtƒH‚ÍŠl“¾‚³‚ê‚½ó‘Ô‚Ì‚Ü‚Ü‚Å‚ ‚éDˆê•ûC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚µ‚Ä
-‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚ª–³‚¯‚ê‚ÎC‚»‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ª‰ð•ú‚³‚ê‚éD
+$B!Z2r@b![(B
+pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$KBP$7$F!$;q8;$r2rJ|$9$kA`:n$r9T$&!%(B
+$B6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F4{$KBT$C$F$$$k%?%9%/$,$"$l$P!$(B
+$BBT$A9TNs$N@hF,$N%?%9%/$r(B READY$B>uBV$K0\$9!%$3$N>l9g!$$=$NM%@hEY7Q>5%;%^(B
+$B%U%)$O3MF@$5$l$?>uBV$N$^$^$G$"$k!%0lJ}!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F(B
+$BBT$C$F$$$k%?%9%/$,L5$1$l$P!$$=$NM%@hEY7Q>5%;%^%U%)$,2rJ|$5$l$k!%(B
 
-‚±‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ðƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ño‚·‚±‚Æ‚Í‚Å‚«‚È‚¢DŒÄ‚Ño‚µ‚½
-ê‡CE_CTXƒGƒ‰[‚Æ‚È‚éD‚Ü‚½CŠl“¾‚³‚ê‚Ä‚¢‚È‚¢C‚È‚¢‚µ‚ÍC‘¼ƒ^ƒXƒN‚É
-Šl“¾‚³‚ê‚Ä‚¢‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‰ð•ú‚µ‚æ‚¤‚Æ‚µ‚½ê‡CE_OBJƒGƒ‰[‚Æ
-‚È‚éD
+$B$3$N%7%9%F%`%3!<%k$r%?%9%/FHN)It$+$i8F$S=P$9$3$H$O$G$-$J$$!%8F$S=P$7$?(B
+$B>l9g!$(BE_CTX$B%(%i!<$H$J$k!%$^$?!$3MF@$5$l$F$$$J$$!$$J$$$7$O!$B>%?%9%/$K(B
+$B3MF@$5$l$F$$$kM%@hEY7Q>5%;%^%U%)$r2rJ|$7$h$&$H$7$?>l9g!$(BE_OBJ$B%(%i!<$H(B
+$B$J$k!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‰ð•ú‚·‚é‚±‚Æ‚É‚æ‚èC–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì”­sƒ^ƒXƒN‚Ì
-—Dæ“x‚ªÄŒvŽZE•ÏX‚³‚ê‚éê‡‚ª‚ ‚éD‹ï‘Ì“I‚É‚ÍC”­sƒ^ƒXƒN‚ÌŒ»Ý—Dæ
-“x‚ªC‰ð•ú‚µ‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‘Ò‚Á‚Ä‚¢‚½’†‚ÅÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚Ì—D
-æ“x‚É“™‚µ‚¢ê‡‚ÉC”­sƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZ‚³‚êC‚»‚ÌŒ‹‰Ê“¾‚ç‚ê‚½’l
-‚ª‚»‚Ìƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚æ‚è‚à’á‚¢ (’l‚ª‘å‚«‚¢) ê‡‚ÉC—Dæ“x‚Ì•ÏX‚ª
-s‚í‚ê‚éD
+$BM%@hEY7Q>5%;%^%U%)$r2rJ|$9$k$3$H$K$h$j!$K\%7%9%F%`%3!<%k$NH/9T%?%9%/$N(B
+$BM%@hEY$,:F7W;;!&JQ99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$H/9T%?%9%/$N8=:_M%@h(B
+$BEY$,!$2rJ|$7$?M%@hEY7Q>5%;%^%U%)$rBT$C$F$$$?Cf$G:G9bM%@hEY$N%?%9%/$NM%(B
+$B@hEY$KEy$7$$>l9g$K!$H/9T%?%9%/$NM%@hEY$,:F7W;;$5$l!$$=$N7k2LF@$i$l$?CM(B
+$B$,$=$N%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g$K!$M%@hEY$NJQ99$,(B
+$B9T$o$l$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
-    E_CTX	ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[ (ƒ^ƒXƒN“Æ—§•”‚©‚ç‚Ì”­s)
-    E_OBJ	ƒIƒuƒWƒFƒNƒg‚Ìó‘Ô‚ª•s³ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ª
-		Šl“¾‚³‚ê‚Ä‚¢‚È‚¢D‚Ü‚½‚ÍC‘¼‚Ìƒ^ƒXƒN‚ªŠl“¾‚µ‚Ä‚¢‚é)
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$+$i$NH/9T!K(B
+    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)$,(B
+		$B3MF@$5$l$F$$$J$$!%$^$?$O!$B>$N%?%9%/$,3MF@$7$F$$$k!K(B
 
-(5) vwai_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹Šl“¾		    (‹@”\ƒR[ƒh: -261)
-(6) vpreq_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹Šl“¾ (ƒ|[ƒŠƒ“ƒO)	    (‹@”\ƒR[ƒh: -262)
-(7) vtwai_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹Šl“¾ (ƒ^ƒCƒ€ƒAƒEƒg—L) (‹@”\ƒR[ƒh: -263)
+(5) vwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@(B		   $B!J5!G=%3!<%I(B: -261$B!K(B
+(6) vpreq_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%]!<%j%s%0!K(B	       $B!J(B-262$B!K(B
+(7) vtwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%?%$%`%"%&%HM-!K(B	       $B!J(B-263$B!K(B
 
     vwai_pis: Wait on Priority Inheritance Semaphore
    vpreq_pis: Poll and Request Priority Inheritance Semaphore
    vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
 
-yƒpƒ‰ƒ[ƒ^ (vwai_pis, vpreq_pis ‚Ìê‡) z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
+$B!Z%Q%i%a!<%?!J(Bvwai_pis, vpreq_pis $B$N>l9g!K![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
 
-yƒpƒ‰ƒ[ƒ^ (vtwai_pis ‚Ìê‡) z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
-    TMO		tmout		ƒ^ƒCƒ€ƒAƒEƒgŽw’è
+$B!Z%Q%i%a!<%?!J(Bvtwai_pis $B$N>l9g!K![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+    TMO		tmout		$B%?%$%`%"%&%H;XDj(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd = vwai_pis(ID pisid);
     ER ercd =vpreq_pis(ID pisid);
     ER ercd =vtwai_pis(ID pisid, TMO tmout);
 
-y‰ðàz
-vwai_pis ‚Å‚ÍCpisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚©‚çCŽ‘Œ¹‚ðŠl“¾‚·‚é
-‘€ì‚ðs‚¤D‹ï‘Ì“I‚É‚ÍC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ªŠl“¾‚³‚ê‚Ä‚¢‚È‚¢ê‡‚É
-‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŠl“¾‚É¬Œ÷‚·‚éD‚±‚Ìê‡C–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì”­
-sƒ^ƒXƒN‚Í‘Ò‚¿ó‘Ô‚É“ü‚ç‚¸CŽÀs‚ðŒp‘±‚·‚éDˆê•ûA‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH
-‚ªŠl“¾‚³‚ê‚Ä‚¢‚éê‡‚É‚ÍC–{ƒVƒXƒeƒ€ƒR[ƒ‹‚ð”­s‚µ‚½ƒ^ƒXƒN‚Í‘Ò‚¿ó‘Ô‚É
-“ü‚éD‚·‚È‚í‚¿C‚»‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚·‚é‘Ò‚¿s—ñ‚É‚Â‚È‚ª‚ê‚éD
+$B!Z2r@b![(B
+vwai_pis $B$G$O!$(Bpisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$+$i!$;q8;$r3MF@$9$k(B
+$BA`:n$r9T$&!%6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$,3MF@$5$l$F$$$J$$>l9g$K(B
+$B$O!$M%@hEY7Q>5%;%^%U%)$N3MF@$K@.8y$9$k!%$3$N>l9g!$K\%7%9%F%`%3!<%k$NH/(B
+$B9T%?%9%/$OBT$A>uBV$KF~$i$:!$<B9T$r7QB3$9$k!%0lJ}!"BP>]M%@hEY7Q>5%;%^%U%)(B
+$B$,3MF@$5$l$F$$$k>l9g$K$O!$K\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$OBT$A>uBV$K(B
+$BF~$k!%$9$J$o$A!$$=$NM%@hEY7Q>5%;%^%U%)$KBP$9$kBT$A9TNs$K$D$J$,$l$k!%(B
 
-–{ƒVƒXƒeƒ€ƒR[ƒ‹‚ð”­s‚µ‚½ƒ^ƒXƒN‚ª‘Ò‚¿ó‘Ô‚É“ü‚éê‡C‘ÎÛ—Dæ“xŒp³ƒZ
-ƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ªC”­sƒ^ƒXƒN‚Ì—Dæ“x‚ðŒp³‚·‚éê‡‚ª‚ ‚éD
-‹ï‘Ì“I‚É‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚ªC”­s
-ƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚æ‚è‚à’á‚¢ (’l‚ª‘å‚«‚¢) ê‡‚ÉC—Dæ“x‚ÌŒp³‚ªs‚í‚ê
-‚éD
+$BK\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$,BT$A>uBV$KF~$k>l9g!$BP>]M%@hEY7Q>5%;(B
+$B%^%U%)$r3MF@$7$F$$$k%?%9%/$,!$H/9T%?%9%/$NM%@hEY$r7Q>5$9$k>l9g$,$"$k!%(B
+$B6qBNE*$K$O!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$,!$H/9T(B
+$B%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g$K!$M%@hEY$N7Q>5$,9T$o$l(B
+$B$k!%(B
 
-vpreq_pis ‚ÍCwai_pis ‚©‚ç‘Ò‚¿ó‘Ô‚É“ü‚é‹@”\‚ðŽæ‚èœ‚¢‚½ƒVƒXƒeƒ€ƒR[ƒ‹
-‚Å‚ ‚éDˆê•ûCvtwai_pis ‚ÍCwai_pis ‚Éƒ^ƒCƒ€ƒAƒEƒg‚Ì‹@”\‚ð•t‚¯‰Á‚¦‚½ƒV
-ƒXƒeƒ€ƒR[ƒ‹‚Å‚ ‚èCtmout ‚É‚æ‚è‘Ò‚¿ŽžŠÔ‚ÌÅ‘å’l (ƒ^ƒCƒ€ƒAƒEƒg’l) ‚ðŽw
-’è‚·‚é‚±‚Æ‚ª‚Å‚«‚éDƒ|[ƒŠƒ“ƒO‚âƒ^ƒCƒ€ƒAƒEƒg‚Ìˆµ‚¢‚É‚Â‚¢‚Ä‚ÍC‘¼‚Ì“¯ŠúE
-’ÊMƒIƒuƒWƒFƒNƒg‚Æ“¯—l‚Å‚ ‚éD
+vpreq_pis $B$O!$(Bwai_pis $B$+$iBT$A>uBV$KF~$k5!G=$r<h$j=|$$$?%7%9%F%`%3!<%k(B
+$B$G$"$k!%0lJ}!$(Bvtwai_pis $B$O!$(Bwai_pis $B$K%?%$%`%"%&%H$N5!G=$rIU$12C$($?%7(B
+$B%9%F%`%3!<%k$G$"$j!$(Btmout $B$K$h$jBT$A;~4V$N:GBgCM!J%?%$%`%"%&%HCM!K$r;X(B
+$BDj$9$k$3$H$,$G$-$k!%%]!<%j%s%0$d%?%$%`%"%&%H$N07$$$K$D$$$F$O!$B>$NF14|!&(B
+$BDL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
 
-twai_pis ‚Ü‚½‚Í vtwai_pis ‚É‚æ‚Á‚Ä—Dæ“xŒp³ƒZƒ}ƒtƒH‘Ò‚¿ó‘Ô‚É“ü‚Á‚½ƒ^
-ƒXƒN‚ªCrel_wai ‚Ì”­sCƒ^ƒCƒ€ƒAƒEƒg (vtwai_pis ‚Ì‚Ý)C‚È‚¢‚µ‚Í‘ÎÛ—D
-æ“xŒp³ƒZƒ}ƒtƒH‚Ìíœ‚É‚æ‚Á‚Ä‘Ò‚¿‰ðœ‚³‚ê‚éê‡‚ÉC‚»‚Ì—Dæ“xŒp³ƒZƒ}
-ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZE•ÏX‚³‚ê‚éê‡‚ª‚ ‚éD‹ï‘Ì“I
-‚É‚ÍC‚»‚Ìƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚ªC‘Ò‚¿‰ðœ‚³‚ê‚½ƒ^ƒXƒN‚Ì—Dæ“x‚É“™‚µ‚¢ê
-‡‚ÉC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZ‚³‚êC‚»‚Ì
-Œ‹‰Ê“¾‚ç‚ê‚½’l‚ª‚»‚Ìƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚Æ“™‚µ‚­‚È‚¢ê‡‚ÉC—Dæ“x‚Ì•ÏX
-‚ªs‚í‚ê‚éD
+twai_pis $B$^$?$O(B vtwai_pis $B$K$h$C$FM%@hEY7Q>5%;%^%U%)BT$A>uBV$KF~$C$?%?(B
+$B%9%/$,!$(Brel_wai $B$NH/9T!$%?%$%`%"%&%H!J(Bvtwai_pis $B$N$_!K!$$J$$$7$OBP>]M%(B
+$B@hEY7Q>5%;%^%U%)$N:o=|$K$h$C$FBT$A2r=|$5$l$k>l9g$K!$$=$NM%@hEY7Q>5%;%^(B
+$B%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;!&JQ99$5$l$k>l9g$,$"$k!%6qBNE*(B
+$B$K$O!$$=$N%?%9%/$N8=:_M%@hEY$,!$BT$A2r=|$5$l$?%?%9%/$NM%@hEY$KEy$7$$>l(B
+$B9g$K!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;$5$l!$$=$N(B
+$B7k2LF@$i$l$?CM$,$=$N%?%9%/$N8=:_M%@hEY$HEy$7$/$J$$>l9g$K!$M%@hEY$NJQ99(B
+$B$,9T$o$l$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
-    E_PAR	ƒpƒ‰ƒ[ƒ^ƒGƒ‰[ (tmout <= (-2))
-    E_DLT	‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ªíœ‚³‚ê‚½ (‘Ò‚¿‚ÌŠÔ‚É‘ÎÛ—Dæ“xŒp³
-		ƒZƒ}ƒtƒH‚ªíœ)
-    E_RLWAI	‘Ò‚¿ó‘Ô‹­§‰ðœ (‘Ò‚¿‚ÌŠÔ‚É rel_wai ‚ðŽó‚¯•t‚¯)
-    E_TMOUT	ƒ|[ƒŠƒ“ƒOŽ¸”s‚Ü‚½‚Íƒ^ƒCƒ€ƒAƒEƒg
-    E_CTX	ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[ (ƒ^ƒXƒN“Æ—§•”‚Ü‚½‚ÍƒfƒBƒXƒpƒbƒ`‹ÖŽ~
-		ó‘Ô‚ÅŽÀs)
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+    E_PAR	$B%Q%i%a!<%?%(%i!<!J(Btmout <= (-2)$B!K(B
+    E_DLT	$BBT$A%*%V%8%'%/%H$,:o=|$5$l$?!JBT$A$N4V$KBP>]M%@hEY7Q>5(B
+		$B%;%^%U%)$,:o=|!K(B
+    E_RLWAI	$BBT$A>uBV6/@)2r=|!JBT$A$N4V$K(B rel_wai $B$r<u$1IU$1!K(B
+    E_TMOUT	$B%]!<%j%s%0<:GT$^$?$O%?%$%`%"%&%H(B
+    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$^$?$O%G%#%9%Q%C%A6X;_(B
+		$B>uBV$G<B9T!K(B
 
-(8) vref_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHó‘ÔŽQÆ		    (‹@”\ƒR[ƒh: -260)
+(8) vref_pis	$BM%@hEY7Q>5%;%^%U%)>uBV;2>H(B		   $B!J5!G=%3!<%I(B: -260$B!K(B
 
     vref_pis: Refer Priority Inheritance Semaphore Status
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
-    T_RPIS*	pk_rpis		—Dæ“xŒp³ƒZƒ}ƒtƒHó‘Ô‚ð•Ô‚·ƒpƒPƒbƒgƒAƒhƒŒƒX
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+    T_RPIS*	pk_rpis		$BM%@hEY7Q>5%;%^%U%)>uBV$rJV$9%Q%1%C%H%"%I%l%9(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-  pk_rpis ‚Ì“à—e
-    VP		exinf		Šg’£î•ñ
-    BOOL_ID	wtsk		‘Ò‚¿ƒ^ƒXƒN‚Ì—L–³
-    BOOL_ID	pistsk		Šl“¾ƒ^ƒXƒN‚Ì—L–³
+  pk_rpis $B$NFbMF(B
+    VP		exinf		$B3HD%>pJs(B
+    BOOL_ID	wtsk		$BBT$A%?%9%/$NM-L5(B
+    BOOL_ID	pistsk		$B3MF@%?%9%/$NM-L5(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
 
-y‰ðàz
-pisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŠeŽí‚Ìó‘Ô‚ðŽQÆ‚µCƒŠƒ^[ƒ“ƒpƒ‰ƒ[
-ƒ^‚Æ‚µ‚Ä‘Ò‚¿ƒ^ƒXƒN‚Ì—L–³ (wtsk)CŠl“¾ƒ^ƒXƒN‚Ì—L–³ (pistsk)CŠg’£î•ñ 
-(exinf) ‚ð•Ô‚·D
+$B!Z2r@b![(B
+pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$N3F<o$N>uBV$r;2>H$7!$%j%?!<%s%Q%i%a!<(B
+$B%?$H$7$FBT$A%?%9%/$NM-L5!J(Bwtsk$B!K!$3MF@%?%9%/$NM-L5!J(Bpistsk$B!K!$3HD%>pJs(B 
+$B!J(Bexinf$B!K$rJV$9!%(B
 
-wtsk ‚ÍC‚±‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚Å‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚Ì—L–³‚ðŽ¦‚·D‘Ò‚¿ƒ^
-ƒXƒN‚ª–³‚¢ê‡‚Í wtsk = FALSE = 0 ‚Æ‚È‚éD‘Ò‚¿ƒ^ƒXƒN‚ª‚ ‚éê‡Cwtsk 
-‚É‚Í‘Ò‚¿s—ñ‚Ìæ“ª‚Ìƒ^ƒXƒN‚Ì ID ‚ð•Ô‚·D
+wtsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$GBT$C$F$$$k%?%9%/$NM-L5$r<($9!%BT$A%?(B
+$B%9%/$,L5$$>l9g$O(B wtsk = FALSE = 0 $B$H$J$k!%BT$A%?%9%/$,$"$k>l9g!$(Bwtsk 
+$B$K$OBT$A9TNs$N@hF,$N%?%9%/$N(B ID $B$rJV$9!%(B
 
-pistsk ‚ÍC‚±‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—L–³‚ðŽ¦‚·DŠl
-“¾ƒ^ƒXƒN‚ª–³‚¢ê‡‚Í pistsk = FALSE = 0 ‚Æ‚È‚éDŠl“¾ƒ^ƒXƒN‚ª‚ ‚éê‡C
-pistsk ‚É‚ÍŠl“¾ƒ^ƒXƒN‚Ì ID ‚ð•Ô‚·D
+pistsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM-L5$r<($9!%3M(B
+$BF@%?%9%/$,L5$$>l9g$O(B pistsk = FALSE = 0 $B$H$J$k!%3MF@%?%9%/$,$"$k>l9g!$(B
+pistsk $B$K$O3MF@%?%9%/$N(B ID $B$rJV$9!%(B
 
-vref_pis ‚Å‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ª‘¶Ý‚µ‚È‚¢ê‡‚É‚ÍCE_NOEXSƒGƒ‰[‚Æ
-‚È‚éD
+vref_pis $B$GBP>]M%@hEY7Q>5%;%^%U%)$,B8:_$7$J$$>l9g$K$O!$(BE_NOEXS$B%(%i!<$H(B
+$B$J$k!%(B
 
-‚Ç‚ñ‚Èê‡‚Å‚àCwtsk = FALSE ‚Æ pistsk != FALSE ‚Ì­‚È‚­‚Æ‚àˆê•û‚Í¬‚è
-—§‚ÂD
+$B$I$s$J>l9g$G$b!$(Bwtsk = FALSE $B$H(B pistsk != FALSE $B$N>/$J$/$H$b0lJ}$O@.$j(B
+$BN)$D!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
 
 
-‚RDŽd—l2 ‚É‚¨‚¯‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ÌŽd—l
+$B#3!%;EMM(B2 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$N;EMM(B
 
-Žd—l2 ‚É‚¨‚¯‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚Å‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‰ð•ú‚µ‚½
-ê‡‚ÉCƒ^ƒXƒN‚Ì—Dæ“x‚ð‰Šú—Dæ“x‚É–ß‚·D‚±‚ê‚ÍC‘¼‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-‚ðŠl“¾‚µ‚Ä‚¢‚éê‡‚É‚àˆê—¥‚És‚í‚ê‚é‚Ì‚ÅC•¡”‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl
-“¾‚µ‚Ä‚¢‚éê‡‚É³‚µ‚¢“®ì‚ðs‚í‚¹‚é‚É‚ÍCŠl“¾‚µ‚Ä‚¢‚é‚·‚×‚Ä‚Ì—Dæ“xŒp
-³ƒZƒ}ƒtƒH‚ðƒfƒBƒXƒpƒbƒ`‹ÖŽ~ó‘Ô‚Åˆê“x‚É‰ð•ú‚·‚é•K—v‚ª‚ ‚éD
+$B;EMM(B2 $B$K$*$1$kM%@hEY7Q>5%;%^%U%)5!G=$G$O!$M%@hEY7Q>5%;%^%U%)$r2rJ|$7$?(B
+$B>l9g$K!$%?%9%/$NM%@hEY$r=i4|M%@hEY$KLa$9!%$3$l$O!$B>$NM%@hEY7Q>5%;%^%U%)(B
+$B$r3MF@$7$F$$$k>l9g$K$b0lN'$K9T$o$l$k$N$G!$J#?t$NM%@hEY7Q>5%;%^%U%)$r3M(B
+$BF@$7$F$$$k>l9g$K@5$7$$F0:n$r9T$o$;$k$K$O!$3MF@$7$F$$$k$9$Y$F$NM%@hEY7Q(B
+$B>5%;%^%U%)$r%G%#%9%Q%C%A6X;_>uBV$G0lEY$K2rJ|$9$kI,MW$,$"$k!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾/‰ð•ú‚·‚éƒ^ƒXƒN‚Ì—Dæ“x‚ð chg_pri ‚É‚æ‚Á‚Ä•ÏX
-‚µ‚Ä‚àC—Dæ“xŒp³ƒZƒ}ƒtƒH‚Ì‹@”\‚É‚æ‚Á‚Ä—Dæ“x‚ª•ÏX‚³‚ê‚é‚ÆCchg_pri 
-‚ÅÝ’è‚µ‚½—Dæ“x‚Í–³Œø‚É‚È‚éD‚Â‚Ü‚èCchg_pri ‚Íƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚ðˆê
-Žž“I‚É•ÏX‚·‚é‚à‚Ì‚Æ‚¢‚¤‚±‚Æ‚É‚È‚éD—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ÌŽÀ‘•‚É 
-chg_pri ‚ªŽg‚í‚ê‚Ä‚¢‚é‚Æl‚¦‚é‚í‚©‚è‚â‚·‚¢‚©‚à‚µ‚ê‚È‚¢D
+$BM%@hEY7Q>5%;%^%U%)$r3MF@(B/$B2rJ|$9$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99(B
+$B$7$F$b!$M%@hEY7Q>5%;%^%U%)$N5!G=$K$h$C$FM%@hEY$,JQ99$5$l$k$H!$(Bchg_pri 
+$B$G@_Dj$7$?M%@hEY$OL58z$K$J$k!%$D$^$j!$(Bchg_pri $B$O%?%9%/$N8=:_M%@hEY$r0l(B
+$B;~E*$KJQ99$9$k$b$N$H$$$&$3$H$K$J$k!%M%@hEY7Q>5%;%^%U%)5!G=$N<BAu$K(B 
+chg_pri $B$,;H$o$l$F$$$k$H9M$($k$o$+$j$d$9$$$+$b$7$l$J$$!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ð chg_pri ‚É‚æ‚Á‚Ä•ÏX‚µ
-‚½ê‡C‚»‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ªÄŒvŽZE•Ï
-X‚³‚ê‚éê‡‚ª‚ ‚éD‹ï‘Ì“I‚É‚ÍC—Dæ“x‚ð•ÏX‚³‚ê‚½ƒ^ƒXƒN‚Ì•ÏXŒã‚Ì—Dæ
-“x‚ªC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚æ‚è‚à‚‚¢ (’l
-‚ª¬‚³‚¢) ê‡‚ÉC—Dæ“x‚Ì•ÏX‚ªs‚í‚ê‚éD
+$BM%@hEY7Q>5%;%^%U%)$rBT$C$F$$$k%?%9%/$NM%@hEY$r(B chg_pri $B$K$h$C$FJQ99$7(B
+$B$?>l9g!$$=$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,:F7W;;!&JQ(B
+$B99$5$l$k>l9g$,$"$k!%6qBNE*$K$O!$M%@hEY$rJQ99$5$l$?%?%9%/$NJQ998e$NM%@h(B
+$BEY$,!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$h$j$b9b$$!JCM(B
+$B$,>.$5$$!K>l9g$K!$M%@hEY$NJQ99$,9T$o$l$k!%(B
 
-(1) vcre_pis	—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬			    (‹@”\ƒR[ƒh: -257)
+(1) vcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.(B			   $B!J5!G=%3!<%I(B: -257$B!K(B
 
     vcre_pis: Create Priority Inheritance Semaphore
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
-    T_CPIS*	pk_cpis		—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬î•ñ
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vcre_pis(ID pisid, T_CPIS *pk_cpis);
 
-y‰ðàz
-vcre_pis ‚Å‚ÍCpisid ‚ÅŽw’è‚³‚ê‚½ ID”Ô†‚ðŽ‚Â—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð¶¬
-‚·‚éD‹ï‘Ì“I‚É‚ÍC¶¬‚·‚éƒZƒ}ƒtƒH‚É‘Î‚µ‚ÄŠÇ—ƒuƒƒbƒN‚ðŠ„‚è•t‚¯CƒZƒ}
-ƒtƒH‚Ì‰Šú’l‚ð 1 ‚É‰Šú‰»‚·‚éD
+$B!Z2r@b![(B
+vcre_pis $B$G$O!$(Bpisid $B$G;XDj$5$l$?(B ID$BHV9f$r;}$DM%@hEY7Q>5%;%^%U%)$r@8@.(B
+$B$9$k!%6qBNE*$K$O!$@8@.$9$k%;%^%U%)$KBP$7$F4IM}%V%m%C%/$r3d$jIU$1!$%;%^(B
+$B%U%)$N=i4|CM$r(B 1 $B$K=i4|2=$9$k!%(B
 
-ID”Ô†‚Ì³•‰‚Ìˆµ‚¢‚âŽg—p‚Å‚«‚È‚¢”ÍˆÍC‚»‚ê‚ç‚Ìê‡‚ÌƒGƒ‰[ƒR[ƒhCŠg’£
-î•ñ (exinf) ‚Ìˆµ‚¢‚É‚Â‚¢‚Ä‚ÍC‘¼‚Ì“¯ŠúE’ÊMƒIƒuƒWƒFƒNƒg‚Æ“¯—l‚Å‚ ‚éD
+ID$BHV9f$N@5Ii$N07$$$d;HMQ$G$-$J$$HO0O!$$=$l$i$N>l9g$N%(%i!<%3!<%I!$3HD%(B
+$B>pJs!J(Bexinf$B!K$N07$$$K$D$$$F$O!$B>$NF14|!&DL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
 
-pisatr ‚ÍC‰ºˆÊ‘¤‚ªƒVƒXƒeƒ€‘®«‚ð•\‚µCãˆÊ‘¤‚ªƒCƒ“ƒvƒŠƒƒ“ƒgˆË‘¶‘®«
-‚ð•\‚·Dpisatr ‚ÌƒVƒXƒeƒ€‘®«‚Ì•”•ª‚Å‚ÍCŽŸ‚Ì‚æ‚¤‚ÈŽw’è‚ðs‚¤D
+pisatr $B$O!$2<0LB&$,%7%9%F%`B0@-$rI=$7!$>e0LB&$,%$%s%W%j%a%s%H0MB8B0@-(B
+$B$rI=$9!%(Bpisatr $B$N%7%9%F%`B0@-$NItJ,$G$O!$<!$N$h$&$J;XDj$r9T$&!%(B
 
 	sematr := TA_TPRI
 
-	    TA_TPRI	‘Ò‚¿ƒ^ƒXƒN‚ÌƒLƒ…[ƒCƒ“ƒO‚Í—Dæ“x‡
+	    TA_TPRI	$BBT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚Å‚ÍC‘Ò‚¿ƒ^ƒXƒN‚ÌƒLƒ…[ƒCƒ“ƒO‚Í—Dæ“x‡‚Å‚È‚¢‚ÆˆÓ–¡
-‚ª‚È‚¢‚½‚ßCFIFO ƒLƒ…[ƒCƒ“ƒO‚Í—pˆÓ‚µ‚Ä‚¢‚È‚¢D‚»‚Ì‚½‚ßCTA_TPRI ‚ðŽw
-’è‚µ‚È‚­‚Ä‚à—Dæ“x‡‚ÌƒLƒ…[ƒCƒ“ƒO‚É‚È‚é‚ªC‘¼‚Ì“¯ŠúE’ÊMƒIƒuƒWƒFƒNƒg
-‚Æ‚Ì“ˆê«‚Ì‚½‚ß‚ÉCTA_TPRI ‚ðŽw’è‚µ‚Ä‚à‚æ‚¢‚±‚Æ‚É‚µ‚Ä‚¢‚éD
+$BM%@hEY7Q>5%;%^%U%)$G$O!$BT$A%?%9%/$N%-%e!<%$%s%0$OM%@hEY=g$G$J$$$H0UL#(B
+$B$,$J$$$?$a!$(BFIFO $B%-%e!<%$%s%0$OMQ0U$7$F$$$J$$!%$=$N$?$a!$(BTA_TPRI $B$r;X(B
+$BDj$7$J$/$F$bM%@hEY=g$N%-%e!<%$%s%0$K$J$k$,!$B>$NF14|!&DL?.%*%V%8%'%/%H(B
+$B$H$NE}0l@-$N$?$a$K!$(BTA_TPRI $B$r;XDj$7$F$b$h$$$3$H$K$7$F$$$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_RSATR	—\–ñ‘®« (pisatr ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_OBJ	ƒIƒuƒWƒFƒNƒg‚Ìó‘Ô‚ª•s³ (“¯ˆêID”Ô†‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ªŠù‚É‘¶Ý)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_RSATR	$BM=LsB0@-!J(Bpisatr $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!JF10l(BID$BHV9f$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,4{$KB8:_!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
 
-(2) vvcre_pis	—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬ (IDŽ©“®Š„“–)	    (‹@”\ƒR[ƒh: -259)
+(2) vvcre_pis	$BM%@hEY7Q>5%;%^%U%)@8@.!J(BID$B<+F03dEv!K(B	   $B!J5!G=%3!<%I(B: -259$B!K(B
 
     vvcre_pis: Create Priority Inheritance Semaphore (automatic ID assignment)
 
-yƒpƒ‰ƒ[ƒ^z
-    T_CPIS*	pk_cpis		—Dæ“xŒp³ƒZƒ}ƒtƒH¶¬î•ñ
+$B!Z%Q%i%a!<%?![(B
+    T_CPIS*	pk_cpis		$BM%@hEY7Q>5%;%^%U%)@8@.>pJs(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		¶¬‚µ‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌID, ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B@8@.$7$?M%@hEY7Q>5%;%^%U%)$N(BID, $B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vvcre_pis(T_CPIS *pk_cpis);
 
-y‰ðàz
-ID”Ô†‚ðŽw’è‚¹‚¸‚É—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð¶¬‚µC¶¬‚µ‚½—Dæ“xŒp³ƒZƒ}ƒtƒH
-‚Ì ID (•K‚¸³‚Ì’l) ‚ð ercd ‚É•Ô‚·Dercd ‚ª•‰‚Ìê‡‚ÍCƒGƒ‰[ƒR[ƒh‚ð•\
-‚·DŠ„‚è“–‚Ä‰Â”\‚È ID ‚ª‚È‚¢ê‡CEV_FULLƒGƒ‰[‚Æ‚È‚éD‚»‚Ì‘¼‚É‚Â‚¢‚Ä
-‚ÍCvcre_pis ‚Æ“¯‚¶D
+$B!Z2r@b![(B
+ID$BHV9f$r;XDj$;$:$KM%@hEY7Q>5%;%^%U%)$r@8@.$7!$@8@.$7$?M%@hEY7Q>5%;%^%U%)(B
+$B$N(B ID$B!JI,$:@5$NCM!K$r(B ercd $B$KJV$9!%(Bercd $B$,Ii$N>l9g$O!$%(%i!<%3!<%I$rI=(B
+$B$9!%3d$jEv$F2DG=$J(B ID $B$,$J$$>l9g!$(BEV_FULL$B%(%i!<$H$J$k!%$=$NB>$K$D$$$F(B
+$B$O!$(Bvcre_pis $B$HF1$8!%(B
 
-(3) vdel_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHíœ			    (‹@”\ƒR[ƒh: -258)
+(3) vdel_pis	$BM%@hEY7Q>5%;%^%U%):o=|(B			   $B!J5!G=%3!<%I(B: -258$B!K(B
 
     vdel_pis: Delete Priority Inheritance Semaphore
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vdel_pis(ID pisid);
 
-y‰ðàz
-pisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðíœ‚·‚éD
+$B!Z2r@b![(B
+pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$r:o=|$9$k!%(B
 
-–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì”­s‚É‚æ‚èC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŠÇ—ƒuƒƒbƒN—p‚Ì
-—Ìˆæ‚Í‰ð•ú‚³‚ê‚éD‚Ü‚½C‚±‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ªI—¹‚µ‚½Œã‚ÍC“¯‚¶ ID”Ô†
-‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðÄ‚Ñ¶¬‚·‚é‚±‚Æ‚ª‚Å‚«‚éD
+$BK\%7%9%F%`%3!<%k$NH/9T$K$h$j!$BP>]M%@hEY7Q>5%;%^%U%)$N4IM}%V%m%C%/MQ$N(B
+$BNN0h$O2rJ|$5$l$k!%$^$?!$$3$N%7%9%F%`%3!<%k$,=*N;$7$?8e$O!$F1$8(B ID$BHV9f(B
+$B$NM%@hEY7Q>5%;%^%U%)$r:F$S@8@.$9$k$3$H$,$G$-$k!%(B
 
-‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‚¨‚¢‚ÄðŒ¬—§‚ð‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚ª‚ ‚Á‚½ê‡‚É
-‚àC–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Í³íI—¹‚·‚é‚ªC‘Ò‚¿ó‘Ô‚É‚ ‚Á‚½ƒ^ƒXƒN‚É‚ÍƒGƒ‰[ 
-E_DLT ‚ª•Ô‚³‚ê‚éD
+$BBP>]M%@hEY7Q>5%;%^%U%)$K$*$$$F>r7o@.N)$rBT$C$F$$$k%?%9%/$,$"$C$?>l9g$K(B
+$B$b!$K\%7%9%F%`%3!<%k$O@5>o=*N;$9$k$,!$BT$A>uBV$K$"$C$?%?%9%/$K$O%(%i!<(B 
+E_DLT $B$,JV$5$l$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
 
-(4) vsig_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹•Ô‹p		    (‹@”\ƒR[ƒh: -264)
+(4) vsig_pis	$BM%@hEY7Q>5%;%^%U%);q8;JV5Q(B		   $B!J5!G=%3!<%I(B: -264$B!K(B
 
     vsig_pis: Signal Priority Inheritance Semaphore
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vsig_pis(ID pisid);
 
-y‰ðàz
-pisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚µ‚ÄCŽ‘Œ¹‚ð‰ð•ú‚·‚é‘€ì‚ðs‚¤D
-‹ï‘Ì“I‚É‚ÍC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚µ‚ÄŠù‚É‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚ª‚ ‚ê‚ÎC
-‘Ò‚¿s—ñ‚Ìæ“ª‚Ìƒ^ƒXƒN‚ð READYó‘Ô‚ÉˆÚ‚·D‚±‚Ìê‡C‚»‚Ì—Dæ“xŒp³ƒZƒ}
-ƒtƒH‚ÍŠl“¾‚³‚ê‚½ó‘Ô‚Ì‚Ü‚Ü‚Å‚ ‚éDˆê•ûC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚µ‚Ä
-‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚ª–³‚¯‚ê‚ÎC‚»‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ª‰ð•ú‚³‚ê‚éD
+$B!Z2r@b![(B
+pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$KBP$7$F!$;q8;$r2rJ|$9$kA`:n$r9T$&!%(B
+$B6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F4{$KBT$C$F$$$k%?%9%/$,$"$l$P!$(B
+$BBT$A9TNs$N@hF,$N%?%9%/$r(B READY$B>uBV$K0\$9!%$3$N>l9g!$$=$NM%@hEY7Q>5%;%^(B
+$B%U%)$O3MF@$5$l$?>uBV$N$^$^$G$"$k!%0lJ}!$BP>]M%@hEY7Q>5%;%^%U%)$KBP$7$F(B
+$BBT$C$F$$$k%?%9%/$,L5$1$l$P!$$=$NM%@hEY7Q>5%;%^%U%)$,2rJ|$5$l$k!%(B
 
-‚±‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ðƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ño‚·‚±‚Æ‚Í‚Å‚«‚È‚¢DŒÄ‚Ño‚µ‚½
-ê‡CE_CTXƒGƒ‰[‚Æ‚È‚éD‚Ü‚½CŠl“¾‚³‚ê‚Ä‚¢‚È‚¢C‚È‚¢‚µ‚ÍC‘¼ƒ^ƒXƒN‚É
-Šl“¾‚³‚ê‚Ä‚¢‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‰ð•ú‚µ‚æ‚¤‚Æ‚µ‚½ê‡CE_OBJƒGƒ‰[‚Æ
-‚È‚éD
+$B$3$N%7%9%F%`%3!<%k$r%?%9%/FHN)It$+$i8F$S=P$9$3$H$O$G$-$J$$!%8F$S=P$7$?(B
+$B>l9g!$(BE_CTX$B%(%i!<$H$J$k!%$^$?!$3MF@$5$l$F$$$J$$!$$J$$$7$O!$B>%?%9%/$K(B
+$B3MF@$5$l$F$$$kM%@hEY7Q>5%;%^%U%)$r2rJ|$7$h$&$H$7$?>l9g!$(BE_OBJ$B%(%i!<$H(B
+$B$J$k!%(B
 
-—Dæ“xŒp³ƒZƒ}ƒtƒH‚ð‰ð•ú‚·‚é‚±‚Æ‚É‚æ‚èCƒ^ƒXƒN‚Ì—Dæ“x‚ÍC•K—v‚Èê‡‚É
-‰Šú—Dæ“x‚É–ß‚³‚ê‚éD‹ï‘Ì“I‚É‚ÍCƒ^ƒXƒN‚Ì—Dæ“x‚ª‰Šú—Dæ“x‚æ‚è‚à‚‚¢
-ê‡‚É‚Ì‚ÝC‰Šú—Dæ“x‚É–ß‚·ˆ—‚ªs‚í‚ê‚éD
+$BM%@hEY7Q>5%;%^%U%)$r2rJ|$9$k$3$H$K$h$j!$%?%9%/$NM%@hEY$O!$I,MW$J>l9g$K(B
+$B=i4|M%@hEY$KLa$5$l$k!%6qBNE*$K$O!$%?%9%/$NM%@hEY$,=i4|M%@hEY$h$j$b9b$$(B
+$B>l9g$K$N$_!$=i4|M%@hEY$KLa$9=hM}$,9T$o$l$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
-    E_CTX	ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[ (ƒ^ƒXƒN“Æ—§•”‚©‚ç‚Ì”­s)
-    E_OBJ	ƒIƒuƒWƒFƒNƒg‚Ìó‘Ô‚ª•s³ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ª
-		Šl“¾‚³‚ê‚Ä‚¢‚È‚¢D‚Ü‚½‚ÍC‘¼‚Ìƒ^ƒXƒN‚ªŠl“¾‚µ‚Ä‚¢‚é)
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$+$i$NH/9T!K(B
+    E_OBJ	$B%*%V%8%'%/%H$N>uBV$,IT@5!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)$,(B
+		$B3MF@$5$l$F$$$J$$!%$^$?$O!$B>$N%?%9%/$,3MF@$7$F$$$k!K(B
 
-(5) vwai_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹Šl“¾		    (‹@”\ƒR[ƒh: -261)
-(6) vpreq_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹Šl“¾ (ƒ|[ƒŠƒ“ƒO)	    (‹@”\ƒR[ƒh: -262)
-(7) vtwai_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHŽ‘Œ¹Šl“¾ (ƒ^ƒCƒ€ƒAƒEƒg—L) (‹@”\ƒR[ƒh: -263)
+(5) vwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@(B		   $B!J5!G=%3!<%I(B: -261$B!K(B
+(6) vpreq_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%]!<%j%s%0!K(B	       $B!J(B-262$B!K(B
+(7) vtwai_pis	$BM%@hEY7Q>5%;%^%U%);q8;3MF@!J%?%$%`%"%&%HM-!K(B	       $B!J(B-263$B!K(B
 
     vwai_pis: Wait on Priority Inheritance Semaphore
    vpreq_pis: Poll and Request Priority Inheritance Semaphore
    vtwai_pis: Wait on Priority Inheritance Semaphore with Timeout
 
-yƒpƒ‰ƒ[ƒ^ (vwai_pis, vpreq_pis ‚Ìê‡) z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
+$B!Z%Q%i%a!<%?!J(Bvwai_pis, vpreq_pis $B$N>l9g!K![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
 
-yƒpƒ‰ƒ[ƒ^ (vtwai_pis ‚Ìê‡) z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
-    TMO		tmout		ƒ^ƒCƒ€ƒAƒEƒgŽw’è
+$B!Z%Q%i%a!<%?!J(Bvtwai_pis $B$N>l9g!K![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+    TMO		tmout		$B%?%$%`%"%&%H;XDj(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd = vwai_pis(ID pisid);
     ER ercd =vpreq_pis(ID pisid);
     ER ercd =vtwai_pis(ID pisid, TMO tmout);
 
-y‰ðàz
-vwai_pis ‚Å‚ÍCpisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚©‚çCŽ‘Œ¹‚ðŠl“¾‚·‚é
-‘€ì‚ðs‚¤D‹ï‘Ì“I‚É‚ÍC‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ªŠl“¾‚³‚ê‚Ä‚¢‚È‚¢ê‡‚É
-‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŠl“¾‚É¬Œ÷‚·‚éD‚±‚Ìê‡C–{ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì”­
-sƒ^ƒXƒN‚Í‘Ò‚¿ó‘Ô‚É“ü‚ç‚¸CŽÀs‚ðŒp‘±‚·‚éDˆê•ûA‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH
-‚ªŠl“¾‚³‚ê‚Ä‚¢‚éê‡‚É‚ÍC–{ƒVƒXƒeƒ€ƒR[ƒ‹‚ð”­s‚µ‚½ƒ^ƒXƒN‚Í‘Ò‚¿ó‘Ô‚É
-“ü‚éD‚·‚È‚í‚¿C‚»‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚É‘Î‚·‚é‘Ò‚¿s—ñ‚É‚Â‚È‚ª‚ê‚éD
+$B!Z2r@b![(B
+vwai_pis $B$G$O!$(Bpisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$+$i!$;q8;$r3MF@$9$k(B
+$BA`:n$r9T$&!%6qBNE*$K$O!$BP>]M%@hEY7Q>5%;%^%U%)$,3MF@$5$l$F$$$J$$>l9g$K(B
+$B$O!$M%@hEY7Q>5%;%^%U%)$N3MF@$K@.8y$9$k!%$3$N>l9g!$K\%7%9%F%`%3!<%k$NH/(B
+$B9T%?%9%/$OBT$A>uBV$KF~$i$:!$<B9T$r7QB3$9$k!%0lJ}!"BP>]M%@hEY7Q>5%;%^%U%)(B
+$B$,3MF@$5$l$F$$$k>l9g$K$O!$K\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$OBT$A>uBV$K(B
+$BF~$k!%$9$J$o$A!$$=$NM%@hEY7Q>5%;%^%U%)$KBP$9$kBT$A9TNs$K$D$J$,$l$k!%(B
 
-–{ƒVƒXƒeƒ€ƒR[ƒ‹‚ð”­s‚µ‚½ƒ^ƒXƒN‚ª‘Ò‚¿ó‘Ô‚É“ü‚éê‡C‘ÎÛ—Dæ“xŒp³ƒZ
-ƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ªC”­sƒ^ƒXƒN‚Ì—Dæ“x‚ðŒp³‚·‚éê‡‚ª‚ ‚éD
-‹ï‘Ì“I‚É‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚ªC”­s
-ƒ^ƒXƒN‚ÌŒ»Ý—Dæ“x‚æ‚è‚à’á‚¢ (’l‚ª‘å‚«‚¢) ê‡‚ÉC—Dæ“x‚ÌŒp³‚ªs‚í‚ê
-‚éD
+$BK\%7%9%F%`%3!<%k$rH/9T$7$?%?%9%/$,BT$A>uBV$KF~$k>l9g!$BP>]M%@hEY7Q>5%;(B
+$B%^%U%)$r3MF@$7$F$$$k%?%9%/$,!$H/9T%?%9%/$NM%@hEY$r7Q>5$9$k>l9g$,$"$k!%(B
+$B6qBNE*$K$O!$M%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$N8=:_M%@hEY$,!$H/9T(B
+$B%?%9%/$N8=:_M%@hEY$h$j$bDc$$!JCM$,Bg$-$$!K>l9g$K!$M%@hEY$N7Q>5$,9T$o$l(B
+$B$k!%(B
 
-vpreq_pis ‚ÍCwai_pis ‚©‚ç‘Ò‚¿ó‘Ô‚É“ü‚é‹@”\‚ðŽæ‚èœ‚¢‚½ƒVƒXƒeƒ€ƒR[ƒ‹
-‚Å‚ ‚éDˆê•ûCvtwai_pis ‚ÍCwai_pis ‚Éƒ^ƒCƒ€ƒAƒEƒg‚Ì‹@”\‚ð•t‚¯‰Á‚¦‚½ƒV
-ƒXƒeƒ€ƒR[ƒ‹‚Å‚ ‚èCtmout ‚É‚æ‚è‘Ò‚¿ŽžŠÔ‚ÌÅ‘å’l (ƒ^ƒCƒ€ƒAƒEƒg’l) ‚ðŽw
-’è‚·‚é‚±‚Æ‚ª‚Å‚«‚éDƒ|[ƒŠƒ“ƒO‚âƒ^ƒCƒ€ƒAƒEƒg‚Ìˆµ‚¢‚É‚Â‚¢‚Ä‚ÍC‘¼‚Ì“¯ŠúE
-’ÊMƒIƒuƒWƒFƒNƒg‚Æ“¯—l‚Å‚ ‚éD
+vpreq_pis $B$O!$(Bwai_pis $B$+$iBT$A>uBV$KF~$k5!G=$r<h$j=|$$$?%7%9%F%`%3!<%k(B
+$B$G$"$k!%0lJ}!$(Bvtwai_pis $B$O!$(Bwai_pis $B$K%?%$%`%"%&%H$N5!G=$rIU$12C$($?%7(B
+$B%9%F%`%3!<%k$G$"$j!$(Btmout $B$K$h$jBT$A;~4V$N:GBgCM!J%?%$%`%"%&%HCM!K$r;X(B
+$BDj$9$k$3$H$,$G$-$k!%%]!<%j%s%0$d%?%$%`%"%&%H$N07$$$K$D$$$F$O!$B>$NF14|!&(B
+$BDL?.%*%V%8%'%/%H$HF1MM$G$"$k!%(B
 
-twai_pis ‚Ü‚½‚Í vtwai_pis ‚É‚æ‚Á‚Ä—Dæ“xŒp³ƒZƒ}ƒtƒH‘Ò‚¿ó‘Ô‚É“ü‚Á‚½ƒ^
-ƒXƒN‚ªCrel_wai ‚Ì”­sCƒ^ƒCƒ€ƒAƒEƒg (vtwai_pis ‚Ì‚Ý)C‚È‚¢‚µ‚Í‘ÎÛ—D
-æ“xŒp³ƒZƒ}ƒtƒH‚Ìíœ‚É‚æ‚Á‚Ä‘Ò‚¿‰ðœ‚³‚ê‚½ê‡‚Å‚àC‚»‚Ì—Dæ“xŒp³ƒZ
-ƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚Í•ÏX‚³‚ê‚È‚¢D‚»‚Ì‚½‚ßC—Dæ“xŒp³
-ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—Dæ“x‚ª‚‚·‚¬‚é’l‚ÉÝ’è‚³‚êC‚»‚ÌŒ‹‰ÊC
-‘Ò‚¿‰ðœ‚³‚ê‚½ƒ^ƒXƒN‚ÌŽÀs‚ª’x‚ê‚éê‡‚ª‚ ‚éD
+twai_pis $B$^$?$O(B vtwai_pis $B$K$h$C$FM%@hEY7Q>5%;%^%U%)BT$A>uBV$KF~$C$?%?(B
+$B%9%/$,!$(Brel_wai $B$NH/9T!$%?%$%`%"%&%H!J(Bvtwai_pis $B$N$_!K!$$J$$$7$OBP>]M%(B
+$B@hEY7Q>5%;%^%U%)$N:o=|$K$h$C$FBT$A2r=|$5$l$?>l9g$G$b!$$=$NM%@hEY7Q>5%;(B
+$B%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$OJQ99$5$l$J$$!%$=$N$?$a!$M%@hEY7Q>5(B
+$B%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM%@hEY$,9b$9$.$kCM$K@_Dj$5$l!$$=$N7k2L!$(B
+$BBT$A2r=|$5$l$?%?%9%/$N<B9T$,CY$l$k>l9g$,$"$k!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
-    E_PAR	ƒpƒ‰ƒ[ƒ^ƒGƒ‰[ (tmout <= (-2))
-    E_DLT	‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ªíœ‚³‚ê‚½ (‘Ò‚¿‚ÌŠÔ‚É‘ÎÛ—Dæ“xŒp³
-		ƒZƒ}ƒtƒH‚ªíœ)
-    E_RLWAI	‘Ò‚¿ó‘Ô‹­§‰ðœ (‘Ò‚¿‚ÌŠÔ‚É rel_wai ‚ðŽó‚¯•t‚¯)
-    E_TMOUT	ƒ|[ƒŠƒ“ƒOŽ¸”s‚Ü‚½‚Íƒ^ƒCƒ€ƒAƒEƒg
-    E_CTX	ƒRƒ“ƒeƒLƒXƒgƒGƒ‰[ (ƒ^ƒXƒN“Æ—§•”‚Ü‚½‚ÍƒfƒBƒXƒpƒbƒ`‹ÖŽ~
-		ó‘Ô‚ÅŽÀs)
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B
+    E_PAR	$B%Q%i%a!<%?%(%i!<!J(Btmout <= (-2)$B!K(B
+    E_DLT	$BBT$A%*%V%8%'%/%H$,:o=|$5$l$?!JBT$A$N4V$KBP>]M%@hEY7Q>5(B
+		$B%;%^%U%)$,:o=|!K(B
+    E_RLWAI	$BBT$A>uBV6/@)2r=|!JBT$A$N4V$K(B rel_wai $B$r<u$1IU$1!K(B
+    E_TMOUT	$B%]!<%j%s%0<:GT$^$?$O%?%$%`%"%&%H(B
+    E_CTX	$B%3%s%F%-%9%H%(%i!<!J%?%9%/FHN)It$^$?$O%G%#%9%Q%C%A6X;_(B
+		$B>uBV$G<B9T!K(B
 
-(8) vref_pis	—Dæ“xŒp³ƒZƒ}ƒtƒHó‘ÔŽQÆ		    (‹@”\ƒR[ƒh: -260)
+(8) vref_pis	$BM%@hEY7Q>5%;%^%U%)>uBV;2>H(B		   $B!J5!G=%3!<%I(B: -260$B!K(B
 
     vref_pis: Refer Priority Inheritance Semaphore Status
 
-yƒpƒ‰ƒ[ƒ^z
-    ID		pisid		—Dæ“xŒp³ƒZƒ}ƒtƒHID
-    T_RPIS*	pk_rpis		—Dæ“xŒp³ƒZƒ}ƒtƒHó‘Ô‚ð•Ô‚·ƒpƒPƒbƒgƒAƒhƒŒƒX
+$B!Z%Q%i%a!<%?![(B
+    ID		pisid		$BM%@hEY7Q>5%;%^%U%)(BID
+    T_RPIS*	pk_rpis		$BM%@hEY7Q>5%;%^%U%)>uBV$rJV$9%Q%1%C%H%"%I%l%9(B
 
-yƒŠƒ^[ƒ“ƒpƒ‰ƒ[ƒ^z
-    ER		ercd		ƒGƒ‰[ƒR[ƒh
+$B!Z%j%?!<%s%Q%i%a!<%?![(B
+    ER		ercd		$B%(%i!<%3!<%I(B
 
-  pk_rpis ‚Ì“à—e
-    VP		exinf		Šg’£î•ñ
-    BOOL_ID	wtsk		‘Ò‚¿ƒ^ƒXƒN‚Ì—L–³
-    BOOL_ID	pistsk		Šl“¾ƒ^ƒXƒN‚Ì—L–³
+  pk_rpis $B$NFbMF(B
+    VP		exinf		$B3HD%>pJs(B
+    BOOL_ID	wtsk		$BBT$A%?%9%/$NM-L5(B
+    BOOL_ID	pistsk		$B3MF@%?%9%/$NM-L5(B
 
-yCŒ¾ŒêƒCƒ“ƒ^ƒtƒF[ƒXz
+$B!Z(BC$B8@8l%$%s%?%U%'!<%9![(B
     ER ercd =vref_pis(T_RPIS *pk_rpis, ID pisid);
 
-y‰ðàz
-pisid ‚ÅŽ¦‚³‚ê‚½—Dæ“xŒp³ƒZƒ}ƒtƒH‚ÌŠeŽí‚Ìó‘Ô‚ðŽQÆ‚µCƒŠƒ^[ƒ“ƒpƒ‰ƒ[
-ƒ^‚Æ‚µ‚Ä‘Ò‚¿ƒ^ƒXƒN‚Ì—L–³ (wtsk)CŠl“¾ƒ^ƒXƒN‚Ì—L–³ (pistsk)CŠg’£î•ñ 
-(exinf) ‚ð•Ô‚·D
+$B!Z2r@b![(B
+pisid $B$G<($5$l$?M%@hEY7Q>5%;%^%U%)$N3F<o$N>uBV$r;2>H$7!$%j%?!<%s%Q%i%a!<(B
+$B%?$H$7$FBT$A%?%9%/$NM-L5!J(Bwtsk$B!K!$3MF@%?%9%/$NM-L5!J(Bpistsk$B!K!$3HD%>pJs(B 
+$B!J(Bexinf$B!K$rJV$9!%(B
 
-wtsk ‚ÍC‚±‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚Å‘Ò‚Á‚Ä‚¢‚éƒ^ƒXƒN‚Ì—L–³‚ðŽ¦‚·D‘Ò‚¿ƒ^
-ƒXƒN‚ª–³‚¢ê‡‚Í wtsk = FALSE = 0 ‚Æ‚È‚éD‘Ò‚¿ƒ^ƒXƒN‚ª‚ ‚éê‡Cwtsk 
-‚É‚Í‘Ò‚¿s—ñ‚Ìæ“ª‚Ìƒ^ƒXƒN‚Ì ID ‚ð•Ô‚·D
+wtsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$GBT$C$F$$$k%?%9%/$NM-L5$r<($9!%BT$A%?(B
+$B%9%/$,L5$$>l9g$O(B wtsk = FALSE = 0 $B$H$J$k!%BT$A%?%9%/$,$"$k>l9g!$(Bwtsk 
+$B$K$OBT$A9TNs$N@hF,$N%?%9%/$N(B ID $B$rJV$9!%(B
 
-pistsk ‚ÍC‚±‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ðŠl“¾‚µ‚Ä‚¢‚éƒ^ƒXƒN‚Ì—L–³‚ðŽ¦‚·DŠl
-“¾ƒ^ƒXƒN‚ª–³‚¢ê‡‚Í pistsk = FALSE = 0 ‚Æ‚È‚éDŠl“¾ƒ^ƒXƒN‚ª‚ ‚éê‡C
-pistsk ‚É‚ÍŠl“¾ƒ^ƒXƒN‚Ì ID ‚ð•Ô‚·D
+pistsk $B$O!$$3$NM%@hEY7Q>5%;%^%U%)$r3MF@$7$F$$$k%?%9%/$NM-L5$r<($9!%3M(B
+$BF@%?%9%/$,L5$$>l9g$O(B pistsk = FALSE = 0 $B$H$J$k!%3MF@%?%9%/$,$"$k>l9g!$(B
+pistsk $B$K$O3MF@%?%9%/$N(B ID $B$rJV$9!%(B
 
-vref_pis ‚Å‘ÎÛ—Dæ“xŒp³ƒZƒ}ƒtƒH‚ª‘¶Ý‚µ‚È‚¢ê‡‚É‚ÍCE_NOEXSƒGƒ‰[‚Æ
-‚È‚éD
+vref_pis $B$GBP>]M%@hEY7Q>5%;%^%U%)$,B8:_$7$J$$>l9g$K$O!$(BE_NOEXS$B%(%i!<$H(B
+$B$J$k!%(B
 
-‚Ç‚ñ‚Èê‡‚Å‚àCwtsk = FALSE ‚Æ pistsk != FALSE ‚Ì­‚È‚­‚Æ‚àˆê•û‚Í¬‚è
-—§‚ÂD
+$B$I$s$J>l9g$G$b!$(Bwtsk = FALSE $B$H(B pistsk != FALSE $B$N>/$J$/$H$b0lJ}$O@.$j(B
+$BN)$D!%(B
 
-yƒGƒ‰[ƒR[ƒh(ercd)z
-    E_OK	³íI—¹
-    E_ID	•s³ID”Ô† (pisid ‚ª•s³‚ ‚é‚¢‚Í—˜—p‚Å‚«‚È‚¢)
-    E_NOEXS	ƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢ (pisid ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH
-		‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢)
-    E_OACV	ƒIƒuƒWƒFƒNƒgƒAƒNƒZƒXŒ ˆá”½ (ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ðƒAƒN
-		ƒZƒX‚·‚éŒ —˜‚ðŽ‚½‚È‚¢ŠÂ‹«‚©‚ç‚Ì”­s‚Å pisid < (-4))
+$B!Z%(%i!<%3!<%I!J(Bercd$B!K![(B
+    E_OK	$B@5>o=*N;(B
+    E_ID	$BIT@5(BID$BHV9f!J(Bpisid $B$,IT@5$"$k$$$OMxMQ$G$-$J$$!K(B
+    E_NOEXS	$B%*%V%8%'%/%H$,B8:_$7$F$$$J$$!J(Bpisid $B$NM%@hEY7Q>5%;%^%U%)(B
+		$B$,B8:_$7$F$$$J$$!K(B
+    E_OACV	$B%*%V%8%'%/%H%"%/%;%98"0cH?!J%7%9%F%`%*%V%8%'%/%H$r%"%/(B
+		$B%;%9$9$k8"Mx$r;}$?$J$$4D6-$+$i$NH/9T$G(B pisid < (-4)$B!K(B

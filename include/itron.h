@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,126 +30,126 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: itron.h,v 1.10 1998/01/30 07:09:02 hiro Exp $
+ *  @(#) $Id: itron.h,v 1.11 1998/01/30 09:54:01 hiro Exp $
  */
 
 #ifndef _ITRON_
 #define _ITRON_
 
 /*
- *  îƒópìIÇ»ÉfÅ[É^É^ÉCÉv
+ *  $BHFMQE*$J%G!<%?%?%$%W(B
  */
 
-typedef	char		B;		/* ïÑçÜïtÇ´ 8ÉrÉbÉgêÆêî */
-typedef	short		H;		/* ïÑçÜïtÇ´ 16ÉrÉbÉgêÆêî */
-typedef	int		W;		/* ïÑçÜïtÇ´ 32ÉrÉbÉgêÆêî */
-typedef	unsigned char	UB;		/* ïÑçÜñ≥Çµ 8ÉrÉbÉgêÆêî */
-typedef	unsigned short  UH;		/* ïÑçÜñ≥Çµ 16ÉrÉbÉgêÆêî */
-typedef	unsigned int	UW;		/* ïÑçÜñ≥Çµ 32ÉrÉbÉgêÆêî */
+typedef	char		B;		/* $BId9fIU$-(B 8$B%S%C%H@0?t(B */
+typedef	short		H;		/* $BId9fIU$-(B 16$B%S%C%H@0?t(B */
+typedef	int		W;		/* $BId9fIU$-(B 32$B%S%C%H@0?t(B */
+typedef	unsigned char	UB;		/* $BId9fL5$7(B 8$B%S%C%H@0?t(B */
+typedef	unsigned short  UH;		/* $BId9fL5$7(B 16$B%S%C%H@0?t(B */
+typedef	unsigned int	UW;		/* $BId9fL5$7(B 32$B%S%C%H@0?t(B */
 
-typedef	char		VB;		/* å^Ç™àÍíËÇµÇ»Ç¢ 8ÉrÉbÉgÇÃÉfÅ[É^ */
-typedef	short		VH;		/* å^Ç™àÍíËÇµÇ»Ç¢ 16ÉrÉbÉgÇÃÉfÅ[É^ */
-typedef	int		VW;		/* å^Ç™àÍíËÇµÇ»Ç¢ 32ÉrÉbÉgÇÃÉfÅ[É^ */
-typedef	void		*VP;		/* å^Ç™àÍíËÇµÇ»Ç¢ÉfÅ[É^Ç÷ÇÃÉ|ÉCÉìÉ^ */
+typedef	char		VB;		/* $B7?$,0lDj$7$J$$(B 8$B%S%C%H$N%G!<%?(B */
+typedef	short		VH;		/* $B7?$,0lDj$7$J$$(B 16$B%S%C%H$N%G!<%?(B */
+typedef	int		VW;		/* $B7?$,0lDj$7$J$$(B 32$B%S%C%H$N%G!<%?(B */
+typedef	void		*VP;		/* $B7?$,0lDj$7$J$$%G!<%?$X$N%]%$%s%?(B */
 
-typedef	void		(*FP)();	/* ÉvÉçÉOÉâÉÄÉXÉ^Å[ÉgÉAÉhÉåÉXàÍî  */
+typedef	void		(*FP)();	/* $B%W%m%0%i%`%9%?!<%H%"%I%l%90lHL(B */
 
 /*
- *  ITRON Ç…àÀë∂ÇµÇΩÉfÅ[É^É^ÉCÉv
+ *  ITRON $B$K0MB8$7$?%G!<%?%?%$%W(B
  */
 
-typedef int		INT;		/* ïÑçÜïtÇ´êÆêî */
-typedef unsigned int	UINT;		/* ïÑçÜñ≥ÇµêÆêî */
+typedef int		INT;		/* $BId9fIU$-@0?t(B */
+typedef unsigned int	UINT;		/* $BId9fL5$7@0?t(B */
 
-typedef INT		BOOL;		/* ÉuÅ[Éãíl */
-typedef INT		FN;		/* ã@î\ÉRÅ[Éh */
-	/* Ç±ÇÃíËã`ÇÕÅCÉ ITRON3.0édólÇ…Ç†Ç¡ÇƒÇ¢Ç»Ç¢ÅD*/
-typedef	INT		ID;		/* ÉIÉuÉWÉFÉNÉgÇÃIDî‘çÜ */
-typedef	INT		BOOL_ID;	/* ÉuÅ[ÉãílÇ‹ÇΩÇÕ IDî‘çÜ */
-typedef	INT		HNO;		/* ÉnÉìÉhÉâî‘çÜ */
-typedef	INT		RNO;		/* ÉâÉìÉfÉuî‘çÜ */
-typedef	INT		NODE;		/* ÉmÅ[Éhî‘çÜ */
-typedef	UINT		ATR;		/* ÉIÉuÉWÉFÉNÉg/ÉnÉìÉhÉâëÆê´ */
-typedef	INT		ER;		/* ÉGÉâÅ[ÉRÅ[Éh */
-typedef	INT		PRI;		/* É^ÉXÉNóDêÊìx */
-typedef	INT		TMO;		/* É^ÉCÉÄÉAÉEÉgéwíË */
-typedef long long	SYSTIME;	/* ÉVÉXÉeÉÄÉNÉçÉbÉN */
-typedef SYSTIME		CYCTIME;	/* é¸ä˙ãNìÆÉnÉìÉhÉâãNìÆé¸ä˙ */
-typedef SYSTIME		ALMTIME;	/* ÉAÉâÅ[ÉÄÉnÉìÉhÉâãNìÆéûçè */
-typedef INT 		DLYTIME;	/* É^ÉXÉNíxâÑéûä‘ */
-/* ItIs ì∆é©ÇÃå^ */
-typedef long long	SYSUTIME;	/* ÉVÉXÉeÉÄéûçè (ê´î\ï]âøóp) */
+typedef INT		BOOL;		/* $B%V!<%kCM(B */
+typedef INT		FN;		/* $B5!G=%3!<%I(B */
+	/* $B$3$NDj5A$O!$&L(BITRON3.0$B;EMM$K$"$C$F$$$J$$!%(B*/
+typedef	INT		ID;		/* $B%*%V%8%'%/%H$N(BID$BHV9f(B */
+typedef	INT		BOOL_ID;	/* $B%V!<%kCM$^$?$O(B ID$BHV9f(B */
+typedef	INT		HNO;		/* $B%O%s%I%iHV9f(B */
+typedef	INT		RNO;		/* $B%i%s%G%VHV9f(B */
+typedef	INT		NODE;		/* $B%N!<%IHV9f(B */
+typedef	UINT		ATR;		/* $B%*%V%8%'%/%H(B/$B%O%s%I%iB0@-(B */
+typedef	INT		ER;		/* $B%(%i!<%3!<%I(B */
+typedef	INT		PRI;		/* $B%?%9%/M%@hEY(B */
+typedef	INT		TMO;		/* $B%?%$%`%"%&%H;XDj(B */
+typedef long long	SYSTIME;	/* $B%7%9%F%`%/%m%C%/(B */
+typedef SYSTIME		CYCTIME;	/* $B<~4|5/F0%O%s%I%i5/F0<~4|(B */
+typedef SYSTIME		ALMTIME;	/* $B%"%i!<%`%O%s%I%i5/F0;~9o(B */
+typedef INT 		DLYTIME;	/* $B%?%9%/CY1d;~4V(B */
+/* ItIs $BFH<+$N7?(B */
+typedef long long	SYSUTIME;	/* $B%7%9%F%`;~9o(B ($B@-G=I>2AMQ(B) */
 
 /*
- *  ã§í íËêî
+ *  $B6&DLDj?t(B
  */
 
-#define NADR		((VP) -1)	/* ÉAÉhÉåÉXÇ‚É|ÉCÉìÉ^ílÇ™ñ≥å¯ */
-#define TRUE		1		/* ê^ */
-#define FALSE		0		/* ãU */
+#define NADR		((VP) -1)	/* $B%"%I%l%9$d%]%$%s%?CM$,L58z(B */
+#define TRUE		1		/* $B??(B */
+#define FALSE		0		/* $B56(B */
 
-#define TA_NULL		0		/* ì¡ï Ç»ëÆê´ÇéwíËÇµÇ»Ç¢ */
+#define TA_NULL		0		/* $BFCJL$JB0@-$r;XDj$7$J$$(B */
 
-#define TA_ASM		0x00000000	/* ÉAÉZÉìÉuÉâÇ…ÇÊÇÈÉvÉçÉOÉâÉÄ */
-#define TA_HLNG		0x00000001	/* çÇãâåæåÍÇ…ÇÊÇÈÉvÉçÉOÉâÉÄ */
+#define TA_ASM		0x00000000	/* $B%"%;%s%V%i$K$h$k%W%m%0%i%`(B */
+#define TA_HLNG		0x00000001	/* $B9b5i8@8l$K$h$k%W%m%0%i%`(B */
 
-#define TA_TFIFO	0x00000000	/* ë“ÇøÉ^ÉXÉNÇ FIFO Ç≈ä«óù */
-#define TA_TPRI		0x00000001	/* ë“ÇøÉ^ÉXÉNÇóDêÊìxèáÇ≈ä«óù */
+#define TA_TFIFO	0x00000000	/* $BBT$A%?%9%/$r(B FIFO $B$G4IM}(B */
+#define TA_TPRI		0x00000001	/* $BBT$A%?%9%/$rM%@hEY=g$G4IM}(B */
 
-#define TMO_POL		0		/* É|Å[ÉäÉìÉO */
-#define TMO_FEVR	(-1)		/* âiãvë“Çø */
+#define TMO_POL		0		/* $B%]!<%j%s%0(B */
+#define TMO_FEVR	(-1)		/* $B1J5WBT$A(B */
 
 /*
- *  É^ÉXÉNä«óùä÷åW
+ *  $B%?%9%/4IM}4X78(B
  */
 
 /* cre_tsk */
 typedef struct t_ctsk {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	tskatr;		/* É^ÉXÉNëÆê´ */
-	FP	task;		/* É^ÉXÉNãNìÆÉAÉhÉåÉX */
-	PRI	itskpri;	/* É^ÉXÉNãNìÆéûóDêÊìx */
-	INT	stksz;		/* ÉÜÅ[ÉUÉXÉ^ÉbÉNÉTÉCÉY */
-	/* ItIs ì∆é©ÇÃÉtÉBÅ[ÉãÉh */
-	INT	sstksz;		/* ÉVÉXÉeÉÄÉXÉ^ÉbÉNÉTÉCÉY */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	tskatr;		/* $B%?%9%/B0@-(B */
+	FP	task;		/* $B%?%9%/5/F0%"%I%l%9(B */
+	PRI	itskpri;	/* $B%?%9%/5/F0;~M%@hEY(B */
+	INT	stksz;		/* $B%f!<%6%9%?%C%/%5%$%:(B */
+	/* ItIs $BFH<+$N%U%#!<%k%I(B */
+	INT	sstksz;		/* $B%7%9%F%`%9%?%C%/%5%$%:(B */
 } T_CTSK;
 
-#define TA_COP0		0x00008000	/* ID=0 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP1		0x00004000	/* ID=1 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP2		0x00002000	/* ID=2 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP3		0x00001000	/* ID=3 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP4		0x00000800	/* ID=4 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP5		0x00000400	/* ID=5 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP6		0x00000200	/* ID=6 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
-#define TA_COP7		0x00000100	/* ID=7 ÇÃÉRÉvÉçÉZÉbÉTÇégóp */
+#define TA_COP0		0x00008000	/* ID=0 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP1		0x00004000	/* ID=1 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP2		0x00002000	/* ID=2 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP3		0x00001000	/* ID=3 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP4		0x00000800	/* ID=4 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP5		0x00000400	/* ID=5 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP6		0x00000200	/* ID=6 $B$N%3%W%m%;%C%5$r;HMQ(B */
+#define TA_COP7		0x00000100	/* ID=7 $B$N%3%W%m%;%C%5$r;HMQ(B */
 
-/* ItIs ì∆é©ÇÃëÆê´ */
-#define TA_SSTKSZ	0x00010000	/* ÉVÉXÉeÉÄÉXÉ^ÉbÉNÉTÉCÉYÇéwíË */
+/* ItIs $BFH<+$NB0@-(B */
+#define TA_SSTKSZ	0x00010000	/* $B%7%9%F%`%9%?%C%/%5%$%:$r;XDj(B */
 
-/* ItIs ì∆é©ÇÃëÆê´ (TRONédólÉ`ÉbÉv) */
-#define TA_RNG0		0x00000000	/* ÉäÉìÉOÉåÉxÉã0 Ç≈é¿çs */
-#define TA_RNG1		0x01000000	/* ÉäÉìÉOÉåÉxÉã1 Ç≈é¿çs */
-#define TA_RNG2		0x02000000	/* ÉäÉìÉOÉåÉxÉã2 Ç≈é¿çs */
-#define TA_RNG3		0x03000000	/* ÉäÉìÉOÉåÉxÉã3 Ç≈é¿çs */
+/* ItIs $BFH<+$NB0@-(B (TRON$B;EMM%A%C%W(B) */
+#define TA_RNG0		0x00000000	/* $B%j%s%0%l%Y%k(B0 $B$G<B9T(B */
+#define TA_RNG1		0x01000000	/* $B%j%s%0%l%Y%k(B1 $B$G<B9T(B */
+#define TA_RNG2		0x02000000	/* $B%j%s%0%l%Y%k(B2 $B$G<B9T(B */
+#define TA_RNG3		0x03000000	/* $B%j%s%0%l%Y%k(B3 $B$G<B9T(B */
 
-/* ItIs ì∆é©ÇÃëÆê´ (68040) */
-#define TA_SMODE	0x00000000	/* ÉXÅ[ÉpÉoÉCÉUÉÇÅ[ÉhÇ≈é¿çs */
-#define TA_UMODE	0x01000000	/* ÉÜÅ[ÉUÉÇÅ[ÉhÇ≈é¿çs */
+/* ItIs $BFH<+$NB0@-(B (68040) */
+#define TA_SMODE	0x00000000	/* $B%9!<%Q%P%$%6%b!<%I$G<B9T(B */
+#define TA_UMODE	0x01000000	/* $B%f!<%6%b!<%I$G<B9T(B */
 
-#define TSK_SELF	0		/* é©É^ÉXÉNéwíË */
+#define TSK_SELF	0		/* $B<+%?%9%/;XDj(B */
 
-#define TPRI_INI	0	/* É^ÉXÉNãNìÆéûóDêÊìxÇéwíË (chg_pri) */
-#define TPRI_RUN	0	/* é¿çsíÜÇÃç≈çÇóDêÊìxÇéwíË (rot_rdq) */
+#define TPRI_INI	0	/* $B%?%9%/5/F0;~M%@hEY$r;XDj(B (chg_pri) */
+#define TPRI_RUN	0	/* $B<B9TCf$N:G9bM%@hEY$r;XDj(B (rot_rdq) */
 
 /* ref_tsk */
 typedef	struct t_rtsk {
-	VP	exinf;		/* ägí£èÓïÒ */
-	PRI	tskpri;		/* åªç›ÇÃóDêÊìx */
-	UINT	tskstat;	/* É^ÉXÉNèÛë‘ */
-	UINT	tskwait;	/* ë“Çøóvàˆ */
-	ID	wid;		/* ë“ÇøÉIÉuÉWÉFÉNÉgID */
-	INT	wupcnt;		/* ãNè∞óvãÅÉLÉÖÅ[ÉCÉìÉOêî */
-	INT	suscnt;		/* SUSPENDóvãÅÉlÉXÉgêî */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	PRI	tskpri;		/* $B8=:_$NM%@hEY(B */
+	UINT	tskstat;	/* $B%?%9%/>uBV(B */
+	UINT	tskwait;	/* $BBT$AMW0x(B */
+	ID	wid;		/* $BBT$A%*%V%8%'%/%H(BID */
+	INT	wupcnt;		/* $B5/>2MW5a%-%e!<%$%s%0?t(B */
+	INT	suscnt;		/* SUSPEND$BMW5a%M%9%H?t(B */
 } T_RTSK;
 
 #define TTS_RUN		0x00000001	/* RUN */
@@ -157,311 +159,311 @@ typedef	struct t_rtsk {
 #define TTS_WAS		0x0000000c	/* WAIT-SUSPEND */
 #define TTS_DMT		0x00000010	/* DORMANT */
 
-#define TTW_SLP		0x00000001	/* ãNè∞ë“ÇøÇ…ÇÊÇÈë“Çø */
-#define TTW_DLY		0x00000002	/* É^ÉXÉNÇÃíxâÑÇ…ÇÊÇÈë“Çø */
-#define TTW_NOD		0x00000008	/* ê⁄ë±ã@î\âûìöë“Çø */
-#define TTW_FLG		0x00000010	/* ÉCÉxÉìÉgÉtÉâÉOë“Çø */
-#define TTW_SEM		0x00000020	/* ÉZÉ}ÉtÉHë“Çø */
-#define TTW_MBX		0x00000040	/* ÉÅÉCÉãÉ{ÉbÉNÉXë“Çø */
-#define TTW_SMBF	0x00000080	/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ëóêMë“Çø */
-#define TTW_MBF		0x00000100	/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@éÛêMë“Çø */
-#define TTW_CAL		0x00000200	/* ÉâÉìÉfÉuåƒèoë“Çø */
-#define TTW_ACP		0x00000400	/* ÉâÉìÉfÉuéÛïtë“Çø */
-#define TTW_RDV		0x00000800	/* ÉâÉìÉfÉuèIóπë“Çø */
-#define TTW_MPL		0x00001000	/* â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãë“Çø */
-#define TTW_MPF		0x00002000	/* å≈íËí∑ÉÅÉÇÉäÉvÅ[Éãë“Çø */
-/* ItIs ì∆é©ÇÃíËã` */
-#define TTW_PIS		0x00010000	/* óDêÊìxåpè≥ÉZÉ}ÉtÉHë“Çø */
-#define TTW_TMB		0x00020000	/* É^ÉXÉNïtëÆÉÅÉCÉãÉ{ÉbÉNÉXë“Çø */
+#define TTW_SLP		0x00000001	/* $B5/>2BT$A$K$h$kBT$A(B */
+#define TTW_DLY		0x00000002	/* $B%?%9%/$NCY1d$K$h$kBT$A(B */
+#define TTW_NOD		0x00000008	/* $B@\B35!G=1~EzBT$A(B */
+#define TTW_FLG		0x00000010	/* $B%$%Y%s%H%U%i%0BT$A(B */
+#define TTW_SEM		0x00000020	/* $B%;%^%U%)BT$A(B */
+#define TTW_MBX		0x00000040	/* $B%a%$%k%\%C%/%9BT$A(B */
+#define TTW_SMBF	0x00000080	/* $B%a%C%;!<%8%P%C%U%!Aw?.BT$A(B */
+#define TTW_MBF		0x00000100	/* $B%a%C%;!<%8%P%C%U%!<u?.BT$A(B */
+#define TTW_CAL		0x00000200	/* $B%i%s%G%V8F=PBT$A(B */
+#define TTW_ACP		0x00000400	/* $B%i%s%G%V<uIUBT$A(B */
+#define TTW_RDV		0x00000800	/* $B%i%s%G%V=*N;BT$A(B */
+#define TTW_MPL		0x00001000	/* $B2DJQD9%a%b%j%W!<%kBT$A(B */
+#define TTW_MPF		0x00002000	/* $B8GDjD9%a%b%j%W!<%kBT$A(B */
+/* ItIs $BFH<+$NDj5A(B */
+#define TTW_PIS		0x00010000	/* $BM%@hEY7Q>5%;%^%U%)BT$A(B */
+#define TTW_TMB		0x00020000	/* $B%?%9%/IUB0%a%$%k%\%C%/%9BT$A(B */
 
 /*
- *  ÉZÉ}ÉtÉHä÷åW
+ *  $B%;%^%U%)4X78(B
  */
 
 /* cre_sem */
 typedef	struct t_csem {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	sematr;		/* ÉZÉ}ÉtÉHëÆê´ */
-	INT	isemcnt;	/* ÉZÉ}ÉtÉHÇÃèâä˙ÉJÉEÉìÉgíl */
-	INT	maxsem;		/* ÉZÉ}ÉtÉHÇÃç≈ëÂÉJÉEÉìÉgíl */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	sematr;		/* $B%;%^%U%)B0@-(B */
+	INT	isemcnt;	/* $B%;%^%U%)$N=i4|%+%&%s%HCM(B */
+	INT	maxsem;		/* $B%;%^%U%)$N:GBg%+%&%s%HCM(B */
 } T_CSEM;
 
 /* ref_sem */
 typedef	struct t_rsem {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	INT	semcnt;		/* åªç›ÇÃÉZÉ}ÉtÉHÉJÉEÉìÉgíl */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	INT	semcnt;		/* $B8=:_$N%;%^%U%)%+%&%s%HCM(B */
 } T_RSEM;
 
 /*
- *  ÉCÉxÉìÉgÉtÉâÉOä÷åW
+ *  $B%$%Y%s%H%U%i%04X78(B
  */
 
 /* cre_flg */
 typedef	struct t_cflg {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	flgatr;		/* ÉCÉxÉìÉgÉtÉâÉOëÆê´ */
-	UINT	iflgptn;	/* ÉCÉxÉìÉgÉtÉâÉOÇÃèâä˙ÉpÉ^Å[Éì */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	flgatr;		/* $B%$%Y%s%H%U%i%0B0@-(B */
+	UINT	iflgptn;	/* $B%$%Y%s%H%U%i%0$N=i4|%Q%?!<%s(B */
 } T_CFLG;
 
-#define TA_WSGL		0x00000000	/* ï°êîÉ^ÉXÉNÇÃë“ÇøÇãñÇ≥Ç»Ç¢ */
-#define TA_WMUL		0x00000008	/* ï°êîÉ^ÉXÉNÇÃë“ÇøÇãñÇ∑ */
+#define TA_WSGL		0x00000000	/* $BJ#?t%?%9%/$NBT$A$r5v$5$J$$(B */
+#define TA_WMUL		0x00000008	/* $BJ#?t%?%9%/$NBT$A$r5v$9(B */
 
-#define TWF_ANDW	0x00000000	/* ANDë“Çø */
-#define TWF_ORW		0x00000002	/* ORë“Çø */
-#define TWF_CLR		0x00000001	/* ÉNÉäÉAéwíË */
+#define TWF_ANDW	0x00000000	/* AND$BBT$A(B */
+#define TWF_ORW		0x00000002	/* OR$BBT$A(B */
+#define TWF_CLR		0x00000001	/* $B%/%j%";XDj(B */
 
 /* ref_flg */
 typedef	struct t_rflg {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	UINT	flgptn;		/* åªç›ÇÃÉCÉxÉìÉgÉtÉâÉOÉpÉ^Å[Éì */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	UINT	flgptn;		/* $B8=:_$N%$%Y%s%H%U%i%0%Q%?!<%s(B */
 } T_RFLG;
 
 /*
- *  ÉÅÉCÉãÉ{ÉbÉNÉXä÷åW
+ *  $B%a%$%k%\%C%/%94X78(B
  */
 
 /* cre_mbx */
 typedef	struct t_cmbx {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mbxatr;		/* ÉÅÉCÉãÉ{ÉbÉNÉXëÆê´ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mbxatr;		/* $B%a%$%k%\%C%/%9B0@-(B */
 } T_CMBX;
 
-#define TA_MFIFO	0x00000000	/* ÉÅÉbÉZÅ[ÉWÇ FIFO Ç≈ä«óù */
-#define TA_MPRI		0x00000002	/* ÉÅÉbÉZÅ[ÉWÇóDêÊìxèáÇ≈ä«óù */
+#define TA_MFIFO	0x00000000	/* $B%a%C%;!<%8$r(B FIFO $B$G4IM}(B */
+#define TA_MPRI		0x00000002	/* $B%a%C%;!<%8$rM%@hEY=g$G4IM}(B */
 
 typedef struct t_msg {
-	VP	msgque[1];	/* ÉÅÉbÉZÅ[ÉWÉLÉÖÅ[ÇÃÇΩÇﬂÇÃÉGÉäÉA */
-	PRI	msgpri;		/* ÉÅÉbÉZÅ[ÉWóDêÊìx */
-	VB	msgcont[0];	/* ÉÅÉbÉZÅ[ÉWñ{ëÃ */
+	VP	msgque[1];	/* $B%a%C%;!<%8%-%e!<$N$?$a$N%(%j%"(B */
+	PRI	msgpri;		/* $B%a%C%;!<%8M%@hEY(B */
+	VB	msgcont[0];	/* $B%a%C%;!<%8K\BN(B */
 } T_MSG;
 
 /* ref_mbx */
 typedef	struct t_rmbx {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	T_MSG	*pk_msg;	/* éüÇ…éÛêMÇ≥ÇÍÇÈÉÅÉbÉZÅ[ÉW */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	T_MSG	*pk_msg;	/* $B<!$K<u?.$5$l$k%a%C%;!<%8(B */
 } T_RMBX;
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ä÷åW
+ *  $B%a%C%;!<%8%P%C%U%!4X78(B
  */
 
 /* cre_mbf */
 typedef	struct t_cmbf {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mbfatr;		/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ëÆê´ */
-	INT	bufsz;		/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ÇÃÉTÉCÉY */
-	INT	maxmsz;		/* ÉÅÉbÉZÅ[ÉWÇÃç≈ëÂí∑ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mbfatr;		/* $B%a%C%;!<%8%P%C%U%!B0@-(B */
+	INT	bufsz;		/* $B%a%C%;!<%8%P%C%U%!$N%5%$%:(B */
+	INT	maxmsz;		/* $B%a%C%;!<%8$N:GBgD9(B */
 } T_CMBF;
 
-#define TMBF_OS		(-4)	/* OS ÇÃÉGÉâÅ[ÉçÉOópÇÃÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ */
-#define TMBF_DB		(-3)	/* ÉfÉoÉbÉOópÇÃÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ */
+#define TMBF_OS		(-4)	/* OS $B$N%(%i!<%m%0MQ$N%a%C%;!<%8%P%C%U%!(B */
+#define TMBF_DB		(-3)	/* $B%G%P%C%0MQ$N%a%C%;!<%8%P%C%U%!(B */
 
 /* ref_mbf */
 typedef struct t_rmbf {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* éÛêMë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	BOOL_ID	stsk;		/* ëóêMë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	INT	msgsz;		/* éüÇ…éÛêMÇ≥ÇÍÇÈÉÅÉbÉZÅ[ÉWÇÃÉTÉCÉY */
-	INT	frbufsz;	/* ãÛÇ´ÉoÉbÉtÉ@ÇÃÉTÉCÉY */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $B<u?.BT$A%?%9%/$NM-L5(B */
+	BOOL_ID	stsk;		/* $BAw?.BT$A%?%9%/$NM-L5(B */
+	INT	msgsz;		/* $B<!$K<u?.$5$l$k%a%C%;!<%8$N%5%$%:(B */
+	INT	frbufsz;	/* $B6u$-%P%C%U%!$N%5%$%:(B */
 } T_RMBF;
 
 /*
- *  ÉâÉìÉfÉuÅCÉâÉìÉfÉuópÉ|Å[Égä÷åW
+ *  $B%i%s%G%V!$%i%s%G%VMQ%]!<%H4X78(B
  */
 
 /* cre_por */
 typedef	struct t_cpor {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	poratr;		/* É|Å[ÉgëÆê´ */
-	INT	maxcmsz;	/* åƒèoÉÅÉbÉZÅ[ÉWÇÃç≈ëÂí∑ */
-	INT	maxrmsz;	/* ï‘ìöÉÅÉbÉZÅ[ÉWÇÃç≈ëÂí∑ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	poratr;		/* $B%]!<%HB0@-(B */
+	INT	maxcmsz;	/* $B8F=P%a%C%;!<%8$N:GBgD9(B */
+	INT	maxrmsz;	/* $BJVEz%a%C%;!<%8$N:GBgD9(B */
 } T_CPOR;
 
 /* ref_por */
 typedef struct t_rpor {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* åƒèoë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	BOOL_ID	atsk;		/* éÛïtë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $B8F=PBT$A%?%9%/$NM-L5(B */
+	BOOL_ID	atsk;		/* $B<uIUBT$A%?%9%/$NM-L5(B */
 } T_RPOR;
 
 /*
- *  óDêÊìxåpè≥ÉZÉ}ÉtÉHä÷åW (ItIs ì∆é©ÇÃíËã`)
+ *  $BM%@hEY7Q>5%;%^%U%)4X78(B (ItIs $BFH<+$NDj5A(B)
  */
 
 /* vcre_pis */
 typedef	struct t_cpis {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	pisatr;		/* óDêÊìxåpè≥ÉZÉ}ÉtÉHëÆê´ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	pisatr;		/* $BM%@hEY7Q>5%;%^%U%)B0@-(B */
 } T_CPIS;
 
 /* vref_pis */
 typedef	struct t_rpis {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	BOOL_ID	pistsk;		/* ÉZÉ}ÉtÉHéÊìæÉ^ÉXÉNÇÃóLñ≥ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	BOOL_ID	pistsk;		/* $B%;%^%U%)<hF@%?%9%/$NM-L5(B */
 } T_RPIS;
 
 /*
- *  É^ÉXÉNïtëÆÉÅÉCÉãÉ{ÉbÉNÉXä÷åW (ItIs ì∆é©ÇÃíËã`)
+ *  $B%?%9%/IUB0%a%$%k%\%C%/%94X78(B (ItIs $BFH<+$NDj5A(B)
  */
 
 /* vref_tmb */
 typedef	struct t_rtmb {
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	T_MSG	*pk_msg;	/* éüÇ…éÛêMÇ≥ÇÍÇÈÉÅÉbÉZÅ[ÉW */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	T_MSG	*pk_msg;	/* $B<!$K<u?.$5$l$k%a%C%;!<%8(B */
 } T_RTMB;
 
 /*
- *  äÑçûÇ›ä«óùä÷åW
+ *  $B3d9~$_4IM}4X78(B
  */
 
 /* def_int */
 typedef struct t_dint {
-	ATR	intatr;		/* äÑçûÇ›ÉnÉìÉhÉâëÆê´ */
-	FP	inthdr;		/* äÑçûÇ›ÉnÉìÉhÉâÉAÉhÉåÉX */
-	/* ItIs ì∆é©ÇÃÉtÉBÅ[ÉãÉh (TRONédólÉ`ÉbÉv) */
-	UINT	eitatr;		/* EITëÆê´ */
+	ATR	intatr;		/* $B3d9~$_%O%s%I%iB0@-(B */
+	FP	inthdr;		/* $B3d9~$_%O%s%I%i%"%I%l%9(B */
+	/* ItIs $BFH<+$N%U%#!<%k%I(B (TRON$B;EMM%A%C%W(B) */
+	UINT	eitatr;		/* EIT$BB0@-(B */
 } T_DINT;
 
-/* ItIs ì∆é©ÇÃëÆê´ (TRONédólÉ`ÉbÉv) */
-#define TA_EITATR	0x00010000	/* EITëÆê´ÇéwíË */
+/* ItIs $BFH<+$NB0@-(B (TRON$B;EMM%A%C%W(B) */
+#define TA_EITATR	0x00010000	/* EIT$BB0@-$r;XDj(B */
 
 /*
- *  ÉÅÉÇÉäÉvÅ[Éãä÷åW
+ *  $B%a%b%j%W!<%k4X78(B
  */
 
 /* cre_mpl */
 typedef	struct t_cmpl {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mplatr;		/* ÉÅÉÇÉäÉvÅ[ÉãëÆê´ */
-	INT	mplsz;		/* ÉÅÉÇÉäÉvÅ[ÉãëSëÃÇÃÉTÉCÉY */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mplatr;		/* $B%a%b%j%W!<%kB0@-(B */
+	INT	mplsz;		/* $B%a%b%j%W!<%kA4BN$N%5%$%:(B */
 } T_CMPL;
 
-/* ItIs ì∆é©ÇÃëÆê´ */
-#define TA_HFIT		0x00000000	/* half-fit ÉAÉãÉSÉäÉYÉÄ */
-#define TA_FFIT		0x00010000	/* first-fit ÉAÉãÉSÉäÉYÉÄ */
+/* ItIs $BFH<+$NB0@-(B */
+#define TA_HFIT		0x00000000	/* half-fit $B%"%k%4%j%:%`(B */
+#define TA_FFIT		0x00010000	/* first-fit $B%"%k%4%j%:%`(B */
 
-#define TMPL_OS		(-4)		/* OSópÉÅÉÇÉäÉvÅ[Éã */
+#define TMPL_OS		(-4)		/* OS$BMQ%a%b%j%W!<%k(B */
 
 /* ref_mpl */
 typedef struct t_rmpl {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	INT	frsz;		/* ãÛÇ´óÃàÊÇÃçáåvÉTÉCÉY */
-	INT	maxsz;		/* ç≈ëÂÇÃòAë±ãÛÇ´óÃàÊÇÃÉTÉCÉY */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	INT	frsz;		/* $B6u$-NN0h$N9g7W%5%$%:(B */
+	INT	maxsz;		/* $B:GBg$NO"B36u$-NN0h$N%5%$%:(B */
 } T_RMPL;
 
 /* cre_mpf */
 typedef	struct t_cmpf {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mpfatr;		/* ÉÅÉÇÉäÉvÅ[ÉãëÆê´ */
-	INT	mpfcnt;		/* ÉÅÉÇÉäÉvÅ[ÉãëSëÃÇÃÉuÉçÉbÉNêî */
-	INT	blfsz;		/* å≈íËí∑ÉÅÉÇÉäÉuÉçÉbÉNÇÃÉTÉCÉY */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mpfatr;		/* $B%a%b%j%W!<%kB0@-(B */
+	INT	mpfcnt;		/* $B%a%b%j%W!<%kA4BN$N%V%m%C%/?t(B */
+	INT	blfsz;		/* $B8GDjD9%a%b%j%V%m%C%/$N%5%$%:(B */
 } T_CMPF;
 
 /* ref_mpf */
 typedef struct t_rmpf {
-	VP	exinf;		/* ägí£èÓïÒ */
-	BOOL_ID	wtsk;		/* ë“ÇøÉ^ÉXÉNÇÃóLñ≥ */
-	INT	frbcnt;		/* ãÛÇ´óÃàÊÇÃÉuÉçÉbÉNêî */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	BOOL_ID	wtsk;		/* $BBT$A%?%9%/$NM-L5(B */
+	INT	frbcnt;		/* $B6u$-NN0h$N%V%m%C%/?t(B */
 } T_RMPF;
 
 /*
- *  éûä‘ä«óùä÷åW
+ *  $B;~4V4IM}4X78(B
  */
 
 /* def_cyc */
 typedef struct t_dcyc {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	cycatr;		/* é¸ä˙ãNìÆÉnÉìÉhÉâëÆê´ */
-	FP	cychdr;		/* é¸ä˙ãNìÆÉnÉìÉhÉâÉAÉhÉåÉX */
-	UINT	cycact;		/* é¸ä˙ãNìÆÉnÉìÉhÉâäàê´èÛë‘ */
-	CYCTIME	cyctim;		/* é¸ä˙ãNìÆéûä‘ä‘äu */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	cycatr;		/* $B<~4|5/F0%O%s%I%iB0@-(B */
+	FP	cychdr;		/* $B<~4|5/F0%O%s%I%i%"%I%l%9(B */
+	UINT	cycact;		/* $B<~4|5/F0%O%s%I%i3h@->uBV(B */
+	CYCTIME	cyctim;		/* $B<~4|5/F0;~4V4V3V(B */
 } T_DCYC;
 
-#define TCY_OFF		0x00000000	/* é¸ä˙ãNìÆÉnÉìÉhÉâÇãNìÆÇµÇ»Ç¢ */
-#define TCY_ON		0x00000001	/* é¸ä˙ãNìÆÉnÉìÉhÉâÇãNìÆÇ∑ÇÈ */
-#define TCY_INI		0x00000002	/* é¸ä˙ÇÃÉJÉEÉìÉgÇèâä˙âªÇ∑ÇÈ */
+#define TCY_OFF		0x00000000	/* $B<~4|5/F0%O%s%I%i$r5/F0$7$J$$(B */
+#define TCY_ON		0x00000001	/* $B<~4|5/F0%O%s%I%i$r5/F0$9$k(B */
+#define TCY_INI		0x00000002	/* $B<~4|$N%+%&%s%H$r=i4|2=$9$k(B */
 
 /* ref_cyc */
 typedef struct t_rcyc {
-	VP	exinf;		/* ägí£èÓïÒ */
-	CYCTIME	lfttim;		/* éüÇÃÉnÉìÉhÉâãNìÆÇ‹Ç≈ÇÃécÇËéûä‘ */
-	UINT	cycact;		/* é¸ä˙ãNìÆÉnÉìÉhÉâäàê´èÛë‘ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	CYCTIME	lfttim;		/* $B<!$N%O%s%I%i5/F0$^$G$N;D$j;~4V(B */
+	UINT	cycact;		/* $B<~4|5/F0%O%s%I%i3h@->uBV(B */
 } T_RCYC;
 
 /* def_alm */
 typedef struct t_dalm {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	almatr;		/* ÉAÉâÅ[ÉÄÉnÉìÉhÉâëÆê´ */
-	FP	almhdr;		/* ÉAÉâÅ[ÉÄÉnÉìÉhÉâÉAÉhÉåÉX */
-	UINT	tmmode;		/* ãNìÆéûçèéwíËÉÇÅ[Éh */
-	ALMTIME	almtim;		/* ÉnÉìÉhÉâãNìÆéûçè */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	almatr;		/* $B%"%i!<%`%O%s%I%iB0@-(B */
+	FP	almhdr;		/* $B%"%i!<%`%O%s%I%i%"%I%l%9(B */
+	UINT	tmmode;		/* $B5/F0;~9o;XDj%b!<%I(B */
+	ALMTIME	almtim;		/* $B%O%s%I%i5/F0;~9o(B */
 } T_DALM;
 
-#define TTM_ABS		0x00000000	/* ê‚ëŒéûçèÇ≈ÇÃéwíË */
-#define TTM_REL		0x00000001	/* ëäëŒéûçèÇ≈ÇÃéwíË */
+#define TTM_ABS		0x00000000	/* $B@dBP;~9o$G$N;XDj(B */
+#define TTM_REL		0x00000001	/* $BAjBP;~9o$G$N;XDj(B */
 
 /* ref_alm */
 typedef struct t_ralm {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ALMTIME	lfttim;		/* ÉnÉìÉhÉâãNìÆÇ‹Ç≈ÇÃécÇËéûä‘ */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ALMTIME	lfttim;		/* $B%O%s%I%i5/F0$^$G$N;D$j;~4V(B */
 } T_RALM;
 
 /*
- *  ÉVÉXÉeÉÄä«óùä÷åW
+ *  $B%7%9%F%`4IM}4X78(B
  */
 
 /* get_ver */
 typedef struct t_ver {
-	UH	maker;		/* ÉÅÅ[ÉJÅ[ */
-	UH	id;		/* å`éÆî‘çÜ */
-	UH	spver;		/* édólèëÉoÅ[ÉWÉáÉì */
-	UH	prver;		/* êªïiÉoÅ[ÉWÉáÉì */
-	UH	prno[4];	/* êªïiä«óùèÓïÒ */
-	UH	cpu;		/* CPUèÓïÒ */
-	UH	var;		/* ÉoÉäÉGÅ[ÉVÉáÉìãLèqéq */
+	UH	maker;		/* $B%a!<%+!<(B */
+	UH	id;		/* $B7A<0HV9f(B */
+	UH	spver;		/* $B;EMM=q%P!<%8%g%s(B */
+	UH	prver;		/* $B@=IJ%P!<%8%g%s(B */
+	UH	prno[4];	/* $B@=IJ4IM}>pJs(B */
+	UH	cpu;		/* CPU$B>pJs(B */
+	UH	var;		/* $B%P%j%(!<%7%g%s5-=R;R(B */
 } T_VER;
 
 /* ref_sys */
 typedef struct t_rsys {
-	INT	sysstat;	/* ÉVÉXÉeÉÄèÛë‘ */
-	ID	runtskid;	/* é¿çsèÛë‘Ç…Ç†ÇÈÉ^ÉXÉNÇÃ ID */
-	ID	schedtskid;	/* é¿çsèÛë‘Ç…Ç∑Ç◊Ç´É^ÉXÉNÇÃ ID */
+	INT	sysstat;	/* $B%7%9%F%`>uBV(B */
+	ID	runtskid;	/* $B<B9T>uBV$K$"$k%?%9%/$N(B ID */
+	ID	schedtskid;	/* $B<B9T>uBV$K$9$Y$-%?%9%/$N(B ID */
 } T_RSYS;
 
-#define TTS_TSK		0	/* É^ÉXÉNïîé¿çsíÜ */
-#define TTS_DDSP	1	/* ÉfÉBÉXÉpÉbÉ`ã÷é~íÜ */
-#define TTS_LOC		3	/* äÑçûÇ›Ç®ÇÊÇ—ÉfÉBÉXÉpÉbÉ`ã÷é~íÜ */
-#define TTS_INDP	4	/* É^ÉXÉNì∆óßïîé¿çsíÜ */
-/* ItIs ì∆é©ÇÃíËã` */
-#define TTS_QTSK	8	/* èÄÉ^ÉXÉNïîé¿çsíÜ */
+#define TTS_TSK		0	/* $B%?%9%/It<B9TCf(B */
+#define TTS_DDSP	1	/* $B%G%#%9%Q%C%A6X;_Cf(B */
+#define TTS_LOC		3	/* $B3d9~$_$*$h$S%G%#%9%Q%C%A6X;_Cf(B */
+#define TTS_INDP	4	/* $B%?%9%/FHN)It<B9TCf(B */
+/* ItIs $BFH<+$NDj5A(B */
+#define TTS_QTSK	8	/* $B=`%?%9%/It<B9TCf(B */
 
 /* ref_cfg */
 typedef struct t_rcfg {
-	/* ItIs ì∆é©ÇÃÉtÉBÅ[ÉãÉh */
+	/* ItIs $BFH<+$N%U%#!<%k%I(B */
 } T_RCFG;
 
 /* def_svc */
 typedef struct t_dsvc {
-	ATR	svcatr;		/* ägí£SVCÉnÉìÉhÉâëÆê´ */
-	FP	svchdr;		/* ägí£SVCÉnÉìÉhÉâÉAÉhÉåÉX */
+	ATR	svcatr;		/* $B3HD%(BSVC$B%O%s%I%iB0@-(B */
+	FP	svchdr;		/* $B3HD%(BSVC$B%O%s%I%i%"%I%l%9(B */
 } T_DSVC;
 
 /* def_exc */
 typedef struct t_dexc {
-	ATR	excatr;		/* ó·äOÉnÉìÉhÉâëÆê´ */
-	FP	exchdr;		/* ó·äOÉnÉìÉhÉâÉAÉhÉåÉX */
+	ATR	excatr;		/* $BNc30%O%s%I%iB0@-(B */
+	FP	exchdr;		/* $BNc30%O%s%I%i%"%I%l%9(B */
 } T_DEXC;
 
 /*
- *  ÉlÉbÉgÉèÅ[ÉNä«óùä÷åW
+ *  $B%M%C%H%o!<%/4IM}4X78(B
  */
 
-#define TND_SELF	0	/* é©ÉmÅ[ÉhéwíË */
-#define TND_OTHR	(-1)	/* ÉfÉtÉHÉãÉgÇÃëºÉmÅ[ÉhéwíË */
+#define TND_SELF	0	/* $B<+%N!<%I;XDj(B */
+#define TND_OTHR	(-1)	/* $B%G%U%)%k%H$NB>%N!<%I;XDj(B */
 
 #endif /* _ITRON_ */

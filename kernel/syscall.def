@@ -1,8 +1,10 @@
 #
 # 
-# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 	ItIs - An ITRON Implementation for Research and Education
 # 
-# Copyright (C) 1989-1997 by Sakamura Lab, the University of Tokyo, JAPAN
+# Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+# Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+# 				Toyohashi Univ. of Technology, JAPAN
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. Neither the name of the University nor the names of the laboratory
+# 3. Neither the name of the universities nor the names of the laboratories
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 # 
 # THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
 # WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 # DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 # GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,31 +30,32 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-#  @(#) $Id: syscall.def,v 1.10 1998/01/30 06:57:48 hiro Exp $
+#  @(#) $Id: syscall.def,v 1.11 1998/01/30 09:52:44 hiro Exp $
 # 
+
 #
-#  ÉVÉXÉeÉÄÉRÅ[ÉãíËã`ÉtÉ@ÉCÉã
+#  $B%7%9%F%`%3!<%kDj5A%U%!%$%k(B
 # 
-#  äeçsÇÕÅCã@î\î‘çÜÅCÉtÉâÉOÅCÉVÉXÉeÉÄÉRÅ[ÉãÇÃÉvÉçÉgÉ^ÉCÉvêÈåæÇ©ÇÁç\ê¨Ç≥
-#  ÇÍÇÈÅDçsì™Ç™ÉXÉyÅ[ÉX (ãÛîíÇ‹ÇΩÇÕ TAB) Ç≈énÇ‹ÇÈéûÇÕÅCã@î\ÉRÅ[ÉhÇ™è»ó™
-#  Ç≥ÇÍÇΩÇ∆Ç›Ç»Ç∑ÅDçsññÇÃ "\" ÇÕåpë±çsÇé¶Ç∑ÅD
+#  $B3F9T$O!$5!G=HV9f!$%U%i%0!$%7%9%F%`%3!<%k$N%W%m%H%?%$%W@k8@$+$i9=@.$5(B
+#  $B$l$k!%9TF,$,%9%Z!<%9(B ($B6uGr$^$?$O(B TAB) $B$G;O$^$k;~$O!$5!G=%3!<%I$,>JN,(B
+#  $B$5$l$?$H$_$J$9!%9TKv$N(B "\" $B$O7QB39T$r<($9!%(B
 #
-#  ç≈èâÇÃÉVÉXÉeÉÄÉRÅ[ÉãÇÃã@î\ÉRÅ[ÉhÇÕè»ó™Ç≈Ç´Ç»Ç¢ÅDç≈å„ÇÃÉVÉXÉeÉÄÉRÅ[Éã
-#  ÇÃã@î\ÉRÅ[ÉhÇ™ -1 Ç…Ç»ÇÈÇÊÇ§Ç…Ç∑ÇÈÇ±Ç∆ÅD
+#  $B:G=i$N%7%9%F%`%3!<%k$N5!G=%3!<%I$O>JN,$G$-$J$$!%:G8e$N%7%9%F%`%3!<%k(B
+#  $B$N5!G=%3!<%I$,(B -1 $B$K$J$k$h$&$K$9$k$3$H!%(B
 #
-#  ÉvÉçÉgÉ^ÉCÉvêÈåæíÜÇ≈ÇÕÅCå^ñºÇ∆ïœêîñºÇÃï™ó£Çóeà’Ç…Ç∑ÇÈÇΩÇﬂÇ…ÅCå^ñºÇ∆
-#  ïœêîñºÇÃä‘Ç…ãÛîíÇì¸ÇÍÅCå^ñºÇÃìríÜÇ…ãÛîíÇì¸ÇÍÇ»Ç¢Ç±Ç∆ÅD
+#  $B%W%m%H%?%$%W@k8@Cf$G$O!$7?L>$HJQ?tL>$NJ,N%$rMF0W$K$9$k$?$a$K!$7?L>$H(B
+#  $BJQ?tL>$N4V$K6uGr$rF~$l!$7?L>$NESCf$K6uGr$rF~$l$J$$$3$H!%(B
 #
-#  ÉtÉâÉOÇÃà”ñ°ÇÕéüÇÃí ÇËÅD
+#  $B%U%i%0$N0UL#$O<!$NDL$j!%(B
 #
-#	R, S, E, C, RN, SN, EN, CN : ÉVÉXÉeÉÄÉRÅ[ÉãÇÃÉåÉxÉã
-#	V, VN : ItIsì∆é©ÇÃÉVÉXÉeÉÄÉRÅ[Éã
-#	M, MN : ItIs/MPì∆é©ÇÃÉVÉXÉeÉÄÉRÅ[Éã
-#	N, n : ê⁄ë±ã@î\Ç…ëŒâûÇ∑ÇÈïKóvÇ™Ç†ÇÈ
-#	m : ÉÅÉÇÉäè„Ç…ÉäÉ^Å[ÉìílÇï‘Ç∑
-#	i : ÉJÅ[ÉlÉãÇÕÉTÉ|Å[ÉgÇµÇ»Ç¢
-#	v : ÉäÉ^Å[ÉìÇµÇ»Ç¢
-#	- : ñ¢ÉTÉ|Å[Égã@î\ÅCñ¢íËã`ã@î\
+#	R, S, E, C, RN, SN, EN, CN : $B%7%9%F%`%3!<%k$N%l%Y%k(B
+#	V, VN : ItIs$BFH<+$N%7%9%F%`%3!<%k(B
+#	M, MN : ItIs/MP$BFH<+$N%7%9%F%`%3!<%k(B
+#	N, n : $B@\B35!G=$KBP1~$9$kI,MW$,$"$k(B
+#	m : $B%a%b%j>e$K%j%?!<%sCM$rJV$9(B
+#	i : $B%+!<%M%k$O%5%]!<%H$7$J$$(B
+#	v : $B%j%?!<%s$7$J$$(B
+#	- : $BL$%5%]!<%H5!G=!$L$Dj5A5!G=(B
 #
 -272	V	vsnd_tmb(ID tskid, T_MSG* pk_msg)
 	Vm	vtrcv_tmb(T_MSG** ppk_msg, TMO tmout)

@@ -22,12 +22,15 @@
  doc                        1	
  doc/BSDUNIX                1	
  doc/CONDITION              1	
+ doc/M68K                   1	
  doc/PRISEM                 1	
+ doc/TRON                   1	
  doc/USER                   1	ItIs Phase3 Users Manual
  include                    1	
  include/Makefile           1	
  include/bsd                1	
  include/bsd/itis_scint.h   1	
+ include/bsd_sigio.h        1	
  include/itis_debug.h       1	
  include/itis_ioctl.h       1	
  include/itis_isyscall.h    1	
@@ -37,6 +40,8 @@
  include/itron.h            1	
  include/itron_errno.h      1	
  include/itron_fncode.h     1	
+ include/m68k               1	
+ include/m68k/itis_scint.h  1	
  include/svc_fncode.h       1	
  include/svc_serial.h       1	
  include/svc_syslog.h       1	
@@ -85,6 +90,7 @@
  libitis/assert_fail.c      1	
  libitis/bsd_nbeio.c        1	
  libitis/bsd_nbio.c         1	
+ libitis/glue_newlib.c      1	
  libitis/itis_panic.c       1	
  libitis/itis_perror.c      1	
  libitis/panic.c            1	
@@ -93,13 +99,35 @@
  libitis/strerror.c         1	
  libitis/syslog.c           1	
  libitis/sysstat.c          1	
+ m68k                       1	
+ m68k/Makefile.config       1	
+ m68k/cpu_calls.c           1	
+ m68k/cpu_conf.h            1	
+ m68k/cpu_status.h          1	
+ m68k/cpu_support.S         1	
+ m68k/cpu_task.h            1	
+ m68k/cpu_util.c            1	
+ m68k/dve68k                1	
+ m68k/dve68k/dve68k.h       1	
+ m68k/dve68k/sys_conf.h     1	
+ m68k/dve68k/sys_serial.h   1	
+ m68k/dve68k/sys_support.S  1	
+ m68k/dve68k/sys_timer.h    1	
+ m68k/dve68k/sys_util.c     1	
+ m68k/m68k_insn.h           1	
+ m68k/makeoffset.c          1	
+ m68k/startup               1	
+ m68k/startup/Makefile      1	
+ m68k/startup/start.S       1	
  sample                     1	
+ sample/Makefile.dve68k     1	
  sample/Makefile.h32        1	
  sample/Makefile.mcube      1	
  sample/Makefile.sunos4     1	
  sample/Makefile.tvme       1	
  sample/config.def          1	
  sample/config.def.bsd      1	
+ sample/sample1.c           1	
  systask                    1	
  systask/bsd_serial.c       1	
  systask/bsd_sigio.c        1	
@@ -147,5 +175,6 @@
  tron/tvme/tvme150.h        1	
  utils                      1	
  utils/deldep               1	
+ utils/extidata             1	
  utils/genoffset            1	
  utils/makedep              1	

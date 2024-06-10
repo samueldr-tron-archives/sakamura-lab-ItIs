@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,11 +30,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: cpu_calls.c,v 1.3 1996/02/17 09:23:31 hiro Exp $
+ *  @(#) $Id: cpu_calls.c,v 1.5 1998/07/06 06:29:28 hiro Exp $
  */
 
 /* 
- *  CPU Ç…àÀë∂Ç∑ÇÈÉVÉXÉeÉÄÉRÅ[Éã
+ *  CPU $B$K0MB8$9$k%7%9%F%`%3!<%k(B
  */
 
 #include "itis_kernel.h"
@@ -40,7 +42,7 @@
 #include "check.h"
 
 /*
- *  ÉfÉBÉXÉpÉbÉ`ÇÃã÷é~/ãñâ¬ã@î\
+ *  $B%G%#%9%Q%C%A$N6X;_(B/$B5v2D5!G=(B
  */
 
 #ifndef _i_dis_dsp
@@ -67,7 +69,7 @@ i_ena_dsp(void)
 #endif /* _i_ena_dsp */
 
 /*
- *  äÑçûÇ›ÇÃã÷é~/ãñâ¬ã@î\
+ *  $B3d9~$_$N6X;_(B/$B5v2D5!G=(B
  */
 
 #ifndef _i_loc_cpu
@@ -94,7 +96,7 @@ i_unl_cpu(void)
 #endif /* _i_unl_cpu */
 
 /*
- *  IMASK ÇÃê›íË/éQè∆ã@î\
+ *  IMASK $B$N@_Dj(B/$B;2>H5!G=(B
  */
 
 #ifndef _i_chg_ims
@@ -102,7 +104,12 @@ i_unl_cpu(void)
 SYSCALL ER
 i_chg_ims(UINT mask)
 {
-	CHECK_PAR(!(in_indp() && (mask & SIGMASK_INDP) != SIGMASK_INDP));
+	if (in_indp()) {
+		CHECK_PAR((mask & SIGMASK_INDP) == SIGMASK_INDP);
+	}
+	else if (mask & ~SIGMASK_DDSP) {
+		CHECK_PAR((mask & SIGMASK_DDSP) == SIGMASK_DDSP);
+	}
 	sigsetmask(mask);
 	return(E_OK);
 }

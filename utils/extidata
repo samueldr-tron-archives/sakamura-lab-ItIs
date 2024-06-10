@@ -1,0 +1,177 @@
+#! /usr/local/bin/perl
+# 
+# 	ItIs - An ITRON Implementation for Research and Education
+# 
+# Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+# 				Toyohashi Univ. of Technology, JAPAN
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the university nor the name of the laboratory
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+#  @(#) $Id: extidata,v 1.2 1998/06/18 07:49:01 hiro Exp $
+# 
+
+#
+#  オブジェクトファイルからデータセクションの内容をアセンブラのソース形
+#  式で抽出する (ROM化対応ユーティリティ)．
+#
+#  アセンブラソースは，取り出したデータセクションの内容をテキストセクショ
+#  ンに置くものとして生成し，その先頭に __idata_startシンボル，末尾に 
+#  __idata_endシンボルを置く．これらのシンボルは，スタートアップモジュー
+#  ルで，データセクションを初期化する際に用いられる．
+#
+#  extidata を使って ROM化可能なプログラムを作成する際には，リンカを 3回
+#  通すことが必要である．具体的には，次のように行う．
+#
+#    % gcc -o program obj1.o obj2.o ... objn.o
+#    % extidata program
+#    % gcc -o program obj1.o obj2.o ... objn.o program-idata.s
+#    % extidata program
+#    % gcc -o program obj1.o obj2.o ... objn.o program-idata.s
+#
+#  1回目のリンクの結果は，通常のオブジェクトモジュールである．ここから，
+#  extidata を使って，データセクションを取り出す．データセクションのサ
+#  イズは，1回目のリンクで fix しており，以後変化しない．
+#
+#  2回目のリンクで，データセクションを初期化するためのデータをテキスト
+#  セクションに入れたオブジェクトモジュールが作られる．このリンク結果で
+#  は，テキストセクションやデータセクションの配置が変化しているために，
+#  テキストセクション中の初期化データと実際のデータセクションの内容が一
+#  致しているとは限らない．
+#
+#  3回目のリンクで，最終的な ROM化可能なプログラムが得られる．2回目のリ
+#  ンク結果と 3回目のリンク結果で，セクションの配置されるアドレスが変化
+#  しないことがポイントである．この段階で大丈夫なことを確認するためには，
+#  再度 extidata を使ってデータセクションを抽出し，1つ前の結果と比較す
+#  ればよい．つまり，
+#
+#    % extidata program program-idata.check
+#    % diff program-idata.s program-idata.check
+#
+#  最後の比較が一致すれば，結果が正しいことが保証される．
+#
+#  extidata 起動時には，パラメータとして，入力ファイルの名前と出力ファ
+#  イルの名前を与える．出力ファイル名を省略した場合には，入力ファイル名
+#  に "-idata.s" をつけたものを用いる．入力ファイル名も省略した場合には，
+#  入力ファイル名として，"a.out" を用いる．
+#
+#  extidata には，次のオプションがある．
+#
+#  -p <prefix>	内部で使う objdump ユーティリティのプリフィックス．例え
+#		ば，<prefix> を m68k とすると，m68-objdump を使う．
+#  -v		動作情報を表示する．
+
+require "getopt.pl";
+do Getopt("p");
+
+$prefix = $opt_p ? $opt_p."-" : "";
+
+#
+#  オブジェクトダンプ 1行文のデータをアセンブラ形式で書き出す
+#
+sub writeline {
+	local($line) = @_;
+	local($byte, $first);
+
+	$first = 1;
+	print OUTFILE "\t.byte ";
+	while ($line =~ /^([0-9a-f][0-9a-f])(.*)$/) {
+		$byte = hex($1);
+		$line = $2;
+		print OUTFILE "," unless ($first);
+		print OUTFILE $byte;
+		$first = 0;
+		$line =~ s/^ //;
+	}
+	print OUTFILE "\n";
+}
+
+#
+#  $infile から .data セクションを抽出して，アセンブラソースを $outfile 
+#  に出力．
+#
+sub extidata {
+	local($infile, $outfile) = @_;
+	local($line);
+
+	if ($opt_v) {
+		print "input file = ",$infile;
+		print " : output file = ",$outfile,"\n";
+	}
+
+	open(OBJDUMP, $prefix."objdump -s -j .data $infile |");
+	open(OUTFILE, "> $outfile");
+
+	print OUTFILE <<END_OF_HEADER;
+	.globl __idata_start
+	.globl __idata_end
+	.text
+	.align 2
+__idata_start:
+END_OF_HEADER
+
+	while ($line = <OBJDUMP>) {
+		chop $line;
+		last if ($line =~ /^Contents of section \.data\:/);
+		next if ($line =~ /[^\t]+:[ \t]+file format/);
+		print $line,"\n" if ($line);
+	}
+	while ($line = <OBJDUMP>) {
+		chop $line;
+		last if ($line !~ /^ [0-9a-f]+ (.*)$/);
+		do writeline(substr($1, 0, 35));
+	}
+	while ($line = <OBJDUMP>) {
+		chop $line;
+		print $line,"\n" if ($line);
+	}
+
+	print OUTFILE "__idata_end:\n";
+	close(OUTFILE);
+	close(OBJDUMP);
+}
+
+sub usage_and_die {
+	print STDERR "Usage: ";
+	print STDERR "extidata [-v][-p <prefix>][<infile> [<outfile>]]\n";
+	exit(1);
+}
+
+if ($#ARGV == -1) {
+	$infile = "a.out";
+	$outfile = $infile."-idata.s";
+}
+elsif ($#ARGV == 0) {
+	$infile = $ARGV[0];
+	$outfile = $infile."-idata.s";
+}
+elsif ($#ARGV == 1) {
+	$infile = $ARGV[0];
+	$outfile = $ARGV[1];
+}
+else {
+	do usage_and_die();
+}
+
+do extidata($infile, $outfile);

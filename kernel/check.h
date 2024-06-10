@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,18 +30,18 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: check.h,v 1.9 1996/02/17 09:32:50 hiro Exp $
+ *  @(#) $Id: check.h,v 1.10 1998/01/30 09:52:26 hiro Exp $
  */
 
 #ifndef _CHECK_
 #define _CHECK_
 
 /*
- *  ÉGÉâÅ[É`ÉFÉbÉNópÉ}ÉNÉçÇÃíËã`
+ *  $B%(%i!<%A%'%C%/MQ%^%/%m$NDj5A(B
  */
 
 /*
- *  ÉIÉuÉWÉFÉNÉgID ÇÃîÕàÕÇÃÉ`ÉFÉbÉN (E_ID)
+ *  $B%*%V%8%'%/%H(BID $B$NHO0O$N%A%'%C%/(B (E_ID)
  */
 
 #ifdef CHK_ID
@@ -126,7 +128,7 @@
 #endif /* CHK_ID */
 
 /*
- *  ÉIÉuÉWÉFÉNÉgÇÃÉAÉNÉZÉXå†ÇÃÉ`ÉFÉbÉN (E_OACV)
+ *  $B%*%V%8%'%/%H$N%"%/%;%98"$N%A%'%C%/(B (E_OACV)
  */
 
 #ifdef CHK_OACV
@@ -198,7 +200,7 @@
 #endif /* CHK_OACV */
 
 /*
- *  é©É^ÉXÉNÇéwíËÇµÇƒÇ¢Ç»Ç¢Ç©ÇÃÉ`ÉFÉbÉN (E_OBJ)
+ *  $B<+%?%9%/$r;XDj$7$F$$$J$$$+$N%A%'%C%/(B (E_OBJ)
  */
 #ifdef CHK_SELF
 #define CHECK_NONSELF(tskid) {					\
@@ -211,7 +213,7 @@
 #endif /* CHK_SELF */
 
 /*
- *  óDêÊìxílÇÃÉ`ÉFÉbÉN (E_PAR)
+ *  $BM%@hEYCM$N%A%'%C%/(B (E_PAR)
  */
 
 #ifdef CHK_PAR
@@ -241,7 +243,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  É^ÉCÉÄÉAÉEÉgéwíËílÇÃÉ`ÉFÉbÉN (E_PAR)
+ *  $B%?%$%`%"%&%H;XDjCM$N%A%'%C%/(B (E_PAR)
  */
 #ifdef CHK_PAR
 #define CHECK_TMOUT(tmout) {					\
@@ -254,7 +256,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  ÇªÇÃëºÇÃÉpÉâÉÅÅ[É^ÉGÉâÅ[ÇÃÉ`ÉFÉbÉN (E_PAR)
+ *  $B$=$NB>$N%Q%i%a!<%?%(%i!<$N%A%'%C%/(B (E_PAR)
  */
 #ifdef CHK_PAR
 #define CHECK_PAR(exp) {					\
@@ -267,7 +269,7 @@
 #endif /* CHK_PAR */
 
 /*
- *  ó\ñÒëÆê´ÉGÉâÅ[ÇÃÉ`ÉFÉbÉN (E_RSATR)
+ *  $BM=LsB0@-%(%i!<$N%A%'%C%/(B (E_RSATR)
  */
 #ifdef CHK_RSATR
 #define CHECK_RSATR(atr, maxatr) {				\
@@ -280,7 +282,7 @@
 #endif /* CHK_RSATR */
 
 /*
- *  ñ¢ÉTÉ|Å[Égã@î\ÇÃÉ`ÉFÉbÉN (E_NOSPT)
+ *  $BL$%5%]!<%H5!G=$N%A%'%C%/(B (E_NOSPT)
  */
 #ifdef CHK_NOSPT
 #define CHECK_NOSPT(exp) {					\
@@ -293,7 +295,7 @@
 #endif /* CHK_NOSPT */
 
 /*
- *  É^ÉXÉNì∆óßïîé¿çsíÜÇ≈Ç»Ç¢Ç©ÇÃÉ`ÉFÉbÉN (E_CTX)
+ *  $B%?%9%/FHN)It<B9TCf$G$J$$$+$N%A%'%C%/(B (E_CTX)
  */
 #ifdef CHK_CTX
 #define CHECK_INTSK() {						\
@@ -306,7 +308,7 @@
 #endif /* CHK_CTX */
 
 /*
- *  ÉfÉBÉXÉpÉbÉ`ã÷é~èÛë‘Ç≈Ç»Ç¢Ç©ÇÃÉ`ÉFÉbÉN (E_CTX)
+ *  $B%G%#%9%Q%C%A6X;_>uBV$G$J$$$+$N%A%'%C%/(B (E_CTX)
  */
 
 #ifdef CHK_CTX
@@ -329,7 +331,7 @@
 #endif /* CHK_CTX */
 
 /*
- *  ÇªÇÃëºÇÃÉRÉìÉeÉLÉXÉgÉGÉâÅ[ÇÃÉ`ÉFÉbÉN (E_CTX)
+ *  $B$=$NB>$N%3%s%F%-%9%H%(%i!<$N%A%'%C%/(B (E_CTX)
  */
 #ifdef CHK_CTX
 #define CHECK_CTX(exp) {					\

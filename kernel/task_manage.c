@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,11 +30,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: task_manage.c,v 1.31 1998/01/30 06:55:15 hiro Exp $
+ *  @(#) $Id: task_manage.c,v 1.33 1998/06/02 10:21:35 hiro Exp $
  */
 
 /*
- *  É^ÉXÉNä«óùã@î\
+ *  $B%?%9%/4IM}5!G=(B
  */
 
 #include "itis_kernel.h"
@@ -42,11 +44,11 @@
 #include "cpu_task.h"
 
 /*
- *  ÉXÉ^ÉbÉNÉGÉäÉAÇÃéÊìæ/ï‘ãp
+ *  $B%9%?%C%/%(%j%"$N<hF@(B/$BJV5Q(B
  *
- *  ÉXÉ^ÉbÉNÉGÉäÉAÇéÊìæ/ï‘ãpÇ∑ÇÈç€Ç…ì¡éÍÇ»ëÄçÏÇ™ïKóvÇ»èÍçáÇ…ÇÕÅCÉVÉX
- *  ÉeÉÄàÀë∂ïîÇ≈ USE_MPROTECT_STACK Ç®ÇÊÇ— sys_get_stack/sys_rel_stack
- *  ÇíËã`ÇµÅCsys_get_blk/sys_rel_blk Ç…ë„Ç¶ÇƒópÇ¢ÇÈÅD
+ *  $B%9%?%C%/%(%j%"$r<hF@(B/$BJV5Q$9$k:]$KFC<l$JA`:n$,I,MW$J>l9g$K$O!$%7%9(B
+ *  $B%F%`0MB8It$G(B USE_MPROTECT_STACK $B$*$h$S(B sys_get_stack/sys_rel_stack
+ *  $B$rDj5A$7!$(Bsys_get_blk/sys_rel_blk $B$KBe$($FMQ$$$k!%(B
  */
 #ifdef USE_MPROTECT_STACK
 extern VP	sys_get_stack(INT size);
@@ -57,7 +59,7 @@ extern void	sys_rel_stack(VP blk);
 #endif /* USE_MPROTECT_STACK */
 
 /*
- *  É^ÉXÉNÇÃê∂ê¨Ç∆çÌèú
+ *  $B%?%9%/$N@8@.$H:o=|(B
  */
 
 #if !defined(_i_cre_tsk) || !defined(_i_vcre_tsk)
@@ -134,7 +136,7 @@ i_cre_tsk(ID tskid, T_CTSK *pk_ctsk)
 		CHECK_RSATR(pk_ctsk->tskatr, TA_HLNG|TA_SSTKSZ);
 	}
 	else {
-		CHECK_RSATR(pk_ctsk->tskatr, TA_HLNG|TA_SSTKSZ|TA_RNG3);
+		CHECK_RSATR(pk_ctsk->tskatr, TA_HLNG|TA_SSTKSZ|TA_MODEMASK);
 	}
 	CHECK_PRI(pk_ctsk->itskpri);
 	CHECK_PAR(pk_ctsk->stksz >= 0);
@@ -146,7 +148,7 @@ i_cre_tsk(ID tskid, T_CTSK *pk_ctsk)
 	else {
 		sstksz = DEF_SYS_STACK_SIZE;
 	}
-	if ((pk_ctsk->tskatr & TA_RNG3) == TA_RNG0) {
+	if (SYS_TSKID(tskid) || SYSMODE(pk_ctsk->tskatr)) {
 		sysmode = 1;
 #ifdef USE_SEPARATE_SSTACK
 		sstksz += pk_ctsk->stksz;
@@ -193,7 +195,7 @@ i_vcre_tsk(T_CTSK *pk_ctsk)
 #endif /* USE_SEPARATE_SSTACK */
 	ER	ercd = E_OK;
 
-	CHECK_RSATR(pk_ctsk->tskatr, TA_HLNG|TA_SSTKSZ|TA_RNG3);
+	CHECK_RSATR(pk_ctsk->tskatr, TA_HLNG|TA_SSTKSZ|TA_MODEMASK);
 	CHECK_PRI(pk_ctsk->itskpri);
 	CHECK_PAR(pk_ctsk->stksz >= 0);
 
@@ -204,7 +206,7 @@ i_vcre_tsk(T_CTSK *pk_ctsk)
 	else {
 		sstksz = DEF_SYS_STACK_SIZE;
 	}
-	if ((pk_ctsk->tskatr & TA_RNG3) == TA_RNG0) {
+	if (SYSMODE(pk_ctsk->tskatr)) {
 		sysmode = 1;
 #ifdef USE_SEPARATE_SSTACK
 		sstksz += pk_ctsk->stksz;
@@ -288,7 +290,7 @@ i_del_tsk(ID tskid)
 #endif /* _i_del_tsk */
 
 /*
- *  É^ÉXÉNÇÃãNìÆÇ∆èIóπ
+ *  $B%?%9%/$N5/F0$H=*N;(B
  */
 
 #ifndef _i_sta_tsk
@@ -348,14 +350,14 @@ i_ext_tsk(void)
 {
 #ifdef DORMANT_STACK_SIZE
 	/*
-	 *  make_dormant Ç≈ÅCégópíÜÇÃÉXÉ^ÉbÉNÇîjâÛÇµÇ»Ç¢ÇÊÇ§Ç…ÅCÉXÉ^Éb
-	 *  ÉNè„Ç…É_É~Å[ÉGÉäÉAÇämï€Ç∑ÇÈÅD
+	 *  make_dormant $B$G!$;HMQCf$N%9%?%C%/$rGK2u$7$J$$$h$&$K!$%9%?%C(B
+	 *  $B%/>e$K%@%_!<%(%j%"$r3NJ]$9$k!%(B
 	 */
 	(void) alloca(DORMANT_STACK_SIZE);
 #endif /* DORMANT_STACK_SIZE */
 
 	/*
-	 *  ÉRÉìÉeÉLÉXÉgÉGÉâÅ[ÇÃèàóùÅD
+	 *  $B%3%s%F%-%9%H%(%i!<$N=hM}!%(B
 	 */
 #ifdef CHK_CTX2
 	if (in_indp()) {
@@ -383,7 +385,7 @@ SYSCALL void
 i_exd_tsk(void)
 {
 	/*
-	 *  ÉRÉìÉeÉLÉXÉgÉGÉâÅ[ÇÃèàóùÅD
+	 *  $B%3%s%F%-%9%H%(%i!<$N=hM}!%(B
 	 */
 #ifdef CHK_CTX2
 	if (in_indp()) {
@@ -401,9 +403,9 @@ i_exd_tsk(void)
 	_ter_tsk(ctxtsk);
 
 	/*
-	 *  Ç±Ç±Ç≈ _del_tsk ÇåƒÇ‘ï˚ñ@ÇÕÅCÉ}ÉãÉ`ÉvÉçÉZÉbÉTÉVÉXÉeÉÄÇÃèÍ
-	 *  çáÇ≈ÅCëºÇÃÉvÉçÉZÉbÉTÇ∆ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÇã§óLÇµÇƒÇ¢ÇÈèÍ
-	 *  çáÇ…ÇÕê≥ÇµÇ≠Ç»Ç¢ÅD
+	 *  $B$3$3$G(B _del_tsk $B$r8F$VJ}K!$O!$%^%k%A%W%m%;%C%5%7%9%F%`$N>l(B
+	 *  $B9g$G!$B>$N%W%m%;%C%5$H%7%9%F%`%a%b%j%W!<%k$r6&M-$7$F$$$k>l(B
+	 *  $B9g$K$O@5$7$/$J$$!%(B
 	 */
 	_del_tsk(ctxtsk);
 
@@ -441,7 +443,7 @@ i_ter_tsk(ID tskid)
 #endif /* _i_ter_tsk */
 
 /*
- *  É^ÉXÉNóDêÊìxÇÃïœçX
+ *  $B%?%9%/M%@hEY$NJQ99(B
  */
 #ifndef _i_chg_pri
 
@@ -473,7 +475,7 @@ i_chg_pri(ID tskid, PRI tskpri)
 #endif /* _i_chg_pri */
 
 /*
- *  ÉåÉfÉBÉLÉÖÅ[ÇÃâÒì]
+ *  $B%l%G%#%-%e!<$N2sE>(B
  */
 #ifndef _i_rot_rdq
 
@@ -501,7 +503,7 @@ i_rot_rdq(PRI tskpri)
 #endif /* _i_rot_rdq */
 
 /*
- *  ëºÉ^ÉXÉNÇÃë“ÇøèÛë‘âèú
+ *  $BB>%?%9%/$NBT$A>uBV2r=|(B
  */
 #ifndef _i_rel_wai
 
@@ -536,7 +538,7 @@ i_rel_wai(ID tskid)
 #endif /* _i_rel_wai */
 
 /*
- *  é©É^ÉXÉNÇÃÉ^ÉXÉNIDéQè∆
+ *  $B<+%?%9%/$N%?%9%/(BID$B;2>H(B
  */
 #ifndef _i_get_tid
 
@@ -550,7 +552,7 @@ i_get_tid(ID* p_tskid)
 #endif /* _i_get_tid */
 
 /*
- *  É^ÉXÉNèÛë‘éQè∆
+ *  $B%?%9%/>uBV;2>H(B
  */
 #ifndef _i_ref_tsk
 

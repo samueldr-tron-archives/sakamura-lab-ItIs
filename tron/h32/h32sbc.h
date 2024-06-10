@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,21 +30,21 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: h32sbc.h,v 1.4 1996/02/17 09:43:38 hiro Exp $
+ *  @(#) $Id: h32sbc.h,v 1.5 1998/01/30 09:56:42 hiro Exp $
  */
 
 #ifndef _H32SBC_
 #define _H32SBC_
 
 /*
- *  H32SBCÉVÉXÉeÉÄ CPUÉ{Å[ÉhÇÃÉnÅ[ÉhÉEÉFÉAéëåπÇÃíËã`
+ *  H32SBC$B%7%9%F%`(B CPU$B%\!<%I$N%O!<%I%&%'%";q8;$NDj5A(B
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/OÉåÉWÉXÉ^ÇÃå^ */
+typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
 
 /*
- *  ACI (Asynchronous Communication Interface) ÇÃÉåÉWÉXÉ^
+ *  ACI (Asynchronous Communication Interface) $B$N%l%8%9%?(B
  */
 
 #define	ACI0_DATA	((IOREG *) 0xffef0803)
@@ -56,7 +58,7 @@ typedef volatile byte	IOREG;		/* I/OÉåÉWÉXÉ^ÇÃå^ */
 #define	ACI1_COMMAND	((IOREG *) 0xffef0c0f)
 
 /*
- *  IRC (Interrupt Request Controller) ÇÃÉåÉWÉXÉ^
+ *  IRC (Interrupt Request Controller) $B$N%l%8%9%?(B
  */
 
 #define	IRC_LMR(n)	((IOREG *) (0xffef03ff+(n)*4))
@@ -69,23 +71,23 @@ typedef volatile byte	IOREG;		/* I/OÉåÉWÉXÉ^ÇÃå^ */
 #define	IRC_BMR		((IOREG *) 0xffef0433)
 #define	IRC_BRR		((IOREG *) 0xffef0437)
 
-#define	LIR0_BIT	0x01		/* ÉçÅ[ÉJÉãäÑçûÇ› 0 */
-#define	LIR1_BIT	0x02		/* ÉçÅ[ÉJÉãäÑçûÇ› 1 */
-#define	LIR2_BIT	0x04		/* ÉçÅ[ÉJÉãäÑçûÇ› 2 */
-#define	LIR3_BIT	0x08		/* ÉçÅ[ÉJÉãäÑçûÇ› 3 */
-#define	LIR4_BIT	0x10		/* ÉçÅ[ÉJÉãäÑçûÇ› 4 */
-#define	LIR5_BIT	0x20		/* ÉçÅ[ÉJÉãäÑçûÇ› 5 */
-#define	LIR6_BIT	0x40		/* ÉçÅ[ÉJÉãäÑçûÇ› 6 */
+#define	LIR0_BIT	0x01		/* $B%m!<%+%k3d9~$_(B 0 */
+#define	LIR1_BIT	0x02		/* $B%m!<%+%k3d9~$_(B 1 */
+#define	LIR2_BIT	0x04		/* $B%m!<%+%k3d9~$_(B 2 */
+#define	LIR3_BIT	0x08		/* $B%m!<%+%k3d9~$_(B 3 */
+#define	LIR4_BIT	0x10		/* $B%m!<%+%k3d9~$_(B 4 */
+#define	LIR5_BIT	0x20		/* $B%m!<%+%k3d9~$_(B 5 */
+#define	LIR6_BIT	0x40		/* $B%m!<%+%k3d9~$_(B 6 */
 
-#define	BIR0_BIT	0x01		/* ÉoÉXäÑçûÇ› 0 */
-#define	BIR1_BIT	0x02		/* ÉoÉXäÑçûÇ› 1 */
-#define	BIR2_BIT	0x04		/* ÉoÉXäÑçûÇ› 2 */
-#define	BIR3_BIT	0x08		/* ÉoÉXäÑçûÇ› 3 */
-#define	BIR4_BIT	0x10		/* ÉoÉXäÑçûÇ› 4 */
-#define	BIR5_BIT	0x20		/* ÉoÉXäÑçûÇ› 5 */
-#define	BIR6_BIT	0x40		/* ÉoÉXäÑçûÇ› 6 */
+#define	BIR0_BIT	0x01		/* $B%P%93d9~$_(B 0 */
+#define	BIR1_BIT	0x02		/* $B%P%93d9~$_(B 1 */
+#define	BIR2_BIT	0x04		/* $B%P%93d9~$_(B 2 */
+#define	BIR3_BIT	0x08		/* $B%P%93d9~$_(B 3 */
+#define	BIR4_BIT	0x10		/* $B%P%93d9~$_(B 4 */
+#define	BIR5_BIT	0x20		/* $B%P%93d9~$_(B 5 */
+#define	BIR6_BIT	0x40		/* $B%P%93d9~$_(B 6 */
 
-#define	INT_VECTOR(n)	(0x40+(n))	/* ÉåÉxÉãn ÇÃäÑçûÇ›ÇÃÉxÉNÉ^î‘çÜ */
+#define	INT_VECTOR(n)	(0x40+(n))	/* $B%l%Y%k(Bn $B$N3d9~$_$N%Y%/%?HV9f(B */
 
 Inline void
 cpu_wait_irc(void)
@@ -135,7 +137,7 @@ irc_read(IOREG *addr)
 }
 
 /*
- *  PI/T (Parallel Interface Timer) ÇÃÉåÉWÉXÉ^
+ *  PI/T (Parallel Interface Timer) $B$N%l%8%9%?(B
  */
 
 #define	PIT_PGCR	((IOREG *) 0xffef0003)
@@ -167,7 +169,7 @@ irc_read(IOREG *addr)
 #define	PIT_TSR		((IOREG *) 0xffef006b)
 
 /*
- *  í·ë¨ÇÃ I/OÉfÉoÉCÉXÇëÄçÏÇ∑ÇÈÇΩÇﬂÇÃä÷êî
+ *  $BDcB.$N(B I/O$B%G%P%$%9$rA`:n$9$k$?$a$N4X?t(B
  */
 
 Inline void
@@ -206,7 +208,7 @@ io_and_assign(IOREG *addr, byte val)
 }
 
 /*
- *  EMS ÉÇÉjÉ^åƒÇ—èoÇµÉãÅ[É`Éì
+ *  EMS $B%b%K%?8F$S=P$7%k!<%A%s(B
  */
 
 Inline void

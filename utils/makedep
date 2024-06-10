@@ -1,8 +1,10 @@
 #! /usr/local/bin/perl
 # 
-# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 	ItIs - An ITRON Implementation for Research and Education
 # 
-# Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+# Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+# Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+# 				Toyohashi Univ. of Technology, JAPAN
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. Neither the name of the University nor the names of the laboratory
+# 3. Neither the name of the universities nor the names of the laboratories
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 # 
 # THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
 # WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 # DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 # GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,17 +30,17 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-#  @(#) $Id: makedep,v 1.5 1996/02/17 09:45:24 hiro Exp $
-#
+#  @(#) $Id: makedep,v 1.6 1998/01/30 09:59:37 hiro Exp $
+# 
 
 require "getopt.pl";
 
-#	ƒIƒvƒVƒ‡ƒ“‚Ì’è‹`
+#	$B%*%W%7%g%s$NDj5A(B
 #
-#	-C : CƒRƒ“ƒpƒCƒ‰‚ÌƒRƒ}ƒ“ƒh–¼
-#	-O : CƒRƒ“ƒpƒCƒ‰‚É“n‚·ƒIƒvƒVƒ‡ƒ“
-#	-S : ƒ\[ƒX‚ðƒT[ƒ`‚·‚éƒpƒX (":" ‚Å‹æØ‚é)
-#	-s : ƒ^[ƒQƒbƒg‚ÌƒTƒtƒBƒbƒNƒX‚ð ".s" ‚É‚·‚é (ƒfƒtƒHƒ‹ƒg‚Í ".o")
+#	-C : C$B%3%s%Q%$%i$N%3%^%s%IL>(B
+#	-O : C$B%3%s%Q%$%i$KEO$9%*%W%7%g%s(B
+#	-S : $B%=!<%9$r%5!<%A$9$k%Q%9(B (":" $B$G6h@Z$k(B)
+#	-s : $B%?!<%2%C%H$N%5%U%#%C%/%9$r(B ".s" $B$K$9$k(B ($B%G%U%)%k%H$O(B ".o")
 
 do Getopt("COS");
 
@@ -48,7 +50,7 @@ $cc_opts = $opt_O;
 $suffix = $opt_s ? "s" : "o";
 
 #
-#  $dependlist ‚Éì‚ç‚ê‚½ˆË‘¶ŠÖŒW‚ðo—Í‚·‚é
+#  $dependlist $B$K:n$i$l$?0MB84X78$r=PNO$9$k(B
 #
 sub output_dependlist {
 	local($file) = @_;
@@ -71,7 +73,7 @@ sub output_dependlist {
 }
 
 #
-#  $file ‚ÌˆË‘¶ŠÖŒW‚ð %dependlist ‚Éì‚é
+#  $file $B$N0MB84X78$r(B %dependlist $B$K:n$k(B
 #
 sub makedepend_one {
 	local($file) = @_;
@@ -96,7 +98,7 @@ sub makedepend_one {
 }
 
 #
-#  ƒƒCƒ“ƒ‹[ƒ`ƒ“
+#  $B%a%$%s%k!<%A%s(B
 #
 foreach $file (@ARGV) {
 	%dependlist = ();

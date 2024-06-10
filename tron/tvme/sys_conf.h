@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,39 +30,39 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: sys_conf.h,v 1.5 1996/07/28 00:29:14 hiro Exp $
+ *  @(#) $Id: sys_conf.h,v 1.6 1998/01/30 09:57:23 hiro Exp $
  */
 
 #ifndef _SYS_CONF_
 #define _SYS_CONF_
 
 /*
- *  ItIs “®ì‚Ìƒƒ‚ƒŠƒ}ƒbƒv
+ *  ItIs $BF0:n;~$N%a%b%j%^%C%W(B
  *
- *	00000000 -		ƒJ[ƒlƒ‹ƒR[ƒh—Ìˆæ
- *		 - 00001000	ROMƒ‚ƒjƒ^‚Ì‰ŠúSPI (”ƒoƒCƒg‰ó‚³‚ê‚é)
- *	00040000 - 0007ffff	ƒ†[ƒUƒvƒƒOƒ‰ƒ€—Ìˆæ (256KB)
- *	00080000 - 000fffff	ƒJ[ƒlƒ‹ƒf[ƒ^—Ìˆæ (512KB)
- *	fff20000 - fff27fff	ƒ‚ƒjƒ^ƒ[ƒN—Ìˆæ (32KB)
- *	fff28000 - fff37fff	–¢g—p (32KB, ˆê•”ƒ_ƒCƒŒƒNƒg‹N“®—p‚ÌƒXƒ^ƒbƒN)
- *		 - fff3ffff	ƒ^ƒXƒN“Æ—§•”—pƒXƒ^ƒbƒN—Ìˆæ
- *	fffb0000 - fffbffff	ƒ[ƒJƒ‹I/O—Ìˆæ
- *	fffc0000 - fffc007f	ƒƒCƒ‹ƒ{ƒbƒNƒX—Ìˆæ
+ *	00000000 -		$B%+!<%M%k%3!<%INN0h(B
+ *		 - 00001000	ROM$B%b%K%?$N=i4|(BSPI ($B?t%P%$%H2u$5$l$k(B)
+ *	00040000 - 0007ffff	$B%f!<%6%W%m%0%i%`NN0h(B (256KB)
+ *	00080000 - 000fffff	$B%+!<%M%k%G!<%?NN0h(B (512KB)
+ *	fff20000 - fff27fff	$B%b%K%?%o!<%/NN0h(B (32KB)
+ *	fff28000 - fff37fff	$BL$;HMQ(B (32KB, $B0lIt%@%$%l%/%H5/F0MQ$N%9%?%C%/(B)
+ *		 - fff3ffff	$B%?%9%/FHN)ItMQ%9%?%C%/NN0h(B
+ *	fffb0000 - fffbffff	$B%m!<%+%k(BI/O$BNN0h(B
+ *	fffc0000 - fffc007f	$B%a%$%k%\%C%/%9NN0h(B
  */
 
 /*
- *  ƒXƒ^ƒbƒNƒGƒŠƒACƒq[ƒvƒGƒŠƒA‚Ì’è‹`
+ *  $B%9%?%C%/%(%j%"!$%R!<%W%(%j%"$NDj5A(B
  *
- *  _end ‚ÍCƒvƒƒOƒ‰ƒ€‚Åg—p‚·‚éƒf[ƒ^ƒGƒŠƒA‚ÌÅŒã‚ÌŸ‚Ì”Ô’nD
+ *  _end $B$O!$%W%m%0%i%`$G;HMQ$9$k%G!<%?%(%j%"$N:G8e$N<!$NHVCO!%(B
  */
-#define STACKTOP	0xfff40000	/* ƒ^ƒXƒN“Æ—§•”—pƒXƒ^ƒbƒN‚Ì‰Šú’l */
-#define HEAPTOP		_end		/* ƒq[ƒvƒGƒŠƒA‚Ìæ“ª */
-#define HEAPLIMIT	0x00100000	/* ƒq[ƒvƒGƒŠƒA‚ÌãŒÀ */
+#define STACKTOP	0xfff40000	/* $B%?%9%/FHN)ItMQ%9%?%C%/$N=i4|CM(B */
+#define HEAPTOP		_end		/* $B%R!<%W%(%j%"$N@hF,(B */
+#define HEAPLIMIT	0x00100000	/* $B%R!<%W%(%j%"$N>e8B(B */
 
 /*
- *  ƒVƒXƒeƒ€ƒ^ƒXƒN‚ÉŠÖ‚·‚é’è‹`
+ *  $B%7%9%F%`%?%9%/$K4X$9$kDj5A(B
  */
-#define	CONSOLE_PORT	1	/* ƒRƒ“ƒ\[ƒ‹—p‚É—p‚¢‚éƒVƒŠƒAƒ‹ƒ|[ƒg”Ô† */
-#define	LOGTASK_PORT	1	/* ƒVƒXƒeƒ€ƒƒO‚ğo—Í‚·‚éƒVƒŠƒAƒ‹ƒ|[ƒg”Ô† */
+#define	CONSOLE_PORT	1	/* $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B */
+#define	LOGTASK_PORT	1	/* $B%7%9%F%`%m%0$r=PNO$9$k%7%j%"%k%]!<%HHV9f(B */
 
 #endif /* _SYS_CONF_ */

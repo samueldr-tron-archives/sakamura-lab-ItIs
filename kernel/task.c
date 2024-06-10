@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: task.c,v 1.25 1997/01/10 13:36:32 hiro Exp $
+ *  @(#) $Id: task.c,v 1.26 1998/01/30 09:52:44 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -38,41 +40,41 @@
 #include "cpu_task.h"
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`‹Ö~ó‘Ô
+ *  $B%?%9%/%G%#%9%Q%C%A6X;_>uBV(B
  */
 #ifdef USE_DISPATCH_DISABLED
 BOOL	dispatch_disabled;
 #endif /* USE_DISPATCH_DISABLED */
 
 /*
- *  Às’†‚Ìƒ^ƒXƒN
+ *  $B<B9TCf$N%?%9%/(B
  */
 TCB	*ctxtsk;
 
 /*
- *  Às‚·‚×‚«ƒ^ƒXƒN
+ *  $B<B9T$9$Y$-%?%9%/(B
  */
 TCB	*schedtsk;
 
 /*
- *  TCB ‚ÌƒGƒŠƒA
+ *  TCB $B$N%(%j%"(B
  */
 TCB	tcb_table[NUM_TSKID];
 
 /*
- *  ƒŒƒfƒBƒLƒ…[
+ *  $B%l%G%#%-%e!<(B
  */ 
 RDYQUE	ready_queue;
 
 /*
- *  –¢g—p‚Ì TCB ‚ÌƒŠƒXƒg
+ *  $BL$;HMQ$N(B TCB $B$N%j%9%H(B
  */
 #ifndef _i_vcre_tsk
 QUEUE	free_tcb;
 #endif /* _i_vcre_tsk */
 
 /*
- *  TCB ‚Ì‰Šú‰»
+ *  TCB $B$N=i4|2=(B
  */
 void
 task_initialize(void)
@@ -106,13 +108,13 @@ task_initialize(void)
 }
 
 /*
- *  ƒ^ƒXƒN‚ÌÀs€”õ‚ğ‚·‚éD
+ *  $B%?%9%/$N<B9T=`Hw$r$9$k!%(B
  */
 void
 make_dormant(TCB *tcb)
 {
 	/*
-	 *  DORMANTó‘Ô‚Å‚ÍƒŠƒZƒbƒg‚³‚ê‚Ä‚¢‚é‚×‚«•Ï”‚ğ‰Šú‰»D
+	 *  DORMANT$B>uBV$G$O%j%;%C%H$5$l$F$$$k$Y$-JQ?t$r=i4|2=!%(B
 	 */
 	tcb->state = TS_DORMANT;
 	tcb->priority = tcb->ipriority;
@@ -129,15 +131,15 @@ make_dormant(TCB *tcb)
 #endif /* USE_TASK_MAILBOX */
 
 	/*
-	 *  ƒ^ƒXƒN‹N“®‚Ì‚½‚ß‚ÌƒRƒ“ƒeƒLƒXƒg‚Ìİ’èD
+	 *  $B%?%9%/5/F0$N$?$a$N%3%s%F%-%9%H$N@_Dj!%(B
 	 */
 	setup_context(tcb);
 }
 
 /*
- *  Às‚·‚×‚«ƒ^ƒXƒN‚ğ‘I‘ğ‚µ’¼‚·D
+ *  $B<B9T$9$Y$-%?%9%/$rA*Br$7D>$9!%(B
  *
- *  schedtsk ‚ğƒŒƒfƒBƒLƒ…[‚Ìæ“ª‚Ìƒ^ƒXƒN‚Æˆê’v‚³‚¹‚éD
+ *  schedtsk $B$r%l%G%#%-%e!<$N@hF,$N%?%9%/$H0lCW$5$;$k!%(B
  */
 Inline void
 reschedule(void)
@@ -151,10 +153,10 @@ reschedule(void)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğÀs‰Â”\ó‘Ô‚É‚·‚éD
+ *  $B%?%9%/$r<B9T2DG=>uBV$K$9$k!%(B
  *
- *  ƒ^ƒXƒNó‘Ô‚ğXV‚µCƒŒƒfƒBƒLƒ…[‚É‘}“ü‚·‚éD•K—v‚È‚çCschedtsk ‚ğ
- *  XV‚µCƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‹N“®‚ğ—v‹‚·‚éD
+ *  $B%?%9%/>uBV$r99?7$7!$%l%G%#%-%e!<$KA^F~$9$k!%I,MW$J$i!$(Bschedtsk $B$r(B
+ *  $B99?7$7!$%?%9%/%G%#%9%Q%C%A%c$N5/F0$rMW5a$9$k!%(B
  */
 void
 make_ready(TCB *tcb)
@@ -167,10 +169,10 @@ make_ready(TCB *tcb)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğÀs‰Â”\ˆÈŠO‚Ìó‘Ô‚É‚·‚éD
+ *  $B%?%9%/$r<B9T2DG=0J30$N>uBV$K$9$k!%(B
  *
- *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚©‚çíœ‚·‚éDíœ‚µ‚½ƒ^ƒXƒN‚ª schedtsk ‚Å‚ ‚Á
- *  ‚½ê‡‚É‚ÍCschedtsk ‚ğƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“xƒ^ƒXƒN‚Éİ’è‚·‚éD
+ *  $B%?%9%/$r%l%G%#%-%e!<$+$i:o=|$9$k!%:o=|$7$?%?%9%/$,(B schedtsk $B$G$"$C(B
+ *  $B$?>l9g$K$O!$(Bschedtsk $B$r%l%G%#%-%e!<Cf$N:G9bM%@hEY%?%9%/$K@_Dj$9$k!%(B
  */
 void
 make_non_ready(TCB *tcb)
@@ -184,7 +186,7 @@ make_non_ready(TCB *tcb)
 }
 
 /*
- *  ƒ^ƒXƒN‚Ì—Dæ“x‚ğ•ÏX‚·‚éD
+ *  $B%?%9%/$NM%@hEY$rJQ99$9$k!%(B
  */
 void
 change_task_priority(TCB *tcb, INT priority)
@@ -193,10 +195,10 @@ change_task_priority(TCB *tcb, INT priority)
 
 	if (tcb->state == TS_READY) {
 		/*
-		 *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚©‚çíœ‚·‚éÛ‚É TCB ‚Ì
-		 *  priority ƒtƒB[ƒ‹ƒh‚Ì’l‚ª•K—v‚É‚È‚é‚½‚ßCƒŒ
-		 *  ƒfƒBƒLƒ…[‚©‚ç‚Ìíœ‚ÍCtcb->priority ‚ğ‘
-		 *  ‚«Š·‚¦‚é‘O‚És‚í‚È‚¯‚ê‚Î‚È‚ç‚È‚¢D
+		 *  $B%?%9%/$r%l%G%#%-%e!<$+$i:o=|$9$k:]$K(B TCB $B$N(B
+		 *  priority $B%U%#!<%k%I$NCM$,I,MW$K$J$k$?$a!$%l(B
+		 *  $B%G%#%-%e!<$+$i$N:o=|$O!$(Btcb->priority $B$r=q(B
+		 *  $B$-49$($kA0$K9T$o$J$1$l$P$J$i$J$$!%(B
 		 */
 		ready_queue_delete(&ready_queue, tcb);
 		tcb->priority = priority;
@@ -213,7 +215,7 @@ change_task_priority(TCB *tcb, INT priority)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚ğ‰ñ“]‚³‚¹‚éD
+ *  $B%l%G%#%-%e!<$r2sE>$5$;$k!%(B
  */
 void
 rotate_ready_queue(INT priority)
@@ -223,7 +225,7 @@ rotate_ready_queue(INT priority)
 }
 
 /*
- *  Å‚—Dæ“x‚Ìƒ^ƒXƒN‚ğŠÜ‚ŞƒŒƒfƒBƒLƒ…[‚ğ‰ñ“]‚³‚¹‚éD
+ *  $B:G9bM%@hEY$N%?%9%/$r4^$`%l%G%#%-%e!<$r2sE>$5$;$k!%(B
  */
 void
 rotate_ready_queue_run(void)

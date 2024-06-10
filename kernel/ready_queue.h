@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,60 +30,60 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: ready_queue.h,v 1.9 1997/01/10 11:50:14 hiro Exp $
+ *  @(#) $Id: ready_queue.h,v 1.10 1998/01/30 09:52:40 hiro Exp $
  */
 
 #ifndef _READY_QUEUE_
 #define _READY_QUEUE_
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‘€ìƒ‹[ƒ`ƒ“
+ *  $B%l%G%#%-%e!<A`:n%k!<%A%s(B
  */
 
 #include "queue.h"
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚Ì\‘¢‚Ì’è‹`
+ *  $B%l%G%#%-%e!<$N9=B$$NDj5A(B
  *
- *  ƒŒƒfƒBƒLƒ…[’†‚É‚ÍC—Dæ“x‚²‚Æ‚Ìƒ^ƒXƒNƒLƒ…[ tskque ‚ª—pˆÓ‚³‚ê‚Ä‚¨
- *  ‚èCƒ^ƒXƒN‚Ì TCB ‚ÍCŠY“–‚·‚é—Dæ“x‚ÌƒLƒ…[‚É“o˜^‚³‚ê‚éD
- *  ƒŒƒfƒBƒLƒ…[‚ÌƒT[ƒ`‚ğŒø—¦‚æ‚­s‚¤‚½‚ß‚ÉC—Dæ“x‚²‚Æ‚Ìƒ^ƒXƒNƒLƒ…[
- *  ‚Éƒ^ƒXƒN‚ª“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ¦‚·ƒrƒbƒgƒ}ƒbƒv—Ìˆæ bitmap ‚ğ—pˆÓ‚µ
- *  ‚Ä‚¢‚éD‚±‚Ì—Ìˆæ‚ğg‚¤‚±‚Æ‚ÅCƒ[ƒh’PˆÊ‚ÌƒT[ƒ`‚ª‰Â”\‚É‚È‚èCƒƒ‚
- *  ƒŠƒAƒNƒZƒX‚Ì‰ñ”‚ğŒ¸‚ç‚·‚±‚Æ‚ª‚Å‚«‚éD‚½‚¾‚µC—Dæ“x‚ÌƒŒƒxƒ‹”‚ª­
- *  ‚È‚­Cƒrƒbƒg‘€ì–½—ß‚ª[À‚µ‚Ä‚¢‚È‚¢ CPU ‚Ìê‡‚É‚ÍCƒrƒbƒgƒ}ƒbƒv‘€
- *  ì‚ÌƒI[ƒo[ƒwƒbƒh‚Ì‚½‚ß‚ÉC‹t‚ÉŒø—¦‚ª—‚¿‚é‰Â”\«‚à‚ ‚éDTRONd—l
- *  ƒ`ƒbƒv—p‚ÌƒR[ƒh‚Æ”Ä—pƒR[ƒh‚ÅCƒ[ƒh“à‚Ìƒrƒbƒg‚Ì”Ô†•t‚¯‚ª‹t‚É‚È
- *  ‚Á‚Ä‚¢‚é‚Ì‚Å’ˆÓ‚¹‚æD
- *  ‚Ü‚½CƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚ğQÆ‚·‚é‘€ì‚ğŒø—¦‚æ‚­s
- *  ‚¤‚½‚ß‚ÉCƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚Ì—Dæ“x‚ğ top_priority
- *  ƒtƒB[ƒ‹ƒh‚É“ü‚ê‚Ä‚¨‚­DƒŒƒfƒBƒLƒ…[‚ª‹ó‚Ìê‡‚É‚ÍC‚±‚ÌƒtƒB[ƒ‹ƒh
- *  ‚Ì’l‚ğ NUM_PRI ‚É‚·‚éD‚±‚Ì‚É tskque[top_priority] ‚ğQÆ‚·‚é‚Æ 
- *  NULL ‚ğ•Ô‚µ‚½‚¢‚½‚ßCí‚É NULL ‚ª“ü‚Á‚Ä‚¢‚é nullƒtƒB[ƒ‹ƒh‚ğ—pˆÓ‚µ
- *  ‚Ä‚¢‚éD
+ *  $B%l%G%#%-%e!<Cf$K$O!$M%@hEY$4$H$N%?%9%/%-%e!<(B tskque $B$,MQ0U$5$l$F$*(B
+ *  $B$j!$%?%9%/$N(B TCB $B$O!$3:Ev$9$kM%@hEY$N%-%e!<$KEPO?$5$l$k!%(B
+ *  $B%l%G%#%-%e!<$N%5!<%A$r8zN($h$/9T$&$?$a$K!$M%@hEY$4$H$N%?%9%/%-%e!<(B
+ *  $B$K%?%9%/$,F~$C$F$$$k$+$I$&$+$r<($9%S%C%H%^%C%WNN0h(B bitmap $B$rMQ0U$7(B
+ *  $B$F$$$k!%$3$NNN0h$r;H$&$3$H$G!$%o!<%IC10L$N%5!<%A$,2DG=$K$J$j!$%a%b(B
+ *  $B%j%"%/%;%9$N2s?t$r8:$i$9$3$H$,$G$-$k!%$?$@$7!$M%@hEY$N%l%Y%k?t$,>/(B
+ *  $B$J$/!$%S%C%HA`:nL?Na$,=<<B$7$F$$$J$$(B CPU $B$N>l9g$K$O!$%S%C%H%^%C%WA`(B
+ *  $B:n$N%*!<%P!<%X%C%I$N$?$a$K!$5U$K8zN($,Mn$A$k2DG=@-$b$"$k!%(BTRON$B;EMM(B
+ *  $B%A%C%WMQ$N%3!<%I$HHFMQ%3!<%I$G!$%o!<%IFb$N%S%C%H$NHV9fIU$1$,5U$K$J(B
+ *  $B$C$F$$$k$N$GCm0U$;$h!%(B
+ *  $B$^$?!$%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$r;2>H$9$kA`:n$r8zN($h$/9T(B
+ *  $B$&$?$a$K!$%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$NM%@hEY$r(B top_priority
+ *  $B%U%#!<%k%I$KF~$l$F$*$/!%%l%G%#%-%e!<$,6u$N>l9g$K$O!$$3$N%U%#!<%k%I(B
+ *  $B$NCM$r(B NUM_PRI $B$K$9$k!%$3$N;~$K(B tskque[top_priority] $B$r;2>H$9$k$H(B 
+ *  NULL $B$rJV$7$?$$$?$a!$>o$K(B NULL $B$,F~$C$F$$$k(B null$B%U%#!<%k%I$rMQ0U$7(B
+ *  $B$F$$$k!%(B
  */
 
 #define BITMAPSZ	(sizeof(UINT) * 8)
 #define NUM_BITMAP	((NUM_PRI + BITMAPSZ - 1) / BITMAPSZ)
 
 typedef	struct ready_queue {
-	INT	top_priority;		/* ƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“x */
-	QUEUE	tskque[NUM_PRI];	/* —Dæ“x‚²‚Æ‚Ìƒ^ƒXƒNƒLƒ…[ */
-	TCB	*null;			/* ƒŒƒfƒBƒLƒ…[‚ª‹ó‚É‚È‚Á‚½‚Ì‚½‚ß */
-	UINT	bitmap[NUM_BITMAP];	/* —Dæ“x‚²‚Æ‚Ìƒrƒbƒgƒ}ƒbƒv—Ìˆæ */
+	INT	top_priority;		/* $B%l%G%#%-%e!<Cf$N:G9bM%@hEY(B */
+	QUEUE	tskque[NUM_PRI];	/* $BM%@hEY$4$H$N%?%9%/%-%e!<(B */
+	TCB	*null;			/* $B%l%G%#%-%e!<$,6u$K$J$C$?;~$N$?$a(B */
+	UINT	bitmap[NUM_BITMAP];	/* $BM%@hEY$4$H$N%S%C%H%^%C%WNN0h(B */
 } RDYQUE;
 
 /*
- *  ƒrƒbƒgƒ}ƒbƒv—Ìˆæ‘€ìƒ‰ƒCƒuƒ‰ƒŠ
+ *  $B%S%C%H%^%C%WNN0hA`:n%i%$%V%i%j(B
  *
- *  ”Ä—pƒR[ƒh‚Å (1 << xxx) ‚Æ‚µ‚Ä‚¢‚é•”•ª‚ÍCƒe[ƒuƒ‹‚ğ—pˆÓ‚µ‚½•û‚ªŒø
- *  —¦‚ª‚æ‚¢‚Æv‚í‚ê‚é‚ªCƒe[ƒuƒ‹‚Ìì‚è•û‚ª CPU ‚Ìƒ[ƒh’·‚ÉˆË‘¶‚µ‚Ä‚µ
- *  ‚Ü‚¤‚Ì‚ÅC(1 << xxx) ‚ÌŒ`‚É‚µ‚Ä‚¢‚éD
+ *  $BHFMQ%3!<%I$G(B (1 << xxx) $B$H$7$F$$$kItJ,$O!$%F!<%V%k$rMQ0U$7$?J}$,8z(B
+ *  $BN($,$h$$$H;W$o$l$k$,!$%F!<%V%k$N:n$jJ}$,(B CPU $B$N%o!<%ID9$K0MB8$7$F$7(B
+ *  $B$^$&$N$G!$(B(1 << xxx) $B$N7A$K$7$F$$$k!%(B
  */
 
 /*
- *  ƒŒƒfƒBƒLƒ…[ rq ‚Ìƒrƒbƒgƒ}ƒbƒv—Ìˆæ’†‚ÌC—Dæ“x priority ‚É‘Î‰‚·‚é
- *  ƒrƒbƒg‚ğƒZƒbƒg‚·‚éD
+ *  $B%l%G%#%-%e!<(B rq $B$N%S%C%H%^%C%WNN0hCf$N!$M%@hEY(B priority $B$KBP1~$9$k(B
+ *  $B%S%C%H$r%;%C%H$9$k!%(B
  */
 Inline void
 bitmap_set(RDYQUE *rq, INT priority)
@@ -94,8 +96,8 @@ bitmap_set(RDYQUE *rq, INT priority)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[ rq ‚Ìƒrƒbƒgƒ}ƒbƒv—Ìˆæ’†‚ÌC—Dæ“x priority ‚É‘Î‰‚·‚é
- *  ƒrƒbƒg‚ğƒNƒŠƒA‚·‚éD
+ *  $B%l%G%#%-%e!<(B rq $B$N%S%C%H%^%C%WNN0hCf$N!$M%@hEY(B priority $B$KBP1~$9$k(B
+ *  $B%S%C%H$r%/%j%"$9$k!%(B
  */
 Inline void
 bitmap_clear(RDYQUE *rq, INT priority)
@@ -108,16 +110,16 @@ bitmap_clear(RDYQUE *rq, INT priority)
 }
 
 /*
- *  ˆÈ‰º‚Ì _ffsŠÖ”‚ÍC•W€‚Ì ffsŠÖ”‚Æˆá‚¢Ci ‚ª 0 ‚Ìê‡‚Íl—¶‚µ‚Ä‚¨
- *  ‚ç‚¸C•Ô‚·’l‚à 0 ‚ğƒx[ƒX‚É‚µ‚Ä‚¢‚éD‚Ü‚½CTRONd—lƒ`ƒbƒv—p‚ÌƒR[ƒh
- *  ‚Å‚ÍCƒT[ƒ`‚·‚é•ûŒü‚ª‹t‚É‚È‚Á‚Ä‚¢‚éD
+ *  $B0J2<$N(B _ffs$B4X?t$O!$I8=`$N(B ffs$B4X?t$H0c$$!$(Bi $B$,(B 0 $B$N>l9g$O9MN8$7$F$*(B
+ *  $B$i$:!$JV$9CM$b(B 0 $B$r%Y!<%9$K$7$F$$$k!%$^$?!$(BTRON$B;EMM%A%C%WMQ$N%3!<%I(B
+ *  $B$G$O!$%5!<%A$9$kJ}8~$,5U$K$J$C$F$$$k!%(B
  *
- *  •W€ƒ‰ƒCƒuƒ‰ƒŠ‚É ffs ‚ª‚ ‚é‚È‚çCŸ‚Ì‚æ‚¤‚É’è‹`‚µ‚ÄC•W€ƒ‰ƒCƒuƒ‰ƒŠ
- *  ‚ğg‚Á‚½•û‚ªŒø—¦‚ª—Ç‚¢‰Â”\«‚ª‚‚¢D
+ *  $BI8=`%i%$%V%i%j$K(B ffs $B$,$"$k$J$i!$<!$N$h$&$KDj5A$7$F!$I8=`%i%$%V%i%j(B
+ *  $B$r;H$C$?J}$,8zN($,NI$$2DG=@-$,9b$$!%(B
  *	#define _ffs(i) (ffs(i) - 1)
- *  TRONd—lƒ`ƒbƒv‚Ì•W€İ’è‚Å‚ÍC”CˆÓ’·ƒrƒbƒgƒtƒB[ƒ‹ƒh‘€ì–½—ß‚ğg‚¤
- *  ‚Ì‚Å _ffsŠÖ”‚Íg‚í‚ê‚È‚¢‚ªCbvsch –½—ß‚ª‚È‚¢ê‡‚É‚Í‚±‚ÌŠÖ”‚ğg‚¤
- *  •K—v‚ª‚ ‚éD
+ *  TRON$B;EMM%A%C%W$NI8=`@_Dj$G$O!$G$0UD9%S%C%H%U%#!<%k%IA`:nL?Na$r;H$&(B
+ *  $B$N$G(B _ffs$B4X?t$O;H$o$l$J$$$,!$(Bbvsch $BL?Na$,$J$$>l9g$K$O$3$N4X?t$r;H$&(B
+ *  $BI,MW$,$"$k!%(B
  */
 Inline INT
 _ffs(INT i)
@@ -138,7 +140,7 @@ _ffs(INT i)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚Ì‰Šú‰»
+ *  $B%l%G%#%-%e!<$N=i4|2=(B
  */
 Inline void
 ready_queue_initialize(RDYQUE *rq)
@@ -154,9 +156,9 @@ ready_queue_initialize(RDYQUE *rq)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚ğQÆ‚·‚éD
+ *  $B%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$r;2>H$9$k!%(B
  *
- *  ƒŒƒfƒBƒLƒ…[‚ª‹ó‚Ì‚Í NULL ‚ğ•Ô‚·D
+ *  $B%l%G%#%-%e!<$,6u$N;~$O(B NULL $B$rJV$9!%(B
  */
 Inline TCB *
 ready_queue_top(RDYQUE *rq)
@@ -165,9 +167,9 @@ ready_queue_top(RDYQUE *rq)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“x‚Ìƒ^ƒXƒN‚Ì—Dæ“x‚ğQÆ‚·‚éD
+ *  $B%l%G%#%-%e!<Cf$N:G9bM%@hEY$N%?%9%/$NM%@hEY$r;2>H$9$k!%(B
  *
- *  ƒŒƒfƒBƒLƒ…[‚ª‹ó‚Ì‚É‚ÍŒÄ‚Î‚ê‚È‚¢D
+ *  $B%l%G%#%-%e!<$,6u$N;~$K$O8F$P$l$J$$!%(B
  */
 Inline INT
 ready_queue_top_priority(RDYQUE *rq)
@@ -176,14 +178,14 @@ ready_queue_top_priority(RDYQUE *rq)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚É‘}“ü‚·‚éD
+ *  $B%?%9%/$r%l%G%#%-%e!<$KA^F~$9$k!%(B
  *
- *  tcb ‚Åw‚·ƒ^ƒXƒN‚Ì—Dæ“x‚Æ“¯‚¶—Dæ“x‚ğ‚Âƒ^ƒXƒN‚Ì’†‚Å‚ÌÅŒã‚É“ü‚ê
- *  ‚éD
- *  ƒrƒbƒgƒ}ƒbƒv—Ìˆæ‚ÌŠY“–‚·‚éƒrƒbƒg‚ğƒZƒbƒg‚µC•K—v‚È‚ç top_priority 
- *  ‚ğXV‚·‚éDtop_priority ‚ğXV‚µ‚½‚Í 1C‚»‚¤‚Å‚È‚¢ê‡‚Í 0 ‚ğ•Ô
- *  ‚· (ƒCƒ“ƒ‰ƒCƒ“ŠÖ”‚È‚Ì‚ÅC•Ô‚è’l‚ª•s—v‚Èê‡‚Å‚à–³‘Ê‚ÈƒR[ƒh‚Ío‚È
- *  ‚¢)D
+ *  tcb $B$G;X$9%?%9%/$NM%@hEY$HF1$8M%@hEY$r;}$D%?%9%/$NCf$G$N:G8e$KF~$l(B
+ *  $B$k!%(B
+ *  $B%S%C%H%^%C%WNN0h$N3:Ev$9$k%S%C%H$r%;%C%H$7!$I,MW$J$i(B top_priority 
+ *  $B$r99?7$9$k!%(Btop_priority $B$r99?7$7$?;~$O(B 1$B!$$=$&$G$J$$>l9g$O(B 0 $B$rJV(B
+ *  $B$9(B ($B%$%s%i%$%s4X?t$J$N$G!$JV$jCM$,ITMW$J>l9g$G$bL5BL$J%3!<%I$O=P$J(B
+ *  $B$$(B)$B!%(B
  */
 Inline BOOL
 ready_queue_insert(RDYQUE *rq, TCB *tcb)
@@ -200,13 +202,13 @@ ready_queue_insert(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚É‘}“ü‚·‚éD
+ *  $B%?%9%/$r%l%G%#%-%e!<$KA^F~$9$k!%(B
  *
- *  tcb ‚Åw‚·ƒ^ƒXƒN‚Ì—Dæ“x‚Æ“¯‚¶—Dæ“x‚ğ‚Âƒ^ƒXƒN‚Ì’†‚Å‚Ìæ“ª‚É“ü‚ê
- *  ‚éDRUNó‘Ô‚Ìƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚©‚çŠO‚µ‚Ä‚¨‚­À‘•‚ÅCƒ^ƒXƒN‚ªƒv
- *  ƒŠƒGƒ“ƒvƒg‚³‚ê‚½ê‡‚Ég‚¤D
- *  ƒrƒbƒgƒ}ƒbƒv—Ìˆæ‚ÌŠY“–‚·‚éƒrƒbƒg‚ğƒZƒbƒg‚µC•K—v‚È‚ç top_priority 
- *  ‚ğXV‚·‚éD
+ *  tcb $B$G;X$9%?%9%/$NM%@hEY$HF1$8M%@hEY$r;}$D%?%9%/$NCf$G$N@hF,$KF~$l(B
+ *  $B$k!%(BRUN$B>uBV$N%?%9%/$r%l%G%#%-%e!<$+$i30$7$F$*$/<BAu$G!$%?%9%/$,%W(B
+ *  $B%j%(%s%W%H$5$l$?>l9g$K;H$&!%(B
+ *  $B%S%C%H%^%C%WNN0h$N3:Ev$9$k%S%C%H$r%;%C%H$7!$I,MW$J$i(B top_priority 
+ *  $B$r99?7$9$k!%(B
  */
 Inline void
 ready_queue_insert_top(RDYQUE *rq, TCB *tcb)
@@ -221,29 +223,29 @@ ready_queue_insert_top(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  ƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚©‚çíœ‚·‚éD
+ *  $B%?%9%/$r%l%G%#%-%e!<$+$i:o=|$9$k!%(B
  *
- *  TCB ‚ğŠY“–‚·‚é—Dæ“x‚Ìƒ^ƒXƒNƒLƒ…[‚©‚ç‚Í‚¸‚µC‚»‚ê‚É‚æ‚Á‚Äƒ^ƒXƒNƒLƒ…[
- *  ‚ª‹ó‚É‚È‚Á‚½ê‡‚É‚ÍCƒrƒbƒgƒ}ƒbƒv—Ìˆæ‚ÌŠY“–‚·‚éƒrƒbƒg‚ğƒNƒŠƒA‚·‚éD
- *  ‚³‚ç‚ÉCíœ‚µ‚½ƒ^ƒXƒN‚ªÅ‚—Dæ“x‚Å‚ ‚Á‚½‚ÍCtop_priority ‚ğXV
- *  ‚·‚éD‚±‚ÌÛ‚ÉCŸ‚É—Dæ“x‚Ì‚‚¢ƒ^ƒXƒN‚ğƒT[ƒ`‚·‚é‚½‚ß‚ÉCƒrƒbƒgƒ}ƒb
- *  ƒv—Ìˆæ‚ğg‚¤D
+ *  TCB $B$r3:Ev$9$kM%@hEY$N%?%9%/%-%e!<$+$i$O$:$7!$$=$l$K$h$C$F%?%9%/%-%e!<(B
+ *  $B$,6u$K$J$C$?>l9g$K$O!$%S%C%H%^%C%WNN0h$N3:Ev$9$k%S%C%H$r%/%j%"$9$k!%(B
+ *  $B$5$i$K!$:o=|$7$?%?%9%/$,:G9bM%@hEY$G$"$C$?;~$O!$(Btop_priority $B$r99?7(B
+ *  $B$9$k!%$3$N:]$K!$<!$KM%@hEY$N9b$$%?%9%/$r%5!<%A$9$k$?$a$K!$%S%C%H%^%C(B
+ *  $B%WNN0h$r;H$&!%(B
  */
 Inline void
 ready_queue_delete(RDYQUE *rq, TCB *tcb)
 {
 #if defined(tron) && !defined(TRON_LEVEL1)
-   Asm("qdel %a1, r0	\n"	/* ƒ^ƒXƒNƒLƒ…[‚©‚ç‚Ìíœ */
-"	bne 1f		\n"	/* ƒLƒ…[‚ª‹ó‚É‚È‚ç‚È‚¢‚Í‚±‚ê‚ÅI—¹ */
+   Asm("qdel %a1, r0	\n"	/* $B%?%9%/%-%e!<$+$i$N:o=|(B */
+"	bne 1f		\n"	/* $B%-%e!<$,6u$K$J$i$J$$;~$O$3$l$G=*N;(B */
 "	mov %2 ,r0	\n"
 "	mov %3, r1	\n"
-"	bclr r1, @r0	\n"	/* ŠY“–ƒrƒbƒg‚ÌƒNƒŠƒA */
+"	bclr r1, @r0	\n"	/* $B3:Ev%S%C%H$N%/%j%"(B */
 "	cmp %4, r1	\n"
-"	bne 1f		\n"	/* ‚æ‚è‚—Dæ“x‚Ìƒ^ƒXƒN‚ª‚ ‚é‚ÍI—¹ */
+"	bne 1f		\n"	/* $B$h$j9bM%@hEY$N%?%9%/$,$"$k;~$O=*N;(B */
 "	mov %5, r2	\n"
-"	sub r1, r2	\n"	/* ƒrƒbƒgƒT[ƒ`‚·‚éƒrƒbƒg•‚ğŒvZ */
+"	sub r1, r2	\n"	/* $B%S%C%H%5!<%A$9$k%S%C%HI}$r7W;;(B */
 "	bvsch/1/f	\n"
-"	mov r1, %0	\n"	/* top_priority ‚ğXV */
+"	mov r1, %0	\n"	/* top_priority $B$r99?7(B */
 "1:			"
 :	"=g"(rq->top_priority)
 :	"g"(tcb->tskque.prev), "g"(rq->bitmap), "g"(tcb->priority),
@@ -272,12 +274,12 @@ ready_queue_delete(RDYQUE *rq, TCB *tcb)
 }
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚Ì—Dæ“xƒŒƒxƒ‹ priority ‚ÌƒLƒ…[‚Ìæ“ª‚Ìƒ^ƒXƒN‚ğCƒLƒ…[
- *  ÅŒã‚ÖˆÚ“®‚·‚éDƒLƒ…[‚ª‹ó‚Ìê‡‚ÍC‰½‚à‚µ‚È‚¢D
+ *  $B%l%G%#%-%e!<$NM%@hEY%l%Y%k(B priority $B$N%-%e!<$N@hF,$N%?%9%/$r!$%-%e!<(B
+ *  $B:G8e$X0\F0$9$k!%%-%e!<$,6u$N>l9g$O!$2?$b$7$J$$!%(B
  *
- *  ready_queue_delete ‚Æ ready_queue_insert ‚ğ‘±‚¯‚ÄŒÄ‚ñ‚Å‚à“¯‚¶‚±‚Æ‚ª
- *  ÀŒ»‚Å‚«‚é‚ªCready_queue_rotate ‚Ìê‡‚Íƒrƒbƒgƒ}ƒbƒv—Ìˆæ‚Ì‘€ì‚Í•K
- *  —v‚È‚¢‚½‚ßCŒø—¦‚ğ‚æ‚­‚·‚é‚½‚ß‚É•Ê‚ÌŠÖ”‚É‚µ‚Ä‚¢‚éD
+ *  ready_queue_delete $B$H(B ready_queue_insert $B$rB3$1$F8F$s$G$bF1$8$3$H$,(B
+ *  $B<B8=$G$-$k$,!$(Bready_queue_rotate $B$N>l9g$O%S%C%H%^%C%WNN0h$NA`:n$OI,(B
+ *  $BMW$J$$$?$a!$8zN($r$h$/$9$k$?$a$KJL$N4X?t$K$7$F$$$k!%(B
  */
 Inline void
 ready_queue_rotate(RDYQUE *rq, INT priority)

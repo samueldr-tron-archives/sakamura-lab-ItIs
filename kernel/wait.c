@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,11 +30,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: wait.c,v 1.8 1997/01/10 13:15:28 hiro Exp $
+ *  @(#) $Id: wait.c,v 1.9 1998/01/30 09:52:53 hiro Exp $
  */
 
 /*
- *  É^ÉXÉNä‘ìØä˙ÅEí êMÉIÉuÉWÉFÉNÉgîƒópÉãÅ[É`Éì
+ *  $B%?%9%/4VF14|!&DL?.%*%V%8%'%/%HHFMQ%k!<%A%s(B
  */
 
 #include "itis_kernel.h"
@@ -40,10 +42,10 @@
 #include "wait.h"
 
 /*
- *  ë“ÇøèÛë‘Ç™âèúÇ∑ÇÈÇÊÇ§É^ÉXÉNèÛë‘ÇçXêVÇ∑ÇÈÅDÉåÉfÉBèÛë‘Ç…Ç»ÇÈèÍçáÇÕÅC
- *  ÉåÉfÉBÉLÉÖÅ[Ç…Ç¬Ç»ÇÆÅD
+ *  $BBT$A>uBV$,2r=|$9$k$h$&%?%9%/>uBV$r99?7$9$k!%%l%G%#>uBV$K$J$k>l9g$O!$(B
+ *  $B%l%G%#%-%e!<$K$D$J$0!%(B
  *
- *  É^ÉXÉNÇ™ë“ÇøèÛë‘ (ìÒèdë“ÇøÇä‹Çﬁ) ÇÃéûÇ…åƒÇ‘Ç±Ç∆ÅD
+ *  $B%?%9%/$,BT$A>uBV(B ($BFs=EBT$A$r4^$`(B) $B$N;~$K8F$V$3$H!%(B
  */
 Inline void
 make_non_wait(TCB *tcb)
@@ -59,7 +61,7 @@ make_non_wait(TCB *tcb)
 }
 
 /*
- *  É^ÉXÉNÇÃë“ÇøèÛë‘ÇâèúÇ∑ÇÈÅD
+ *  $B%?%9%/$NBT$A>uBV$r2r=|$9$k!%(B
  */
 __inline__ void
 wait_release(TCB *tcb)
@@ -89,12 +91,12 @@ wait_release_tmout(TCB *tcb)
 }
 
 /*
- *  é¿çsíÜÇÃÉ^ÉXÉNÇë“ÇøèÛë‘Ç…à⁄çsÇ≥ÇπÅCÉ^ÉCÉ}ÉCÉxÉìÉgÉLÉÖÅ[Ç…Ç¬Ç»ÇÆÅD
+ *  $B<B9TCf$N%?%9%/$rBT$A>uBV$K0\9T$5$;!$%?%$%^%$%Y%s%H%-%e!<$K$D$J$0!%(B
  *
- *  ctxtsk ÇÕ RUNèÛë‘Ç…Ç»Ç¡ÇƒÇ¢ÇÈÇÃÇ™í èÌÇ≈Ç†ÇÈÇ™ÅCé¿çsíÜÇÃÉVÉXÉeÉÄÉRÅ[ 
- *  ÉãÇÃìríÜÇ≈äÑçûÇ›Ç™î≠ê∂ÇµÅCÇªÇÃäÑçûÇ›ÉnÉìÉhÉâíÜÇ≈åƒÇŒÇÍÇΩÉVÉXÉeÉÄÉRÅ[ 
- *  ÉãÇ…ÇÊÇ¡Çƒ ctxtsk Ç™ÇªÇÃëºÇÃèÛë‘Ç…Ç»ÇÈèÍçáÇ™Ç†ÇÈÅDÇΩÇæÇµÅCWAITèÛë‘
- *  Ç…Ç»ÇÈÇ±Ç∆ÇÕÇ»Ç¢ÅD
+ *  ctxtsk $B$O(B RUN$B>uBV$K$J$C$F$$$k$N$,DL>o$G$"$k$,!$<B9TCf$N%7%9%F%`%3!<(B 
+ *  $B%k$NESCf$G3d9~$_$,H/@8$7!$$=$N3d9~$_%O%s%I%iCf$G8F$P$l$?%7%9%F%`%3!<(B 
+ *  $B%k$K$h$C$F(B ctxtsk $B$,$=$NB>$N>uBV$K$J$k>l9g$,$"$k!%$?$@$7!$(BWAIT$B>uBV(B
+ *  $B$K$J$k$3$H$O$J$$!%(B
  */
 void
 make_wait(TMO tmout)
@@ -115,8 +117,8 @@ make_wait(TMO tmout)
 }
 
 /*
- *  ë“ÇøÉLÉÖÅ[Ç…Ç¬Ç»Ç™Ç¡ÇƒÇ¢ÇÈÉ^ÉXÉNÇÃë“ÇøèÛë‘ÇÇ∑Ç◊ÇƒâèúÇµÅCE_DLTÉGÉâÅ[
- *  Ç∆Ç∑ÇÈÅD
+ *  $BBT$A%-%e!<$K$D$J$,$C$F$$$k%?%9%/$NBT$A>uBV$r$9$Y$F2r=|$7!$(BE_DLT$B%(%i!<(B
+ *  $B$H$9$k!%(B
  */
 void
 wait_delete(QUEUE *wait_queue)
@@ -131,7 +133,7 @@ wait_delete(QUEUE *wait_queue)
 }
 
 /*
- *  ë“ÇøÉLÉÖÅ[ÇÃêÊì™ÇÃÉ^ÉXÉNÇÃ ID ÇéÊÇËèoÇ∑ÅD
+ *  $BBT$A%-%e!<$N@hF,$N%?%9%/$N(B ID $B$r<h$j=P$9!%(B
  */
 ID
 wait_tskid(QUEUE *wait_queue)
@@ -145,7 +147,7 @@ wait_tskid(QUEUE *wait_queue)
 }
 
 /*
- *  É^ÉXÉNÇóDêÊìxèáÇÃë“ÇøÉLÉÖÅ[Ç…Ç¬Ç»ÇÆÅD
+ *  $B%?%9%/$rM%@hEY=g$NBT$A%-%e!<$K$D$J$0!%(B
  */
 Inline void
 queue_insert_tpri(TCB *tcb, QUEUE *queue)
@@ -157,8 +159,8 @@ queue_insert_tpri(TCB *tcb, QUEUE *queue)
 }
 
 /*
- *  é¿çsíÜÇÃÉ^ÉXÉNÇë“ÇøèÛë‘Ç…à⁄çsÇ≥ÇπÅCÉ^ÉCÉ}ÉCÉxÉìÉgÉLÉÖÅ[Ç®ÇÊÇ—ÉIÉu
- *  ÉWÉFÉNÉgÇÃë“ÇøÉLÉÖÅ[Ç…Ç¬Ç»ÇÆÅDÇ‹ÇΩÅCctxtsk ÇÃ wgcb Çê›íËÇ∑ÇÈÅD
+ *  $B<B9TCf$N%?%9%/$rBT$A>uBV$K0\9T$5$;!$%?%$%^%$%Y%s%H%-%e!<$*$h$S%*%V(B
+ *  $B%8%'%/%H$NBT$A%-%e!<$K$D$J$0!%$^$?!$(Bctxtsk $B$N(B wgcb $B$r@_Dj$9$k!%(B
  */
 void
 gcb_make_wait(GCB *gcb, TMO tmout)
@@ -174,9 +176,9 @@ gcb_make_wait(GCB *gcb, TMO tmout)
 }
 
 /*
- *  É^ÉXÉNÇÃóDêÊìxÇ™ïœÇÌÇ¡ÇΩç€Ç…ÅCë“ÇøÉLÉÖÅ[ÇÃíÜÇ≈ÇÃÉ^ÉXÉNÇÃà íuÇèCê≥
- *  Ç∑ÇÈÅDÉIÉuÉWÉFÉNÉgëÆê´Ç… TA_TPRI Ç™éwíËÇ≥ÇÍÇƒÇ¢ÇÈèÍçáÇ…ÇÃÇ›ÅCåƒÇ—èo
- *  Ç≥ÇÍÇÈÅD
+ *  $B%?%9%/$NM%@hEY$,JQ$o$C$?:]$K!$BT$A%-%e!<$NCf$G$N%?%9%/$N0LCV$r=$@5(B
+ *  $B$9$k!%%*%V%8%'%/%HB0@-$K(B TA_TPRI $B$,;XDj$5$l$F$$$k>l9g$K$N$_!$8F$S=P(B
+ *  $B$5$l$k!%(B
  */
 inline void
 gcb_change_priority(GCB *gcb, TCB *tcb)

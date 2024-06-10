@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: time_calls.c,v 1.15 1997/01/10 13:36:33 hiro Exp $
+ *  @(#) $Id: time_calls.c,v 1.17 1998/07/06 04:42:10 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -38,7 +40,7 @@
 #include "check.h"
 
 /*
- *  éûä‘ä«óùã@î\
+ *  $B;~4V4IM}5!G=(B
  */
 
 #ifndef _i_set_tim
@@ -94,22 +96,22 @@ i_dly_tsk(DLYTIME dlytim)
 #endif /* _i_dly_tsk */
 
 /*
- *  é¸ä˙ãNìÆÉnÉìÉhÉâ
+ *  $B<~4|5/F0%O%s%I%i(B
  */
 
 #ifdef USE_CYC
 
 /*
- *  é¸ä˙ãNìÆÉnÉìÉhÉâä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B<~4|5/F0%O%s%I%i4IM}%V%m%C%/$NDj5A(B
  */
 
 typedef struct cyclic_handler_control_block {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	cycatr;		/* é¸ä˙ãNìÆÉnÉìÉhÉâëÆê´ */
-	FP	cychdr;		/* é¸ä˙ãNìÆÉnÉìÉhÉâÉAÉhÉåÉX */
-	UINT	cycact;		/* é¸ä˙ãNìÆÉnÉìÉhÉâäàê´èÛë‘ */
-	CYCTIME	cyctim;		/* é¸ä˙ãNìÆéûä‘ä‘äu */
-	TMEB	cyctmeb;	/* É^ÉCÉ}ÉCÉxÉìÉgÉuÉçÉbÉN */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	cycatr;		/* $B<~4|5/F0%O%s%I%iB0@-(B */
+	FP	cychdr;		/* $B<~4|5/F0%O%s%I%i%"%I%l%9(B */
+	UINT	cycact;		/* $B<~4|5/F0%O%s%I%i3h@->uBV(B */
+	CYCTIME	cyctim;		/* $B<~4|5/F0;~4V4V3V(B */
+	TMEB	cyctmeb;	/* $B%?%$%^%$%Y%s%H%V%m%C%/(B */
 } CYCCB;
 
 CYCCB	cyccb_table[NUM_CYC];
@@ -117,14 +119,14 @@ CYCCB	cyccb_table[NUM_CYC];
 #define get_cyccb(no)	(&(cyccb_table[(no)-1]))
 
 /*
- *  ñ¢égópÇÃé¸ä˙ãNìÆÉnÉìÉhÉâä«óùÉuÉçÉbÉNÇÃÉäÉXÉg
+ *  $BL$;HMQ$N<~4|5/F0%O%s%I%i4IM}%V%m%C%/$N%j%9%H(B
  */
 #ifndef _i_vdef_cyc
 QUEUE	free_cyccb;
 #endif /* _i_vdef_cyc */
 
 /*
- *  é¸ä˙ãNìÆÉnÉìÉhÉâä«óùÉuÉçÉbÉNÇÃèâä˙âª
+ *  $B<~4|5/F0%O%s%I%i4IM}%V%m%C%/$N=i4|2=(B
  */
 void
 cyclichandler_initialize(void)
@@ -145,7 +147,7 @@ cyclichandler_initialize(void)
 }
 
 /*
- *  é¸ä˙ãNìÆÉnÉìÉhÉâãNìÆÉãÅ[É`Éì
+ *  $B<~4|5/F0%O%s%I%i5/F0%k!<%A%s(B
  */
 static void
 call_cychdr(CYCCB *cyccb)
@@ -219,6 +221,9 @@ i_vdef_cyc(T_DCYC* pk_dcyc)
 	ER	ercd = E_OK;
 
 	CHECK_PAR(pk_dcyc != NADR);
+	CHECK_RSATR(pk_dcyc->cycatr, TA_HLNG);
+	CHECK_PAR((pk_dcyc->cycact & ~(TCY_ON)) == 0);
+	CHECK_PAR(pk_dcyc->cyctim > 0);
 
 	BEGIN_CRITICAL_SECTION;
 	if (queue_empty_p(&free_cyccb)) {
@@ -291,20 +296,20 @@ i_ref_cyc(T_RCYC* pk_rcyc, HNO cycno)
 #endif /* USE_CYC */
 
 /*
- *  ÉAÉâÅ[ÉÄÉnÉìÉhÉâ
+ *  $B%"%i!<%`%O%s%I%i(B
  */
 
 #ifdef USE_ALM
 
 /*
- *  ÉAÉâÅ[ÉÄÉnÉìÉhÉâä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B%"%i!<%`%O%s%I%i4IM}%V%m%C%/$NDj5A(B
  */
 
 typedef struct alarm_handler_control_block {
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	almatr;		/* ÉAÉâÅ[ÉÄÉnÉìÉhÉâëÆê´ */
-	FP	almhdr;		/* ÉAÉâÅ[ÉÄÉnÉìÉhÉâÉAÉhÉåÉX */
-	TMEB	almtmeb;	/* É^ÉCÉ}ÉCÉxÉìÉgÉuÉçÉbÉN */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	almatr;		/* $B%"%i!<%`%O%s%I%iB0@-(B */
+	FP	almhdr;		/* $B%"%i!<%`%O%s%I%i%"%I%l%9(B */
+	TMEB	almtmeb;	/* $B%?%$%^%$%Y%s%H%V%m%C%/(B */
 } ALMCB;
 
 ALMCB	almcb_table[NUM_ALM];
@@ -312,14 +317,14 @@ ALMCB	almcb_table[NUM_ALM];
 #define get_almcb(no)	(&(almcb_table[(no)-1]))
 
 /*
- *  ñ¢égópÇÃÉAÉâÅ[ÉÄÉnÉìÉhÉâä«óùÉuÉçÉbÉNÇÃÉäÉXÉg
+ *  $BL$;HMQ$N%"%i!<%`%O%s%I%i4IM}%V%m%C%/$N%j%9%H(B
  */
 #ifndef _i_vdef_alm
 QUEUE	free_almcb;
 #endif /* _i_vdef_alm */
 
 /*
- *  ÉAÉâÅ[ÉÄÉnÉìÉhÉâä«óùÉuÉçÉbÉNÇÃèâä˙âª
+ *  $B%"%i!<%`%O%s%I%i4IM}%V%m%C%/$N=i4|2=(B
  */
 void
 alarmhandler_initialize(void)
@@ -340,7 +345,7 @@ alarmhandler_initialize(void)
 }
 
 /*
- *  ÉAÉâÅ[ÉÄÉnÉìÉhÉâãNìÆÉãÅ[É`Éì
+ *  $B%"%i!<%`%O%s%I%i5/F0%k!<%A%s(B
  */
 static void
 call_almhdr(ALMCB *almcb)

@@ -1,8 +1,10 @@
 #! /usr/local/bin/perl
 # 
-# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 	ItIs - An ITRON Implementation for Research and Education
 # 
-# Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+# Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+# Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+# 				Toyohashi Univ. of Technology, JAPAN
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. Neither the name of the University nor the names of the laboratory
+# 3. Neither the name of the universities nor the names of the laboratories
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 # 
 # THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
 # WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 # DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 # GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,25 +30,25 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-#  @(#) $Id: genconfig,v 1.18 1998/01/30 06:54:01 hiro Exp $
-#
+#  @(#) $Id: genconfig,v 1.19 1998/01/30 09:52:29 hiro Exp $
+# 
 
 #
-#  ÉVÉXÉeÉÄç\ê¨íËã`ê∂ê¨ÉvÉçÉOÉâÉÄ
+#  $B%7%9%F%`9=@.Dj5A@8@.%W%m%0%i%`(B
 #
-#  ÉVÉXÉeÉÄç\ê¨ê›íËÉtÉ@ÉCÉã (config.def) Çì«Ç›çûÇÒÇ≈ÅCà»â∫ÇÃÉtÉ@ÉCÉãÇ
-#  ê∂ê¨Ç∑ÇÈÅD
+#  $B%7%9%F%`9=@.@_Dj%U%!%$%k(B (config.def) $B$rFI$_9~$s$G!$0J2<$N%U%!%$%k$r(B
+#  $B@8@.$9$k!%(B
 #
 #	config.h
 #
 
-#  ëÂàÊïœêîÇÃèâä˙âª
+#  $BBg0hJQ?t$N=i4|2=(B
 
 $line = "";
 $word = "";
 $lineno = 0;
 
-#  éöãÂâêÕÉãÅ[É`Éì
+#  $B;z6g2r@O%k!<%A%s(B
 
 sub getline {
 	$line = <>;
@@ -54,7 +56,7 @@ sub getline {
 }
 
 sub getword {
-	# ãÛçsÇ∆ãÛîíÇÃÉXÉLÉbÉv
+	# $B6u9T$H6uGr$N%9%-%C%W(B
 	$line =~ s/^[ \t]+//;
 	while ($line eq "") {
 		do getline();
@@ -63,7 +65,7 @@ sub getword {
 		$line =~ s/^[ \t]+//;
 	}
 
-	# ÉRÉÅÉìÉgÇÃÉXÉLÉbÉv
+	# $B%3%a%s%H$N%9%-%C%W(B
 	if ($line =~ /^\/\*/) {
 		while ($line !~ /\*\/(.*)$/) {
 			do getline();
@@ -75,34 +77,34 @@ sub getword {
 		return(do getword());
 	}
 
-	# åÍÇÃêÿÇËèoÇµ
+	# $B8l$N@Z$j=P$7(B
 	if ($line =~ /^([A-Za-z_][A-Za-z0-9_]*)(.*)$/) {
-		# éØï éq
+		# $B<1JL;R(B
 		$word = $1;
 		$line = $2;
 	}
 	elsif ($line =~ /^(-?)0x([0-9A-Fa-f]+)(.*)$/) {
-		# 16êiêî
+		# 16$B?J?t(B
 		$word = hex($1.$2);
 		$line = $3;
 	}
 	elsif ($line =~ /^(-?[0-9]+)(.*)$/) {
-		# 10êiêî
+		# 10$B?J?t(B
 		$word = $1;
 		$line = $2;
 	}
 	else {
-		# ÇªÇÃëºÇÃãLçÜ
+		# $B$=$NB>$N5-9f(B
 		$word = substr($line, 0, 1);
 		$line = substr($line, 1);
 	}
 
-	# è¨ï∂éöÇ…ïœä∑ (ëÂï∂éöÇ∆è¨ï∂éöÇÕãÊï ÇµÇ»Ç¢)
+	# $B>.J8;z$KJQ49(B ($BBgJ8;z$H>.J8;z$O6hJL$7$J$$(B)
 	$word =~ y/A-Z/a-z/;
 	return($word);
 }
 
-#  ÉGÉâÅ[èoóÕÉãÅ[É`Éì
+#  $B%(%i!<=PNO%k!<%A%s(B
 
 sub out_error {
 	if ($word) {
@@ -114,7 +116,7 @@ sub out_error {
 	exit(1);
 }
 
-#  éüÇÃåÍÇÃÉ`ÉFÉbÉN
+#  $B<!$N8l$N%A%'%C%/(B
 
 sub nextword {
 	local($next) = @_;
@@ -127,7 +129,7 @@ sub nextword {
 	}
 }
 
-#  ÉVÉìÉ{ÉãÇÃíËã`
+#  $B%7%s%\%k$NDj5A(B
 
 %resource_spec = (
 	"min_tskid", 1,
@@ -197,7 +199,7 @@ sub nextword {
 	"sys_mpl_size", 1,
 );
 
-#  ÉVÉìÉ{ÉãÉäÉXÉgÇì«Ç›çûÇﬁ
+#  $B%7%s%\%k%j%9%H$rFI$_9~$`(B
 
 sub readsymlist {
 	local($symlist);
@@ -213,19 +215,19 @@ sub readsymlist {
 	return($symlist);
 }
 
-#  ÉVÉìÉ{ÉãÇÃíËã`Çì«Ç›çûÇﬁ
+#  $B%7%s%\%k$NDj5A$rFI$_9~$`(B
 
 sub readvalue {
 	local($var, $varspec) = @_;
 
-	if ($varspec == 1) {			# êîílÇÃì«Ç›çûÇ›
+	if ($varspec == 1) {			# $B?tCM$NFI$_9~$_(B
 		if ($word eq "=") {
 			do getword();
 			$val{$var} = $word;
 			do getword();
 		}
 	}
-	elsif ($varspec == 11) {		# ÉVÉìÉ{ÉãÉäÉXÉgÇÃì«Ç›çûÇ›
+	elsif ($varspec == 11) {		# $B%7%s%\%k%j%9%H$NFI$_9~$_(B
 		if ($word eq "{") {
 			do getword();
 			$val{$var} = do readsymlist();
@@ -234,7 +236,7 @@ sub readvalue {
 	do nextword(";");
 }
 
-#  íËã`ÉeÅ[ÉuÉãÇì«Ç›çûÇﬁ
+#  $BDj5A%F!<%V%k$rFI$_9~$`(B
 
 sub readtable {
 	local($id, %spec) = @_;
@@ -252,7 +254,7 @@ sub readtable {
 }
 
 #
-#  íËã`ÉtÉ@ÉCÉãÇÃì«Ç›çûÇ›
+#  $BDj5A%U%!%$%k$NFI$_9~$_(B
 #
 
 do getword();
@@ -280,7 +282,7 @@ while ($word) {
 }
 
 #
-#  äeéÌÇÃíËã`ê∂ê¨ÉãÅ[É`Éì
+#  $B3F<o$NDj5A@8@.%k!<%A%s(B
 #
 
 sub out_object_def {
@@ -486,7 +488,7 @@ sub gen_flag_def {
 }
 
 #
-#  config.h ÇÃê∂ê¨
+#  config.h $B$N@8@.(B
 #
 
 open(FILE, "> config.h");
@@ -498,7 +500,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ÉIÉuÉWÉFÉNÉgID ÇÃîÕàÕíËã`ÇÃê∂ê¨
+# $B%*%V%8%'%/%H(BID $B$NHO0ODj5A$N@8@.(B
 do gen_object_def("tsk", 0);
 do gen_object_def("sem", 0);
 do gen_object_def("flg", 0);
@@ -514,15 +516,15 @@ do gen_resnum_def("alm");
 do gen_resnum_def("svc");
 print FILE "\n";
 
-# ägí£SVC ÇégÇ§éûÇÕÅCèÄÉ^ÉXÉNïîÇ™ïKóv
+# $B3HD%(BSVC $B$r;H$&;~$O!$=`%?%9%/It$,I,MW(B
 if ($val{"resource\$num_svc"} > 0 && !$val{"use_qtsk_portion"}) {
 	$val{"use_qtsk_portion"} = 1;
 }
 
-# óDêÊìxílÇÃîÕàÕíËã`ÇÃê∂ê¨
+# $BM%@hEYCM$NHO0ODj5A$N@8@.(B
 do gen_priority_def();
 
-# ÉGÉâÅ[É`ÉFÉbÉNédólÇÃíËã`ÇÃê∂ê¨
+# $B%(%i!<%A%'%C%/;EMM$NDj5A$N@8@.(B
 do gen_errorcheck_def("nospt");
 do gen_errorcheck_def("rsatr");
 do gen_errorcheck_def("par");
@@ -534,7 +536,7 @@ do gen_errorcheck_def("ctx2");
 do gen_errorcheck_def("self");
 print FILE "\n";
 
-# ÇªÇÃëºÇÃíËã`ÇÃê∂ê¨
+# $B$=$NB>$NDj5A$N@8@.(B
 do gen_flag_def("use_suspend_self");
 do gen_flag_def("use_qtsk_portion");
 do gen_flag_def("use_auto_id");

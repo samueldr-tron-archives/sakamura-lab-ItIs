@@ -1,425 +1,612 @@
 
+Mon Jul  6 23:55:00 JST 1998	Hiroaki Takada
+
+	* ChangeLog, README, MANIFEST, doc/USER, TRON, M68K, BSDUNIX,
+	kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
+
+	* systask/bsd_sigio.c: $B%7%0%J%k%O%s%I%i$NDj5A$G!$0z?t$,$J$$$3$H$r(B
+	$B@k8@$9$k$N$r$d$a$k!%(B
+
+	* Release1.4 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs4-1_4")$B!%(B
+
+Mon Jul  6 23:22:04 JST 1998	Hiroaki Takada
+
+	* systask/bsd_sigio.c, include/bsd_sigio.h: BSD UNIX$BMQ(B $B%N%s%V%m%C(B
+	$B%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$rA4LL2~D{!%%$%Y%s%H%U%i%0$K4X$o$k%P%0(B
+	$B$r2r7h!%(B
+
+	* systask/bsd_serial.c, libitis/bsd_nbio.c, bsd_nbeio.c: $B?7$7$$%N(B
+	$B%s%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$r;H$&$h$&$K=$@5!%(B
+
+	* systask/systask.h, inittask.c, sample/config.def.bsd: $B?7$7$$%N%s(B
+	$B%V%m%C%-%s%0(BI/O $B%5%]!<%H%b%8%e!<%k$X$NBP1~!%(B
+
+	* sample/Makefile.sunos4: sysio.o $B$rKu>C!%(B
+
+Mon Jul  6 20:34:07 JST 1998	Hiroaki Takada
+
+	* include/m68k/itis_scint.h: trapa $B$r(B trap $B$K(B ($B%P%0%U%#%C%/%9(B)$B!%(B
+
+	* include/Makefile, libitis/Makefile: newlib $BBP1~$K=$@5!%(B
+
+	* libitis/glue_newlib.c, systask/sysio.c, sample/Makefile.dve68k:
+	newlib $BBP1~Dc%l%Y%kF~=PNO%k!<%A%s$r(B sysio.c $B$+$i@Z$jN%$7!$(B
+	glue_newlib.c $B$KFHN)$5$;$k!%(B
+
+	* kernel/startup.c: main $B4X?t$NJV$jCM$r(B void $B$HL@5-$9$k$N$r$d$a$k(B 
+	(gcc $B$N%P!<%8%g%s$K$h$C$F$O!$(Bwarning $B$,=P$k$?$a(B)$B!%(B
+
+	* sample/Makefile.dve68k: newlib $BBP1~$KH<$&@0M}!%(B
+
+Mon Jul  6 19:48:32 JST 1998	Hiroaki Takada
+
+	* m68k/Makefile.config: TOPDIR $B$r=$@5!%(BAR $B$r=$@5!%(B
+
+	* m68k/start/Makefile: install $B$rM-8z$K(B (crt0.o $B$N%$%s%9%H!<%k@h$r(B
+	$BJQ99$9$k(B)$B!%(B
+
+	* m68k/cpu_support.S: ret_int $B$G%?%9%/@Z$jBX$($r9T$&>l9g$r!$La$C$?(B
+	$B8e$N(B IPM $B$,(B 0 $B$N>l9g$K8BDj$9$k(B ($BL7=b$7$?%1!<%9$rKI$0$?$a$NM=KIA<CV(B)$B!%(B
+
+	* m68k/cpu_calls.c: $B%3%a%s%H$N=$@5!%(B
+
+	* m68k/cpu_task.h: $BA0$N2~B$$r%-%c%s%;%k$9$k(B ($B%?%9%/B0@-$N(B TA_HLNG
+	$B$rM-8z$K$9$k(B)$B!%(B
+
+Mon Jul  6 15:30:49 JST 1998	Hiroaki Takada
+
+	* bsd/cpu_calls.c: chg_ims $B$G!$(BSIGUSR2 $B0J30$N%7%0%J%k$r%^%9%/$7$?(B
+	$B>uBV$K@_Dj$9$k>l9g$K$O!$(BSIGUSR2 $B$b%^%9%/$7$?>uBV$K$7$J$1$l$P$J$i$J(B
+	$B$$$b$N$H$9$k!%(B
+
+	* doc/BSDUNIX, CONDITION, M68K, PRISEM, TRON, USER: $B%I%-%e%a%s%H$r(B
+	$B:G?7HG$K(B ($B$^$@40@.$G$O$J$$(B)$B!%(BCPU$B0MB8$N5-=R$rJL$N%U%!%$%k$KJ,N%!%(B
+
+Mon Jul  6 13:43:41 JST 1998	Hiroaki Takada
+
+	* m68k/cpu_task.h: $B%?%9%/B0@-$,(B TA_HLNG $B$G$J$$>l9g$K$b!$(BC$B8@8l$N%3(B
+	$B%s%Y%s%7%g%s$G0z?t$rEO$9J}<0$KJQ99!%(B
+
+	* kernel/misc_call.c: get_ver $B$,JV$9>pJs$rJQ99!%(B
+
+	* kernel/time_calls.c: vdef_cyc $B$G%(%i!<%A%'%C%/$,H4$1$F$$$?%P%0$r(B
+	$B=$@5!%(B
+
+Thu Jun 18 16:49:30 JST 1998	Hiroaki Takada
+
+	* utils/extidata: $B%P%0$N=$@5$H2~NI!%(B
+
+	* sample/Makefile.*: extidata $B$K(B prefix $B%*%W%7%g%s$rDI2C!%(B
+
+Thu Jun 18 16:45:29 JST 1998	Hiroaki Takada
+
+	* m68k/cpu_task.h: TA_HLNG $BIU$-$GDj5A$5$l$?%?%9%/$r5/F0;~$K!$La$j(B
+	$BHVCO$r@Q$`%(%j%"$r3NJ]$7$F$$$J$+$C$?LdBj$r=$@5!%(BSYSMODE $B%^%/%m$r;H(B
+	$B$&$h$&$K=$@5!%(B
+
+	* systask/sysio.h: newlib $B$N>l9g$K$O!$(B_exit $B$,I,MW!%(Bnewlib $BBP1~$O(B
+	$B$^$@IT40A4!%(B
+
+	* m68k/dve68k/sys_conf.h: NEWLIB $B%^%/%m$NDj5A$rDI2C!%(B
+
+	* m68k/dve68k/sys_support.S: ___sys_init $B$r(B _hardware_init_hook $B$K(B
+	$B%j%M!<%`!%La$jHVCO$r<+J,$G<h$j=P$9$3$H$K(B (newlib $B$X$NBP1~(B)$B!%(B
+
+	* m68k/*, m68k/*/*: copyright notice $B$rIU$1D>$9!%(B
+
+Thu Jun 18 16:35:20 JST 1998	Hiroaki Takada
+
+	* m68k/start/Makefile: install $B=hM}$r%3%a%s%H%"%&%H!%(B
+
+	* m68k/start/start.S: newlib $BBP1~$K=q$-D>$9!%(Bstart.s $B$r(B start.S $B$K(B
+	$B%j%M!<%`!%(B
+
+Wed Jun 17 19:25:05 JST 1998	Hiroaki Takada
+
+	* utils/extidata: extidata $B%f!<%F%#%j%F%#$r(B perl $B$G=q$-D>$9!%(B
+
+	* sample/Makefile.*: extidata $B$N%Q%9$NJQ99!%(B
+
+Mon Jun  8 20:00:28 JST 1998	Hiroaki Takada
+
+	* systask/bsd_sigio.c: SIGIO$B%O%s%I%i$rDj5A$9$kA0$K!$%$%Y%s%H%U%i%0(B
+	$B$r@8@.$9$k$h$&$K=$@5!%(B
+
+	* systask/bsd_serial.c: $BD>@\%U%!%$%k%G%#%9%/%j%W%?(B 0 $B$rD>@\;H$&$3(B
+	$B$H$KH<$&=$@5!%(B
+
+Mon Jun  8 19:52:30 JST 1998	Hiroaki Takada
+
+	* bsd/cpu_status.h: _force_dispatch $B$+$iD>@\(B dispatch_handler $B$r8F(B
+	$B$S=P$9$h$&$K$9$k(B (_force_dispatch $B$N:G8e$G3d9~$_$r<u$1IU$1$k$H!$F1(B
+	$B$8%9%?%C%/%(%j%"$r:FMxMQ$9$k$*$=$l$,$"$j4m81(B)$B!%(B
+
+	* bsd/cpu_status.h, cpu_util.c: CPU$B%m%C%/Cf$b(B SIGTRAP $B$O<u$1IU$1$k(B
+	$B$h$&$K(B ($B%7%s%0%k%9%F%C%WF0:n$r2DG=$K(B)$B!%(B
+
+	* bsd/cpu_status.h: SA_ONSTACK $B$r(B SS_ONSTACK $B$K=$@5!%(B
+
+	* bsd/sunos4/sys_conf.h, bsd/freebsd/sys_conf.h: SIGSTACK_MERGIN 
+	$B$rBg$-$/$9$k!%(B
+
+Wed Jun  3 16:34:38 JST 1998	Hiroaki Takada
+
+	* sample/Makefile.dve68k, Makefile.*: Makefile.dve68k $B$rDI2C!%(B
+	$BB>$N(B Makefile $B$N@0M}(B (-soft-float $B$J$I(B)$B!%(B
+
+Wed Jun  3 16:12:54 JST 1998	Hiroaki Takada
+
+	* sample/sample1.c: $B%5%s%W%k%W%m%0%i%`$rG[IU%-%C%H$K2C$($k!%(B
+
+Tue Jun  2 19:22:02 JST 1998	Hiroaki Takada
+
+	* kernel/task_manage.c, tron/cpu_conf.h, m68k/cpu_conf.h,
+	bsd/cpu_conf.h: $B%?%9%/B0@-Cf$N<B9T%b!<%I$K4X$9$k(B CPU$B0MB8ItJ,$r!$(B
+	task_manage.c $B$+$i(B cpu_conf.h $B$KDI$$=P$9!%(B
+
+Tue Jun  2 12:07:28 JST 1998	Hiroaki Takada
+
+	* bsd/cpu_task.h: sys/types.h $B$r(B include $B$9$k!%(B
+
+	* bsd/cpu_task.h, bsd/sunos/sys_conf.h, bsd/freebsd/sys_conf.h:
+	JUMPBUF_MERGIN $B$r(B STACK_MERGIN $B$K%j%M!<%`$7!$(BCPU $B$K$h$k%9%?%C%/%](B
+	$B%$%s%?$N=i4|CM$NCV$-J}$N:9$r$3$3$G5[<}$9$k$3$H$K$9$k!%(BFreeBSD $B$G$O!$(B
+	$B$3$l$r(B 4 $B$K$9$k!%(B
+
+	* bsd/sys_timer.h, systask/bsd_serial.c, bsd_sigio.h: $B%7%0%J%k%O%s(B
+	$B%I%i$N0z?t$N?t$N0c$$$r5[<}$9$k$?$a$K!$%7%0%J%k%O%s%I%i$N0z?t$N?t$r(B
+	$BL@<(E*$K@k8@$7$J$$$3$H$H$9$k!%(B
+
+	* systask/bsd_serial.c: $B5?;w%7%j%"%k%I%i%$%P$G!$(B/dev/tty $B$r(B open 
+	$B$9$k$N$r$d$a$F!$%U%!%$%k%G%#%9%/%j%W%?(B 0 $B$rD>@\;H$&$3$H$K$9$k!%(B
+
+Mon May 25 10:38:55 JST 1998	Hiroaki Takada
+
+	* kernel/mempfix.c: OBJ_NONEXIST $B$H$NHf3S$r(B mpfid $B$H9T$C$F$$$k%P%0(B
+	$B$N=$@5(B (thanks to $BIZED>oM:$5$s(B)$B!%(B
+
+Tue Mar 10 23:29:22 JST 1998	Hiroaki Takada
+
+	* m68k/cpu_support.S: $B%"%;%s%V%iL?Na$N%5%$%:;XDj$NDI2C!%(B
+
+	* kernel/newversion: $B%P%0$N=$@5!%(B
+
+Tue Feb 24 11:38:10 JST 1998	Hiroaki Takada
+
+	* m68k/cpu_support.S, m68k/dve68k/sys_support.S: ret_int $B$H%7%9%F(B
+	$B%`=i4|2==hM}$N%P%0$N=$@5!%(B
+
+Fri Jan 30 19:00:10 JST 1998	Hiroaki Takada
+
+	* $BA4%U%!%$%k(B: $BJ88@I=<($rJQ99$9$k!%(B
+
+	* m68k/*, m68k/startup/*, m68k/dve68k/*, include/m68k/*: 68040 $B$N(B
+	$B%5%]!<%H$rDI2C!%(B
+
+	* $B$3$l0J9_!$(BPhase4 $B$H8F$V$3$H$K$9$k!%%P!<%8%g%sHV9f$O!$(BPhase3 $B$N$b(B
+	$B$N$r7QB3$7$F;H$&(B ($B<!$N%j%j!<%9$O(B Release1.4 $B$K$J$k(B)$B!%(B
+
 Fri Jan 30 17:00:00 JST 1998	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, BSDUNIX,
-	kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
 
-	* bsd/makeoffset.c: ‹ó‚Ìƒtƒ@ƒCƒ‹‚ğì‚é (makeoffset.c ‚ª tron ‚Ì‰º
-	‚ÖˆÚ“®‚µ‚½‚±‚Æ‚É”º‚¤‘[’u)D
+	* bsd/makeoffset.c: $B6u$N%U%!%$%k$r:n$k(B (makeoffset.c $B$,(B tron $B$N2<(B
+	$B$X0\F0$7$?$3$H$KH<$&A<CV(B)$B!%(B
 
-	* Release1.3 (patchlevel=4) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_4")D
+	* Release1.3 (patchlevel=4) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_4")$B!%(B
 
 Fri Jan 30 16:14:47 JST 1998	Hiroaki Takada
 
-	* include/itron.h: TRONd—lƒ`ƒbƒvˆË‘¶‚Ì•”•ª‚ÉƒRƒƒ“ƒg‚ğ’Ç‰ÁDm68k 
-	ˆË‘¶‚Ì’è‹`‚ğ’Ç‰ÁD
+	* include/itron.h: TRON$B;EMM%A%C%W0MB8$NItJ,$K%3%a%s%H$rDI2C!%(Bm68k 
+	$B0MB8$NDj5A$rDI2C!%(B
 
-	* include/itis_debug.h: TRONd—lƒ`ƒbƒvˆË‘¶‚Ì•”•ª‚ğ #ifdef tron ‚Å
-	ˆÍ‚İCm68k ˆË‘¶‚Ì’è‹`‚ğ’Ç‰ÁD
+	* include/itis_debug.h: TRON$B;EMM%A%C%W0MB8$NItJ,$r(B #ifdef tron $B$G(B
+	$B0O$_!$(Bm68k $B0MB8$NDj5A$rDI2C!%(B
 
-	* kernel/newversion: freebsd ‚Æ dve68k ‚ğ’Ç‰ÁD
+	* kernel/newversion: freebsd $B$H(B dve68k $B$rDI2C!%(B
 
-	* kernel/task_manage.c: ID ‚ª•‰‚Ìƒ^ƒXƒN‚ğ TA_RNG0 ˆÈŠO‚Å¶¬‚µ‚æ‚¤
-	‚Æ‚µ‚½ê‡‚ÉƒGƒ‰[‚ÉD
+	* kernel/task_manage.c: ID $B$,Ii$N%?%9%/$r(B TA_RNG0 $B0J30$G@8@.$7$h$&(B
+	$B$H$7$?>l9g$K%(%i!<$K!%(B
 
-	* kernel/task_sync.c, genconfig, sample/config.def: ©ƒ^ƒXƒN‚É 
-	sus/rem_tsk ‚ğ‹–‚·ƒIƒvƒVƒ‡ƒ“‚Ì’Ç‰ÁD
+	* kernel/task_sync.c, genconfig, sample/config.def: $B<+%?%9%/$K(B 
+	sus/rem_tsk $B$r5v$9%*%W%7%g%s$NDI2C!%(B
 
-	* kernel/genisyscall, kernel/ptable.S: ˆø”‚ğÏ‚Şˆ—‚ğs‚¤‚½‚ß‚Ì
-	ƒWƒƒƒ“ƒvƒe[ƒuƒ‹‚à¶¬‚·‚é‚æ‚¤‚ÉC³D
+	* kernel/genisyscall, kernel/ptable.S: $B0z?t$r@Q$`=hM}$r9T$&$?$a$N(B
+	$B%8%c%s%W%F!<%V%k$b@8@.$9$k$h$&$K=$@5!%(B
 
 	* kernel/syscall.def, genisyscall, isyscall.h, itable.S,
 	include/itis_isyscall.h, itron_fncode.h, include/bsd/itis_scint.h,
 	include/tron/itis_scint.h, bsd/cpu_conf.h, tron/cpu_conf.h:
-	chg/ref_ims ‚ğ chg/ref_iXX ‚É•ÏXDdis/ena_int ‚ğƒTƒ|[ƒg‚Å‚«‚é‚æ
-	‚¤‚É‰ü‘¢D
+	chg/ref_ims $B$r(B chg/ref_iXX $B$KJQ99!%(Bdis/ena_int $B$r%5%]!<%H$G$-$k$h(B
+	$B$&$K2~B$!%(B
 
-	* systask/inittask.c: ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ì’â~‚ğ #ifdef CONSOLE_PORT 
-	‚ÅˆÍ‚ŞD
+	* systask/inittask.c: $B%7%j%"%k%]!<%H$NDd;_$r(B #ifdef CONSOLE_PORT 
+	$B$G0O$`!%(B
 
-	* tron/cpu_status.h: ƒRƒƒ“ƒg‚Ìƒ~ƒX‚ÌC³D
+	* tron/cpu_status.h: $B%3%a%s%H$N%_%9$N=$@5!%(B
 
 Sun Jan 19 16:06:41 JST 1997	Hiroaki Takada
 
-	* kernel/taskmbox.c: vref_tmb ‚Åæ“ªƒƒbƒZ[ƒW‚ğ³‚µ‚­•Ô‚ç‚È‚¢ƒoƒO
-	‚ğC³D
+	* kernel/taskmbox.c: vref_tmb $B$G@hF,%a%C%;!<%8$r@5$7$/JV$i$J$$%P%0(B
+	$B$r=$@5!%(B
 
 Mon Jan 13 12:55:36 JST 1997	Hiroaki Takada
 
-	* kernel/task_sync.c: ƒRƒƒ“ƒg‚Ì’Ç‰ÁD
+	* kernel/task_sync.c: $B%3%a%s%H$NDI2C!%(B
 
-	* kernel/genoffset: ƒtƒ@ƒCƒ‹‚Ìæ“ª‚Éo—Í‚·‚éƒRƒƒ“ƒg‚ğC³‚µC
-	utils ƒfƒBƒŒƒNƒgƒŠ‚ÖˆÚ“®D
+	* kernel/genoffset: $B%U%!%$%k$N@hF,$K=PNO$9$k%3%a%s%H$r=$@5$7!$(B
+	utils $B%G%#%l%/%H%j$X0\F0!%(B
 
-	* sample/Makefile.*: genoffset ‚ğ utils ‚ÖˆÚ“®‚µ‚½‚±‚Æ‚É‚æ‚éC³D
+	* sample/Makefile.*: genoffset $B$r(B utils $B$X0\F0$7$?$3$H$K$h$k=$@5!%(B
 
-	* sample/Makefile.sunos4: offset.h ‚ğì‚é‚Ì‚ğ‚â‚ß‚éD
+	* sample/Makefile.sunos4: offset.h $B$r:n$k$N$r$d$a$k!%(B
 
-	* kernel/makeoffset.c: tron ƒfƒBƒŒƒNƒgƒŠ‚ÖˆÚ“®D
+	* kernel/makeoffset.c: tron $B%G%#%l%/%H%j$X0\F0!%(B
 
-	* tron/cpu_support.S: NUM_SVC ¨ USE_SVCD
+	* tron/cpu_support.S: NUM_SVC $B"*(B USE_SVC$B!%(B
 
 Fri Jan 10 22:36:39 JST 1997	Hiroaki Takada
 
 	* kernel/isysconf.h, winfo.h, startup.c, semaphore.c, eventflag.c,
 	mailbox.c, messagebuf.c, rendezvous.c, prisem.c, mempfix.c,
-	mempool.c, task.h, task.c, misc_calls.c, time_calls.c: ‹@”\ƒuƒƒb
-	ƒN’PˆÊ‚ÅŠO‚·‚±‚Æ‚ğ¯•Ê‚·‚éƒ}ƒNƒ‚Æ‚µ‚ÄCUSE_??? ‚ğ“±“üD
+	mempool.c, task.h, task.c, misc_calls.c, time_calls.c: $B5!G=%V%m%C(B
+	$B%/C10L$G30$9$3$H$r<1JL$9$k%^%/%m$H$7$F!$(BUSE_??? $B$rF3F~!%(B
 
 Fri Jan 10 22:16:02 JST 1997	Hiroaki Takada
 
 	* kernel/task.h, wait.h, wait.c, task_manage.c, task_sync.c,
 	semaphore.c, mailbox.c, messagebuf.c, rendezvous.c, mempool.c,
-	mempfix.c, time_call.c, prisem.c, taskmbox.c: WAITó‘Ô‚É‚¨‚¢‚Ä TCB 
-	’†‚É‚Â‚Ì‚ğC‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ÌID ‚©‚ç‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ÌƒRƒ“ƒgƒ[
-	ƒ‹ƒuƒƒbƒN‚É•ÏX‚·‚éD
+	mempfix.c, time_call.c, prisem.c, taskmbox.c: WAIT$B>uBV$K$*$$$F(B TCB 
+	$BCf$K;}$D$N$r!$BT$A%*%V%8%'%/%H$N(BID $B$+$iBT$A%*%V%8%'%/%H$N%3%s%H%m!<(B
+	$B%k%V%m%C%/$KJQ99$9$k!%(B
 
 Fri Jan 10 21:35:01 JST 1997	Hiroaki Takada
 
-	* tron/cpu_call.h, cpu_status.h, tron_defs.h, tron_insn.h: ×‚©‚È
-	ƒŠƒtƒ@ƒCƒ“ (/MP ‚É‚ ‚í‚¹‚é)D
+	* tron/cpu_call.h, cpu_status.h, tron_defs.h, tron_insn.h: $B:Y$+$J(B
+	$B%j%U%!%$%s(B (/MP $B$K$"$o$;$k(B)$B!%(B
 
 Fri Jan 10 21:05:40 JST 1997	Hiroaki Takada
 
 	* kernel/task_sync.c, semaphore.c, eventflag.c, mailbox.c,
 	messagebuf.c, rendezvous.c, prisem.c, taskmbox.c, mempfix.c,
-	mempool.c: ercd ‚ğ E_TMOUT ‚É‰Šú‰»‚·‚éˆ—‚ğ‘O‚ÖˆÚ“® (/MP ‚É‚ ‚í
-	‚¹‚é)D
+	mempool.c: ercd $B$r(B E_TMOUT $B$K=i4|2=$9$k=hM}$rA0$X0\F0(B (/MP $B$K$"$o(B
+	$B$;$k(B)$B!%(B
 
-	* kernel/wait.c, task_manage.c: wercd Œo—R‚ÅƒGƒ‰[ƒR[ƒh‚ğİ’è‚·‚é
-	ˆ—‚ğCwait_release ‚æ‚è‚à‘O‚ÖˆÚ“® (/MP ‚É‚ ‚í‚¹‚é)D
+	* kernel/wait.c, task_manage.c: wercd $B7PM3$G%(%i!<%3!<%I$r@_Dj$9$k(B
+	$B=hM}$r!$(Bwait_release $B$h$j$bA0$X0\F0(B (/MP $B$K$"$o$;$k(B)$B!%(B
 
 Fri Jan 10 20:50:17 JST 1997	Hiroaki Takada
 
 	* kernel/wait.h, semaphore.c, eventflag.c, mailbox.c,
-	messagebuf.c, rendezvous.c, prisem.c, mempfix.c, mempool.c: ƒIƒuƒWƒF
-	ƒNƒg‚ª‘¶İ‚µ‚È‚¢ê‡‚Ìˆµ‚¢‚ğ•ÏXD
+	messagebuf.c, rendezvous.c, prisem.c, mempfix.c, mempool.c: $B%*%V%8%'(B
+	$B%/%H$,B8:_$7$J$$>l9g$N07$$$rJQ99!%(B
 
-	* kernel/ready_queue.h: ƒRƒƒ“ƒg‚Ì•ÒWD
+	* kernel/ready_queue.h: $B%3%a%s%H$NJT=8!%(B
 
 Tue Aug 27 12:54:58 JST 1996	Hiroaki Takada
 
-	* tron/cpu_support.S: _dispatch ’†‚Ì trapa ‚ÌƒxƒNƒgƒ‹”Ô†‚ğC³D
-	‚±‚ÌŠÖ”‚ğ #ifdef TRON_NO_DI ‚ÅˆÍ‚ŞD
+	* tron/cpu_support.S: _dispatch $BCf$N(B trapa $B$N%Y%/%H%kHV9f$r=$@5!%(B
+	$B$3$N4X?t$r(B #ifdef TRON_NO_DI $B$G0O$`!%(B
 
 Sun Jul 28 10:40:17 JST 1996	Hiroaki Takada
 
-	* kernel/taskmbox.c: ƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‹@”\ (V‹K)D
+	* kernel/taskmbox.c: $B%?%9%/IUB0%a%$%k%\%C%/%95!G=(B ($B?75,(B)$B!%(B
 
 	* include/itron.h, kernel/syscall.def, isysconf.h, genconfig,
-	task.h, task.c, winfo.h, sample/Makefile.*, config.def*: ƒ^ƒXƒN•t
-	‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‹@”\‚Ì‚½‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	task.h, task.c, winfo.h, sample/Makefile.*, config.def*: $B%?%9%/IU(B
+	$BB0%a%$%k%\%C%/%95!G=$N$?$a$NDj5A$rDI2C!%(B
 
-	* systask/inittask.c: ‰Šú‰»ƒ^ƒXƒN‚É“n‚³‚ê‚é‹N“®ƒR[ƒh‚ğC‚»‚Ì‚Ü‚Ü
-	‰Šú‹N“®ƒ^ƒXƒN‚É“n‚·‚æ‚¤‚É‚·‚éD
+	* systask/inittask.c: $B=i4|2=%?%9%/$KEO$5$l$k5/F0%3!<%I$r!$$=$N$^$^(B
+	$B=i4|5/F0%?%9%/$KEO$9$h$&$K$9$k!%(B
 
 Sun Jul 28 09:29:23 JST 1996	Hiroaki Takada
 
-	* kernel/task.c: ˆø”‚Ì‚È‚¢ŠÖ”‚ÌéŒ¾‚ğ (void) ‚ÉD
+	* kernel/task.c: $B0z?t$N$J$$4X?t$N@k8@$r(B (void) $B$K!%(B
 
-	* tron/tvme/sys_support.S: ƒAƒZƒ“ƒuƒ‰‚Ì‹Lq‚ÌƒŠƒtƒ@ƒCƒ“D
+	* tron/tvme/sys_support.S: $B%"%;%s%V%i$N5-=R$N%j%U%!%$%s!%(B
 
 	* kernel/genisyscall, task.c, timer.c, tron/tvme/sys_conf.h,
-	sys_util.c: ƒRƒƒ“ƒg‚ğC³D
+	sys_util.c: $B%3%a%s%H$r=$@5!%(B
 
-	* kernel/rendezvous.c: ref_por ‚ğƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ô‚±‚Æ‚ğ‹Ö~D
+	* kernel/rendezvous.c: ref_por $B$r%?%9%/FHN)It$+$i8F$V$3$H$r6X;_!%(B
 
 Sun Jul 28 08:30:56 JST 1996	Hiroaki Takada
 
-	* sample/Makefile.*: ƒJ[ƒlƒ‹‚Ìƒ\[ƒX‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ‚ğ•Ï”‚É’u
-	‚­Doffset.h ‚ğ clean ‚ÅÁ‹D
+	* sample/Makefile.*: $B%+!<%M%k$N%=!<%9$,$"$k%G%#%l%/%H%j$rJQ?t$KCV(B
+	$B$/!%(Boffset.h $B$r(B clean $B$G>C5n!%(B
 
 Sat Feb 17 19:00:15 JST 1996	Hiroaki Takada
 
 	* ChangeLog, README, MANIFEST, doc/USER, kernel/patchlevel.h: 
-	‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	$B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
 
-	* ‘Sƒtƒ@ƒCƒ‹: •¶Œ¾•\¦‚ğC4.4 BSD ‚Ì‚à‚Ì‚ğƒx[ƒX‚É‚µ‚½‚à‚Ì‚É•ÏX‚·
-	‚éD‚±‚Ì•û‚ªC•\Œ»‚ª‚í‚©‚è‚â‚·‚¢D
+	* $BA4%U%!%$%k(B: $BJ88@I=<($r!$(B4.4 BSD $B$N$b$N$r%Y!<%9$K$7$?$b$N$KJQ99$9(B
+	$B$k!%$3$NJ}$,!$I=8=$,$o$+$j$d$9$$!%(B
 
-	* Release1.3 (patchlevel=3) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_3")D
+	* Release1.3 (patchlevel=3) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_3")$B!%(B
 
 Wed Feb  7 16:24:22 JST 1996	Hiroaki Takada
 
-	* doc/CONDITION: uItIs ‚Ì”z•tEg—pğŒ‚ÉŠÖ‚·‚é FAQv‚ğ’Ç‰ÁD
+	* doc/CONDITION: $B!V(BItIs $B$NG[IU!&;HMQ>r7o$K4X$9$k(B FAQ$B!W$rDI2C!%(B
 
 Tue Jan  9 13:11:22 JST 1996	Hiroaki Takada
 
-	* libitis/bsd_nbio.c, bsd_nbeio.c, systask/bsd_serial.c: ƒmƒ“ƒuƒƒb
-	ƒLƒ“ƒOI/Oƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚é‚ÉCfcntl(fd, F_SETOWN, getpid()) 
-	‚·‚é‚æ‚¤‚ÉC³Dnb{e}_closeCnb{e}_socketCnb{e}_accept ‚ğ’Ç‰ÁD
+	* libitis/bsd_nbio.c, bsd_nbeio.c, systask/bsd_serial.c: $B%N%s%V%m%C(B
+	$B%-%s%0(BI/O$B%b!<%I$G%*!<%W%s$9$k;~$K!$(Bfcntl(fd, F_SETOWN, getpid()) 
+	$B$9$k$h$&$K=$@5!%(Bnb{e}_close$B!$(Bnb{e}_socket$B!$(Bnb{e}_accept $B$rDI2C!%(B
 
 Fri Sep  8 23:51:36 JST 1995	Hiroaki Takada
 
-	* MANIFEST: bsd/freebsd/sys_conf.h ‚ğ’Ç‰ÁD
+	* MANIFEST: bsd/freebsd/sys_conf.h $B$rDI2C!%(B
 
-	* bsd/cpu_status.h: sigaltstack ‚ğ³‚µ‚­g‚Á‚Ä‚¢‚È‚©‚Á‚½–â‘è‚ğ
-	C³D
+	* bsd/cpu_status.h: sigaltstack $B$r@5$7$/;H$C$F$$$J$+$C$?LdBj$r(B
+	$B=$@5!%(B
 
 Mon Jun 19 19:10:00 JST 1995	Hiroaki Takada
 
-	* include/itis_debug.h: TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é•”•ª‚ğ #ifdef tron
-	‚ÅˆÍ‚ñ‚¾C³‚ğ‚â‚ß‚é (ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠÂ‹«‚ÅƒGƒ‰[‚É‚È‚é)D
+	* include/itis_debug.h: TRON$B;EMM%A%C%W$K0MB8$9$kItJ,$r(B #ifdef tron
+	$B$G0O$s$@=$@5$r$d$a$k(B ($B%7%_%e%l!<%7%g%s4D6-$G%(%i!<$K$J$k(B)$B!%(B
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚Ì
-	C³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N(B
+	$B=$@5$r$^$H$a$k!%(B
 
-	* ‘Sƒtƒ@ƒCƒ‹: •¶Œ¾•\¦‚ğ•ÏX‚·‚éD
+	* $BA4%U%!%$%k(B: $BJ88@I=<($rJQ99$9$k!%(B
 
-	* Release1.3 (patchlevel=2) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_2")D
+	* Release1.3 (patchlevel=2) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_2")$B!%(B
 
 Mon Jun 19 17:28:27 JST 1995	Hiroaki Takada
 
-	* include/itis_debug.h: TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é•”•ª‚ğ #ifdef tron
-	‚ÅˆÍ‚ŞD
+	* include/itis_debug.h: TRON$B;EMM%A%C%W$K0MB8$9$kItJ,$r(B #ifdef tron
+	$B$G0O$`!%(B
 
-	* kernel/messagebuf.c: rcv_mbf ‚ÅCŠÔˆá‚Á‚½ƒƒbƒZ[ƒWƒTƒCƒY‚ª•Ô‚é
-	ê‡‚ª‚ ‚éƒoƒO‚ğC³D
+	* kernel/messagebuf.c: rcv_mbf $B$G!$4V0c$C$?%a%C%;!<%8%5%$%:$,JV$k(B
+	$B>l9g$,$"$k%P%0$r=$@5!%(B
 
-	* kernel/rendezvous.c: fwd_por ‚ÅC‘Šè‚ª‘Ò‚Á‚Ä‚¢‚È‚©‚Á‚½‚É•K‚¸ 
-	E_TMOUTƒGƒ‰[‚É‚È‚éƒoƒO‚ğC³D
+	* kernel/rendezvous.c: fwd_por $B$G!$Aj<j$,BT$C$F$$$J$+$C$?;~$KI,$:(B 
+	E_TMOUT$B%(%i!<$K$J$k%P%0$r=$@5!%(B
 
 Mon May 29 19:12:19 JST 1995	Hiroaki Takada
 
-	* kernel/timer.c: TIMER_PERIOD ‚ª 1 ‚Å‚È‚¢ê‡‚ÉCvget_tim ‚ª³‚µ
-	‚­‚È‚¢’l‚ğ•Ô‚·ƒoƒO‚ğC³D
+	* kernel/timer.c: TIMER_PERIOD $B$,(B 1 $B$G$J$$>l9g$K!$(Bvget_tim $B$,@5$7(B
+	$B$/$J$$CM$rJV$9%P%0$r=$@5!%(B
 
 Wed Mar 15 19:14:02 JST 1995	Hiroaki Takada
 
 	* ChangeLog, MANIFEST, README, doc/USER, BSDUNIX,
-	kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
 
-	* Release1.3 (patchlevel=1) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3_1")D
+	* Release1.3 (patchlevel=1) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3_1")$B!%(B
 
 Mon Mar 13 12:13:08 JST 1995	Hiroaki Takada
 
-	* kernel/genconfig: ID ‚Ì max ‚ğw’è‚µ‚È‚¢ê‡‚ÌƒfƒtƒHƒ‹ƒg‚ğ 0 ‚É
-	C³D
+	* kernel/genconfig: ID $B$N(B max $B$r;XDj$7$J$$>l9g$N%G%U%)%k%H$r(B 0 $B$K(B
+	$B=$@5!%(B
 
-	* sample/Makefile.sunos4: itis_panic.o, panic.o ‚ğ’Ç‰Á (ŒÃ‚¢ GCC 
-	‚Ö‚Ì‘Î‰)D
+	* sample/Makefile.sunos4: itis_panic.o, panic.o $B$rDI2C(B ($B8E$$(B GCC 
+	$B$X$NBP1~(B)$B!%(B
 
-	* sample/Makefile.tvme: SƒtƒH[ƒ}ƒbƒgƒtƒ@ƒCƒ‹‚ğì‚é‚æ‚¤‚ÉC³D
+	* sample/Makefile.tvme: S$B%U%)!<%^%C%H%U%!%$%k$r:n$k$h$&$K=$@5!%(B
 
 Mon Mar 13 12:09:08 JST 1995	Hiroaki Takada
 
-	* libitis/bsd_nbeio.c: V‹K (errno ‚ğ•Ô‚·ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/Oƒ‰ƒCƒu
-	ƒ‰ƒŠ)D
+	* libitis/bsd_nbeio.c: $B?75,(B (errno $B$rJV$9%N%s%V%m%C%-%s%0(BI/O$B%i%$%V(B
+	$B%i%j(B)$B!%(B
 
 Fri Mar 10 12:31:16 JST 1995	Hiroaki Takada
 
-	* tron/tvme/sys_timer.h: start_hw_timer ‚Ì’è‹`‚ÌC³ (C³–Y‚ê)D
+	* tron/tvme/sys_timer.h: start_hw_timer $B$NDj5A$N=$@5(B ($B=$@5K:$l(B)$B!%(B
 
-	* tron/*/sys_timer.h: ƒRƒƒ“ƒg‚ÌC³D
+	* tron/*/sys_timer.h: $B%3%a%s%H$N=$@5!%(B
 
 Thu Feb 23 18:27:11 JST 1995	Hiroaki Takada
 
-	* kernel/task.h, task.c, ready_queue.h, task_manage.c: RUNó‘Ô‚Ìƒ^
-	ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚É“ü‚ê‚Ä‚¨‚­•û®‚É•ÏXD
+	* kernel/task.h, task.c, ready_queue.h, task_manage.c: RUN$B>uBV$N%?(B
+	$B%9%/$r%l%G%#%-%e!<$KF~$l$F$*$/J}<0$KJQ99!%(B
 
 Thu Feb 23 14:44:48 JST 1995	Hiroaki Takada
 
 	* kernel/task_manage.c, bsd/cpu_conf.h, cpu_task.h, bsd/sunos4/
-	sys_conf.h: USE_SPECIAL_STACK ‚ğ USE_MPROTECT_STACK ‚ÆƒŠƒl[ƒ€‚µC
-	cpu_conf.h ‚Å‚Í‚È‚­ sys_conf.h ‚Å’è‹`‚·‚é‚æ‚¤‚É•ÏX‚·‚éD
+	sys_conf.h: USE_SPECIAL_STACK $B$r(B USE_MPROTECT_STACK $B$H%j%M!<%`$7!$(B
+	cpu_conf.h $B$G$O$J$/(B sys_conf.h $B$GDj5A$9$k$h$&$KJQ99$9$k!%(B
 
 	* bsd/cpu_status.h, cpu_util.c, bsd/sunos4/sys_conf.h: sigaltstack 
-	‚ğg‚¤ê‡‚É‘Î‰D
+	$B$r;H$&>l9g$KBP1~!%(B
 
-	* bsd/cpu_task.h: jmp_buf \‘¢‘Ì‚Ì‘€ì‚Ì•”•ª‚ÅCjmp_buf ‚Ì’è‹`‚ÉˆË
-	‘¶‚µ‚È‚¢‚æ‚¤‚ÉC³‚µC#ifdef sunos4 ‚ğ‚â‚ß‚éD
+	* bsd/cpu_task.h: jmp_buf $B9=B$BN$NA`:n$NItJ,$G!$(Bjmp_buf $B$NDj5A$K0M(B
+	$BB8$7$J$$$h$&$K=$@5$7!$(B#ifdef sunos4 $B$r$d$a$k!%(B
 
-	* bsd/cpu_task.h: sys/mman.h ‚Å PROT_NONE ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ƒP[ƒX
-	‚ğ‹~ÏDmprotect ‚Ì‘æˆêˆø”‚ğ caddr_t ‚ÉƒLƒƒƒXƒg‚·‚éD
+	* bsd/cpu_task.h: sys/mman.h $B$G(B PROT_NONE $B$,Dj5A$5$l$F$$$J$$%1!<%9(B
+	$B$r5_:Q!%(Bmprotect $B$NBh0l0z?t$r(B caddr_t $B$K%-%c%9%H$9$k!%(B
 
-	* bsd/sunos4/sys_conf.h, systask/bsd_serial.c: ’[––‚ğ RAWƒ‚[ƒh‚É
-	İ’è‚·‚é•û–@‚ğ OS “Æ—§‚ÉD
+	* bsd/sunos4/sys_conf.h, systask/bsd_serial.c: $BC<Kv$r(B RAW$B%b!<%I$K(B
+	$B@_Dj$9$kJ}K!$r(B OS $BFHN)$K!%(B
 
-	* bsd/sunos4/sys_conf.h: #define ‚·‚éƒVƒ“ƒ{ƒ‹‚ğ‘å•¶š‚ÉD
+	* bsd/sunos4/sys_conf.h: #define $B$9$k%7%s%\%k$rBgJ8;z$K!%(B
 
-	* bsd/freebsd/sys_conf.h: V‹KD
+	* bsd/freebsd/sys_conf.h: $B?75,!%(B
 
 Tue Feb 14 20:28:47 JST 1995	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, README, doc/USER, PRISEM, BSDUNIX: ‚±‚Ì“_
-	‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, MANIFEST, README, doc/USER, PRISEM, BSDUNIX: $B$3$N;~E@(B
+	$B$^$G$N=$@5$r$^$H$a$k!%(B
 
-	* Release1.3 (patchlevel=0) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_3")D
+	* Release1.3 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_3")$B!%(B
 
 Tue Feb 14 19:48:46 JST 1995	Hiroaki Takada
 
 	* bsd/cpu_conf.h, cpu_util.c, systask/systask.h, logtask.c,
-	serial.c, bsd_serial.c: BSD UNIX ã‚ÅCŠg’£SVC ‚ª‚È‚¢‚½‚ß‚ÉCƒ†[
-	ƒUƒ^ƒXƒN‚©‚çƒVƒXƒeƒ€ƒƒO—pƒƒbƒZ[ƒWƒoƒbƒtƒ@‚âƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒo‚ÉƒA
-	ƒNƒZƒX‚Å‚«‚È‚¢–â‘è‚É‘ÎˆD
+	serial.c, bsd_serial.c: BSD UNIX $B>e$G!$3HD%(BSVC $B$,$J$$$?$a$K!$%f!<(B
+	$B%6%?%9%/$+$i%7%9%F%`%m%0MQ%a%C%;!<%8%P%C%U%!$d%7%j%"%k%I%i%$%P$K%"(B
+	$B%/%;%9$G$-$J$$LdBj$KBP=h!%(B
 
 Tue Feb 14 19:14:59 JST 1995	Hiroaki Takada
 
-	* tron/h32/sys_serial.c: ƒ|[ƒg”Ô†‚ğ‹t‚É‚µ‚½‚ÉCŠ„‚İƒnƒ“ƒhƒ‰
-	‚ğ‹t‚É‚·‚é‚Ì‚ğ–Y‚ê‚Ä‚¢‚½ƒoƒO‚ğC³D
+	* tron/h32/sys_serial.c: $B%]!<%HHV9f$r5U$K$7$?;~$K!$3d9~$_%O%s%I%i(B
+	$B$r5U$K$9$k$N$rK:$l$F$$$?%P%0$r=$@5!%(B
 
 Tue Feb 14 18:40:41 JST 1995	Hiroaki Takada
 
-	* util/makedep, sample/Makefile.*: makedep ‚ª CƒRƒ“ƒpƒCƒ‰‚Ìˆá‚¢‚É
-	‘Î‰‚Å‚«‚é‚æ‚¤‚É‰ü‘¢D".s" ƒtƒ@ƒCƒ‹ (ƒvƒŠƒvƒƒZƒbƒT‚ğ’Ê‚³‚È‚¢ƒAƒZ
-	ƒ“ƒuƒ‰ƒ\[ƒX) ‚É‘Î‰‚·‚é‚Ì‚ğ‚â‚ß‚éD‚Ü‚½CƒIƒvƒVƒ‡ƒ“‚Ì“n‚µ•û‚ğ®—D
-	ŠÖ˜A‚µ‚ÄCŠeƒVƒXƒeƒ€—p‚Ì Makefile ‚ğC³D
+	* util/makedep, sample/Makefile.*: makedep $B$,(B C$B%3%s%Q%$%i$N0c$$$K(B
+	$BBP1~$G$-$k$h$&$K2~B$!%(B".s" $B%U%!%$%k(B ($B%W%j%W%m%;%C%5$rDL$5$J$$%"%;(B
+	$B%s%V%i%=!<%9(B) $B$KBP1~$9$k$N$r$d$a$k!%$^$?!$%*%W%7%g%s$NEO$7J}$r@0M}!%(B
+	$B4XO"$7$F!$3F%7%9%F%`MQ$N(B Makefile $B$r=$@5!%(B
 
 Tue Feb 14 18:10:35 JST 1995	Hiroaki Takada
 
-	* sample/Makefile.sun4: ƒŠƒŠ[ƒX”Å‚ÉƒtƒBƒbƒNƒXD
+	* sample/Makefile.sun4: $B%j%j!<%9HG$K%U%#%C%/%9!%(B
 
 Tue Feb 14 18:05:02 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_conf.h: FLG_SIGIO ‚Ì’è‹`‚ğíœDƒVƒŠƒAƒ‹ƒ|[ƒg‚ÉŠÖ‚·‚é’è
-	‹`‚ğ’Ç‰ÁD
+	* bsd/cpu_conf.h: FLG_SIGIO $B$NDj5A$r:o=|!%%7%j%"%k%]!<%H$K4X$9$kDj(B
+	$B5A$rDI2C!%(B
 
-	* sample/config.def.bsd: V‹KDBSD UNIX—p ƒVƒXƒeƒ€\¬İ’èƒtƒ@ƒCƒ‹
-	‚ÌƒTƒ“ƒvƒ‹D
+	* sample/config.def.bsd: $B?75,!%(BBSD UNIX$BMQ(B $B%7%9%F%`9=@.@_Dj%U%!%$%k(B
+	$B$N%5%s%W%k!%(B
 
-	* systask/serial.c: CR ‚ğ CR+LF ‚É•ÏŠ·‚·‚éˆ—‚ğ serial_write_one 
-	‚ÉˆÚ“®D
+	* systask/serial.c: CR $B$r(B CR+LF $B$KJQ49$9$k=hM}$r(B serial_write_one 
+	$B$K0\F0!%(B
 
-	* systask/systask.h: bsd_serial_task ‚Ì’è‹`‚ğC³D
+	* systask/systask.h: bsd_serial_task $B$NDj5A$r=$@5!%(B
 
-	* systask/bsd_serial.c: V‹KDBSD UNIX—p ‹^—ƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒoD
+	* systask/bsd_serial.c: $B?75,!%(BBSD UNIX$BMQ(B $B5?;w%7%j%"%k%I%i%$%P!%(B
 
-	* libitis/bsd_nbio.c: V‹KDBSD UNIX—p ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/Oƒ‰ƒCƒuƒ‰
-	ƒŠD
+	* libitis/bsd_nbio.c: $B?75,!%(BBSD UNIX$BMQ(B $B%N%s%V%m%C%-%s%0(BI/O$B%i%$%V%i(B
+	$B%j!%(B
 
 Mon Feb 13 02:06:45 JST 1995	Hiroaki Takada
 
-	* kernel/itis_kernel.h, startup.c: ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹‚ğC³D
-	TSK_INIT_CTSK ‚ÌƒLƒƒƒXƒg‚ğíœD
+	* kernel/itis_kernel.h, startup.c: $B%$%s%/%k!<%I%U%!%$%k$r=$@5!%(B
+	TSK_INIT_CTSK $B$N%-%c%9%H$r:o=|!%(B
 
-	* xscheme/itisstuff.c, itis3call.c: ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹‚ğC³D
-	SCHEME_MPL ‚ğ MPL_XSCHEME ‚ÉƒŠƒl[ƒ€D
+	* xscheme/itisstuff.c, itis3call.c: $B%$%s%/%k!<%I%U%!%$%k$r=$@5!%(B
+	SCHEME_MPL $B$r(B MPL_XSCHEME $B$K%j%M!<%`!%(B
 
-	* systask/inittask.c: ŠeƒVƒXƒeƒ€ƒ^ƒXƒN/ƒhƒ‰ƒCƒo‚Ì‹N“®‚ğ ifdef ‚ÅˆÍ
-	‚ŞD
+	* systask/inittask.c: $B3F%7%9%F%`%?%9%/(B/$B%I%i%$%P$N5/F0$r(B ifdef $B$G0O(B
+	$B$`!%(B
 
 	* systask/inittask.c, logtask.c, serial.c, sysio.c, bsd_sigio.c:
-	systask.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ‚¤‚ÉC³D•s—v‚É‚È‚Á‚½ƒLƒƒƒXƒg‚ğíœD
+	systask.h $B$r%$%s%/%k!<%I$9$k$h$&$K=$@5!%ITMW$K$J$C$?%-%c%9%H$r:o=|!%(B
 
-	* systask/systask.h, serial.c, logtask.c: def_svc ‚ªƒTƒ|[ƒg‚³‚ê‚Ä
-	‚¢‚éê‡‚ÉCUSE_EXTENDED_SVC ‚ğ’è‹`DDSVC ‚Ì’è‹`‚ğ systask.h ‚ÉˆÚ
-	“®DUSE_EXTENDED_SVC ‚ª’è‹`‚³‚ê‚Ä‚¢‚éê‡‚Ì‚İCŠg’£SVC ‚ğ’è‹`‚·‚é
-	‚æ‚¤‚ÉC³DƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒo“à‚ÌŠÖ”‚Ìƒvƒƒgƒ^ƒCƒvéŒ¾‚ğ systsak.h 
-	‚ÉˆÚ“®D
+	* systask/systask.h, serial.c, logtask.c: def_svc $B$,%5%]!<%H$5$l$F(B
+	$B$$$k>l9g$K!$(BUSE_EXTENDED_SVC $B$rDj5A!%(BDSVC $B$NDj5A$r(B systask.h $B$K0\(B
+	$BF0!%(BUSE_EXTENDED_SVC $B$,Dj5A$5$l$F$$$k>l9g$N$_!$3HD%(BSVC $B$rDj5A$9$k(B
+	$B$h$&$K=$@5!%%7%j%"%k%I%i%$%PFb$N4X?t$N%W%m%H%?%$%W@k8@$r(B systsak.h 
+	$B$K0\F0!%(B
 
-	* systask/logtask.c: port ‚ğ portid ‚ÉƒŠƒl[ƒ€D
+	* systask/logtask.c: port $B$r(B portid $B$K%j%M!<%`!%(B
 
-	* systask/bsd_sigio.c: sigio ‚ğ bsd_sigio ‚ÉƒŠƒl[ƒ€D
+	* systask/bsd_sigio.c: sigio $B$r(B bsd_sigio $B$K%j%M!<%`!%(B
 
 Mon Feb 13 01:10:13 JST 1995	Hiroaki Takada
 
-	* kernel/genconfig, sample/config.def: ƒVƒXƒeƒ€ƒ^ƒXƒN‚ªg‚¤ƒIƒuƒWƒF
-	ƒNƒgID ‚Ì’è‹`‚ğ config.h ‚É“ü‚ê‚é‚æ‚¤‚É‰ü‘¢D
+	* kernel/genconfig, sample/config.def: $B%7%9%F%`%?%9%/$,;H$&%*%V%8%'(B
+	$B%/%H(BID $B$NDj5A$r(B config.h $B$KF~$l$k$h$&$K2~B$!%(B
 
-	* include/itis_resouces.h: íœD“à—e‚Ìˆê•”‚Í config.h ‚É“ü‚éDc
-	‚è‚Í systask/systask.h ‚Æ include/svc_fncode.h ‚É•ª‚¯‚éD
+	* include/itis_resouces.h: $B:o=|!%FbMF$N0lIt$O(B config.h $B$KF~$k!%;D(B
+	$B$j$O(B systask/systask.h $B$H(B include/svc_fncode.h $B$KJ,$1$k!%(B
 
-	* include/svc_serial.h, svc_syslog.h: itis_resources.h ‚ğ 
-	svc_fncode.h ‚ÉCitis_sysint.h ‚ğ itis_scint.h ‚ÉC³D
+	* include/svc_serial.h, svc_syslog.h: itis_resources.h $B$r(B 
+	svc_fncode.h $B$K!$(Bitis_sysint.h $B$r(B itis_scint.h $B$K=$@5!%(B
 
 	* include/itis_services.h, itis_isyscall.h, kernel/genisyscall:
-	itis_sysint.h ‚ğ itis_scint.h ‚ÉC³‚µCitis_isyscall.h “à‚ÅƒCƒ“ƒN
-	ƒ‹[ƒh‚·‚é‚æ‚¤‚É‚·‚éD
+	itis_sysint.h $B$r(B itis_scint.h $B$K=$@5$7!$(Bitis_isyscall.h $BFb$G%$%s%/(B
+	$B%k!<%I$9$k$h$&$K$9$k!%(B
 
 Mon Feb 13 00:52:11 JST 1995	Hiroaki Takada
 
-	* include/tron/itis_sysint.h: DOSã‚Å‘¼‚Ìƒtƒ@ƒCƒ‹‚Æ‹æ•Ê‚Å‚«‚È‚­‚È
-	‚é‚½‚ßCitis_scint.h ‚ÉƒŠƒl[ƒ€D
+	* include/tron/itis_sysint.h: DOS$B>e$GB>$N%U%!%$%k$H6hJL$G$-$J$/$J(B
+	$B$k$?$a!$(Bitis_scint.h $B$K%j%M!<%`!%(B
 
-	* include/bsd/itis_scint.h: ‹ó‚Ìƒtƒ@ƒCƒ‹‚Æ‚µ‚Ä¶¬D
+	* include/bsd/itis_scint.h: $B6u$N%U%!%$%k$H$7$F@8@.!%(B
 
 Sat Feb 11 00:40:39 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_conf.h, systask/bsd_sigio.c: ƒmƒ“ƒuƒƒbƒLƒ“ƒOI/O ƒTƒ|[
-	ƒgƒ‚ƒWƒ…[ƒ‹‚Ì’Ç‰ÁD
+	* bsd/cpu_conf.h, systask/bsd_sigio.c: $B%N%s%V%m%C%-%s%0(BI/O $B%5%]!<(B
+	$B%H%b%8%e!<%k$NDI2C!%(B
 
-	* systask/inittask.c: ƒCƒ“ƒNƒ‹[ƒh‚·‚éƒtƒ@ƒCƒ‹‚ÌC³D
+	* systask/inittask.c: $B%$%s%/%k!<%I$9$k%U%!%$%k$N=$@5!%(B
 
 Fri Feb 10 17:36:39 JST 1995	Hiroaki Takada
 
-	* bsd/cpu_status.h, bsd/cpu_util.c: ƒ^ƒXƒN“Æ—§•”‚Ì”»’è‚É SIGUSR1 
-	‚Ìƒ}ƒXƒN‚ğg‚¤‚Ì‚ğ‚â‚ß‚ÄCƒVƒOƒiƒ‹ƒXƒ^ƒbƒN‚ğg‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğg
-	‚¤‚±‚Æ‚É‚·‚éD
+	* bsd/cpu_status.h, bsd/cpu_util.c: $B%?%9%/FHN)It$NH=Dj$K(B SIGUSR1 
+	$B$N%^%9%/$r;H$&$N$r$d$a$F!$%7%0%J%k%9%?%C%/$r;H$C$F$$$k$+$I$&$+$r;H(B
+	$B$&$3$H$K$9$k!%(B
 
-	* bsd/cpu_task.h, cpu_util.c, sunos4/sys_conf.h: CPU ‚ÌƒXƒ^ƒbƒN‚Ì
-	g‚¢•û‚ÉˆË‘¶‚·‚é’è”‚ğ sys_conf.h ‚Å’è‹`‚·‚é‚±‚Æ‚É‚·‚éD
+	* bsd/cpu_task.h, cpu_util.c, sunos4/sys_conf.h: CPU $B$N%9%?%C%/$N(B
+	$B;H$$J}$K0MB8$9$kDj?t$r(B sys_conf.h $B$GDj5A$9$k$3$H$K$9$k!%(B
 
 Thu Feb  9 18:51:14 JST 1995	Hiroaki Takada
 
 	* systask/inittask.c, tron/*/sys_conf.h: COLSOLE_PORT,
-	LOGTASK_PORT ‚Ì’è‹`‚ğ inittask.c ‚©‚ç sysconf.h ‚ÉˆÚ“®D
+	LOGTASK_PORT $B$NDj5A$r(B inittask.c $B$+$i(B sysconf.h $B$K0\F0!%(B
 
-	* tron/h32/sys_conf.h, sys_serial.c: ƒ|[ƒg1 ‚Æ 2 ‚ÌˆÓ–¡‚ğ‹t‚É‚·‚éD
+	* tron/h32/sys_conf.h, sys_serial.c: $B%]!<%H(B1 $B$H(B 2 $B$N0UL#$r5U$K$9$k!%(B
 
-	* tron/mcube/sys_serial.c, tron/tvme/sys_serial.c: initflag ‚Ì’è‹`
-	êŠ‚ğˆÚ“®D
+	* tron/mcube/sys_serial.c, tron/tvme/sys_serial.c: initflag $B$NDj5A(B
+	$B>l=j$r0\F0!%(B
 
 Thu Feb  9 18:49:55 JST 1995	Hiroaki Takada
 
-	* kernel/newversion: BSD UNIXŠÂ‹«‚ÅCOS–¼‚Ü‚ÅŒ©‚é‚æ‚¤‚ÉC³D
+	* kernel/newversion: BSD UNIX$B4D6-$G!$(BOS$BL>$^$G8+$k$h$&$K=$@5!%(B
 
 Thu Feb  9 15:20:43 JST 1995	Hiroaki Takada
 
-	* bsd/*, bsd/sunos4/*, sample/Makefile.sunos4: BSD UNIXã‚ÌƒVƒ~ƒ…
-	ƒŒ[ƒVƒ‡ƒ“ŠÂ‹«‚ğ’Ç‰ÁDMakefile.sunos4 ‚Íb’è”ÅD
+	* bsd/*, bsd/sunos4/*, sample/Makefile.sunos4: BSD UNIX$B>e$N%7%_%e(B
+	$B%l!<%7%g%s4D6-$rDI2C!%(BMakefile.sunos4 $B$O;CDjHG!%(B
 
 Thu Feb  9 14:55:30 JST 1995	Hiroaki Takada
 
 	* kernel/genconfig, task_manage.c, tron/cpu_task.h: SYS_STACK_SIZE 
-	‚ğ DEF_SYS_STACK_SIZE ‚ÉƒŠƒl[ƒ€D
+	$B$r(B DEF_SYS_STACK_SIZE $B$K%j%M!<%`!%(B
 
-	* kernel/genconfig: min_sys_stack_size ‚ğ’Ç‰ÁD
+	* kernel/genconfig: min_sys_stack_size $B$rDI2C!%(B
 
-	* sample/config.def: ƒfƒtƒHƒ‹ƒgƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ÆƒVƒXƒeƒ€ƒ
-	ƒ‚ƒŠƒv[ƒ‹‚ÌƒTƒCƒY‚Ì’è‹`‚ğŠO‚· (ƒ^[ƒQƒbƒg–ˆ‚ÌƒfƒtƒHƒ‹ƒg‚É”C‚¹‚é)D
+	* sample/config.def: $B%G%U%)%k%H%7%9%F%`%9%?%C%/%5%$%:$H%7%9%F%`%a(B
+	$B%b%j%W!<%k$N%5%$%:$NDj5A$r30$9(B ($B%?!<%2%C%HKh$N%G%U%)%k%H$KG$$;$k(B)$B!%(B
 
 Thu Feb  9 14:22:22 JST 1995	Hiroaki Takada
 
-	* tron/tvme/sys_serial.h: MCUBE—p‚É‚ ‚í‚¹‚ÄƒfƒoƒbƒOD
+	* tron/tvme/sys_serial.h: MCUBE$BMQ$K$"$o$;$F%G%P%C%0!%(B
 
 Wed Feb  8 12:19:04 JST 1995	Hiroaki Takada
 
-	* startup: tron ‚Ì‰º‚ÉˆÚ“®D
+	* startup: tron $B$N2<$K0\F0!%(B
 
-	* tron/h32/h32sbc.h, tron/mcube/mcube.h: Š¿šƒR[ƒh‚ğVJISƒR[ƒh‚É
-	•ÏŠ·D
+	* tron/h32/h32sbc.h, tron/mcube/mcube.h: $B4A;z%3!<%I$r?7(BJIS$B%3!<%I$K(B
+	$BJQ49!%(B
 
 Sat Feb  4 02:26:27 JST 1995	Hiroaki Takada
 
-	* ƒfƒBƒŒƒNƒgƒŠ‚Ì\¬‚ğ•ÏX: tron ‚Æ‚¢‚¤ƒfƒBƒŒƒNƒgƒŠ‚ğì‚èC
-	TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é•”•ª‚ğ‚»‚Ì‰º‚ÉˆÚ“®‚·‚éDh32, tvme,
-	mcube ‚Ì 3‚Â‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÍCtron ‚Ì‰º‚ÉˆÚ“®‚·‚éDƒJ[ƒlƒ‹‚Ì
-	\¬‚ÉŠÖ‚·‚é CPUˆË‘¶‚Ì’è‹`‚ğ“ü‚ê‚é‚½‚ß‚Ìƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄC
-	tron/cpu_conf.h ‚ğVİD
+	* $B%G%#%l%/%H%j$N9=@.$rJQ99(B: tron $B$H$$$&%G%#%l%/%H%j$r:n$j!$(B
+	TRON$B;EMM%A%C%W$K0MB8$9$kItJ,$r$=$N2<$K0\F0$9$k!%(Bh32, tvme,
+	mcube $B$N(B 3$B$D$N%G%#%l%/%H%j$O!$(Btron $B$N2<$K0\F0$9$k!%%+!<%M%k$N(B
+	$B9=@.$K4X$9$k(B CPU$B0MB8$NDj5A$rF~$l$k$?$a$N%U%!%$%k$H$7$F!$(B
+	tron/cpu_conf.h $B$r?7@_!%(B
 
-	* Makefile.conf: tron ‚Ì‰º‚ÉˆÚ“®D.s ‚©‚ç .o ‚ğì‚é’è‹`‚ğíœD
+	* Makefile.conf: tron $B$N2<$K0\F0!%(B.s $B$+$i(B .o $B$r:n$kDj5A$r:o=|!%(B
 
-	* kernel/common.h: ‚±‚Ìƒtƒ@ƒCƒ‹‚Í”p~Dtron/cpu_status.h ‚ğV
-	İ‚µCCPU ‚ÉˆË‘¶‚·‚é•”•ª‚ğˆÚ“®D‚»‚¤‚Å‚È‚¢•”•ª‚Í itis_kernel.h 
-	‚ÖˆÚ“®D
+	* kernel/common.h: $B$3$N%U%!%$%k$OGQ;_!%(Btron/cpu_status.h $B$r?7(B
+	$B@_$7!$(BCPU $B$K0MB8$9$kItJ,$r0\F0!%$=$&$G$J$$ItJ,$O(B itis_kernel.h 
+	$B$X0\F0!%(B
 
-	* kernel/cpu_inline.h: tron/tron_insn.h ‚ÉƒŠƒl[ƒ€D
+	* kernel/cpu_inline.h: tron/tron_insn.h $B$K%j%M!<%`!%(B
 
-	* kernel/cregs.h: tron/tron_defs.h ‚ÉƒŠƒl[ƒ€D
+	* kernel/cregs.h: tron/tron_defs.h $B$K%j%M!<%`!%(B
 
-	* kernel/ientry.S: tron/cpu_support.S ‚ÉƒŠƒl[ƒ€DƒAƒZƒ“ƒuƒ‰‚Å
-	‹Lq‚µ‚½ƒVƒXƒeƒ€ƒR[ƒ‹‚ÌƒGƒ“ƒgƒŠ‚ğCƒVƒXƒeƒ€ƒR[ƒ‹ƒGƒ“ƒgƒŠƒe[
-	ƒuƒ‹‚Å“à‚Å·‚µ‚©‚¦‚éİ’è‚ğ’Ç‰ÁDƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚µ‚½ƒVƒXƒeƒ€ƒR[
-	ƒ‹‚ªC’x‰„Š„‚İ‚ğg‚í‚È‚¢İ’è‚É‘Î‰‚µ‚Ä‚¢‚È‚©‚Á‚½–â‘è‚ğC³D
+	* kernel/ientry.S: tron/cpu_support.S $B$K%j%M!<%`!%%"%;%s%V%i$G(B
+	$B5-=R$7$?%7%9%F%`%3!<%k$N%(%s%H%j$r!$%7%9%F%`%3!<%k%(%s%H%j%F!<(B
+	$B%V%k$GFb$G:9$7$+$($k@_Dj$rDI2C!%%"%;%s%V%i$G5-=R$7$?%7%9%F%`%3!<(B
+	$B%k$,!$CY1d3d9~$_$r;H$o$J$$@_Dj$KBP1~$7$F$$$J$+$C$?LdBj$r=$@5!%(B
 
-	* kernel/dispatch.S, nd_dispatch.S: tron/ ‚Ì‰º‚ÉˆÚ“®D‚±‚ê‚ç‚Ì
-	ƒtƒ@ƒCƒ‹‚ÍCtron/cpu_support.S ‚©‚çƒCƒ“ƒNƒ‹[ƒh‚µ‚Äg‚¤‚±‚Æ‚É
-	‚·‚éDnd_dispatch.S ’†‚Ì’è”’è‹`‚ÍCtron/tron_defs.h ‚ÉˆÚ“®D
+	* kernel/dispatch.S, nd_dispatch.S: tron/ $B$N2<$K0\F0!%$3$l$i$N(B
+	$B%U%!%$%k$O!$(Btron/cpu_support.S $B$+$i%$%s%/%k!<%I$7$F;H$&$3$H$K(B
+	$B$9$k!%(Bnd_dispatch.S $BCf$NDj?tDj5A$O!$(Btron/tron_defs.h $B$K0\F0!%(B
 
-	* ƒ^[ƒQƒbƒgƒVƒXƒeƒ€ˆË‘¶ƒtƒ@ƒCƒ‹–¼‚Ì•ÏX: ]—ˆCƒ^[ƒQƒbƒgƒVƒX
-	ƒeƒ€–¼‚ğæ“ª‚É‚Â‚¯‚Ä‚¢‚½‚Ì‚ğCsys_ ‚ğæ“ª‚É‚Â‚¯‚éƒXƒ^ƒCƒ‹‚É‚·
-	‚éDtron/h32/sys_conf.h ‚Æ tron/tvme/sys_conf.h ‚ÍVİD‚Ü‚½C
-	ˆê•”‚Ì“à—e‚ğ‚±‚ê‚ç‚Ìƒtƒ@ƒCƒ‹‚ÌŠÔ‚ÅˆÚ“®D
+	* $B%?!<%2%C%H%7%9%F%`0MB8%U%!%$%kL>$NJQ99(B: $B=>Mh!$%?!<%2%C%H%7%9(B
+	$B%F%`L>$r@hF,$K$D$1$F$$$?$N$r!$(Bsys_ $B$r@hF,$K$D$1$k%9%?%$%k$K$9(B
+	$B$k!%(Btron/h32/sys_conf.h $B$H(B tron/tvme/sys_conf.h $B$O?7@_!%$^$?!$(B
+	$B0lIt$NFbMF$r$3$l$i$N%U%!%$%k$N4V$G0\F0!%(B
 
 		$(TARGET)conf.h --> sys_conf.h
 		$(TARGET)start.S --> sys_support.S
@@ -427,880 +614,880 @@ Sat Feb  4 02:26:27 JST 1995	Hiroaki Takada
 		$(TARGET)timer.h --> sys_timer.h
 		$(TARGET)serial.h --> sys_serial.h
 
-	* ƒXƒ^ƒbƒNƒGƒŠƒACƒq[ƒvƒGƒŠƒA‚Ì’è‹`‚ğ $(TARGET)start.S ‚©‚ç 
-	sys_conf.h ‚ÉˆÚ“®D
+	* $B%9%?%C%/%(%j%"!$%R!<%W%(%j%"$NDj5A$r(B $(TARGET)start.S $B$+$i(B 
+	sys_conf.h $B$K0\F0!%(B
 
-	* tron/{h32,tvme,mcube}/sys_util.c: target_??? ‚ğ sys_??? ‚ÉƒŠ
-	ƒl[ƒ€D
+	* tron/{h32,tvme,mcube}/sys_util.c: target_??? $B$r(B sys_??? $B$K%j(B
+	$B%M!<%`!%(B
 
-	* kernel/misc_calls.c: tron/cpu_calls.c ‚ğVİ‚µCCPU ‚ÉˆË‘¶‚·
-	‚éƒVƒXƒeƒ€ƒR[ƒ‹‚Ì’è‹`‚ğˆÚ“®Dget_ver ‚ÅCCPU ƒR[ƒh‚ğ“ü‚ê‚é‚Æ
-	‚±‚ë‚ÅCCPU_CODE ƒ}ƒNƒ‚ğQÆ‚·‚é‚æ‚¤‚ÉC³D
+	* kernel/misc_calls.c: tron/cpu_calls.c $B$r?7@_$7!$(BCPU $B$K0MB8$9(B
+	$B$k%7%9%F%`%3!<%k$NDj5A$r0\F0!%(Bget_ver $B$G!$(BCPU $B%3!<%I$rF~$l$k$H(B
+	$B$3$m$G!$(BCPU_CODE $B%^%/%m$r;2>H$9$k$h$&$K=$@5!%(B
 
-	* kernel/debug_calls.c: vset_reg, vget_reg ‚ğ tron/cpu_calls.c 
-	‚ÉˆÚ“®D‚±‚Ì“_‚ÅCdebug_calls.c ‚Í‹ó‚É‚È‚Á‚½‚ªC«—ˆ‚ÌŠg’£‚Ì
-	‚½‚ß‚Éƒtƒ@ƒCƒ‹‚ÍÁ‚³‚¸‚É‚¨‚¢‚Ä‚¨‚­D
+	* kernel/debug_calls.c: vset_reg, vget_reg $B$r(B tron/cpu_calls.c 
+	$B$K0\F0!%$3$N;~E@$G!$(Bdebug_calls.c $B$O6u$K$J$C$?$,!$>-Mh$N3HD%$N(B
+	$B$?$a$K%U%!%$%k$O>C$5$:$K$*$$$F$*$/!%(B
 
-	* kernel/task.h: ƒ^ƒXƒNƒRƒ“ƒeƒLƒXƒgƒuƒƒbƒN‚Ì’è‹`‚ğ tron/
-	cpu_status.h ‚ÉˆÚ“®Ddispatch_disabled •Ï”‚ğg‚¤‚©‚Ç‚¤‚©‚ğ§
-	Œä‚·‚éƒXƒCƒbƒ` (USE_DISPATCH_DISABLED) ‚ÆCƒVƒXƒeƒ€ƒXƒ^ƒbƒN‚ğ
-	ƒ†[ƒUƒXƒ^ƒbƒN‚Æ•Ê‚É‚Â‚©‚Ç‚¤‚©‚ğ§Œä‚·‚éƒXƒCƒbƒ` 
-	(USE_SEPARATE_SSTACK) ‚ğ’Ç‰ÁD
+	* kernel/task.h: $B%?%9%/%3%s%F%-%9%H%V%m%C%/$NDj5A$r(B tron/
+	cpu_status.h $B$K0\F0!%(Bdispatch_disabled $BJQ?t$r;H$&$+$I$&$+$r@)(B
+	$B8f$9$k%9%$%C%A(B (USE_DISPATCH_DISABLED) $B$H!$%7%9%F%`%9%?%C%/$r(B
+	$B%f!<%6%9%?%C%/$HJL$K;}$D$+$I$&$+$r@)8f$9$k%9%$%C%A(B 
+	(USE_SEPARATE_SSTACK) $B$rDI2C!%(B
 
-	* kernel/task.c: TRONd—lƒ`ƒbƒv‚ÉˆË‘¶‚·‚é’è”‚Ì’è‹`‚ğCtron/
-	tron_defs.h ‚Æ tron/cpu_task.h ‚ÉˆÚ“®Dƒ^ƒXƒN‹N“®‚Ì‚½‚ß‚ÌƒRƒ“
-	ƒeƒLƒXƒg‚ğİ’è‚·‚é•”•ª‚ğCtron/cpu_task.h ’†‚Å’è‹`‚·‚é 
-	startup_context ŠÖ”‚Æ‚µ‚ÄØ‚è•ª‚¯‚éDdispatch ŠÖ”‚Ì’è‹`‚ÍC
-	tron/cpu_status.h ‚ÉˆÚ“®DVİ‚³‚ê‚½ USE_DISPATCH_DISABLE ‚Æ
-	USE_SEPARATE_SSTACK ‚É‘Î‰D
+	* kernel/task.c: TRON$B;EMM%A%C%W$K0MB8$9$kDj?t$NDj5A$r!$(Btron/
+	tron_defs.h $B$H(B tron/cpu_task.h $B$K0\F0!%%?%9%/5/F0$N$?$a$N%3%s(B
+	$B%F%-%9%H$r@_Dj$9$kItJ,$r!$(Btron/cpu_task.h $BCf$GDj5A$9$k(B 
+	startup_context $B4X?t$H$7$F@Z$jJ,$1$k!%(Bdispatch $B4X?t$NDj5A$O!$(B
+	tron/cpu_status.h $B$K0\F0!%?7@_$5$l$?(B USE_DISPATCH_DISABLE $B$H(B
+	USE_SEPARATE_SSTACK $B$KBP1~!%(B
 
-	* kernel/task_manage.c: ƒ^ƒXƒN‹N“®ƒR[ƒh‚ğİ’è‚·‚é•”•ª‚ğC
-	tron/cpu_task.h ’†‚Å’è‹`‚·‚é startup_stacd ŠÖ”‚Æ‚µ‚ÄØ‚è•ª‚¯
-	‚éDEIT_FRAME_SIZE ‚ÍC“¯‚¶–Ú“I‚Ì DORMANT_STACK_SIZE ‚É‘ã‚¦C
-	‚»‚Ì’è‹`‚Í tron/cpu_task.h ‚Ì’†‚Ås‚¤DƒVƒXƒeƒ€ƒXƒ^ƒbƒN‚ÌÅ¬
-	ƒTƒCƒY‚Ì’è‹`‚ğ tron/cpu_conf.h ‚ÉˆÚ“®DVİ‚³‚ê‚½ 
-	USE_SEPARATE_SSTACK ‚É‘Î‰DƒXƒ^ƒbƒNƒGƒŠƒA‚ğæ“¾/•Ô‹p‚·‚éÛ‚É
-	“Áê‚È‘€ì‚ª•K—v‚Èê‡‚É‘Î‰D‚»‚Ì‚½‚ß‚ÌƒXƒCƒbƒ`‚Æ‚µ‚ÄC
-	USE_SPECIAL_STACK ‚ğVİD
+	* kernel/task_manage.c: $B%?%9%/5/F0%3!<%I$r@_Dj$9$kItJ,$r!$(B
+	tron/cpu_task.h $BCf$GDj5A$9$k(B startup_stacd $B4X?t$H$7$F@Z$jJ,$1(B
+	$B$k!%(BEIT_FRAME_SIZE $B$O!$F1$8L\E*$N(B DORMANT_STACK_SIZE $B$KBe$(!$(B
+	$B$=$NDj5A$O(B tron/cpu_task.h $B$NCf$G9T$&!%%7%9%F%`%9%?%C%/$N:G>.(B
+	$B%5%$%:$NDj5A$r(B tron/cpu_conf.h $B$K0\F0!%?7@_$5$l$?(B 
+	USE_SEPARATE_SSTACK $B$KBP1~!%%9%?%C%/%(%j%"$r<hF@(B/$BJV5Q$9$k:]$K(B
+	$BFC<l$JA`:n$,I,MW$J>l9g$KBP1~!%$=$N$?$a$N%9%$%C%A$H$7$F!$(B
+	USE_SPECIAL_STACK $B$r?7@_!%(B
 
-	* kernel/timer.c: start_hw_timer ‚Éƒ^ƒCƒ}ƒnƒ“ƒhƒ‰‚ÌƒAƒhƒŒƒX‚ğ
-	“n‚·‚Ì‚ğ‚â‚ß‚éDC_timer_handler ‚ğ timer_handler ‚ÉƒŠƒl[ƒ€D
-	ƒ^ƒCƒ}ƒnƒ“ƒhƒ‰‹N“®‚Ì‚½‚ß‚Ì‚‹‰Œ¾Œê‘Î‰ƒ‹[ƒ`ƒ“‚ğ 
-	tron/cpu_support.S ‚ÉˆÚ“®D
+	* kernel/timer.c: start_hw_timer $B$K%?%$%^%O%s%I%i$N%"%I%l%9$r(B
+	$BEO$9$N$r$d$a$k!%(BC_timer_handler $B$r(B timer_handler $B$K%j%M!<%`!%(B
+	$B%?%$%^%O%s%I%i5/F0$N$?$a$N9b5i8@8lBP1~%k!<%A%s$r(B 
+	tron/cpu_support.S $B$K0\F0!%(B
 
 	* kernel/genisyscall, syscall.def, itable.h: itis_isyscall.h 
-	‚ªƒ^[ƒQƒbƒg“Æ—§‚É‚È‚é‚æ‚¤‚ÉC’¼ÚƒCƒ“ƒ‰ƒCƒ“ƒAƒZƒ“ƒuƒ‰‚ğo‚·‚Ì
-	‚ğ‚â‚ß‚ÄCƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ—pƒ}ƒNƒ‚ğo‚·‚æ‚¤‚ÉC³DƒAƒZ
-	ƒ“ƒuƒ‰‚Å‹Lq‚µ‚½ƒVƒXƒeƒ€ƒR[ƒ‹‚ÉŠÖ‚·‚é“Áêˆ— (zƒIƒvƒVƒ‡ƒ“) 
-	‚ğ”p~Ditable.h ‚ğitable.S ‚ÉƒŠƒl[ƒ€D
+	$B$,%?!<%2%C%HFHN)$K$J$k$h$&$K!$D>@\%$%s%i%$%s%"%;%s%V%i$r=P$9$N(B
+	$B$r$d$a$F!$%7%9%F%`%3!<%k8F$S=P$7MQ%^%/%m$r=P$9$h$&$K=$@5!%%"%;(B
+	$B%s%V%i$G5-=R$7$?%7%9%F%`%3!<%k$K4X$9$kFC<l=hM}(B (z$B%*%W%7%g%s(B) 
+	$B$rGQ;_!%(Bitable.h $B$r(Bitable.S $B$K%j%M!<%`!%(B
 
-	* kernel/isysconf.h: ƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ÌƒfƒtƒHƒ‹ƒg’l‚Ì’è
-	‹`‚ğ tron/cpu_conf.h ‚ÉˆÚ“®DƒAƒZƒ“ƒuƒ‰‚Å‹Lq‚³‚ê‚Ä‚¢‚éƒVƒXƒe
-	ƒ€ƒR[ƒ‹‚Ì‚½‚ß‚Ì’è‹`‚ğíœD
+	* kernel/isysconf.h: $B%7%9%F%`%9%?%C%/%5%$%:$N%G%U%)%k%HCM$NDj(B
+	$B5A$r(B tron/cpu_conf.h $B$K0\F0!%%"%;%s%V%i$G5-=R$5$l$F$$$k%7%9%F(B
+	$B%`%3!<%k$N$?$a$NDj5A$r:o=|!%(B
 
-	* kernel/startup.c: cpu_initialize, cpu_shutdown ‚Ì 2‚Â‚ÌŠÖ”
-	‚ğ cpu_util.c ’†‚Å’è‹`‚·‚é‚±‚Æ‚É‚µ‚ÄCCPUˆË‘¶‚Ì‰Šú‰»/I—¹ˆ—
-	‚¨‚æ‚ÑŠÖ˜A‚·‚é’è‹`‚ğ‚»‚ê‚ç‚ÌŠÖ”‚É”C‚¹‚éDcpu_util.c ‚ÍVİD
+	* kernel/startup.c: cpu_initialize, cpu_shutdown $B$N(B 2$B$D$N4X?t(B
+	$B$r(B cpu_util.c $BCf$GDj5A$9$k$3$H$K$7$F!$(BCPU$B0MB8$N=i4|2=(B/$B=*N;=hM}(B
+	$B$*$h$S4XO"$9$kDj5A$r$=$l$i$N4X?t$KG$$;$k!%(Bcpu_util.c $B$O?7@_!%(B
 
 	* kernel/itis_kernel.h, isyslog.h, startup.c, systask/logtask.c:
-	target_??? ‚ğ sys_??? ‚ÉC³D
+	target_??? $B$r(B sys_??? $B$K=$@5!%(B
 
-	* kernel/patchlevel.h: ƒŠƒŠ[ƒX”Ô†‚ğ 1.3.0 ‚ÉD
+	* kernel/patchlevel.h: $B%j%j!<%9HV9f$r(B 1.3.0 $B$K!%(B
 
-	* kernel/newversion: ƒ^[ƒQƒbƒgCPU ‚ÆƒVƒXƒeƒ€‚Ì—¼•û‚©‚çCƒ^[
-	ƒQƒbƒg‚Ì–¼Ì‚ğŒˆ‚ß‚é‚æ‚¤‚ÉC³Dbsd ‚ğ’Ç‰ÁDCopyright ‚Ì“ú•t‚ğ
-	XVD
+	* kernel/newversion: $B%?!<%2%C%H(BCPU $B$H%7%9%F%`$NN>J}$+$i!$%?!<(B
+	$B%2%C%H$NL>>N$r7h$a$k$h$&$K=$@5!%(Bbsd $B$rDI2C!%(BCopyright $B$NF|IU$r(B
+	$B99?7!%(B
 
-	* include/svc_serial.h, svc_syslog.h: ƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ—p
-	ƒ}ƒNƒ‚ğg‚¤‚æ‚¤‚ÉC³D
+	* include/svc_serial.h, svc_syslog.h: $B%7%9%F%`%3!<%k8F$S=P$7MQ(B
+	$B%^%/%m$r;H$&$h$&$K=$@5!%(B
 
-	* include/tron/itis_sysint.h: TRONd—lƒ`ƒbƒv—p‚ÌƒVƒXƒeƒ€ƒR[ƒ‹
-	ŒÄ‚Ño‚µ—pƒ}ƒNƒ‚Ì’è‹`ƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄVİD
+	* include/tron/itis_sysint.h: TRON$B;EMM%A%C%WMQ$N%7%9%F%`%3!<%k(B
+	$B8F$S=P$7MQ%^%/%m$NDj5A%U%!%$%k$H$7$F?7@_!%(B
 
-	* include/itis_services.h: itis_sysint.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ
-	‚¤C³D
+	* include/itis_services.h: itis_sysint.h $B$r%$%s%/%k!<%I$9$k$h(B
+	$B$&=$@5!%(B
 
-	* include/itis_stddefs.h: REGISTER ‚Ì’è‹`‚ğ include/tron/
-	itis_sysint.h ‚ÉˆÚ“®D
+	* include/itis_stddefs.h: REGISTER $B$NDj5A$r(B include/tron/
+	itis_sysint.h $B$K0\F0!%(B
 
-	* include/Makefile: include/tron/itis_sysint.h ‚ğƒRƒs[‚·‚é|
-	‚ÌƒƒbƒZ[ƒW‚ğ’Ç‰ÁD
+	* include/Makefile: include/tron/itis_sysint.h $B$r%3%T!<$9$k;](B
+	$B$N%a%C%;!<%8$rDI2C!%(B
 
-	* include/itis_resources.h: ‰Šú‰»ƒ^ƒXƒN‚ÆƒVƒXƒeƒ€ƒƒOƒ^ƒXƒN‚Ì
-	ƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY‚ğCƒJ[ƒlƒ‹‚ÌƒfƒtƒHƒ‹ƒg‚É”C‚¹‚éD
+	* include/itis_resources.h: $B=i4|2=%?%9%/$H%7%9%F%`%m%0%?%9%/$N(B
+	$B%7%9%F%`%9%?%C%/%5%$%:$r!$%+!<%M%k$N%G%U%)%k%H$KG$$;$k!%(B
 
-	* ‘½‚­‚Ìƒtƒ@ƒCƒ‹: ƒRƒƒ“ƒg‚ğ®—DƒCƒ“ƒNƒ‹[ƒh‚ÌŠÖŒW‚ğ®—D
+	* $BB?$/$N%U%!%$%k(B: $B%3%a%s%H$r@0M}!%%$%s%/%k!<%I$N4X78$r@0M}!%(B
 
-	* ‚Ù‚Ú‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹: Š¿šƒR[ƒh‚ğVJISƒR[ƒh‚É•ÏŠ·D
+	* $B$[$\$9$Y$F$N%U%!%$%k(B: $B4A;z%3!<%I$r?7(BJIS$B%3!<%I$KJQ49!%(B
 
 Fri Nov 11 11:29:24 JST 1994	Hiroaki Takada
 
-	* kernel/task_sync.c: #ifndef ‚Ì TYPO ‚ğC³ (by nobuo)D
+	* kernel/task_sync.c: #ifndef $B$N(B TYPO $B$r=$@5(B (by nobuo)$B!%(B
 
 Tue Sep 27 02:35:26 JST 1994	Hiroaki Takada
 
-	* kernel/prisem.c, doc/PRISEM: d—l2 ‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚Ìd
-	—l‚ğ•ÏX‚·‚éD‹ï‘Ì“I‚É‚ÍC—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğ‰ğ•ú‚µ‚½Û‚ÉCŠl
-	“¾‘O‚Ì—Dæ“x‚Å‚Í‚È‚­Cƒ^ƒXƒN‚Ì‰Šú—Dæ“x‚É–ß‚·‚±‚Æ‚É‚·‚éD‚Ü‚½C
-	Šl“¾‚³‚ê‚Ä‚¢‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğíœ‚·‚é‚±‚Æ‚ğ‹–‚·‚±‚Æ‚É‚·‚éD
+	* kernel/prisem.c, doc/PRISEM: $B;EMM(B2 $B$NM%@hEY7Q>5%;%^%U%)$N;E(B
+	$BMM$rJQ99$9$k!%6qBNE*$K$O!$M%@hEY7Q>5%;%^%U%)$r2rJ|$7$?:]$K!$3M(B
+	$BF@A0$NM%@hEY$G$O$J$/!$%?%9%/$N=i4|M%@hEY$KLa$9$3$H$K$9$k!%$^$?!$(B
+	$B3MF@$5$l$F$$$kM%@hEY7Q>5%;%^%U%)$r:o=|$9$k$3$H$r5v$9$3$H$K$9$k!%(B
 
 Tue Sep 27 02:22:17 JST 1994	Hiroaki Takada
 
-	* kernel/winfo.h: WSPEC ‚Ì’è‹`‚É const éŒ¾‚ğ’Ç‰ÁD
+	* kernel/winfo.h: WSPEC $B$NDj5A$K(B const $B@k8@$rDI2C!%(B
 
 Tue Sep 27 01:13:14 JST 1994	Hiroaki Takada
 
 	* h32/h32init.c, tvme/tvmeinit.c, mcube/mcubeinit.c:
-	cpu_inline.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚Ì‚ğ‚â‚ß‚éD
+	cpu_inline.h $B$r%$%s%/%k!<%I$9$k$N$r$d$a$k!%(B
 
-	* kernel/task_manage.c: MIN_SYS_STACK_SIZE ‚Ì’è‹`‚ğ ifndef ‚Å
-	ˆÍ‚ŞD
+	* kernel/task_manage.c: MIN_SYS_STACK_SIZE $B$NDj5A$r(B ifndef $B$G(B
+	$B0O$`!%(B
 
-	* systask/inittask.c: ƒJ[ƒlƒ‹‚Ì’â~ƒƒbƒZ[ƒW‚ğo‚·‚Ì‚ğ‚â‚ß‚é 
-	(À‚ÍCƒƒbƒZ[ƒWƒoƒbƒtƒ@‚É“ü‚é‚¾‚¯‚ÅC•\¦‚Í‚³‚ê‚Ä‚¢‚È‚©‚Á‚½)D
+	* systask/inittask.c: $B%+!<%M%k$NDd;_%a%C%;!<%8$r=P$9$N$r$d$a$k(B 
+	($B<B$O!$%a%C%;!<%8%P%C%U%!$KF~$k$@$1$G!$I=<($O$5$l$F$$$J$+$C$?(B)$B!%(B
 
 Fri Sep  9 07:53:36 JST 1994	Hiroaki Takada
 
-	* sample/Makefile.*: target.h ‚ÉŠÖ‚·‚é’è‹`‚ğíœ‚µCtargetconf.h 
-	‚ÉŠÖ‚·‚é’è‹`‚ğ’Ç‰ÁDƒpƒX‚Ì’†‚ÅC../$(TARGET) ‚ğ‘O‚ÖˆÚ“®‚È‚¢‚µ
-	‚Í’Ç‰ÁD
+	* sample/Makefile.*: target.h $B$K4X$9$kDj5A$r:o=|$7!$(Btargetconf.h 
+	$B$K4X$9$kDj5A$rDI2C!%%Q%9$NCf$G!$(B../$(TARGET) $B$rA0$X0\F0$J$$$7(B
+	$B$ODI2C!%(B
 
-	* mcube/mcube.h, mcubeconf.h: mcubeconf.h ‚ğV‹K‚Éì‚èCEITVB 
-	‚ÉŠÖ‚·‚é’è‹`‚ğ mcube.h ‚©‚çˆÚ“®D
+	* mcube/mcube.h, mcubeconf.h: mcubeconf.h $B$r?75,$K:n$j!$(BEITVB 
+	$B$K4X$9$kDj5A$r(B mcube.h $B$+$i0\F0!%(B
 
-	* kernel/itis_kernel.h, startup.c: target.h ‚ğ‚â‚ß‚ÄC
-	targetconf.h ‚ğ itis_kernel.h ‚©‚çƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ‚¤‚É•ÏXD
+	* kernel/itis_kernel.h, startup.c: target.h $B$r$d$a$F!$(B
+	targetconf.h $B$r(B itis_kernel.h $B$+$i%$%s%/%k!<%I$9$k$h$&$KJQ99!%(B
 
 Fri Sep  9 02:05:54 JST 1994	Hiroaki Takada
 
-	* kernel/task.c: ctxtsk, schedtsk ‚Ì‰Šú‰»‚ğ’Ç‰ÁD
+	* kernel/task.c: ctxtsk, schedtsk $B$N=i4|2=$rDI2C!%(B
 
-	* kernel/startup.c: syslog ƒƒbƒZ[ƒW‚ÌC³D
+	* kernel/startup.c: syslog $B%a%C%;!<%8$N=$@5!%(B
 
-	* kernel/misc_calls.c: #ifndef _i_def_int ‚ÅˆÍ‚Ş”ÍˆÍ‚ğL‚°‚éD
+	* kernel/misc_calls.c: #ifndef _i_def_int $B$G0O$`HO0O$r9-$2$k!%(B
 
-	* systask/logtask.c: perror ‚ÌŒÄ‚Ño‚µ•û–@‚ğC³D
+	* systask/logtask.c: perror $B$N8F$S=P$7J}K!$r=$@5!%(B
 
 	* kernel/itis_kernel.h, common.h, ready_queue.h, startup.c,
 	task.c, task_manage.c, misc_calls.c, debug_calls.c:
-	cpu_inline.h ‚ğ itis_kernel.h ‚©‚çƒCƒ“ƒNƒ‹[ƒh‚·‚é‚±‚Æ‚É‚µ‚ÄC
-	‘¼‚Ìƒtƒ@ƒCƒ‹‚©‚çƒCƒ“ƒNƒ‹[ƒh‚µ‚È‚¢‚æ‚¤‚É‚·‚éD
+	cpu_inline.h $B$r(B itis_kernel.h $B$+$i%$%s%/%k!<%I$9$k$3$H$K$7$F!$(B
+	$BB>$N%U%!%$%k$+$i%$%s%/%k!<%I$7$J$$$h$&$K$9$k!%(B
 
 	* kernel/common.h, cpu_inline.h, task.c: dispatch_request,
-	force_dispatch ‚ğ common.h ‚ÉˆÚ“®D
+	force_dispatch $B$r(B common.h $B$K0\F0!%(B
 
-	* kernel/mailbox.c: ƒRƒƒ“ƒg‚ÌC³D
+	* kernel/mailbox.c: $B%3%a%s%H$N=$@5!%(B
 
 Tue Sep  6 13:43:39 JST 1994	Hiroaki Takada
 
-	* include/itron.h, kernel/mailbox.c: ƒƒbƒZ[ƒWƒLƒ…[‚ÌŠÇ—•û
-	–@‚ğCƒVƒ“ƒOƒ‹ƒŠƒ“ƒN‚É’¼‚·D
+	* include/itron.h, kernel/mailbox.c: $B%a%C%;!<%8%-%e!<$N4IM}J}(B
+	$BK!$r!$%7%s%0%k%j%s%/$KD>$9!%(B
 
-	* kernel/queue.h: –¢g—p‚Ì queue_serach_ge ‚ğ–•ÁD
+	* kernel/queue.h: $BL$;HMQ$N(B queue_serach_ge $B$rKu>C!%(B
 
 Fri Sep  2 19:05:08 JST 1994	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, doc/USER: ‚±‚Ì“_‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, MANIFEST, doc/USER: $B$3$N;~E@$^$G$N=$@5$r$^$H$a$k!%(B
 
-	* doc/PRISEM: V‚½‚Éì¬D
+	* doc/PRISEM: $B?7$?$K:n@.!%(B
 
 Fri Sep  2 16:13:38 JST 1994	Hiroaki Takada
 
 	* kernel/task.h, task.c, wait.h, wait.c, winfo.h, task_manage.c,
 	task_sync.c, semaphore.c, eventflag.c, mailbox.c, messagebuf.c,
-	rendezvous.c, prisem.c, mempool.c, mempfix.c, time_call.c: ‘Ò
-	‚¿d—l‚ğ“±“ü‚µC—Dæ“x•ÏXC‘Ò‚¿ó‘Ô‰ğœ‚Ìˆ—‚ğƒtƒbƒNƒ‹[
-	ƒ`ƒ“‚Åˆ—‚·‚é‚æ‚¤‚É‰ü‘¢‚·‚éD
+	rendezvous.c, prisem.c, mempool.c, mempfix.c, time_call.c: $BBT(B
+	$B$A;EMM$rF3F~$7!$M%@hEYJQ99;~!$BT$A>uBV2r=|;~$N=hM}$r%U%C%/%k!<(B
+	$B%A%s$G=hM}$9$k$h$&$K2~B$$9$k!%(B
 
 	* kernel/task_manage.c, task_sync.c, eventflag.c, mailbox.c,
-	messagebuf.c, mempool.c, mempfix.c: ƒVƒXƒeƒ€ƒR[ƒ‹–ˆ‚ÉŠO‚¹‚é‚æ
-	‚¤‚É‚·‚éD
+	messagebuf.c, mempool.c, mempfix.c: $B%7%9%F%`%3!<%kKh$K30$;$k$h(B
+	$B$&$K$9$k!%(B
 
-	* kernel/isysconf.h, isyslog.c, messagebuf.c, mempool.c: ƒJ[
-	ƒlƒ‹‚ªg—p‚·‚éƒIƒuƒWƒFƒNƒg‚ª‚È‚¢ê‡‚É‘Î‰ (USE_TMBF_OS,
-	USE_TMPL_OS ‚ğ“±“ü)D
+	* kernel/isysconf.h, isyslog.c, messagebuf.c, mempool.c: $B%+!<(B
+	$B%M%k$,;HMQ$9$k%*%V%8%'%/%H$,$J$$>l9g$KBP1~(B (USE_TMBF_OS,
+	USE_TMPL_OS $B$rF3F~(B)$B!%(B
 
-	* kernel/itis_kernel.h: ƒwƒbƒ_ƒtƒ@ƒCƒ‹‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‡˜‚ğ
-	•ÏX (ã‚Ì•ÏX‚É”º‚Á‚Ä•K—v‚É)D
+	* kernel/itis_kernel.h: $B%X%C%@%U%!%$%k$r%$%s%/%k!<%I$9$k=g=x$r(B
+	$BJQ99(B ($B>e$NJQ99$KH<$C$FI,MW$K(B)$B!%(B
 
-	* kernel/isysconf.h: SYS_OS_SIZE ‚ğ SYS_MPL_SIZE ‚ÉD
+	* kernel/isysconf.h: SYS_OS_SIZE $B$r(B SYS_MPL_SIZE $B$K!%(B
 
 Fri Sep  2 15:43:17 JST 1994	Hiroaki Takada
 
-	* kernel/misc_calls.c: get_ver ‚ª•Ô‚· spver ‚ğƒo[ƒWƒ‡ƒ“ 3.02 
-	‚ğ•\‚·’l‚É•ÏXD
+	* kernel/misc_calls.c: get_ver $B$,JV$9(B spver $B$r%P!<%8%g%s(B 3.02 
+	$B$rI=$9CM$KJQ99!%(B
 
-	* kernel/common.h: ƒRƒƒ“ƒg‚ÌC³D
+	* kernel/common.h: $B%3%a%s%H$N=$@5!%(B
 
 Fri Aug 26 01:37:46 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c, prisem.c: d—l1 (‹Œ–¼: d—l2) ‚Ì—Dæ“x
-	Œp³ƒZƒ}ƒtƒH‹@”\‚ğƒ}[ƒWDd—l1 ‚Ìê‡‚ÉCƒ^ƒXƒNI—¹‚ÉŠl“¾‚µ
-	‚Ä‚¢‚é—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğ©“®“I‚É‰ğ•ú‚·‚é‚æ‚¤‚É‚·‚éD
+	* kernel/task_manage.c, prisem.c: $B;EMM(B1 ($B5lL>(B: $B;EMM(B2) $B$NM%@hEY(B
+	$B7Q>5%;%^%U%)5!G=$r%^!<%8!%;EMM(B1 $B$N>l9g$K!$%?%9%/=*N;;~$K3MF@$7(B
+	$B$F$$$kM%@hEY7Q>5%;%^%U%)$r<+F0E*$K2rJ|$9$k$h$&$K$9$k!%(B
 
 Mon Aug  8 18:40:33 JST 1994	Hiroaki Takada
 
 	* kernel/isysconf.h, task.h, task.c, wait.h, sample/config.def: 
-	—Dæ“xŒp³ƒZƒ}ƒtƒH‚Ìd—l1 ‚Æd—l2 ‚Ì–¼Ì‚ğ‹t‚É‚·‚éD
+	$BM%@hEY7Q>5%;%^%U%)$N;EMM(B1 $B$H;EMM(B2 $B$NL>>N$r5U$K$9$k!%(B
 
 Mon Aug  8 14:57:22 JST 1994	Hiroaki Takada
 
-	* kernel/isyslog.c: NDEBUG ‚Ì‚É‚ÍCi_assert_fail ‚ğŠO‚·D
+	* kernel/isyslog.c: NDEBUG $B$N;~$K$O!$(Bi_assert_fail $B$r30$9!%(B
 
 Mon Aug  8 14:04:36 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h, startup.c, misc_call.c: def_int ‚ÅC‘O
-	‚Ì’è‹`‚ğ‰ğœ‚·‚é‹@”\‚ğ’Ç‰ÁD
+	* kernel/cpu_inline.h, startup.c, misc_call.c: def_int $B$G!$A0(B
+	$B$NDj5A$r2r=|$9$k5!G=$rDI2C!%(B
 
-	* sample/Makefile.*: target.h ‚ÉŠÖ‚·‚é’è‹`‚ğ’Ç‰ÁD
+	* sample/Makefile.*: target.h $B$K4X$9$kDj5A$rDI2C!%(B
 
-	* mcube/mcube.h, mcubestart.S: EITVB ‚ÉŠÖ‚·‚é’è‹`‚ğˆÚ“®D
+	* mcube/mcube.h, mcubestart.S: EITVB $B$K4X$9$kDj5A$r0\F0!%(B
 
 Mon Aug  8 12:56:48 JST 1994	Hiroaki Takada
 
-	* kernel/genconfig: (-4)`0 ‚Ì—Dæ“x’l‚ğC—\–ñ’l‚Æ‚µ‚ÄƒGƒ‰[‚ğ
-	•Ô‚·‚æ‚¤‚É‚·‚éD
+	* kernel/genconfig: (-4)$B!A(B0 $B$NM%@hEYCM$r!$M=LsCM$H$7$F%(%i!<$r(B
+	$BJV$9$h$&$K$9$k!%(B
 
 Sun Aug  7 23:19:06 JST 1994	Hiroaki Takada
 
 	* kernel/itis_kernel.h, isyslog.c, libitis/assert_fail.c:
-	assertƒ}ƒNƒ‚Ìˆ—ŠÖ”‚ğ GNU•W€Cƒ‰ƒCƒuƒ‰ƒŠ‚É‚ ‚í‚¹‚é/‹ß‚­‚·‚éD
+	assert$B%^%/%m$N=hM}4X?t$r(B GNU$BI8=`(BC$B%i%$%V%i%j$K$"$o$;$k(B/$B6a$/$9$k!%(B
 
-	* sample/config.def: min_mplid ‚ÌƒfƒtƒHƒ‹ƒg‚ğ -5 ‚É–ß‚·D
+	* sample/config.def: min_mplid $B$N%G%U%)%k%H$r(B -5 $B$KLa$9!%(B
 
 Sun Aug  7 22:44:33 JST 1994	Hiroaki Takada
 
-	* kernel/isysconf.h, startup.c, winfo.h: ŠeƒIƒuƒWƒFƒNƒg‚Ìƒ‚ƒWƒ…[
-	ƒ‹‚ğŠO‚¹‚é‚æ‚¤‚É‚·‚é‚½‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	* kernel/isysconf.h, startup.c, winfo.h: $B3F%*%V%8%'%/%H$N%b%8%e!<(B
+	$B%k$r30$;$k$h$&$K$9$k$?$a$NDj5A$rDI2C!%(B
 
 Sun Aug  7 22:13:03 JST 1994	Hiroaki Takada
 
-	* sample/config.def: min_mplid ‚ÌƒfƒtƒHƒ‹ƒg‚ğ 1 ‚ÉD
+	* sample/config.def: min_mplid $B$N%G%U%)%k%H$r(B 1 $B$K!%(B
 
 Sun Aug  7 22:05:16 JST 1994	Hiroaki Takada
 
-	* kernel/isysconf.h: TMPL_OS_SIZE ‚ğ SYS_OS_SIZE ‚ÉD
+	* kernel/isysconf.h: TMPL_OS_SIZE $B$r(B SYS_OS_SIZE $B$K!%(B
 
 Sun Aug  7 21:23:03 JST 1994	Hiroaki Takada
 
 	* kernel/semaphore.c, mailbox.c, messagebuf.c, mempool.c,
-	mempfix.c: ID ‚ğƒ`ƒFƒbƒN‚·‚é assert ‚ÌğŒ‚ğ‹­‚­‚·‚éD
+	mempfix.c: ID $B$r%A%'%C%/$9$k(B assert $B$N>r7o$r6/$/$9$k!%(B
 
 Thu Aug  4 23:55:04 JST 1994	Hiroaki Takada
 
-	* kernel/task.h, task.c, task_manage.c, prisem.c, wait.h: d—l2
-	‚Ì—Dæ“xŒp³ƒZƒ}ƒtƒH‚ğæ‚è‚Ş‚½‚ß‚ÌC³D
+	* kernel/task.h, task.c, task_manage.c, prisem.c, wait.h: $B;EMM(B2
+	$B$NM%@hEY7Q>5%;%^%U%)$r<h$j9~$`$?$a$N=$@5!%(B
 
 	* kernel/genconfig, isysconf.h, sample/config.def: prisem_spec 
-	‚Ì’è‹`‚Æ‚»‚ê‚ÉŠÖ˜A‚·‚éİ’è‚ğ’Ç‰ÁD
+	$B$NDj5A$H$=$l$K4XO"$9$k@_Dj$rDI2C!%(B
 
-	* kernel/prisem.c: del_pis ‚Ìd—l‚ğ•ÏXDƒoƒOƒtƒBƒbƒNƒXD
+	* kernel/prisem.c: del_pis $B$N;EMM$rJQ99!%%P%0%U%#%C%/%9!%(B
 
-	* kernel/wait.c, wait.h, task_manage.c, rendezvous.c: ‘Ò‚¿‰ğœ
-	ˆ—‚Ì‚½‚ß‚Ìƒ‹[ƒ`ƒ“ŒQ‚ğ®—D
+	* kernel/wait.c, wait.h, task_manage.c, rendezvous.c: $BBT$A2r=|(B
+	$B=hM}$N$?$a$N%k!<%A%s72$r@0M}!%(B
 
 Thu Aug  4 22:16:31 JST 1994	Hiroaki Takada
 
 	* include/itis_services.h, libitis/itis_panic.c, itis_perror.c,
-	panic.c, perror.c: itron_errno ‚ğ‚â‚ß‚é (ƒ^ƒXƒN‹¤’Ê‚É‚Â‚Ì‚Í
-	–³—)D
+	panic.c, perror.c: itron_errno $B$r$d$a$k(B ($B%?%9%/6&DL$K;}$D$N$O(B
+	$BL5M}(B)$B!%(B
 
-	* libitis/errno.c: íœD
+	* libitis/errno.c: $B:o=|!%(B
 
-	* libitis/Makefile, sample/Makefile.*: errno.o ‚ğ–•ÁD
+	* libitis/Makefile, sample/Makefile.*: errno.o $B$rKu>C!%(B
 
-	* xscheme/itisstuff.c: ƒƒ‚ƒŠ‚ª‚È‚¢ê‡‚ÌƒoƒO‚ğƒtƒBƒbƒNƒXD
+	* xscheme/itisstuff.c: $B%a%b%j$,$J$$>l9g$N%P%0$r%U%#%C%/%9!%(B
 
 Thu Aug  4 21:22:30 JST 1994	Hiroaki Takada
 
-	* systask/logtask.c: itron_errno ‚Ö‚Ì‘ã“ü‚ğ‚â‚ß‚é (ƒAƒvƒŠƒP[
-	ƒVƒ‡ƒ“‚©‚çŒ©‚é‚ÆCitron_errno ‚ªŸè‚É‘‚«‚©‚í‚é)D
+	* systask/logtask.c: itron_errno $B$X$NBeF~$r$d$a$k(B ($B%"%W%j%1!<(B
+	$B%7%g%s$+$i8+$k$H!$(Bitron_errno $B$,>!<j$K=q$-$+$o$k(B)$B!%(B
 
 Tue Aug  2 21:51:52 JST 1994	Hiroaki Takada
 
-	* kernel/semaphore.c: ƒVƒXƒeƒ€ƒR[ƒ‹–ˆ‚ÉŠO‚¹‚é‚æ‚¤‚É‚·‚é 
-	(prisem.c ‚Æƒ\[ƒXƒR[ƒhƒTƒCƒY‚ğ”äŠr‚·‚é‚½‚ß)D
+	* kernel/semaphore.c: $B%7%9%F%`%3!<%kKh$K30$;$k$h$&$K$9$k(B 
+	(prisem.c $B$H%=!<%9%3!<%I%5%$%:$rHf3S$9$k$?$a(B)$B!%(B
 
 Tue Aug  2 21:30:17 JST 1994	Hiroaki Takada
 
-	* Makefile.config: tgas ‚ğ tron-gasCtld ‚ğ tron-ld ‚ÉD
+	* Makefile.config: tgas $B$r(B tron-gas$B!$(Btld $B$r(B tron-ld $B$K!%(B
 
 Tue Aug  2 13:35:42 JST 1994	Hiroaki Takada
 
-	* h32/h32start.S, tvme/tvmestart.S: FPU ‚ÌŠÛ‚ßƒ‚[ƒh‚ğ RZ ‚É‚·
-	‚éˆ—‚ğŠO‚· (ƒRƒ“ƒpƒCƒ‰‚ª‘Î‰‚µ‚½‚½‚ß)D
+	* h32/h32start.S, tvme/tvmestart.S: FPU $B$N4]$a%b!<%I$r(B RZ $B$K$9(B
+	$B$k=hM}$r30$9(B ($B%3%s%Q%$%i$,BP1~$7$?$?$a(B)$B!%(B
 
 Sun Jul 31 21:45:48 JST 1994	Hiroaki Takada
 
-	* kernel/task.h, task.c, task_manage.c: change_running_task ‚ğ 
-	change_scheduled_task ‚ÉƒŠƒl[ƒ€D
+	* kernel/task.h, task.c, task_manage.c: change_running_task $B$r(B 
+	change_scheduled_task $B$K%j%M!<%`!%(B
 
 Sun Jul 31 14:40:33 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h: force_dispatch ‚Ì volatile éŒ¾‚ğÁ‚· 
-	(GCC 2.6 ‘Î‰‚ÌC³)D
+	* kernel/cpu_inline.h: force_dispatch $B$N(B volatile $B@k8@$r>C$9(B 
+	(GCC 2.6 $BBP1~$N=$@5(B)$B!%(B
 
 Sun Jul 31 14:37:23 JST 1994	Hiroaki Takada
 
-	* tvme/tvmetimer.c, h32/h32timer.c: get_current_hw_time ’†‚ÅC
-	TIMER_TICK ‚ğQÆ‚µ‚Ä‚¢‚½‚Æ‚±‚ë‚ğ TO_TICK(TIMER_PERIOD) ‚ÉC³D
+	* tvme/tvmetimer.c, h32/h32timer.c: get_current_hw_time $BCf$G!$(B
+	TIMER_TICK $B$r;2>H$7$F$$$?$H$3$m$r(B TO_TICK(TIMER_PERIOD) $B$K=$@5!%(B
 
 Mon Jul 18 17:25:24 JST 1994	Hiroaki Takada
 
 	* libitis/strerror.c, panic.c, perror.c, itis_panic.c,
-	itis_perror.c: itron_strerrorŠÖ”‚É‘Î‚·‚é const éŒ¾‚ğíœD
+	itis_perror.c: itron_strerror$B4X?t$KBP$9$k(B const $B@k8@$r:o=|!%(B
 
 Fri Jun 24 20:43:13 JST 1994	Hiroaki Takada
 
-	* kernel/prisem.c: —Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ğŠÜ
-	‚Şƒ‚ƒWƒ…[ƒ‹‚Æ‚µ‚ÄV‹Kì¬D
+	* kernel/prisem.c: $BM%@hEY7Q>5%;%^%U%)4X78$N%7%9%F%`%3!<%k$r4^(B
+	$B$`%b%8%e!<%k$H$7$F?75,:n@.!%(B
 
 	* kernel/check.h, common.h, genconfig, isysconf.h, startup.c,
-	task.c, include/itron.h: —Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚Ìˆ—‚¨‚æ‚Ñ’è
-	‹`‚ğ’Ç‰ÁD
+	task.c, include/itron.h: $BM%@hEY7Q>5%;%^%U%)4X78$N=hM}$*$h$SDj(B
+	$B5A$rDI2C!%(B
 
 	* kernel/syscall.def, isyscall.h, itable.h, include/itron_fncd.h,
-	itis_isyscall.h: —Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚ÌƒVƒXƒeƒ€ƒR[ƒ‹‚ğ’Ç‰ÁD
+	itis_isyscall.h: $BM%@hEY7Q>5%;%^%U%)4X78$N%7%9%F%`%3!<%k$rDI2C!%(B
 
 	* sample/config.def, Makefile.h32, Makefile.tvme, Makefile.mcube:
-	—Dæ“xŒp³ƒZƒ}ƒtƒHŠÖŒW‚Ì‹Lq‚ğ’Ç‰ÁD
+	$BM%@hEY7Q>5%;%^%U%)4X78$N5-=R$rDI2C!%(B
 
-	* kernel/wait.h: Še“¯ŠúE’ÊMƒ‚ƒWƒ…[ƒ‹‚Ì—Dæ“x•ÏXˆ—ŠÖ”‚Ì
-	éŒ¾‚ğ’Ç‰ÁD
+	* kernel/wait.h: $B3FF14|!&DL?.%b%8%e!<%k$NM%@hEYJQ99=hM}4X?t$N(B
+	$B@k8@$rDI2C!%(B
 
-	* kernel/semaphore.c: ç’·‚ÈğŒ®‚ğC³Dtypo ‚ÌC³D
+	* kernel/semaphore.c: $B>iD9$J>r7o<0$r=$@5!%(Btypo $B$N=$@5!%(B
 
 Tue Jun 21 19:30:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü
-	‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^(B
+	$B$G$N=$@5$r$^$H$a$k!%(B
 
-	* Release1.2 (patchlevel=5) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_5")D
+	* Release1.2 (patchlevel=5) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_5")$B!%(B
 
 Tue Jun 21 19:21:17 JST 1994	Hiroaki Takada
 
-	* systask/serial.c: serial_init ‚ªƒGƒ‰[‚É‚È‚Á‚½ê‡‚É‚ÍC
-	init_flag ‚ğ 1 ‚É‚µ‚È‚¢‚æ‚¤C³D
+	* systask/serial.c: serial_init $B$,%(%i!<$K$J$C$?>l9g$K$O!$(B
+	init_flag $B$r(B 1 $B$K$7$J$$$h$&=$@5!%(B
 
 Tue Jun 21 15:14:30 JST 1994	Hiroaki Takada
 
-	* mcube/mcubeserial.c, tvme/tvmeserial.c: 2‚Â‚ß‚Ìƒ|[ƒg‚ğ‰Šú
-	‰»‚·‚é‚ÆCÅ‰‚Ìƒ|[ƒg‚àg‚¦‚È‚­‚È‚é–â‘è‚ğC³D
+	* mcube/mcubeserial.c, tvme/tvmeserial.c: 2$B$D$a$N%]!<%H$r=i4|(B
+	$B2=$9$k$H!$:G=i$N%]!<%H$b;H$($J$/$J$kLdBj$r=$@5!%(B
 
-	* mcube/mcubeserial.c: TRONd—lƒL[ƒ{[ƒh‚ÌÚ‘±‚ğƒTƒ|[ƒgD
+	* mcube/mcubeserial.c: TRON$B;EMM%-!<%\!<%I$N@\B3$r%5%]!<%H!%(B
 
 Tue Jun 21 15:12:07 JST 1994	Hiroaki Takada
 
 	* systask/serial.c, include/svc_serial.h, itis_resources.h:
-	serial_init, serial_shutdown ‚ğŠg’£SVC ‚Æ‚µ‚Äƒ†[ƒUƒ^ƒXƒN‚©‚ç
-	ŒÄ‚Ño‚¹‚é‚æ‚¤‚É‚·‚éD
+	serial_init, serial_shutdown $B$r3HD%(BSVC $B$H$7$F%f!<%6%?%9%/$+$i(B
+	$B8F$S=P$;$k$h$&$K$9$k!%(B
 
-	* sample/config.def: ƒTƒ“ƒvƒ‹‚Å‚ÌŠg’£SVC ‚Ì’è‹`”‚ğ 50 ‚É•ÏXD
+	* sample/config.def: $B%5%s%W%k$G$N3HD%(BSVC $B$NDj5A?t$r(B 50 $B$KJQ99!%(B
 
 Thu Jun  9 19:03:59 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c: ƒVƒXƒeƒ€ƒ_ƒEƒ“‚·‚éÛ‚ÌƒƒO‚Ì priority 
-	‚ğ LOG_EMERG ‚É•ÏXD
+	* kernel/task_manage.c: $B%7%9%F%`%@%&%s$9$k:]$N%m%0$N(B priority 
+	$B$r(B LOG_EMERG $B$KJQ99!%(B
 
-	* systask/inittask.c: serial_shutdown ŒÄ‚Ñ‚¾‚µ‚Ìˆø”‚ğ’Ç‰ÁD
+	* systask/inittask.c: serial_shutdown $B8F$S$@$7;~$N0z?t$rDI2C!%(B
 
-	* systask/serial.c: read ‚ªs––‚ÅI—¹‚·‚é‚Ì‚ÍCCANONICAL ‚Ì
-	‚Ì‚İ‚É‚·‚éD
+	* systask/serial.c: read $B$,9TKv$G=*N;$9$k$N$O!$(BCANONICAL $B$N;~(B
+	$B$N$_$K$9$k!%(B
 
 Thu Jun  9 16:18:40 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c, misc_calls.c: RUNó‘Ô‚Ìƒ^ƒXƒN‚Ì’è‹`‚ğ
-	•ÏX‚·‚éD
+	* kernel/task_manage.c, misc_calls.c: RUN$B>uBV$N%?%9%/$NDj5A$r(B
+	$BJQ99$9$k!%(B
 
-	* kernel/dispatch.S, nd_dispatch.S: WAIT–½—ß‚ğ”­s‚·‚é’¼‘O‚ÉC
-	ctxtsk ‚ğ NULL ‚É‚·‚éD
+	* kernel/dispatch.S, nd_dispatch.S: WAIT$BL?Na$rH/9T$9$kD>A0$K!$(B
+	ctxtsk $B$r(B NULL $B$K$9$k!%(B
 
 Thu Jun  9 15:38:30 JST 1994	Hiroaki Takada
 
 	* kernel/check.h, task_manage.c, sample/config.def: CHK_CTX2 
-	‚ğ CHK_CTX ‚Æ‰ü–¼DV‚½‚È CHK_CTX2 ‚ğC’v–½“I‚ÈƒRƒ“ƒeƒLƒXƒgƒG
-	ƒ‰[‚Ì‚ÉƒVƒXƒeƒ€ƒ_ƒEƒ“‚³‚¹‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚Æ‚·‚éD
+	$B$r(B CHK_CTX $B$H2~L>!%?7$?$J(B CHK_CTX2 $B$r!$CWL?E*$J%3%s%F%-%9%H%((B
+	$B%i!<$N;~$K%7%9%F%`%@%&%s$5$;$k$+$I$&$+$N%U%i%0$H$9$k!%(B
 
-	* kernel/genconfig: CHK_CTX ‚ÌƒTƒ|[ƒg‚ğ’Ç‰ÁD
+	* kernel/genconfig: CHK_CTX $B$N%5%]!<%H$rDI2C!%(B
 
 Fri Mar  4 23:04:46 JST 1994	Hiroaki Takada
 
-	* systask/logtask.c: logtask_alive ‚ğ 1 ‚É‚·‚é‚Ì‚ğCsys_log ‚Ì
-	Šg’£SVC’è‹`‚æ‚èŒã‚ÉˆÚ“®‚·‚é (–â‘è‚È‚¢‚Í‚¸‚¾‚ªC”O‚Ì‚½‚ß)D
+	* systask/logtask.c: logtask_alive $B$r(B 1 $B$K$9$k$N$r!$(Bsys_log $B$N(B
+	$B3HD%(BSVC$BDj5A$h$j8e$K0\F0$9$k(B ($BLdBj$J$$$O$:$@$,!$G0$N$?$a(B)$B!%(B
 
 Tue Feb 15 12:59:00 JST 1994	Hiroaki Takada
 
-	* kernel/rendezvous.c: ƒ‰ƒ“ƒfƒu‚Ì‰“šƒƒbƒZ[ƒW‚ª‹ó (’·‚³‚ª 0) 
-	‚ğ‹–‚·‚±‚Æ‚É‚·‚éD
+	* kernel/rendezvous.c: $B%i%s%G%V$N1~Ez%a%C%;!<%8$,6u(B ($BD9$5$,(B 0) 
+	$B$r5v$9$3$H$K$9$k!%(B
 
 Tue Feb 15 12:40:30 JST 1994	Hiroaki Takada
 
-	* kernel/check.h, genconfig, sample/config.def: ƒGƒ‰[ƒ`ƒFƒbƒN
-	ƒIƒvƒVƒ‡ƒ“‚É CHK_SELF ‚ğ’Ç‰ÁD
+	* kernel/check.h, genconfig, sample/config.def: $B%(%i!<%A%'%C%/(B
+	$B%*%W%7%g%s$K(B CHK_SELF $B$rDI2C!%(B
 
 Tue Feb 15 12:07:41 JST 1994	Hiroaki Takada
 
-	* kernel/check.h: CHK_PAR ‚Å‚È‚¢ê‡‚Ì CHECK_PRI_INI ‚Ì’è‹`‚Ì 
-	typo ‚ğC³D
+	* kernel/check.h: CHK_PAR $B$G$J$$>l9g$N(B CHECK_PRI_INI $B$NDj5A$N(B 
+	typo $B$r=$@5!%(B
 
 Tue Feb 15 11:11:03 JST 1994	Hiroaki Takada
 
-	* kernel/task_sync.c: wup_tsk ‚ÅCE_QOVR ‚Ìƒ`ƒFƒbƒNêŠ‚ğŒã‚ë
-	‚ÉˆÚ“®‚·‚é («”\‚ª­‚µã‚é‚Í‚¸)D
+	* kernel/task_sync.c: wup_tsk $B$G!$(BE_QOVR $B$N%A%'%C%/>l=j$r8e$m(B
+	$B$K0\F0$9$k(B ($B@-G=$,>/$7>e$k$O$:(B)$B!%(B
 
 Thu Feb 10 19:00:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³
-	‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5(B
+	$B$r$^$H$a$k!%(B
 
-	* Release1.2 (patchlevel=4) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_4")D
+	* Release1.2 (patchlevel=4) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_4")$B!%(B
 
 Thu Feb 10 04:27:11 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h: "memory" ‚Ìw’è‚ª—]Œv‚É‚³‚ê‚Ä‚¢‚½‚Ì‚ğí
-	œDŠÖ˜A‚µ‚ÄCƒRƒƒ“ƒg‚ğ’Ç‰ÁD
+	* kernel/cpu_inline.h: "memory" $B$N;XDj$,M>7W$K$5$l$F$$$?$N$r:o(B
+	$B=|!%4XO"$7$F!$%3%a%s%H$rDI2C!%(B
 
 Thu Feb 10 04:19:25 JST 1994	Hiroaki Takada
 
-	* kernel/messagebuf.c: del_mbf ‚ÅCƒoƒbƒtƒ@ƒTƒCƒY‚ª 0 ‚Ìê‡‚É
-	‚àCƒoƒbƒtƒ@—Ìˆæ‚ğ‰ğ•ú‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚½ƒoƒO‚ğC³D
+	* kernel/messagebuf.c: del_mbf $B$G!$%P%C%U%!%5%$%:$,(B 0 $B$N>l9g$K(B
+	$B$b!$%P%C%U%!NN0h$r2rJ|$7$h$&$H$7$F$$$?%P%0$r=$@5!%(B
 
 Sat Feb  5 11:45:04 JST 1994	Hiroaki Takada
 
 	* kernel/cpu_inline.h, genisyscall, queue.h, ready_queue.h,
 	syscall.def, task.c, include/itis_isyscall.h, svc_serial.h:
-	ƒCƒ“ƒ‰ƒCƒ“ƒAƒZƒ“ƒuƒ‰‚Ì’†‚Ì clobber ƒŠƒXƒg‚É "memory" ‚ª‚È‚¢‚ÆC
-	³‚µ‚­‚È‚¢ƒR[ƒh‚ªo‚é‰Â”\«‚ª‚ ‚éD•K—v‚È‰ÓŠ‚É "memory" ‚ğ’Ç
-	‰ÁD
+	$B%$%s%i%$%s%"%;%s%V%i$NCf$N(B clobber $B%j%9%H$K(B "memory" $B$,$J$$$H!$(B
+	$B@5$7$/$J$$%3!<%I$,=P$k2DG=@-$,$"$k!%I,MW$J2U=j$K(B "memory" $B$rDI(B
+	$B2C!%(B
 
 Mon Jan 31 22:36:25 JST 1994	Hiroaki Takada
 
-	* kernel/newversion: ‹N“®‚ÌƒƒbƒZ[ƒW‚Ì 93 ‚ğ 94 ‚ÉC³D
+	* kernel/newversion: $B5/F0;~$N%a%C%;!<%8$N(B 93 $B$r(B 94 $B$K=$@5!%(B
 
 Wed Jan 26 11:49:13 JST 1994	Hiroaki Takada
 
-	* README: ‚±‚Ìƒtƒ@ƒCƒ‹‚ğ’P“Æ‚ÅŒöŠJ‚Å‚«‚é—l‚É‘‚«’¼‚·D
+	* README: $B$3$N%U%!%$%k$rC1FH$G8x3+$G$-$kMM$K=q$-D>$9!%(B
 
 Wed Jan 26 11:45:56 JST 1994	Hiroaki Takada
 
-	* kernel/cpu_inline.h, nd_dispatch.S, startup.c task.c: ’x‰„Š„
-	‚İ‚ğg‚í‚È‚¢ê‡‚ÌƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‹N“®‚ğ TRAPA #14 ‚©‚ç #4 
-	‚É•ÏXD
+	* kernel/cpu_inline.h, nd_dispatch.S, startup.c task.c: $BCY1d3d(B
+	$B9~$_$r;H$o$J$$>l9g$N%G%#%9%Q%C%A%c$N5/F0$r(B TRAPA #14 $B$+$i(B #4 
+	$B$KJQ99!%(B
 
 Thu Jan 20 00:54:57 JST 1994	Hiroaki Takada
 
-	* kernel/mempfix.c: rel_blf ‚ÅCblf ‚ª³‚µ‚¢ƒAƒhƒŒƒX‚©ƒ`ƒFƒbƒN
-	‚·‚éğŒ‚ğŒµ‚µ‚­‚·‚éD
+	* kernel/mempfix.c: rel_blf $B$G!$(Bblf $B$,@5$7$$%"%I%l%9$+%A%'%C%/(B
+	$B$9$k>r7o$r87$7$/$9$k!%(B
 
 Thu Jan 20 00:46:16 JST 1994	Hiroaki Takada
 
-	* doc/USER: ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚ÌƒTƒCƒYw’è‚Ì•û–@‚ÉŠÖ‚·‚é‹Lq
-	‚ğC³D
+	* doc/USER: $B%7%9%F%`%a%b%j%W!<%k$N%5%$%:;XDj$NJ}K!$K4X$9$k5-=R(B
+	$B$r=$@5!%(B
 
 Wed Jan 19 18:55:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³
-	‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5(B
+	$B$r$^$H$a$k!%(B
 
-	* Release1.2 (patchlevel=3) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_3")D
+	* Release1.2 (patchlevel=3) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_3")$B!%(B
 
 Wed Jan 19 18:37:07 JST 1994	Hiroaki Takada
 
-	* kernel/genconfig: sys_mpl_size ‚Ì’è‹`‚ğ’Ç‰ÁD16i”‚ğƒTƒ|[ƒgD
+	* kernel/genconfig: sys_mpl_size $B$NDj5A$rDI2C!%(B16$B?J?t$r%5%]!<%H!%(B
 
-	* sample/config.def: sys_mpl_size ‚Ì’è‹`‚ğ’Ç‰ÁD
+	* sample/config.def: sys_mpl_size $B$NDj5A$rDI2C!%(B
 
-	* kernel/mempool.c: TMPL_OS_SIZE ‚ğ SYS_MPL_SIZE ‚ÉƒŠƒl[ƒ€D
+	* kernel/mempool.c: TMPL_OS_SIZE $B$r(B SYS_MPL_SIZE $B$K%j%M!<%`!%(B
 
 	* kernel/isysconf.h, task_manage.c, include/itis_resources.h:
-	SYS_STACK_SIZE, SYS_MPL_SIZE ‚ÌƒfƒtƒHƒ‹ƒg’l‚ğ isysconf.h ‚Å’è
-	‹`‚·‚é‚±‚Æ‚É‚·‚éD
+	SYS_STACK_SIZE, SYS_MPL_SIZE $B$N%G%U%)%k%HCM$r(B isysconf.h $B$GDj(B
+	$B5A$9$k$3$H$K$9$k!%(B
 
 Wed Jan 19 17:27:32 JST 1994	Hiroaki Takada
 
-	* sample/Makefile.mcube, mcube/mcubestart.S: MCUBE ‚Ìê‡‚ÌƒJ[
-	ƒlƒ‹ƒR[ƒh‚Ìæ“ª”Ô’n‚ğ 0x80020000 ‚É•ÏXD
+	* sample/Makefile.mcube, mcube/mcubestart.S: MCUBE $B$N>l9g$N%+!<(B
+	$B%M%k%3!<%I$N@hF,HVCO$r(B 0x80020000 $B$KJQ99!%(B
 
-	* mcube/mcube.h: mcube_getc ‚ÌƒCƒ“ƒ‰ƒCƒ“ƒAƒZƒ“ƒuƒ‰’†‚ÅCƒRƒ“ƒ}
-	‚ª”²‚¯‚Ä‚¢‚½“_‚ğC³D
+	* mcube/mcube.h: mcube_getc $B$N%$%s%i%$%s%"%;%s%V%iCf$G!$%3%s%^(B
+	$B$,H4$1$F$$$?E@$r=$@5!%(B
 
 Mon Jan 17 16:10:00 JST 1994	Hiroaki Takada
 
-	* ChangeLog, README, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü
-	‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, README, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^(B
+	$B$G$N=$@5$r$^$H$a$k!%(B
 
-	* Release1.2 (patchlevel=2) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_2")D
-	‚±‚Ìƒo[ƒWƒ‡ƒ“‚©‚çCƒÀ”Å‚Æ‚·‚éD
+	* Release1.2 (patchlevel=2) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_2")$B!%(B
+	$B$3$N%P!<%8%g%s$+$i!$&BHG$H$9$k!%(B
 
 Mon Jan 17 15:58:37 JST 1994	Hiroaki Takada
 
-	* kernel/task_manage.c: _ter_tsk ‚©‚ç make_dormant ‚ğŒÄ‚Ño‚µ
-	‚Ä‚¢‚é•”•ª‚ğCŒÄ‚Ño‚µ‘¤‚ÉˆÚ“®‚·‚éD
+	* kernel/task_manage.c: _ter_tsk $B$+$i(B make_dormant $B$r8F$S=P$7(B
+	$B$F$$$kItJ,$r!$8F$S=P$7B&$K0\F0$9$k!%(B
 
-	* kernel/task.c, task_manage.c: ƒ^ƒXƒNŠg’£î•ñ‚ğ R1 ‚É“ü‚ê‚éˆ
-	—‚ğCsta_tsk ‚ÖˆÚ“®D
+	* kernel/task.c, task_manage.c: $B%?%9%/3HD%>pJs$r(B R1 $B$KF~$l$k=h(B
+	$BM}$r!$(Bsta_tsk $B$X0\F0!%(B
 
-	* kernel/task_manage.c: ext_tsk ‚ÅCmake_dormant ’†‚Åg—p’†‚Ì
-	ƒXƒ^ƒbƒN‚ª”j‰ó‚³‚ê‚é–â‘è‚ğC³D
+	* kernel/task_manage.c: ext_tsk $B$G!$(Bmake_dormant $BCf$G;HMQCf$N(B
+	$B%9%?%C%/$,GK2u$5$l$kLdBj$r=$@5!%(B
 
 Wed Jan 12 21:58:15 JST 1994	Hiroaki Takada
 
-	* systask/serial.c: ƒRƒƒ“ƒg‚ÌC³D
+	* systask/serial.c: $B%3%a%s%H$N=$@5!%(B
 
 Mon Jan 10 19:23:53 JST 1994	Hiroaki Takada
 
-	* mcube/mcubeinit.c: ƒJ[ƒlƒ‹‹N“®‚ÉCƒoƒXŠ„‚İ‚àƒ}ƒXƒN‚·‚é
-	‚æ‚¤‚ÉC³ (BMS ‚Ìİ’è‚É‚ ‚í‚¹‚é)D
+	* mcube/mcubeinit.c: $B%+!<%M%k5/F0;~$K!$%P%93d9~$_$b%^%9%/$9$k(B
+	$B$h$&$K=$@5(B (BMS $B$N@_Dj$K$"$o$;$k(B)$B!%(B
 
 Mon Jan 10 19:19:09 JST 1994	Hiroaki Takada
 
-	* h32/h32sbc.h, mcube/mcube.h: Gmicro IRC ‚ÌƒoƒXŠ„‚İŠÖŒW‚Ì’è
-	‹` (BIR?_BIT) ‚ğ’Ç‰ÁD
+	* h32/h32sbc.h, mcube/mcube.h: Gmicro IRC $B$N%P%93d9~$_4X78$NDj(B
+	$B5A(B (BIR?_BIT) $B$rDI2C!%(B
 
 Fri Jan  7 12:26:24 JST 1994	Hiroaki Takada
 
-	* kernel/messagebuf.c: ƒƒbƒZ[ƒWƒoƒbƒtƒ@‚Æ‚ÌŠÔ‚ÌƒƒbƒZ[ƒW“]
-	‘—ƒ‹[ƒ`ƒ“‚ÌƒoƒO‚ÌC³D
+	* kernel/messagebuf.c: $B%a%C%;!<%8%P%C%U%!$H$N4V$N%a%C%;!<%8E>(B
+	$BAw%k!<%A%s$N%P%0$N=$@5!%(B
 
-	* kernel/messagebuf.c: cre_mbf, vcre_mbf ‚ÅCbufsz ‚ª•‰‚Ìê‡
-	‚ğƒGƒ‰[‚Æ‚·‚éƒpƒ‰ƒ[ƒ^ƒ`ƒFƒbƒN‚ğ’Ç‰ÁD
+	* kernel/messagebuf.c: cre_mbf, vcre_mbf $B$G!$(Bbufsz $B$,Ii$N>l9g(B
+	$B$r%(%i!<$H$9$k%Q%i%a!<%?%A%'%C%/$rDI2C!%(B
 
 Thu Jan  6 13:54:23 JST 1994	Hiroaki Takada
 
-	* kernel/time_calls.c: i_def_alm ‚Å NADR w’è‚Ìƒpƒ‰ƒ[ƒ^ƒ`ƒFƒb
-	ƒN‚Ìƒ~ƒX‚ğC³D
+	* kernel/time_calls.c: i_def_alm $B$G(B NADR $B;XDj;~$N%Q%i%a!<%?%A%'%C(B
+	$B%/$N%_%9$r=$@5!%(B
 
 Mon Dec 27 11:13:29 JST 1993	Hiroaki Takada
 
-	* kernel/mempfix.c: _cre_mpf ‚Å mpfid ‚Ì‰Šú‰»‚ª‚³‚ê‚Ä‚¢‚È‚©‚Á
-	‚½–â‘è‚ğC³D
+	* kernel/mempfix.c: _cre_mpf $B$G(B mpfid $B$N=i4|2=$,$5$l$F$$$J$+$C(B
+	$B$?LdBj$r=$@5!%(B
 
-	* kernel/time_calls.c: vdef_alm ‚Å ƒGƒ‰[ƒ`ƒFƒbƒN‚ª”²‚¯‚Ä‚¢‚½
-	–â‘è‚ğC³D
+	* kernel/time_calls.c: vdef_alm $B$G(B $B%(%i!<%A%'%C%/$,H4$1$F$$$?(B
+	$BLdBj$r=$@5!%(B
 
 Fri Dec 24 12:26:22 JST 1993	Hiroaki Takada
 
-	* ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü‚Å‚ÌC³
-	‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^$G$N=$@5(B
+	$B$r$^$H$a$k!%(B
 
-	* Release1.2 (patchlevel=1) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2_1")D
+	* Release1.2 (patchlevel=1) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2_1")$B!%(B
 
 Fri Dec 24 12:19:33 JST 1993	Hiroaki Takada
 
-	* kernel/rendezvous.c: cre_por, del_por ‚ğƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ñ
-	o‚·‚±‚Æ‚ğ‹Ö~‚·‚éD
+	* kernel/rendezvous.c: cre_por, del_por $B$r%?%9%/FHN)It$+$i8F$S(B
+	$B=P$9$3$H$r6X;_$9$k!%(B
 
 Mon Dec 20 22:42:12 JST 1993	Hiroaki Takada
 
-	* sample/Makefile.*, startup/start.S: V”Å‚Ì GNU LD ‘Î‰‚ÉC³
-	‚·‚éD-TromƒIƒvƒVƒ‡ƒ“‚ª‚È‚­‚È‚Á‚½‚½‚ßCextidata ‚ğg‚Á‚Äƒf[ƒ^
-	ƒZƒNƒVƒ‡ƒ“‚Ì‰Šú‰»‚ğs‚¤D
+	* sample/Makefile.*, startup/start.S: $B?7HG$N(B GNU LD $BBP1~$K=$@5(B
+	$B$9$k!%(B-Trom$B%*%W%7%g%s$,$J$/$J$C$?$?$a!$(Bextidata $B$r;H$C$F%G!<%?(B
+	$B%;%/%7%g%s$N=i4|2=$r9T$&!%(B
 
 Mon Dec 20 16:30:12 JST 1993	Hiroaki Takada
 
-	* kernel/cpu_inline.h, common.h, rendezvous.c: ƒ^ƒXƒN“Æ—§•”‚©
-	‚çƒ‰ƒ“ƒfƒu‹@”\‚ğg‚¤‚±‚Æ‹Ö~‚µ‚½C³‚ğŒ³‚É–ß‚·D‚à‚¤­‚µl@‚ª
-	•K—vD
+	* kernel/cpu_inline.h, common.h, rendezvous.c: $B%?%9%/FHN)It$+(B
+	$B$i%i%s%G%V5!G=$r;H$&$3$H6X;_$7$?=$@5$r85$KLa$9!%$b$&>/$79M;!$,(B
+	$BI,MW!%(B
 
 Mon Dec 20 12:03:20 JST 1993	Hiroaki Takada
 
-	* kernel/time_calls.c: üŠú‹N“®ƒnƒ“ƒhƒ‰’†‚ÅC©•ª‚É‘Î‚·‚é 
-	def_cyc ‚ğŒÄ‚Ño‚µ‚½ê‡‚É‹N‚±‚é–â‘è‚ğC³D
+	* kernel/time_calls.c: $B<~4|5/F0%O%s%I%iCf$G!$<+J,$KBP$9$k(B 
+	def_cyc $B$r8F$S=P$7$?>l9g$K5/$3$kLdBj$r=$@5!%(B
 
 Tue Dec 14 22:25:11 JST 1993	Hiroaki Takada
 
 	* include/itis_services.h, libitis/errno.c, itis_panic.c,
-	itis_perror.c, panic.c, perror.c, strerror.c: ƒGƒ‰[”Ô† 
-	(errno)	‚ÌŒ^‚ğ ER ‚ÉC³D
+	itis_perror.c, panic.c, perror.c, strerror.c: $B%(%i!<HV9f(B 
+	(errno)	$B$N7?$r(B ER $B$K=$@5!%(B
 
 Fri Dec 10 18:45:00 JST 1993	Hiroaki Takada
 
-	* README, ChangeLog, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_‚Ü
-	‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* README, ChangeLog, doc/USER, kernel/patchlevel.h: $B$3$N;~E@$^(B
+	$B$G$N=$@5$r$^$H$a$k!%(B
 
-	* Release1.2 (patchlevel=0) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_2")D
+	* Release1.2 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_2")$B!%(B
 
 Fri Dec 10 15:00:16 JST 1993	Hiroaki Takada
 
-	* tvme/tvmetimer.h: vget_tim ‚Åg‚¤ƒ}ƒNƒ‚ğ’Ç‰ÁD
+	* tvme/tvmetimer.h: vget_tim $B$G;H$&%^%/%m$rDI2C!%(B
 
 Fri Dec 10 14:31:23 JST 1993	Hiroaki Takada
 
-	* kernel/cpu_inline.h, common.h: ƒ^ƒXƒNŠÔƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡
-	ƒ“’è‹`—pƒ}ƒNƒ‚ğ’Ç‰Á‚·‚éD
+	* kernel/cpu_inline.h, common.h: $B%?%9%/4V%/%j%F%#%+%k%;%/%7%g(B
+	$B%sDj5AMQ%^%/%m$rDI2C$9$k!%(B
 
-	* kernel/rendezvous.c: ƒ^ƒXƒN“Æ—§•”‚©‚çƒ‰ƒ“ƒfƒu‹@”\‚ğg‚¤‚±‚Æ
-	‚ğ‹Ö~‚·‚éD
+	* kernel/rendezvous.c: $B%?%9%/FHN)It$+$i%i%s%G%V5!G=$r;H$&$3$H(B
+	$B$r6X;_$9$k!%(B
 
 Fri Dec 10 14:13:15 JST 1993	Hiroaki Takada
 
 	* kernel/check.h, task_manage.c, misc_calls.c, debug_calls.c:
-	ƒ^ƒXƒN•”Às’†‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é CHECK_INTSKƒ}ƒNƒ‚ğ’Ç‰ÁD
+	$B%?%9%/It<B9TCf$+$I$&$+$r%A%'%C%/$9$k(B CHECK_INTSK$B%^%/%m$rDI2C!%(B
 
 Fri Dec 10 13:23:05 JST 1993	Hiroaki Takada
 
-	* kernel/task_manage.c: chg_pri ‚ğCDORMANTó‘Ô‚Ìƒ^ƒXƒN‚É‘Î‚µ
-	‚Ä‚à”­s‰Â”\‚Æ‚·‚éD
+	* kernel/task_manage.c: chg_pri $B$r!$(BDORMANT$B>uBV$N%?%9%/$KBP$7(B
+	$B$F$bH/9T2DG=$H$9$k!%(B
 
 Thu Dec  9 20:25:29 JST 1993	Hiroaki Takada
 
-	* h32/h32timer.h: vget_tim ‚Åg‚¤ƒ}ƒNƒ‚ğ’Ç‰ÁDƒ^ƒCƒ}‚Ìİ’è’l
-	‚ğC³D
+	* h32/h32timer.h: vget_tim $B$G;H$&%^%/%m$rDI2C!%%?%$%^$N@_DjCM(B
+	$B$r=$@5!%(B
 
 Tue Dec  7 18:14:32 JST 1993	Hiroaki Takada
 
-	* kernel/timer.c: «”\•]‰¿—pƒVƒXƒeƒ€‚ğæ‚èo‚·‚½‚ß‚Ì
-	vget_tim ƒVƒXƒeƒ€ƒR[ƒ‹‚ğ’Ç‰ÁD
+	* kernel/timer.c: $B@-G=I>2AMQ%7%9%F%`;~9o$r<h$j=P$9$?$a$N(B
+	vget_tim $B%7%9%F%`%3!<%k$rDI2C!%(B
 
-	* include/itron.h: SYSUTIMEŒ^‚ğ’Ç‰ÁD
+	* include/itron.h: SYSUTIME$B7?$rDI2C!%(B
 
 	* kernel/syscall.def, isyscall.h, itable.h, include/itron_fncd.h,
-	itis_isyscall.h: vget_tim ƒVƒXƒeƒ€ƒR[ƒ‹‚ğ’Ç‰ÁD
+	itis_isyscall.h: vget_tim $B%7%9%F%`%3!<%k$rDI2C!%(B
 
-	* kernel/genconfig, isysconf.h: ƒVƒXƒeƒ€\¬İ’èƒtƒ@ƒCƒ‹‚ÅC
-	use_vget_tim ‚ğƒTƒ|[ƒg‚·‚éD
+	* kernel/genconfig, isysconf.h: $B%7%9%F%`9=@.@_Dj%U%!%$%k$G!$(B
+	use_vget_tim $B$r%5%]!<%H$9$k!%(B
 
-	* mcube/mcubetimer.h: fetch_hw_timer_interrupt ‚ğì¬D
+	* mcube/mcubetimer.h: fetch_hw_timer_interrupt $B$r:n@.!%(B
 
-	* include/itis_resources.h: ƒVƒXƒeƒ€ƒZƒ}ƒtƒH‚Ì ID ‚ğ‚¸‚ç‚·D
+	* include/itis_resources.h: $B%7%9%F%`%;%^%U%)$N(B ID $B$r$:$i$9!%(B
 
-	* sample/config.def: ˆÈã‚Ì•ÏX‚É‘Î‰‚µ‚ÄCƒVƒXƒeƒ€\¬İ’èƒtƒ@
-	ƒCƒ‹‚ğC³D
+	* sample/config.def: $B0J>e$NJQ99$KBP1~$7$F!$%7%9%F%`9=@.@_Dj%U%!(B
+	$B%$%k$r=$@5!%(B
 
 Mon Nov 22 23:36:14 JST 1993	Hiroaki Takada
 
-	* kernel/ientry.S: CHK_??? ‚ğŒ©‚ÄCƒGƒ‰[ƒ`ƒFƒbƒN‚ğ‚·‚é‚©‚Ç‚¤
-	‚©‚ğŒˆ‚ß‚é‚æ‚¤‚ÉC³ (.S ‚É‚µ‚½‚©‚ç‰Â”\‚É‚È‚Á‚½)D
+	* kernel/ientry.S: CHK_??? $B$r8+$F!$%(%i!<%A%'%C%/$r$9$k$+$I$&(B
+	$B$+$r7h$a$k$h$&$K=$@5(B (.S $B$K$7$?$+$i2DG=$K$J$C$?(B)$B!%(B
 
 Mon Nov 22 20:15:47 JST 1993	Hiroaki Takada
 
-	* kernel/task.c, task_manage.c, rendezvous.c: TCB ‚Ì wrdvnoƒtƒB[
-	ƒ‹ƒh‚ÍCtask_initialize ‚Å tskid ‚É‰Šú‰»‚·‚é‚±‚Æ‚É‚·‚éD
+	* kernel/task.c, task_manage.c, rendezvous.c: TCB $B$N(B wrdvno$B%U%#!<(B
+	$B%k%I$O!$(Btask_initialize $B$G(B tskid $B$K=i4|2=$9$k$3$H$K$9$k!%(B
 
 Mon Nov 22 19:44:30 JST 1993	Hiroaki Takada
 
-	* h32/h32start.S: ‘O‚ÉCGmicro/300 ‚Ìê‡‚ÉƒLƒƒƒbƒVƒ…‚ğ‚·‚×‚Ä
-	OFF ‚É‚µ‚½‚Ì‚ğCŒ³‚É–ß‚· (Gmicro/300 ‚ğV‚µ‚¢”Å‚ÉŒğŠ·‚µ‚½)D
+	* h32/h32start.S: $BA0$K!$(BGmicro/300 $B$N>l9g$K%-%c%C%7%e$r$9$Y$F(B
+	OFF $B$K$7$?$N$r!$85$KLa$9(B (Gmicro/300 $B$r?7$7$$HG$K8r49$7$?(B)$B!%(B
 
 Fri Nov 19 18:20:12 JST 1993	Hiroaki Takada
 
 	* kernel/task_manage.c, semaphore.c, eventflag.c, mailbox.c,
 	messagebuf.c, rendezvous.c, mempool.c, mempfix.c,
-	time_calls.c: ID©“®Š„“–‹@”\‚ÅCID ‚ªŠ„‚è“–‚Ä‚ç‚ê‚È‚¢ê‡‚ÌƒG
-	ƒ‰[‚ğ EV_FULL ‚É•ÏXD
+	time_calls.c: ID$B<+F03dEv5!G=$G!$(BID $B$,3d$jEv$F$i$l$J$$>l9g$N%((B
+	$B%i!<$r(B EV_FULL $B$KJQ99!%(B
 
-	* include/itron_errno.h, libitis/strerror.c: EV_FULL ‚ğ’Ç‰ÁD
+	* include/itron_errno.h, libitis/strerror.c: EV_FULL $B$rDI2C!%(B
 
 Fri Nov 19 16:56:15 JST 1993	Hiroaki Takada
 
-	* kernel/ready_queue.h: CŒ¾Œê‚Å‹Lq‚µ‚½ _ffs ‚ÌƒoƒO‚ğC³D
+	* kernel/ready_queue.h: C$B8@8l$G5-=R$7$?(B _ffs $B$N%P%0$r=$@5!%(B
 
-	* kernel/mempool.c: sys_rel_blk ’†‚ÅCassert() “à‚É•›ì—p‚Ì‚ 
-	‚é®‚ª‘‚©‚ê‚Ä‚¢‚½D
+	* kernel/mempool.c: sys_rel_blk $BCf$G!$(Bassert() $BFb$KI{:nMQ$N$"(B
+	$B$k<0$,=q$+$l$F$$$?!%(B
 
-	* kernel/rendezvous.c: get_tskid_rdvno ‚ÅCtskid •”•ª‚ª•‰‚Ìê
-	‡‚Ìˆµ‚¢‚É–â‘è‚ª‚ ‚Á‚½‚Ì‚ğC³D
+	* kernel/rendezvous.c: get_tskid_rdvno $B$G!$(Btskid $BItJ,$,Ii$N>l(B
+	$B9g$N07$$$KLdBj$,$"$C$?$N$r=$@5!%(B
 
 Fri Nov 19 15:16:50 JST 1993	Hiroaki Takada
 
-	* kernel/misc_calls.c: CŒ¾Œê‚Å‹Lq‚µ‚½Š„‚İƒnƒ“ƒhƒ‰‚ÉCEITƒX
-	ƒ^ƒbƒNƒtƒŒ[ƒ€‚Ìæ“ª”Ô’n‚ğ“n‚·‚æ‚¤‚É‚·‚éD
+	* kernel/misc_calls.c: C$B8@8l$G5-=R$7$?3d9~$_%O%s%I%i$K!$(BEIT$B%9(B
+	$B%?%C%/%U%l!<%`$N@hF,HVCO$rEO$9$h$&$K$9$k!%(B
 
 Fri Nov 19 14:22:36 JST 1993	Hiroaki Takada
 
-	* kernel/time_call.c: ƒAƒ‰[ƒ€ƒnƒ“ƒhƒ‰‹N“®‚ÉC‰ğ•ú‚³‚ê‚½ƒAƒ‰[
-	ƒ€ƒnƒ“ƒhƒ‰ŠÇ—ƒuƒƒbƒN‚ğƒtƒŠ[ƒŠƒXƒg‚É‚Â‚È‚®‚æ‚¤‚ÉC³D
+	* kernel/time_call.c: $B%"%i!<%`%O%s%I%i5/F0;~$K!$2rJ|$5$l$?%"%i!<(B
+	$B%`%O%s%I%i4IM}%V%m%C%/$r%U%j!<%j%9%H$K$D$J$0$h$&$K=$@5!%(B
 
 Fri Nov 19 13:30:14 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, task.c, task_manage.c, debug_calls.c:
-	vset_reg ‚Æ vget_reg ‚ğ DORMANTó‘Ô‚Ìƒ^ƒXƒN‚É‘Î‚µ‚Ä‚à”­s‚Å‚«
-	‚é‚æ‚¤‚É‚·‚éD
+	vset_reg $B$H(B vget_reg $B$r(B DORMANT$B>uBV$N%?%9%/$KBP$7$F$bH/9T$G$-(B
+	$B$k$h$&$K$9$k!%(B
 
 Thu Nov 18 23:35:57 JST 1993	Hiroaki Takada
 
-	* kernel/debug_calls.c: (V‹K) ƒfƒoƒbƒOƒTƒ|[ƒg‹@”\ (vset_reg
-	‚Æ vget_reg) ‚ğƒTƒ|[ƒgD
+	* kernel/debug_calls.c: ($B?75,(B) $B%G%P%C%0%5%]!<%H5!G=(B (vset_reg
+	$B$H(B vget_reg) $B$r%5%]!<%H!%(B
 
 	* kernel/itis_kernel.h, include/itis_services.h, include/
-	itis_debug.h: itis_debug.h ‚Ìˆµ‚¢‚ğC³D
+	itis_debug.h: itis_debug.h $B$N07$$$r=$@5!%(B
 
-	* sample/Makefile.*: debug_calls.c ‚ğ’Ç‰ÁD
+	* sample/Makefile.*: debug_calls.c $B$rDI2C!%(B
 
-	* Ÿ‚Ì Release ‚ÅƒTƒ|[ƒg—\’è‚Ì‹@”\‚Ìì‚è‚İ‚ğŠ®—¹D
+	* $B<!$N(B Release $B$G%5%]!<%HM=Dj$N5!G=$N:n$j9~$_$r40N;!%(B
 
 Thu Nov 18 21:36:52 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, task.c, task_manage.c, semaphore.c,
 	eventflag.c, mailbox.c, messagebuf.c, rendezvous.c,
-	mempool.c, mempfix.c, time_calls.c: ID©“®Š„“–‹@”\‚ğƒTƒ|[ƒgD
+	mempool.c, mempfix.c, time_calls.c: ID$B<+F03dEv5!G=$r%5%]!<%H!%(B
 
 Thu Nov 18 21:30:53 JST 1993	Hiroaki Takada
 
-	* kernel/syscall.def: ID©“®Š„“–‹@”\CƒfƒoƒbƒOƒTƒ|[ƒg‹@”\‚Ì‚½
-	‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	* kernel/syscall.def: ID$B<+F03dEv5!G=!$%G%P%C%0%5%]!<%H5!G=$N$?(B
+	$B$a$NDj5A$rDI2C!%(B
 
-	* include/itis_debug.h: (V‹K) ƒfƒoƒbƒOƒTƒ|[ƒg‹@”\‚Ì‚½‚ß‚Ì’è
-	‹`ƒtƒ@ƒCƒ‹D
+	* include/itis_debug.h: ($B?75,(B) $B%G%P%C%0%5%]!<%H5!G=$N$?$a$NDj(B
+	$B5A%U%!%$%k!%(B
 
-	* kernel/itis_kernel.h: itis_debug.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚æ‚¤‚É
-	C³D
+	* kernel/itis_kernel.h: itis_debug.h $B$r%$%s%/%k!<%I$9$k$h$&$K(B
+	$B=$@5!%(B
 
 Thu Nov 18 17:57:03 JST 1993	Hiroaki Takada
 
-	* kernel/genconfig: ƒRƒ“ƒgƒ[ƒ‹ƒuƒƒbƒN‚ÌƒCƒ“ƒfƒbƒNƒX‚©‚ç ID 
-	‚ğ‹‚ß‚é ID_???(index) ƒ}ƒNƒ‚ğ¶¬‚·‚é‚æ‚¤‚É‚·‚éD
+	* kernel/genconfig: $B%3%s%H%m!<%k%V%m%C%/$N%$%s%G%C%/%9$+$i(B ID 
+	$B$r5a$a$k(B ID_???(index) $B%^%/%m$r@8@.$9$k$h$&$K$9$k!%(B
 
 Thu Nov 18 17:54:51 JST 1993	Hiroaki Takada
 
-	* sample/Makefile.*: FTASK_CFLAGS ‚©‚çC-I$(ITISINCDIR) ‚ğíœD
+	* sample/Makefile.*: FTASK_CFLAGS $B$+$i!$(B-I$(ITISINCDIR) $B$r:o=|!%(B
 
 Thu Nov 18 17:51:21 JST 1993	Hiroaki Takada
 
-	* h32/h32start.S: Gmicro/300 ‚Ìê‡‚ÉCƒLƒƒƒbƒVƒ…‚ğ‚·‚×‚Ä OFF 
-	‚É‚·‚é (IRC ‚Ìİ’è‚ª‚¤‚Ü‚­‚¢‚©‚È‚¢ê‡‚ª‚ ‚é)D
+	* h32/h32start.S: Gmicro/300 $B$N>l9g$K!$%-%c%C%7%e$r$9$Y$F(B OFF 
+	$B$K$9$k(B (IRC $B$N@_Dj$,$&$^$/$$$+$J$$>l9g$,$"$k(B)$B!%(B
 
 Sat Nov 13 01:35:34 JST 1993	Hiroaki Takada
 
 	* kernel/ientry.S, kernel/isysconf.h, kernel/misc_calls.c,
-	kernel/rendezvous.c, kernel/time_calls.c: ƒVƒXƒeƒ€ƒR[ƒ‹‚ğƒTƒ|[
-	ƒg‚µ‚È‚¢ê‡‚Ìƒ_ƒ~[’è‹`‚ğíœDˆê•”CƒVƒXƒeƒ€ƒR[ƒ‹–ˆ‚Éæ‚èŠO
-	‚µ‰Â”\‚É‚·‚éD
+	kernel/rendezvous.c, kernel/time_calls.c: $B%7%9%F%`%3!<%k$r%5%]!<(B
+	$B%H$7$J$$>l9g$N%@%_!<Dj5A$r:o=|!%0lIt!$%7%9%F%`%3!<%kKh$K<h$j30(B
+	$B$72DG=$K$9$k!%(B
 
 Sat Nov 13 01:04:46 JST 1993	Hiroaki Takada
 
-	* ƒAƒZƒ“ƒuƒ‰ƒ\[ƒX‚àƒvƒŠƒvƒƒZƒbƒT‚ğ’Ê‚·‚æ‚¤‚ÉC³D
+	* $B%"%;%s%V%i%=!<%9$b%W%j%W%m%;%C%5$rDL$9$h$&$K=$@5!%(B
 
-	* kernel/isysconf.h: ƒVƒXƒeƒ€ƒR[ƒ‹‚Ì\¬’è‹`ƒtƒ@ƒCƒ‹‚ğ’Ç‰ÁD
+	* kernel/isysconf.h: $B%7%9%F%`%3!<%k$N9=@.Dj5A%U%!%$%k$rDI2C!%(B
 
-	* sample/config.def: ‚±‚ÌŒã‚ÌŠg’£‚Ì‚½‚ß‚Ì’è‹`‚ğ’Ç‰ÁD
+	* sample/config.def: $B$3$N8e$N3HD%$N$?$a$NDj5A$rDI2C!%(B
 
-	* h32/h32serial.h: ‘O‰ñ‚ÌC³–Y‚ê‰ÓŠ‚ğC³D
+	* h32/h32serial.h: $BA02s$N=$@5K:$l2U=j$r=$@5!%(B
 
 Sat Nov 13 00:01:05 JST 1993	Hiroaki Takada
 
-	* kernel/rendezvous.c: ƒRƒƒ“ƒg‚ÌC³D
+	* kernel/rendezvous.c: $B%3%a%s%H$N=$@5!%(B
 
-	* kernel/time_calls.c: NUM_CYC, NUM_ALM ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡
-	‚Ìƒ_ƒ~[ŠÖ”‚Ì–¼Ì‚ğC³D
+	* kernel/time_calls.c: NUM_CYC, NUM_ALM $B$,Dj5A$5$l$F$$$J$$>l9g(B
+	$B$N%@%_!<4X?t$NL>>N$r=$@5!%(B
 
 Wed Nov 10 16:20:29 JST 1993	Hiroaki Takada
 
 	* include/itron.h, kernel/task.h, kernel/task.c, kernel/
-	misc_calls.c: ref_sys ‚ğ runtskid ‚Æ schedtskid ‚ğ•Ô‚·‚æ‚¤‚É
-	Šg’£D
+	misc_calls.c: ref_sys $B$r(B runtskid $B$H(B schedtskid $B$rJV$9$h$&$K(B
+	$B3HD%!%(B
 
 Wed Nov 10 12:26:23 JST 1993	Hiroaki Takada
 
 	* kernel/task.h, kernel/task.c, kernel/task_manage.c: task.c 
-	’†‚É SCHEDULED ‚Æ‚¢‚¤ƒ}ƒNƒ‚ğ“±“ü‚·‚é‚±‚Æ‚É‚æ‚Á‚ÄCTCB ‚Ì 
-	runflagƒtƒB[ƒ‹ƒh‚ğ”p~‚·‚éDƒ}ƒ‹ƒ`ƒvƒƒZƒbƒT‰»‚·‚é‚É‚ÍC•œ
-	Šˆ‚³‚¹‚éD
+	$BCf$K(B SCHEDULED $B$H$$$&%^%/%m$rF3F~$9$k$3$H$K$h$C$F!$(BTCB $B$N(B 
+	runflag$B%U%#!<%k%I$rGQ;_$9$k!%%^%k%A%W%m%;%C%52=$9$k;~$K$O!$I|(B
+	$B3h$5$;$k!%(B
 
 	* kernel/cpu_inline.h, kernel/dispatch.s, kernel/nd_dispach.s,
-	kernel/task.c: runtsk ‚Æ‚¢‚¤•Ï”–¼‚Í•´‚ç‚í‚µ‚¢‚½‚ßCschedtsk
-	(scheduled task ‚Ì—ª) ‚É•ÏX‚·‚éD
+	kernel/task.c: runtsk $B$H$$$&JQ?tL>$OJ6$i$o$7$$$?$a!$(Bschedtsk
+	(scheduled task $B$NN,(B) $B$KJQ99$9$k!%(B
 
 Wed Nov 10 11:56:03 JST 1993	Hiroaki Takada
 
-	* kernel/task.h, kernel/task_manage.c: ref_tsk ‚Å•Ô‚é tskstat
-	(ƒ^ƒXƒNó‘Ô) ‚Ì TTS_RUN ‚Ì‰ğß‚ğ•ÏX‚·‚éD]—ˆ‚ÍCruntsk ‚ª 
-	TTS_RUN ‚Å‚ ‚é‚Æ‚µ‚Ä‚¢‚½‚ªCctxtsk ‚ª TTS_RUN ‚Å‚ ‚é‚Æ‚·‚éD
+	* kernel/task.h, kernel/task_manage.c: ref_tsk $B$GJV$k(B tskstat
+	($B%?%9%/>uBV(B) $B$N(B TTS_RUN $B$N2r<a$rJQ99$9$k!%=>Mh$O!$(Bruntsk $B$,(B 
+	TTS_RUN $B$G$"$k$H$7$F$$$?$,!$(Bctxtsk $B$,(B TTS_RUN $B$G$"$k$H$9$k!%(B
 
 Tue Nov  9 23:08:01 JST 1993	Hiroaki Takada
 
 	* kernel/task_manage.c, kernel/dispatch.s, kernel/nd_dispatch.s:
-	ƒ^ƒXƒN“Æ—§•”‚©‚ç ter_tsk ‚ğŒÄ‚Ño‚·‚±‚Æ‚ğ‹Ö~‚µ‚½D‚±‚ê‚É‚æ‚èC
-	ctxtsk ‚ª NULL ‚É‚È‚é‚±‚Æ‚Í‚È‚­‚È‚éD
+	$B%?%9%/FHN)It$+$i(B ter_tsk $B$r8F$S=P$9$3$H$r6X;_$7$?!%$3$l$K$h$j!$(B
+	ctxtsk $B$,(B NULL $B$K$J$k$3$H$O$J$/$J$k!%(B
 
 	* kernel/common.h, kernel/genconfig, kernel/task.h, kernel/
-	misc_calls.c: ƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ªƒAƒNƒZƒX‚Å‚«‚é‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒb
-	ƒN‚ğŒø—¦‚æ‚­s‚¤‚½‚ß‚ÉCTCB ‚É sysmodeƒtƒB[ƒ‹ƒh‚ğ’Ç‰Á‚µ‚½D
-	sysmodeƒtƒB[ƒ‹ƒh‚ÍCqtsklev ƒtƒB[ƒ‹ƒh‚Ì–ğŠ„‚à‰Ê‚½‚·‚½‚ßC
-	qtsklevƒtƒB[ƒ‹ƒh‚Í•s—v‚É‚È‚Á‚½‚ªC€ƒ^ƒXƒN•”‚ğg‚¤ê‡‚É‚Í 
-	sysmodeƒtƒB[ƒ‹ƒh‚Ì‰Šú’l‚ğ“ü‚ê‚Ä‚¨‚­ isysmodeƒtƒB[ƒ‹ƒh‚ª•K
-	—v‚É‚È‚éD
+	misc_calls.c: $B%7%9%F%`%*%V%8%'%/%H$,%"%/%;%9$G$-$k$+$I$&$+$N%A%'%C(B
+	$B%/$r8zN($h$/9T$&$?$a$K!$(BTCB $B$K(B sysmode$B%U%#!<%k%I$rDI2C$7$?!%(B
+	sysmode$B%U%#!<%k%I$O!$(Bqtsklev $B%U%#!<%k%I$NLr3d$b2L$?$9$?$a!$(B
+	qtsklev$B%U%#!<%k%I$OITMW$K$J$C$?$,!$=`%?%9%/It$r;H$&>l9g$K$O(B 
+	sysmode$B%U%#!<%k%I$N=i4|CM$rF~$l$F$*$/(B isysmode$B%U%#!<%k%I$,I,(B
+	$BMW$K$J$k!%(B
 
-	* kernel/ientry.s, kernel/misc_calls.c: ƒ^ƒXƒN“Æ—§•”‚©‚ç 
-	chg_ims ‚ğŒÄ‚Ño‚µ‚½ê‡‚ÉCIMASK ‚Æ‚µ‚Ä 7 ‚æ‚è‘å‚«‚¢’l‚ğw’è
-	‚Å‚«‚È‚¢‚æ‚¤‚ÉC³D
+	* kernel/ientry.s, kernel/misc_calls.c: $B%?%9%/FHN)It$+$i(B 
+	chg_ims $B$r8F$S=P$7$?>l9g$K!$(BIMASK $B$H$7$F(B 7 $B$h$jBg$-$$CM$r;XDj(B
+	$B$G$-$J$$$h$&$K=$@5!%(B
 
 Tue Nov  9 22:19:25 JST 1993	Hiroaki Takada
 
-	* kernel/mailbox.c: i_trcv_msg ‚ÅCƒGƒ‰[ƒ`ƒFƒbƒN‚ª•s\•ª‚¾‚Á
-	‚½‚Ì‚ğC³D
+	* kernel/mailbox.c: i_trcv_msg $B$G!$%(%i!<%A%'%C%/$,IT==J,$@$C(B
+	$B$?$N$r=$@5!%(B
 
 Tue Nov  9 17:29:40 JST 1993	Hiroaki Takada
 
 	* systask/serial.c, h32/h32serial.h, tvme/tvmeserial.h,
-	mcube/mcubeserial.h: ƒ^ƒXƒN“Æ—§•”‚©‚ç serial_ioctl ‚ğŒÄ‚Ño‚·
-	‚±‚Æ‚ğ‹Ö~‚µCƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒXŠ„‚İƒnƒ“ƒhƒ‰‚Ì’†‚ÅC‘¼‚Ì
-	Š„‚İ‚ğ‹Ö~‚·‚é‚Ì‚ğ‚â‚ß‚éD‚±‚ê‚ÍCƒVƒŠƒAƒ‹I/O ‚ğ‘€ì‚·‚éŠg’£
-	SVC‚Í‚¢‚¸‚ê‚àƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Ô‚±‚Æ‚ª‚Å‚«‚È‚¢‚½‚ßCƒVƒŠƒAƒ‹
-	I/O ‚Ì‹£‡‚ª‹N‚±‚ç‚È‚¢‚½‚ß‚Å‚ ‚éD
+	mcube/mcubeserial.h: $B%?%9%/FHN)It$+$i(B serial_ioctl $B$r8F$S=P$9(B
+	$B$3$H$r6X;_$7!$%7%j%"%k%$%s%?%U%'!<%93d9~$_%O%s%I%i$NCf$G!$B>$N(B
+	$B3d9~$_$r6X;_$9$k$N$r$d$a$k!%$3$l$O!$%7%j%"%k(BI/O $B$rA`:n$9$k3HD%(B
+	SVC$B$O$$$:$l$b%?%9%/FHN)It$+$i8F$V$3$H$,$G$-$J$$$?$a!$%7%j%"%k(B
+	I/O $B$N6%9g$,5/$3$i$J$$$?$a$G$"$k!%(B
 
 Mon Nov  8 12:30:00 JST 1993	Hiroaki Takada
 
-	* ChangeLog: ‚±‚Ì“_‚ÅCpatchlevel=1 ‚Æ‚µ‚ÄƒŠƒŠ[ƒX‚·‚é (TAG
-	= "ItIs3-1_1_1")D
+	* ChangeLog: $B$3$N;~E@$G!$(Bpatchlevel=1 $B$H$7$F%j%j!<%9$9$k(B (TAG
+	= "ItIs3-1_1_1")$B!%(B
 
-	* kernel/task.c: change_running_task ‚ÅCruntsk ‚ª NULL ‚Ìê‡
-	‚ğl—¶‚·‚éD‚»‚Ì‘¼Cruntsk ‰ñ‚è‚ğ®—‚·‚éD
+	* kernel/task.c: change_running_task $B$G!$(Bruntsk $B$,(B NULL $B$N>l9g(B
+	$B$r9MN8$9$k!%$=$NB>!$(Bruntsk $B2s$j$r@0M}$9$k!%(B
 
 Sat Nov  6 00:40:46 JST 1993	Hiroaki Takada
 
-	* ChangeLog, MANIFEST, doc/USER, kernel/patchlevel.h: ‚±‚Ì“_
-	‚Ü‚Å‚ÌC³‚ğ‚Ü‚Æ‚ß‚éD
+	* ChangeLog, MANIFEST, doc/USER, kernel/patchlevel.h: $B$3$N;~E@(B
+	$B$^$G$N=$@5$r$^$H$a$k!%(B
 
-	* kernel/task.c: rotate_ready_queue ‚ÅCruntsk ‚ª NULL ‚Ìê‡
-	‚ğl—¶‚·‚éD
+	* kernel/task.c: rotate_ready_queue $B$G!$(Bruntsk $B$,(B NULL $B$N>l9g(B
+	$B$r9MN8$9$k!%(B
 
-	* libitis/syslog.c: syslog ŠÖ”‚ª priority ‚ğƒ`ƒFƒbƒN‚·‚é‚æ‚¤
-	‚ÉC³D
+	* libitis/syslog.c: syslog $B4X?t$,(B priority $B$r%A%'%C%/$9$k$h$&(B
+	$B$K=$@5!%(B
 
-	* mcube/mcubeinit.c: ƒJ[ƒlƒ‹‹N“®‚ÉCABORTƒXƒCƒbƒ`ˆÈŠO‚Ì‚·‚×
-	‚Ä‚ÌŠ„‚İ‚ğƒ}ƒXƒN‚·‚é‚æ‚¤‚ÉC³D
+	* mcube/mcubeinit.c: $B%+!<%M%k5/F0;~$K!$(BABORT$B%9%$%C%A0J30$N$9$Y(B
+	$B$F$N3d9~$_$r%^%9%/$9$k$h$&$K=$@5!%(B
 
 Fri Nov  5 19:30:06 JST 1993	Hiroaki Takada
 
-	* kernel/task.c: make_ready ‚Ì“üŒû‚ÅCassert(tcb->state !=
-	TS_READY) ‚µ‚Ä‚¢‚½‚Ì‚ğíœ‚·‚éDchange_task_priority ‚Ì’†‚©‚ç
-	ŒÄ‚Î‚ê‚½ê‡‚É‚ÍC‚±‚Ì assertion ‚Í¬—§‚µ‚È‚¢D
+	* kernel/task.c: make_ready $B$NF~8}$G!$(Bassert(tcb->state !=
+	TS_READY) $B$7$F$$$?$N$r:o=|$9$k!%(Bchange_task_priority $B$NCf$+$i(B
+	$B8F$P$l$?>l9g$K$O!$$3$N(B assertion $B$O@.N)$7$J$$!%(B
 
 Thu Nov  4 17:30:33 JST 1993	Hiroaki Takada
 
-	* kernel/task_manage.c: cre_tsk ‚Å pk_ctsk->stksz ‚ª 0 ‚Ìê‡
-	‚ğ‹–‚·D‚±‚Ìê‡Cƒ†[ƒUƒXƒ^ƒbƒN‚ÍŠm•Û‚³‚ê‚È‚¢D
+	* kernel/task_manage.c: cre_tsk $B$G(B pk_ctsk->stksz $B$,(B 0 $B$N>l9g(B
+	$B$r5v$9!%$3$N>l9g!$%f!<%6%9%?%C%/$O3NJ]$5$l$J$$!%(B
 
 Thu Nov  4 17:22:23 JST 1993	Hiroaki Takada
 
-	* include/itis_resources.h, testtask/*.c: ƒ†[ƒUƒXƒ^ƒbƒNƒTƒCƒY
-	‚Ì•W€’l‚ğ 4096 ‚©‚ç 8192 ‚É•ÏX‚·‚éD‚±‚ê‚ÍCGNU C ƒ‰ƒCƒuƒ‰ƒŠ
-	‚Ì vsprintf ‚ªƒXƒ^ƒbƒNƒGƒŠƒA‚ğ­‚È‚­‚Æ‚à 3KB g‚¢ (vfprinf ‚Å 
-	2KBCprintf_unknown ‚Å 1KB g‚¤D‚»‚ê‚ç‚©‚çŒÄ‚Î‚ê‚éŠÖ”‚Ü‚Å‚Í
-	’²‚×‚Ä‚¢‚È‚¢)C‚±‚ê‚É syslog ‚ªg‚¤ 1KB ‚ğ‰Á‚¦‚é‚Æ 4KB ‚Å‚Í•s
-	‘«‚·‚é‚½‚ß‚Å‚ ‚éD
+	* include/itis_resources.h, testtask/*.c: $B%f!<%6%9%?%C%/%5%$%:(B
+	$B$NI8=`CM$r(B 4096 $B$+$i(B 8192 $B$KJQ99$9$k!%$3$l$O!$(BGNU C $B%i%$%V%i%j(B
+	$B$N(B vsprintf $B$,%9%?%C%/%(%j%"$r>/$J$/$H$b(B 3KB $B;H$$(B (vfprinf $B$G(B 
+	2KB$B!$(Bprintf_unknown $B$G(B 1KB $B;H$&!%$=$l$i$+$i8F$P$l$k4X?t$^$G$O(B
+	$BD4$Y$F$$$J$$(B)$B!$$3$l$K(B syslog $B$,;H$&(B 1KB $B$r2C$($k$H(B 4KB $B$G$OIT(B
+	$BB-$9$k$?$a$G$"$k!%(B
 	
 Tue Nov  2 16:17:20 JST 1993	Hiroaki Takada
 
-	* kernel/misc_calls.c: i_get_ver ‚ÅCprver (»•iƒo[ƒWƒ‡ƒ“) ‚É
-	“ü‚ê‚é’l‚ğC³‚·‚é (ƒVƒtƒg‚·‚é”‚ªŠÔˆá‚Á‚Ä‚¢‚½)D
+	* kernel/misc_calls.c: i_get_ver $B$G!$(Bprver ($B@=IJ%P!<%8%g%s(B) $B$K(B
+	$BF~$l$kCM$r=$@5$9$k(B ($B%7%U%H$9$k?t$,4V0c$C$F$$$?(B)$B!%(B
 
 Tue Nov  2 00:55:05 JST 1993	Hiroaki Takada
 
-	* kernel/vsprintf.c: long long Œ^‚Ì‚½‚ß‚Ìƒ‚ƒfƒBƒtƒ@ƒCƒ„‚ğCGNU
-	C ƒ‰ƒCƒuƒ‰ƒŠ‚É‚ ‚í‚¹‚é‚½‚ß‚É 'L' ‚É•ÏXD
+	* kernel/vsprintf.c: long long $B7?$N$?$a$N%b%G%#%U%!%$%d$r!$(BGNU
+	C $B%i%$%V%i%j$K$"$o$;$k$?$a$K(B 'L' $B$KJQ99!%(B
 
 Mon Nov  1 23:48:51 JST 1993	Hiroaki Takada
 
-	* GNU C ƒ‰ƒCƒuƒ‰ƒŠ (GLIBC) ‚ğg‚¤‚æ‚¤‚É•ÏXD
+	* GNU C $B%i%$%V%i%j(B (GLIBC) $B$r;H$&$h$&$KJQ99!%(B
 
 	* Makefile.config, h32/h32start.s, tvme/tvmestart.s,
-	mcube/mcubestart.s: GNU C ƒ‰ƒCƒuƒ‰ƒŠ‚Ì‰Šú‰»ƒR[ƒh‚ğŒÄ‚Ô‚æ‚¤‚É
-	C³D
+	mcube/mcubestart.s: GNU C $B%i%$%V%i%j$N=i4|2=%3!<%I$r8F$V$h$&$K(B
+	$B=$@5!%(B
 
-	* systask/sysio.c: ƒRƒ“ƒ\[ƒ‹“üo—ÍŠÖ”‚Ì–¼‘O‚ğ GNU C ƒ‰ƒCƒuƒ‰
-	ƒŠ‚É‚ ‚í‚¹‚ÄC³D
+	* systask/sysio.c: $B%3%s%=!<%kF~=PNO4X?t$NL>A0$r(B GNU C $B%i%$%V%i(B
+	$B%j$K$"$o$;$F=$@5!%(B
 
-	* startup/Makefile, startup/startup.s, startup/start.S: ƒXƒ^[
-	ƒgƒAƒbƒvƒ‚ƒWƒ…[ƒ‹‚ğC]—ˆ‚Ìƒ‰ƒCƒuƒ‰ƒŠ—p‚Ì‚à‚Ì‚©‚ç GNU C ƒ‰ƒC
-	ƒuƒ‰ƒŠ—p‚Ì‚à‚Ì‚ÉŒğŠ·D
+	* startup/Makefile, startup/startup.s, startup/start.S: $B%9%?!<(B
+	$B%H%"%C%W%b%8%e!<%k$r!$=>Mh$N%i%$%V%i%jMQ$N$b$N$+$i(B GNU C $B%i%$(B
+	$B%V%i%jMQ$N$b$N$K8r49!%(B
 
 Mon Nov  1 23:10:39 JST 1993	Hiroaki Takada
 
-	* ‚·‚×‚Ä‚Ìƒ^[ƒQƒbƒg‚ÅCxscheme ‚Å•‚“®­”“_”‚ğƒTƒ|[ƒg‚·‚é‚Ì
-	‚ğ‚â‚ß‚éD‚Ü‚½Cxscheme “à‚ÌŒÃ‚¢ ItIs ‚Ì‚½‚ß‚ÌƒR[ƒh‚ğ–•ÁD
+	* $B$9$Y$F$N%?!<%2%C%H$G!$(Bxscheme $B$GIbF0>/?tE@?t$r%5%]!<%H$9$k$N(B
+	$B$r$d$a$k!%$^$?!$(Bxscheme $BFb$N8E$$(B ItIs $B$N$?$a$N%3!<%I$rKu>C!%(B
 
-	* xscheme/tronstuff.c ‚ğ xscheme/itisstuff.c ‚ÉƒŠƒl[ƒ€D
+	* xscheme/tronstuff.c $B$r(B xscheme/itisstuff.c $B$K%j%M!<%`!%(B
 
-	* sample/Makefile.*, libitis/Makefile: ã‚Ì•ÏX‚É”º‚¤C³D‚Ü
-	‚½C‚±‚ê‚É”º‚Á‚½Cƒ‰ƒCƒuƒ‰ƒŠ‚ğì‚éÛ‚É‚à -msoft-float ‚·‚é‚±‚Æ
-	‚É‚µ‚ÄC2í—Ş‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ğ—pˆÓ‚·‚é‚Ì‚ğ‚â‚ß‚éD
+	* sample/Makefile.*, libitis/Makefile: $B>e$NJQ99$KH<$&=$@5!%$^(B
+	$B$?!$$3$l$KH<$C$?!$%i%$%V%i%j$r:n$k:]$K$b(B -msoft-float $B$9$k$3$H(B
+	$B$K$7$F!$(B2$B<oN`$N%i%$%V%i%j$rMQ0U$9$k$N$r$d$a$k!%(B
 
 Mon Nov  1 15:00:26 JST 1993	Hiroaki Takada
 
-	* include/sys/ioctl.h ‚ğ include/itis_ioctl.h ‚ÉˆÚ“®/ƒŠƒl[ƒ€D
+	* include/sys/ioctl.h $B$r(B include/itis_ioctl.h $B$K0\F0(B/$B%j%M!<%`!%(B
 
 Wed Oct 20 18:05:28 JST 1993	Hiroaki Takada
 
-	* Release1.1 (patchlevel=0) ‚ğƒtƒBƒbƒNƒX (TAG = "ItIs3-1_1")D
+	* Release1.1 (patchlevel=0) $B$r%U%#%C%/%9(B (TAG = "ItIs3-1_1")$B!%(B

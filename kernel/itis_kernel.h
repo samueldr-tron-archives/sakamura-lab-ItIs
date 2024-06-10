@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,18 +30,18 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: itis_kernel.h,v 1.12 1996/02/17 09:33:07 hiro Exp $
+ *  @(#) $Id: itis_kernel.h,v 1.13 1998/01/30 09:52:32 hiro Exp $
  */
 
 #ifndef _ITIS_KERNEL_
 #define _ITIS_KERNEL_
 
 /*
- *  ItIsÉJÅ[ÉlÉã ïWèÄÉCÉìÉNÉãÅ[ÉhÉtÉ@ÉCÉã
+ *  ItIs$B%+!<%M%k(B $BI8=`%$%s%/%k!<%I%U%!%$%k(B
  */
 
 /*
- *  ItIs ïWèÄÉCÉìÉNÉãÅ[ÉhÉtÉ@ÉCÉã
+ *  ItIs $BI8=`%$%s%/%k!<%I%U%!%$%k(B
  */
 #include <itron.h>
 #include <itron_errno.h>
@@ -49,7 +51,7 @@
 #include <itis_syslog.h>
 
 /*
- *  ÉJÅ[ÉlÉãóp assertÉ}ÉNÉçÇÃíËã`
+ *  $B%+!<%M%kMQ(B assert$B%^%/%m$NDj5A(B
  */
 #ifndef NDEBUG
 
@@ -65,7 +67,7 @@ extern void	i_assert_fail(const char *expr, const char *file,
 #endif /* NDEBUG */
 
 /*
- *  ÉJÅ[ÉlÉãç\ê¨ê›íËÉtÉ@ÉCÉã
+ *  $B%+!<%M%k9=@.@_Dj%U%!%$%k(B
  */
 #include "config.h"
 #include "cpu_conf.h"
@@ -73,17 +75,17 @@ extern void	i_assert_fail(const char *expr, const char *file,
 #include "isysconf.h"
 
 /*
- *  CPUàÀë∂ÉCÉìÉNÉãÅ[ÉhÉtÉ@ÉCÉã
+ *  CPU$B0MB8%$%s%/%k!<%I%U%!%$%k(B
  */
 #include "cpu_status.h"
 
 /*
- *  ÉVÉXÉeÉÄÉRÅ[ÉãÉvÉçÉgÉ^ÉCÉvêÈåæ
+ *  $B%7%9%F%`%3!<%k%W%m%H%?%$%W@k8@(B
  */
 #include "isyscall.h"
 
 /*
- *  ÉVÉXÉeÉÄèâä˙âªópä÷êî (äeÉÇÉWÉÖÅ[Éã)
+ *  $B%7%9%F%`=i4|2=MQ4X?t(B ($B3F%b%8%e!<%k(B)
  */
 extern void	task_initialize(void);
 extern void	semaphore_initialize(void);
@@ -99,36 +101,36 @@ extern void	alarmhandler_initialize(void);
 extern void	extended_svc_initialize(void);
 
 /*
- *  ÉVÉXÉeÉÄèIóπópä÷êî (startup.c)
+ *  $B%7%9%F%`=*N;MQ4X?t(B (startup.c)
  */
 extern void	itis_exit(void);
 
 /*
- *  ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÇ©ÇÁÇÃÉÅÉÇÉäÉuÉçÉbÉNÇÃéÊìæÇ∆ï‘ãp (mempool.c)
+ *  $B%7%9%F%`%a%b%j%W!<%k$+$i$N%a%b%j%V%m%C%/$N<hF@$HJV5Q(B (mempool.c)
  *
- *  ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÇÕÅCID Ç™ TMPL_OS ÇÃÉÅÉÇÉäÉvÅ[ÉãÇ∆ÇµÇƒÉAÉNÉZÉX
- *  Ç∑ÇÈÇ±Ç∆Ç‡Ç≈Ç´ÇÈÇ™ÅCÉJÅ[ÉlÉãì‡Ç©ÇÁópÇ¢ÇÈÇΩÇﬂÇÃÉCÉìÉ^ÉtÉFÅ[ÉXÇópà”
- *  ÇµÇƒÇ¢ÇÈÅDsys_get_blk ÇÕÅCÉÅÉÇÉäÉuÉçÉbÉNÇ™éÊÇÍÇ»Ç©Ç¡ÇΩèÍçáÇ…ÅCë“Çø
- *  èÛë‘Ç…ÇÕì¸ÇÁÇ∏Ç…ÅCë¶ç¿Ç… NULL Çï‘Ç∑ÅD
+ *  $B%7%9%F%`%a%b%j%W!<%k$O!$(BID $B$,(B TMPL_OS $B$N%a%b%j%W!<%k$H$7$F%"%/%;%9(B
+ *  $B$9$k$3$H$b$G$-$k$,!$%+!<%M%kFb$+$iMQ$$$k$?$a$N%$%s%?%U%'!<%9$rMQ0U(B
+ *  $B$7$F$$$k!%(Bsys_get_blk $B$O!$%a%b%j%V%m%C%/$,<h$l$J$+$C$?>l9g$K!$BT$A(B
+ *  $B>uBV$K$OF~$i$:$K!$B(:B$K(B NULL $B$rJV$9!%(B
  */
 extern ER	sys_cre_mpl(void);
 extern VP	sys_get_blk(INT size);
 extern void	sys_rel_blk(VP blk);
 
 /*
- *  ÉJÅ[ÉlÉãópÉVÉXÉeÉÄÉçÉOãLò^ÉâÉCÉuÉâÉä (isyslog.c)
+ *  $B%+!<%M%kMQ%7%9%F%`%m%05-O?%i%$%V%i%j(B (isyslog.c)
  */
 extern void	i_syslog(int class, const char *format, ...);
 
 /*
- *  É^Å[ÉQÉbÉgÉVÉXÉeÉÄàÀë∂ÉãÅ[É`Éì (sys_util.c)
+ *  $B%?!<%2%C%H%7%9%F%`0MB8%k!<%A%s(B (sys_util.c)
  */
 extern void	sys_initialize(void);
 extern void	sys_exit(void);
 extern int	sys_write(const char *buf, unsigned int len);
 
 /*
- *  ÇªÇÃëºÇÃíËã`
+ *  $B$=$NB>$NDj5A(B
  */
 #define	offsetof(structure, field) ((INT) &(((structure *) 0)->field))
 

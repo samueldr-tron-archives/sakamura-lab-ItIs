@@ -1,8 +1,10 @@
 #
 # 
-# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 	ItIs - An ITRON Implementation for Research and Education
 # 
-# Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+# Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+# Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+# 				Toyohashi Univ. of Technology, JAPAN
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. Neither the name of the University nor the names of the laboratory
+# 3. Neither the name of the universities nor the names of the laboratories
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 # 
 # THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
 # WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 # DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 # GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,46 +30,46 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-#  @(#) $Id: Makefile.sunos4,v 1.9 1997/01/13 03:53:47 hiro Exp $
+#  @(#) $Id: Makefile.sunos4,v 1.13 1998/07/06 14:17:08 hiro Exp $
 # 
 
 #
-#  É^Å[ÉQÉbÉgíËã` (CPUñº, ÉVÉXÉeÉÄñº)
+#  $B%?!<%2%C%HDj5A(B (CPU$BL>(B, $B%7%9%F%`L>(B)
 #
 CPU = bsd
 SYS = sunos4
 
 #
-#  ã§í íËã`
+#  $B6&DLDj5A(B
 #
 include ../$(CPU)/Makefile.config
 
 #
-#  ÉRÉìÉpÉCÉâÉIÉvÉVÉáÉìÇÃíËã`
+#  $B%3%s%Q%$%i%*%W%7%g%s$NDj5A(B
 #
 INCLUDES = -I. -I../include -I../include/$(CPU) -I../$(CPU) -I../$(CPU)/$(SYS)
 CFLAGS := -DITIS -DLINK_KERNEL $(INCLUDES) $(CFLAGS)
 LDFLAGS = -static
 
 #
-#  ÉfÅ[É^ÉZÉNÉVÉáÉìÇÃèâä˙âªèàóùÇçsÇ§Ç©Ç«Ç§Ç©ÇÃíËã`
+#  $B%G!<%?%;%/%7%g%s$N=i4|2==hM}$r9T$&$+$I$&$+$NDj5A(B
 #
 #IDATA = true
 IDATA = false
 
 #
-#  èâä˙ãNìÆÉ^ÉXÉNÇÃíËã`
+#  $B=i4|5/F0%?%9%/$NDj5A(B
 #
 FIRST_TASK = sample1
 
 ifeq ($(FIRST_TASK),scheme)
-#    xscheme ÇÕÇªÇÃÇ‹Ç‹Ç≈ÇÕìÆÇ©Ç»Ç¢
+#    xscheme $B$O$=$N$^$^$G$OF0$+$J$$(B
 #    FTASK_DIR = ../xscheme:../systask
 #    FTASK_ASMOBJS =
 #    FTASK_COBJS = xscheme.o xsdmem.o xsimage.o xsio.o xsobj.o \
 #		  xsprint.o xsread.o xssym.o xsfun1.o xsfun2.o \
 #		  xsmath.o xsftab.o xsinit.o xscom.o xsint.o \
-#		  itisstuff.o itis3call.o sysio.o
+#		  itisstuff.o itis3call.o
 #    FTASK_CFLAGS = -DNO_FLOAT
 #    FTASK_LIBS =
 else
@@ -79,17 +81,17 @@ else
 endif
 
 #
-#  ÉVÉXÉeÉÄÉ^ÉXÉN (ÉVÉXÉeÉÄÉ^ÉXÉNópÉâÉCÉuÉâÉäÇä‹Çﬁ) ÇÃíËã`
+#  $B%7%9%F%`%?%9%/(B ($B%7%9%F%`%?%9%/MQ%i%$%V%i%j$r4^$`(B) $B$NDj5A(B
 #
 STASK_DIR = ../systask:../libitis
 STASK_ASMOBJS =
 STASK_COBJS = inittask.o bsd_serial.o logtask.o bsd_sigio.o \
 	      itis_perror.o itis_panic.o perror.o panic.o \
 	      strerror.o syslog.o sysstat.o
-STASK_CFLAGS = -msoft-float -I../systask
+STASK_CFLAGS = -I../systask
 
 #
-#  ÉJÅ[ÉlÉãä÷åWÇÃíËã`
+#  $B%+!<%M%k4X78$NDj5A(B
 #
 KERNEL = ../kernel
 KERNEL_DIR = ../$(CPU):../$(CPU)/$(SYS):$(KERNEL)
@@ -100,14 +102,14 @@ KERNEL_COBJS = startup.o cpu_util.o sys_util.o \
 	       semaphore.o eventflag.o mailbox.o messagebuf.o rendezvous.o \
 	       mempool.o mempfix.o time_calls.o \
 	       debug_calls.o prisem.o taskmbox.o
-KERNEL_CFLAGS = -msoft-float -I$(KERNEL)
+KERNEL_CFLAGS = -I$(KERNEL)
 
 #
-#  É^Å[ÉQÉbÉgÉtÉ@ÉCÉã
+#  $B%?!<%2%C%H%U%!%$%k(B
 #
 all: itis
 
-# à»â∫ÇÕï“èWÇµÇ»Ç¢Ç±Ç∆
+# $B0J2<$OJT=8$7$J$$$3$H(B
 
 SRCDIR = $(KERNEL_DIR):$(STASK_DIR):$(FTASK_DIR)
 
@@ -140,9 +142,9 @@ itis.bin: itis
 itis: Makefile $(OBJS) version.o
 	$(CC) $(LDFLAGS) -o itis version.o $(OBJS) $(LIBS)
 ifeq ($(IDATA),true)
-	extidata itis
+	../utils/extidata itis
 	$(CC) $(LDFLAGS) -o itis version.o $(OBJS) itis-idata.s $(LIBS)
-	extidata itis
+	../utils/extidata itis
 	$(CC) $(LDFLAGS) -o itis version.o $(OBJS) itis-idata.s $(LIBS)
 endif
 
@@ -185,7 +187,7 @@ depend: config.h
 		$(FTASK_ASMOBJS:.o=.S) $(FTASK_COBJS:.o=.c) >> Makefile
 
 #
-#  ÉRÉìÉpÉCÉãÉãÅ[ÉãÇÃíËã`
+#  $B%3%s%Q%$%k%k!<%k$NDj5A(B
 #
 $(KERNEL_ALL_COBJS): %.o: %.c
 	$(CC) -c $(KERNEL_CFLAGS) $(CFLAGS) $<
@@ -219,7 +221,7 @@ $(FTASK_ASMOBJS): %.o: %.S
 endif
 
 #
-#  ÉfÉtÉHÉãÉgÉRÉìÉpÉCÉãÉãÅ[ÉãÇè„èëÇ´
+#  $B%G%U%)%k%H%3%s%Q%$%k%k!<%k$r>e=q$-(B
 #
 %.o: %.c
 	@echo "*** Default compile rules should not be used."

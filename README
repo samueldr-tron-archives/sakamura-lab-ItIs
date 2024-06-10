@@ -1,108 +1,92 @@
 
-	ItIs - ITRON Implementation by Sakamura Lab
-	(Phase3 Release1.3ƒÀ)
+	ItIs - An ITRON Implementation for Research and Education
+	(Phase4 Release1.4$B&B(B)
 
-ItIs (ITRON Implementation by Sakamura Lab) ‚ÍC“Œ‹ž‘åŠw—Šw•”â‘ºŒ¤‹†
-Žº‚ÅŒ¤‹†E‹³ˆç—p‚ÉŠJ”­‚³‚ê‚½CƒÊITRON3.0Žd—l‚É€‹’‚µ‚½ƒŠƒAƒ‹ƒ^ƒCƒ€ƒJ[
-ƒlƒ‹‚Å‚·DŒ»ƒo[ƒWƒ‡ƒ“‚ÅCƒŒƒxƒ‹E ‚Ü‚Å‚Ì‚·‚×‚Ä‚Ì‹@”\ (Ú‘±‹@”\‚ðœ‚­) 
-‚ðŽÀŒ»‚µ‚Ä‚¨‚èC‚¢‚­‚Â‚©‚Ì“ÆŽ©‚ÌŠg’£‹@”\‚àŽ‚Á‚Ä‚¢‚Ü‚·D
+ItIs$B!J(BITRON Implementation by Sakamura Lab$B!K$O!$El5~Bg3X(B $B:dB<8&5f<<$G(B
+$B8&5f!&650iMQ$K3+H/$,;O$a$i$l!$K-665;=Q2J3XBg3X(B $BAH$_9~$_%j%"%k%?%$%`%7(B
+$B%9%F%`8&5f<<$G3+H/$,B3$1$i$l$F$$$k!$&L(BITRON3.0$B;EMM$K=`5r$7$?%j%"%k%?%$(B
+$B%`%+!<%M%k$G$9!%8=%P!<%8%g%s$G!$%l%Y%k(BE $B$^$G$N$9$Y$F$N5!G=!J@\B35!G=$r(B
+$B=|$/!K$r<B8=$7$F$*$j!$$$$/$D$+$NFH<+$N3HD%5!G=$b;}$C$F$$$^$9!%:#8e=y!9(B
+$B$K!$&L(BITRON4.0$B;EMM=`5r$K=q$-D>$7$F$$$/M=Dj$G$9!%(B
 
-ƒ^[ƒQƒbƒgCPU ‚Æ‚µ‚ÄCŒ»Žž“_‚Å‚ÍCTRONŽd—lƒ`ƒbƒv (Gmicro/200 ‚Æ 
-Gmicro/300 ‚Å“®ìŠm”F) ‚Ì‚Ý‚ðƒTƒ|[ƒg‚µ‚Ä‚¢‚Ü‚·DCPUˆË‘¶‚Ì•”•ª‚ð•ª—£‚·
-‚é‚È‚ÇC‘¼‚Ì CPU ‚Ö‚ÌˆÚA‚É‚Â‚¢‚Ä‚àl—¶‚µ‚Ä‚¢‚Ü‚·‚ªC‚Ç‚Ì’ö“x‚ÌŽèŠÔ‚ª
-‚©‚©‚é‚©‚ÍˆÚAæ‚Ì CPU ‚ÌƒA[ƒLƒeƒNƒ`ƒƒ‚É‘å‚«‚­ˆË‘¶‚µ‚Ü‚·D‚Ü‚½C‹@”\
-‚ÉŒÀ’è‚Í‚ ‚è‚Ü‚·‚ªCBSD UNIX (Œ»ƒo[ƒWƒ‡ƒ“‚Å‚ÍCSunOS4.X ‚Æ FreeBSD ‚Ì
-‚ÝƒTƒ|[ƒg) ã‚Å“®ì‚·‚éƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠÂ‹«‚ð—pˆÓ‚µ‚Ä‚¢‚Ü‚·D
+$B%?!<%2%C%H(BCPU $B$H$7$F!$8=;~E@$G$O!$(B68040 $B$H(B TRON$B;EMM%A%C%W!J(BGmicro/200 
+$B$H(B Gmicro/300 $B$GF0:n3NG'!K$r%5%]!<%H$7$F$$$^$9!%(BCPU$B0MB8$NItJ,$rJ,N%$9(B
+$B$k$J$I!$B>$N(B CPU $B$X$N0\?"$K$D$$$F$b9MN8$7$F$$$^$9$,!$$I$NDxEY$N<j4V$,(B
+$B$+$+$k$+$O0\?"@h$N(B CPU $B$N%"!<%-%F%/%A%c$KBg$-$/0MB8$7$^$9!%$^$?!$5!G=(B
+$B$K8BDj$O$"$j$^$9$,!$(BBSD UNIX$B!J8=%P!<%8%g%s$G$O!$(BSunOS4.X $B$H(B FreeBSD $B$N(B
+$B$_%5%]!<%H!K>e$GF0:n$9$k%7%_%e%l!<%7%g%s4D6-$rMQ0U$7$F$$$^$9!%(B
 
-ItIs ‚ÍCƒtƒŠ[ƒ\ƒtƒgƒEƒFƒA‚Å‚ ‚èC”z•zŽ©—R‚Å‚·DItIs ‚Ì”z•tƒLƒbƒg‚ÌÅ
-V”Å‚ÍCˆÈ‰º‚ÌƒfƒBƒŒƒNƒgƒŠ‚©‚ç anonymous ftp ‚ÅŽæ“¾‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·D
+ItIs $B$O!$%U%j!<%=%U%H%&%'%"$G$"$j!$G[I[<+M3$G$9!%(BItIs $B$N%[!<%`%Z!<%8$O!$(B
+$B0J2<$N(B URL $B$K$"$j$^$9!%(BItIs $B$NG[IU%-%C%H$N:G?7HG$O!$$3$N%Z!<%8$+$iF~<j(B
+$B$9$k$3$H$,$G$-$^$9!%(B
 
-	ftp://tron.um.u-tokyo.ac.jp/TRON/ItIs/
+	http://www.ertl.ics.tut.ac.jp/ItIs/
 
-‚±‚ÌƒfƒBƒŒƒNƒgƒŠ‚É‚ÍC•W€”z•tƒLƒbƒg (ItIs3-1.3.?.tar.Z) ‚Æ DOS—p”z•t
-ƒLƒbƒg (ItIs3-1.3.?.lzh) ‚ª‚ ‚è‚Ü‚·D—¼ŽÒ‚Ì“à—e‚Í“¯‚¶‚Å‚·D
+$B$3$N%Z!<%8$+$i$O!$I8=`G[IU%-%C%H!J(BItIs4-1.4.?.tar.Z$B!K$H(B DOS$BMQG[IU%-%C(B
+$B%H!J(BItIs4-1.4.?.lzh$B!K$rF~<j$G$-$^$9!%N><T$NFbMF$OF1$8$G$9!%(B
 
-‚Ü‚½CWWW ã‚Ì ItIs ‚Ìƒy[ƒW‚ªCˆÈ‰º‚ÌƒAƒhƒŒƒX‚É‚ ‚è‚Ü‚·D
+Release1.4$B&B$NG[I[%-%C%H$K$O!$(BItIs$B%+!<%M%k$NA4%=!<%9%j%9%H$,4^$^$l$F$$(B
+$B$^$9$,!$0lIt$N%7%9%F%`%?%9%/$N%=!<%9%3!<%I$d%+!<%M%k$rF0:n$5$;$k$?$a$K(B
+$BI,MW$J%D!<%kEy$O4^$^$l$F$$$^$;$s!%$3$l$i$,I,MW$J>l9g$d%P%$%J%jHG$NG[I[(B
+$B$r4uK>$5$l$k>l9g$O!$JLES$4AjCL2<$5$$!%(B
 
-	http://tron.um.u-tokyo.ac.jp/TRON/ItIs/
+	$BG[IU4uK>Ey(B:	itis@ertl.ics.tut.ac.jp
 
-Release1.3ƒÀ‚Ì”z•zƒLƒbƒg‚É‚ÍCItIsƒJ[ƒlƒ‹‚Ì‘Sƒ\[ƒXƒŠƒXƒg‚ªŠÜ‚Ü‚ê‚Ä‚¢
-‚Ü‚·‚ªCˆê•”‚ÌƒVƒXƒeƒ€ƒ^ƒXƒN‚Ìƒ\[ƒXƒR[ƒh‚âƒJ[ƒlƒ‹‚ð“®ì‚³‚¹‚é‚½‚ß‚É
-•K—v‚Èƒc[ƒ‹“™‚ÍŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚¹‚ñD‚±‚ê‚ç‚ª•K—v‚Èê‡‚âƒoƒCƒiƒŠ”Å‚Ì”z•z
-‚ðŠó–]‚³‚ê‚éê‡‚ÍC•Ê“r‚²‘Š’k‰º‚³‚¢D
+$B<ALd$d%P%0%l%]!<%H$O$G$-$k8B$jEE;R%a%$%k$G$*4j$$$7$^$9!%EE;R%a%$%k%"%I(B
+$B%l%9$O!$0J2<$NDL$j$G$9!%$?$@$7!$C4Ev<T$NET9g$G?WB.$JJVEz$,$G$-$J$$>l9g(B
+$B$,$"$k$+$H;W$$$^$9$,!$$4N;>52<$5$$!%$^$?!$EEOC$K$h$kO"Mm$O$41sN82<$5$$!%(B
 
-	”z•tŠó–]“™:	itis@tron.um.u-tokyo.ac.jp
+	$B<ALd(B:		itis-users@ertl.ics.tut.ac.jp
+	$B%P%0%l%]!<%H(B:	itis-bug@ertl.ics.tut.ac.jp
 
-Ž¿–â‚âƒoƒOƒŒƒ|[ƒg‚Í‚Å‚«‚éŒÀ‚è“dŽqƒƒCƒ‹‚Å‚¨Šè‚¢‚µ‚Ü‚·D“dŽqƒƒCƒ‹ƒAƒh
-ƒŒƒX‚ÍCˆÈ‰º‚Ì’Ê‚è‚Å‚· (NIFTY ‚â PC-VAN ‚©‚ç‚à‘—‚ê‚Ü‚·)D‚½‚¾‚µC’S“–
-ŽÒ‚Ì“s‡‚Åv‘¬‚È•Ô“š‚ª‚Å‚«‚È‚¢ê‡‚ª‚ ‚é‚©‚ÆŽv‚¢‚Ü‚·‚ªC‚²—¹³‰º‚³‚¢D
-‚Ü‚½C“d˜b‚É‚æ‚é˜A—‚Í‚²‰“—¶‰º‚³‚¢D
+$B$3$NFb!$(Bitis-users $B$O!$(BItIs $B$K6=L#$N$"$kJ}$N$?$a$N%a%$%j%s%0%j%9%H$G$9!%(B
+ItIs $B$K6=L#$N$"$kJ}$G$"$l$P$I$J$?$G$b;22C$G$-$^$9!%$*5$7Z$K;22C2<$5$$!%(B
+$B$^$?!$;E;v!&JY6/!&<qL#$rLd$o$:(B ITRON $B$K6=L#$r;}$D?M$N$?$a$N>pJs8r49!&(B
+$B5DO@$N>l$H$7$F!$(BITRON Club $B%a%$%j%s%0%j%9%H$rMQ0U$7$F$$$^$9!%$3$A$i$K(B
+$B$b!$$*5$7Z$K;22C2<$5$$!%%a%$%j%s%0%j%9%H$X$N;22CJ}K!$K$D$$$F$O!$%f!<%6(B
+$B%:%^%K%e%"%k$N(B 7$B>O$r;2>H2<$5$$!%(B
 
-	Ž¿–â:		itis-users@tron.um.u-tokyo.ac.jp
-	ƒoƒOƒŒƒ|[ƒg:	itis-bug@tron.um.u-tokyo.ac.jp
+$B!v(B DOS$BMQG[IU%-%C%H$K4X$9$kCm0U(B
 
-‚±‚Ì“àCitis-users ‚ÍCItIs ‚É‹»–¡‚Ì‚ ‚é•û‚Ì‚½‚ß‚ÌƒƒCƒŠƒ“ƒOƒŠƒXƒg‚Å‚·D
-ItIs ‚É‹»–¡‚Ì‚ ‚é•û‚Å‚ ‚ê‚Î‚Ç‚È‚½‚Å‚àŽQ‰Á‚Å‚«‚Ü‚·D‚¨‹CŒy‚ÉŽQ‰Á‰º‚³‚¢D
-‚Ü‚½CŽdŽ–E•×‹­EŽï–¡‚ð–â‚í‚¸ ITRON ‚É‹»–¡‚ðŽ‚Âl‚Ì‚½‚ß‚Ìî•ñŒðŠ·E
-‹c˜_‚Ìê‚Æ‚µ‚ÄCITRON Club ƒƒCƒŠƒ“ƒOƒŠƒXƒg‚ð—pˆÓ‚µ‚Ä‚¢‚Ü‚·D‚±‚¿‚ç‚É
-‚àC‚¨‹CŒy‚ÉŽQ‰Á‰º‚³‚¢DƒƒCƒŠƒ“ƒOƒŠƒXƒg‚Ö‚ÌŽQ‰Á•û–@‚É‚Â‚¢‚Ä‚ÍCƒ†[ƒU
-ƒYƒ}ƒjƒ…ƒAƒ‹‚Ì 7Í‚ðŽQÆ‰º‚³‚¢D
+$B!&(BDOS$BMQG[IU%-%C%H$O!$(BLHA $B$K$h$j%"!<%+%$%V(B/$B05=L$7$F:n$i$l$F$$$^$9!%(B
+$B!&(BItIs $B$N%=!<%9$G$O!$0lItD9$$%U%!%$%kL>$r;H$C$F$$$k$?$a!$(BDOS $B$N%U%!%$(B
+$B!!%k%7%9%F%`$KE83+$9$k$H%U%!%$%kL>$,ESCf$G@Z$l$F$7$^$$$^$9!%$^$?!$BgJ8(B
+$B!!;z(B/$B>.J8;z$N6hJL$b$J$/$J$j$^$9!%$?$@$7!$J#?t$N%U%!%$%k$,F1$8L>A0$K$J(B
+$B!!$k$3$H$O$J$$$h$&L>A0$,$D$1$F$"$j$^$9$N$G!$(BMINIFEST $B%U%!%$%k$r;2>H$7(B
+$B!!$F!$E,59FI$_49$($F2<$5$$!%(B
+$B!&2~9T%3!<%I!$4A;z%3!<%I$O(B DOS $B$NI8=`$KJQ49$7$F$"$j$^$9!%(B
 
+$B!v(B Release1.3.4 $B"*(B Release1.4 $B$N<g$JJQ99E@(B
 
-– DOS—p”z•tƒLƒbƒg‚ÉŠÖ‚·‚é’ˆÓ
+$B!&(B68040 $B$N%5%]!<%H$rDI2C!%(B
+$B!&(BFreeBSD$B!J(Bx86$B!K$N%5%]!<%H$r$h$j40A4$K!%(B
 
-EDOS—p”z•tƒLƒbƒg‚ÍCLHA ‚É‚æ‚èƒA[ƒJƒCƒu/ˆ³k‚µ‚Äì‚ç‚ê‚Ä‚¢‚Ü‚·D
+$B!v(B Release1.3 $B"*(B Release1.3.4 $B$N<g$JJQ99E@(B
 
-EItIs ‚Ìƒ\[ƒX‚Å‚ÍCˆê•”’·‚¢ƒtƒ@ƒCƒ‹–¼‚ðŽg‚Á‚Ä‚¢‚é‚½‚ßCDOS ‚Ìƒtƒ@ƒC
-ƒ‹ƒVƒXƒeƒ€‚É“WŠJ‚·‚é‚Æƒtƒ@ƒCƒ‹–¼‚ª“r’†‚ÅØ‚ê‚Ä‚µ‚Ü‚¢‚Ü‚·D‚Ü‚½C‘å•¶Žš
-/¬•¶Žš‚Ì‹æ•Ê‚à‚È‚­‚È‚è‚Ü‚·D‚½‚¾‚µC•¡”‚Ìƒtƒ@ƒCƒ‹‚ª“¯‚¶–¼‘O‚É‚È‚é‚±
-‚Æ‚Í‚È‚¢‚æ‚¤–¼‘O‚ª‚Â‚¯‚Ä‚ ‚è‚Ü‚·‚Ì‚ÅCMINIFEST ƒtƒ@ƒCƒ‹‚ðŽQÆ‚µ‚ÄC“K
-‹X“Ç‚ÝŠ·‚¦‚Ä‰º‚³‚¢D
+$B!&%?%9%/IUB0%a%$%k%\%C%/%95!G=$rDI2C!%(B
+$B!&(BFreeBSD$B!J(Bx86$B!K$N%5%]!<%H$rDI2C!%(B
+$B!&%P%0%U%#%C%/%9!%(B
 
-E‰üsƒR[ƒhCŠ¿ŽšƒR[ƒh‚Í DOS ‚Ì•W€‚É•ÏŠ·‚µ‚Ä‚ ‚è‚Ü‚·D
+$B!v(B Release1.2 $B"*(B Release1.3 $B$N<g$JJQ99E@(B
 
+$B!&%?!<%2%C%H(BCPU $B$K0MB8$9$kItJ,$rJ,N%!%$3$l$KH<$C$F!$%G%#%l%/%H%j9=@.!$(B
+$B!!%U%!%$%k9=@.$rBgI}$KJQ99!%(B
+$B!&(BBSD UNIX$B>e$G$N%7%_%e%l!<%7%g%s4D6-$rDI2C!%(B
+$B!&M%@hEY7Q>5%;%^%U%)5!G=$rDI2C!%(B
+$B!&%a%$%k%\%C%/%95!G=$G%a%C%;!<%8%-%e!<$N4IM}J}K!$r%7%s%0%k%j%s%/$KJQ99!%(B
+$B!!$3$l$K$h$j!$%a%C%;!<%8M%@hEY$rF~$l$k%U%#!<%k%I$,0\F0$7$?$?$a!$M%@hEY=g(B
+$B!!$N%a%C%;!<%8%-%e!<%$%s%0$r;H$C$F$$$k%W%m%0%i%`$O!$:F%3%s%Q%$%k$,I,MW!%(B
+$B!&(Bref_tsk $B$,JV$9(B RUN$B>uBV$N2r<a$NJQ99!%(B
+$B!&3d9~$_%O%s%I%i$NDj5A2r=|$r%5%]!<%H!J%G%U%)%k%H$N@_Dj$G$O(B MCUBE $B$N$_!K!%(B
+$B!&(Bitron_errno $B$rGQ;_!%$3$l$KH<$$!$(Bsyscall $B%^%/%m$NDj5A$d!$(BItIs $B%?%9%/(B
+$B!!%5%]!<%H%i%$%V%i%jCf$N%(%i!<>pJsI=<(4X?t$N;EMM$rJQ99$7$?!%(B
+$B!&(BMCUBE $B$G!$(BTRON$B;EMM%-!<%\!<%I$N@\B3$r%5%]!<%H!%(B
+$B!&%P%0%U%#%C%/%9!%(B
 
-– Release1.3 ¨ Release1.3.4 ‚ÌŽå‚È•ÏX“_
+$B!v(B Release1.1 $B"*(B Release1.2 $B$N<g$JJQ99E@(B
 
-Eƒ^ƒXƒN•t‘®ƒƒCƒ‹ƒ{ƒbƒNƒX‹@”\‚ð’Ç‰ÁD
-
-EFreeBSD (x86) ‚ÌƒTƒ|[ƒg‚ð’Ç‰ÁD
-
-EƒoƒOƒtƒBƒbƒNƒXD
-
-
-– Release1.2 ¨ Release1.3 ‚ÌŽå‚È•ÏX“_
-
-Eƒ^[ƒQƒbƒgCPU ‚ÉˆË‘¶‚·‚é•”•ª‚ð•ª—£D‚±‚ê‚É”º‚Á‚ÄCƒfƒBƒŒƒNƒgƒŠ\¬C
-ƒtƒ@ƒCƒ‹\¬‚ð‘å•‚É•ÏXD
-
-EBSD UNIXã‚Å‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠÂ‹«‚ð’Ç‰ÁD
-
-E—Dæ“xŒp³ƒZƒ}ƒtƒH‹@”\‚ð’Ç‰ÁD
-
-EƒƒCƒ‹ƒ{ƒbƒNƒX‹@”\‚ÅƒƒbƒZ[ƒWƒLƒ…[‚ÌŠÇ—•û–@‚ðƒVƒ“ƒOƒ‹ƒŠƒ“ƒN‚É•ÏXD
-‚±‚ê‚É‚æ‚èCƒƒbƒZ[ƒW—Dæ“x‚ð“ü‚ê‚éƒtƒB[ƒ‹ƒh‚ªˆÚ“®‚µ‚½‚½‚ßC—Dæ“x‡
-‚ÌƒƒbƒZ[ƒWƒLƒ…[ƒCƒ“ƒO‚ðŽg‚Á‚Ä‚¢‚éƒvƒƒOƒ‰ƒ€‚ÍCÄƒRƒ“ƒpƒCƒ‹‚ª•K—vD
-
-Eref_tsk ‚ª•Ô‚· RUNó‘Ô‚Ì‰ðŽß‚Ì•ÏXD
-
-EŠ„ž‚Ýƒnƒ“ƒhƒ‰‚Ì’è‹`‰ðœ‚ðƒTƒ|[ƒg (ƒfƒtƒHƒ‹ƒg‚ÌÝ’è‚Å‚Í MCUBE ‚Ì‚Ý)D
-
-Eitron_errno ‚ð”pŽ~D‚±‚ê‚É”º‚¢Csyscall ƒ}ƒNƒ‚Ì’è‹`‚âCItIs ƒ^ƒXƒN
-ƒTƒ|[ƒgƒ‰ƒCƒuƒ‰ƒŠ’†‚ÌƒGƒ‰[î•ñ•\Ž¦ŠÖ”‚ÌŽd—l‚ð•ÏX‚µ‚½D
-
-EMCUBE ‚ÅCTRONŽd—lƒL[ƒ{[ƒh‚ÌÚ‘±‚ðƒTƒ|[ƒgD
-
-EƒoƒOƒtƒBƒbƒNƒXD
-
-
-– Release1.1 ¨ Release1.2 ‚ÌŽå‚È•ÏX“_
-
-EIDŽ©“®Š„“–‹@”\CƒfƒoƒbƒOƒTƒ|[ƒg‹@”\‚Ìˆê•” (vset_reg, vget_reg)C«
-”\•]‰¿—pƒVƒXƒeƒ€ŽžŽQÆ‹@”\‚ð’Ç‰ÁD
-
-Eref_tsk ‚ª•Ô‚· RUNó‘Ô‚Ì‰ðŽß‚Ì•ÏX (ƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Î‚ê‚½ê‡)D
-
-Eref_sys ‚ª•Ô‚·î•ñ‚É runtskid, schedtskid ‚ð’Ç‰ÁD
-
-EƒoƒOƒtƒBƒbƒNƒXD
+$B!&(BID$B<+F03dEv5!G=!$%G%P%C%0%5%]!<%H5!G=$N0lIt!J(Bvset_reg, vget_reg$B!K!$@-(B
+$B!!G=I>2AMQ%7%9%F%`;~9o;2>H5!G=$rDI2C!%(B
+$B!&(Bref_tsk $B$,JV$9(B RUN$B>uBV$N2r<a$NJQ99!J%?%9%/FHN)It$+$i8F$P$l$?>l9g!K!%(B
+$B!&(Bref_sys $B$,JV$9>pJs$K(B runtskid, schedtskid $B$rDI2C!%(B
+$B!&%P%0%U%#%C%/%9!%(B

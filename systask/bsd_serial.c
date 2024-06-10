@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,11 +30,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: bsd_serial.c,v 1.6 1996/02/17 09:38:05 hiro Exp $
+ *  @(#) $Id: bsd_serial.c,v 1.10 1998/07/06 14:21:00 hiro Exp $
  */
 
 /*
- *  BSD UNIX—p ‹^—ƒVƒŠƒAƒ‹ƒhƒ‰ƒCƒo
+ *  BSD UNIX$BMQ(B $B5?;w%7%j%"%k%I%i%$%P(B
  */
 
 #define _BSD_SERIAL_
@@ -40,62 +42,47 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <bsd_sigio.h>
 #include <itis_ioctl.h>
 
 #define	assert(exp)
 
 /*
- *  ƒRƒ“ƒ\[ƒ‹—p‚É—p‚¢‚éƒVƒŠƒAƒ‹ƒ|[ƒg”Ô†
+ *  $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B
  */
 static int	console_portid;
 
 /*
- *  ƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒXƒhƒ‰ƒCƒo‚Ì‹N“®
- */
-void
-serial_startup(int portid)
-{
-	syscall(serial_init(portid));
-	console_portid = portid;
-
-#ifdef USE_EXTENDED_SVC
-	syscall(def_svc(SVC_SERIAL_INIT, DSVC(serial_init)));
-	syscall(def_svc(SVC_SERIAL_READ, DSVC(serial_read)));
-	syscall(def_svc(SVC_SERIAL_WRITE, DSVC(serial_write)));
-	syscall(def_svc(SVC_SERIAL_IOCTL, DSVC(serial_ioctl)));
-	syscall(def_svc(SVC_SERIAL_SHUTDOWN, DSVC(serial_shutdown)));
-#endif
-
-	syscall(cre_tsk(TSK_BSD_SERIAL, &TSK_BSD_SERIAL_CTSK));
-	syscall(sta_tsk(TSK_BSD_SERIAL, 0));
-
-	syslog(LOG_NOTICE, "Serial driver service starts on port %d.\r",
-		 portid);
-}
-
-/*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ì’áƒŒƒxƒ‹’è‹`
+ *  $B%7%j%"%k%]!<%H$NDc%l%Y%kDj5A(B
  */
 
 typedef struct raw_serial_port_descripter {
-	char		*path;		/* UNIX ã‚Å‚Ìƒtƒ@ƒCƒ‹–¼ */
-	int		fd;		/* ƒtƒ@ƒCƒ‹ƒfƒBƒXƒNƒŠƒvƒ^ */
-	struct sgttyb	current_ttyb;	/* ’[––§Œäî•ñ */
+	char		*path;		/* UNIX $B>e$G$N%U%!%$%kL>(B */
+	int		fd;		/* $B%U%!%$%k%G%#%9%/%j%W%?(B */
+	struct sgttyb	current_ttyb;	/* $BC<Kv@)8f>pJs(B */
 	struct sgttyb	saved_ttyb;
 } RPORT;
 
 #define NUM_PORT	1
 
-#define RAWPORT1	{ "/dev/tty" }
+#define RAWPORT1	{ 0 }
 
 /*
- *  UNIX ƒŒƒxƒ‹‚Ìƒ|[ƒg‰Šú‰»/ƒVƒƒƒbƒgƒ_ƒEƒ“ˆ—
+ *  UNIX $B%l%Y%k$N%]!<%H=i4|2=(B/$B%7%c%C%H%@%&%s=hM}(B
+ *
+ *  $B8=:_$N<BAu$G$O!$C<Kv$r;H$&%1!<%9$7$+9M$($F$$$J$$!%K\Mh$O!$(Bopen $B$7(B
+ *  $B$?$N$,C<Kv$+$I$&$+$G=hM}$rJQ$($k$Y$-!%(B
  */
 
 Inline void
 raw_port_init(RPORT *p)
 {
-	p->fd = open(p->path, O_RDWR|O_NDELAY);
+	if (p->path) {
+		p->fd = open(p->path, O_RDWR|O_NDELAY);
+	}
+	else {
+		p->fd = 0;			/* $BI8=`F~=PNO$r;H$&(B */
+	}
 	fcntl(p->fd, F_SETOWN, getpid());
 	fcntl(p->fd, F_SETFL, FASYNC|FNDELAY);
 	ioctl(p->fd, TIOCGETP, &(p->saved_ttyb));
@@ -109,11 +96,13 @@ raw_port_shutdown(RPORT *p)
 {
 	ioctl(p->fd, TIOCSETP, &(p->saved_ttyb));
 	fcntl(p->fd, F_SETFL, 0);
-	close(p->fd);
+	if (p->path) {
+		close(p->fd);
+	}
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒgŠÇ—ƒuƒƒbƒN‚Ì’è‹`
+ *  $B%7%j%"%k%]!<%H4IM}%V%m%C%/$NDj5A(B
  */
 
 typedef struct ioctl_descripter {
@@ -123,38 +112,38 @@ typedef struct ioctl_descripter {
 	int	flowc;
 } IOCTL;
 
-#define	SERIAL_BUFSZ	256	/* ƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒX—pƒoƒbƒtƒ@‚ÌƒTƒCƒY */
+#define	SERIAL_BUFSZ	256	/* $B%7%j%"%k%$%s%?%U%'!<%9MQ%P%C%U%!$N%5%$%:(B */
 
 #define	inc(x)		(((x)+1 < SERIAL_BUFSZ) ? (x)+1 : 0)
 #define	INC(x)		((++(x) < SERIAL_BUFSZ) ? (x) : ((x) = 0))
 
 typedef struct serial_port_control_block {
-	int	init_flag;	/* ‰Šú‰»Ï‚©H */
-	RPORT	rawport;	/* ƒn[ƒhƒEƒFƒAˆË‘¶î•ñ */
-	char	*in_buffer;	/* óMƒoƒbƒtƒ@ƒGƒŠƒA‚Ìæ“ª */
-	ID	in_sem_id;	/* óMƒoƒbƒtƒ@ŠÇ——pƒZƒ}ƒtƒH‚Ì ID */
-	int	in_read_ptr;	/* óMƒoƒbƒtƒ@“Ç‚İo‚µƒ|ƒCƒ“ƒ^ */
-	int	in_write_ptr;	/* óMƒoƒbƒtƒ@‘‚«‚İƒ|ƒCƒ“ƒ^ */
-	char	*out_buffer;	/* ‘—Mƒoƒbƒtƒ@ƒGƒŠƒA‚Ìæ“ª */
-	ID	out_sem_id;	/* ‘—Mƒoƒbƒtƒ@ŠÇ——pƒZƒ}ƒtƒH‚Ì ID */
-	int	out_read_ptr;	/* ‘—Mƒoƒbƒtƒ@“Ç‚İo‚µƒ|ƒCƒ“ƒ^ */
-	int	out_write_ptr;	/* ‘—Mƒoƒbƒtƒ@‘‚«‚İƒ|ƒCƒ“ƒ^ */
-	IOCTL	ctl;		/* ioctl ‚É‚æ‚éİ’è“à—e */
-	BOOL	send_enabled;	/* ‘—M‚ğƒCƒl[ƒuƒ‹‚µ‚Ä‚ ‚é‚©H (g‚í‚È‚¢) */
-	BOOL	ixon_stopped;	/* STOP ‚ğó‚¯æ‚Á‚½ó‘Ô‚©H */
-	BOOL	ixoff_stopped;	/* ‘Šè‚É STOP ‚ğ‘—‚Á‚½ó‘Ô‚©H */
-	char	ixoff_send;	/* ‘Šè‚É START/STOP ‚ğ‘—‚é‚©H */
+	int	init_flag;	/* $B=i4|2=:Q$+!)(B */
+	RPORT	rawport;	/* $B%O!<%I%&%'%"0MB8>pJs(B */
+	char	*in_buffer;	/* $B<u?.%P%C%U%!%(%j%"$N@hF,(B */
+	ID	in_sem_id;	/* $B<u?.%P%C%U%!4IM}MQ%;%^%U%)$N(B ID */
+	int	in_read_ptr;	/* $B<u?.%P%C%U%!FI$_=P$7%]%$%s%?(B */
+	int	in_write_ptr;	/* $B<u?.%P%C%U%!=q$-9~$_%]%$%s%?(B */
+	char	*out_buffer;	/* $BAw?.%P%C%U%!%(%j%"$N@hF,(B */
+	ID	out_sem_id;	/* $BAw?.%P%C%U%!4IM}MQ%;%^%U%)$N(B ID */
+	int	out_read_ptr;	/* $BAw?.%P%C%U%!FI$_=P$7%]%$%s%?(B */
+	int	out_write_ptr;	/* $BAw?.%P%C%U%!=q$-9~$_%]%$%s%?(B */
+	IOCTL	ctl;		/* ioctl $B$K$h$k@_DjFbMF(B */
+	BOOL	send_enabled;	/* $BAw?.$r%$%M!<%V%k$7$F$"$k$+!)(B ($B;H$o$J$$(B) */
+	BOOL	ixon_stopped;	/* STOP $B$r<u$1<h$C$?>uBV$+!)(B */
+	BOOL	ixoff_stopped;	/* $BAj<j$K(B STOP $B$rAw$C$?>uBV$+!)(B */
+	char	ixoff_send;	/* $BAj<j$K(B START/STOP $B$rAw$k$+!)(B */
 } SPCB;
 
 /*
- *  ƒ‚ƒWƒ…[ƒ‹“à‚Åg‚¤ŠÖ”
+ *  $B%b%8%e!<%kFb$G;H$&4X?t(B
  */
-static void	sigint_handler(void);
+static void	sigint_handler();
 static char	serial_read_one(SPCB *p);
 static void	serial_write_one(SPCB *p, char c);
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒgŠÇ—ƒuƒƒbƒN‚Ì’è‹`‚Æ‰Šú‰»
+ *  $B%7%j%"%k%]!<%H4IM}%V%m%C%/$NDj5A$H=i4|2=(B
  */
 
 SPCB spcb_table[NUM_PORT] = {
@@ -169,7 +158,7 @@ SPCB spcb_table[NUM_PORT] = {
 #define get_spcb_def(portid)	get_spcb((portid) ? (portid) : console_portid)
 
 /*
- *  ƒ|[ƒg‚Ì‰Šú‰»
+ *  $B%]!<%H$N=i4|2=(B
  */
 int
 serial_init(int portid)
@@ -179,7 +168,7 @@ serial_init(int portid)
 	T_DINT	pk_dint;
 	ER	ercd = E_OK;
 
-	if (sysstat() & TTS_INDP) {		/* ƒRƒ“ƒeƒLƒXƒg‚Ìƒ`ƒFƒbƒN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(1 <= portid && portid <= NUM_PORT)) {
@@ -187,14 +176,14 @@ serial_init(int portid)
 	}
 
 	p = get_spcb(portid);
-	if (p->init_flag) {			/* ‰Šú‰»Ï‚©‚Ìƒ`ƒFƒbƒN */
+	if (p->init_flag) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OK);
 	}
 
 	ENTER_EXTENDED_SVC;
 
 	/*
-	 *  ƒoƒbƒtƒ@—Ìˆæ‚ÌŠm•Û (ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚©‚çæ‚é)
+	 *  $B%P%C%U%!NN0h$N3NJ](B ($B%7%9%F%`%a%b%j%W!<%k$+$i<h$k(B)
 	 */
 	if (pget_blk(&buffer, TMPL_OS, SERIAL_BUFSZ * 2) != E_OK) {
 		ercd = E_NOMEM;
@@ -204,7 +193,7 @@ serial_init(int portid)
 	p->out_buffer = ((char *) buffer) + SERIAL_BUFSZ;
 
 	/*
-	 *  •Ï”‚Ì‰Šú‰»
+	 *  $BJQ?t$N=i4|2=(B
 	 */
 	p->in_read_ptr = p->in_write_ptr = 0;
 	p->out_read_ptr = p->out_write_ptr = 0;
@@ -212,7 +201,7 @@ serial_init(int portid)
 	p->ixoff_send = 0;
 
 	/*
-	 *  ƒZƒ}ƒtƒH‚Ì¶¬
+	 *  $B%;%^%U%)$N@8@.(B
 	 */
 	syscall(cre_sem(p->in_sem_id,
 		&((T_CSEM) { 0, TA_TPRI, 0, SERIAL_BUFSZ-1 })));
@@ -220,13 +209,13 @@ serial_init(int portid)
 		&((T_CSEM) { 0, TA_TPRI, SERIAL_BUFSZ-1, SERIAL_BUFSZ-1 })));
 
 	/*
-	 *  ’áƒŒƒxƒ‹‚Ì‰Šú‰»
+	 *  $BDc%l%Y%k$N=i4|2=(B
 	 */
 	syscall(loc_cpu());
 	raw_port_init(&(p->rawport));
 
 	/*
- 	 *  ƒvƒƒZƒX‚ğI—¹‚³‚¹‚éƒVƒOƒiƒ‹‚ğ•ß‚Ü‚¦‚é
+ 	 *  $B%W%m%;%9$r=*N;$5$;$k%7%0%J%k$rJa$^$($k(B
 	 */
 	signal(SIGHUP, sigint_handler);
 	signal(SIGINT, sigint_handler);
@@ -242,10 +231,10 @@ serial_init(int portid)
 }
 
 /*
- *  ƒ|[ƒg‚ÌƒVƒƒƒbƒgƒ_ƒEƒ“
+ *  $B%]!<%H$N%7%c%C%H%@%&%s(B
  *
- *  flush ‚ª TRUE ‚Ìê‡‚ÍCƒVƒŠƒAƒ‹ƒ|[ƒg‚Ö‚Ì‘—Mƒoƒbƒtƒ@‚ª‹ó‚É‚È‚é‚Ü
- *  ‚Å‘Ò‚ÂD
+ *  flush $B$,(B TRUE $B$N>l9g$O!$%7%j%"%k%]!<%H$X$NAw?.%P%C%U%!$,6u$K$J$k$^(B
+ *  $B$GBT$D!%(B
  */
 
 #define	MAX_FLUSH_LOOP	1000000
@@ -256,22 +245,22 @@ serial_shutdown(int portid, int flush)
 	SPCB	*p;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* ƒRƒ“ƒeƒLƒXƒg‚Ìƒ`ƒFƒbƒN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(1 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* ƒ|[ƒg”Ô†‚Ìƒ`ƒFƒbƒN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb(portid);
-	if (!(p->init_flag)) {			/* ‰Šú‰»Ï‚©‚Ìƒ`ƒFƒbƒN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
 	ENTER_EXTENDED_SVC;
 
 	/*
-	 *  ƒoƒbƒtƒ@‚Ìƒtƒ‰ƒbƒVƒ…ˆ—
+	 *  $B%P%C%U%!$N%U%i%C%7%e=hM}(B
 	 */
 	if (flush) {
 		for (i = 0; i < MAX_FLUSH_LOOP; i++) {
@@ -282,20 +271,20 @@ serial_shutdown(int portid, int flush)
 	}
 
 	/*
-	 *  ’áƒŒƒxƒ‹‚ÌƒVƒƒƒbƒgƒ_ƒEƒ“ˆ—
+	 *  $BDc%l%Y%k$N%7%c%C%H%@%&%s=hM}(B
 	 */
 	syscall(loc_cpu());
 	raw_port_shutdown(&(p->rawport));
 	syscall(unl_cpu());
 
 	/*
-	 *  ƒZƒ}ƒtƒH‚Ìíœ
+	 *  $B%;%^%U%)$N:o=|(B
 	 */
 	syscall(del_sem(p->in_sem_id));
 	syscall(del_sem(p->out_sem_id));
 
 	/*
-	 *  ƒoƒbƒtƒ@—Ìˆæ‚Ì‰ğ•ú
+	 *  $B%P%C%U%!NN0h$N2rJ|(B
 	 */
 	syscall(rel_blk(TMPL_OS, p->in_buffer));
 
@@ -306,7 +295,7 @@ serial_shutdown(int portid, int flush)
 }
 
 /*
- *  ƒvƒƒZƒX‚ğI—¹‚³‚¹‚éƒVƒOƒiƒ‹‚É‘Î‚·‚éƒnƒ“ƒhƒ‰
+ *  $B%W%m%;%9$r=*N;$5$;$k%7%0%J%k$KBP$9$k%O%s%I%i(B
  */
 void
 sigint_handler()
@@ -324,7 +313,7 @@ sigint_handler()
 }
 
 /*
- *  ƒtƒ[ƒRƒ“ƒgƒ[ƒ‹ŠÖŒW‚Ì’è‹`
+ *  $B%U%m!<%3%s%H%m!<%k4X78$NDj5A(B
  */
 #define	STOP	'\023'		/* Control-S */
 #define	START	'\021'		/* Control-Q */
@@ -337,7 +326,7 @@ sigint_handler()
 			 (p->in_read_ptr + SERIAL_BUFSZ - p->in_write_ptr))
 
 /*
- *  ƒ†[ƒeƒBƒŠƒeƒBƒ‹[ƒ`ƒ“
+ *  $B%f!<%F%#%j%F%#%k!<%A%s(B
  */
 
 Inline BOOL
@@ -365,7 +354,7 @@ write_char(SPCB *p, char c)
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒg‚©‚ç‚ÌóM
+ *  $B%7%j%"%k%]!<%H$+$i$N<u?.(B
  */
 
 int
@@ -375,15 +364,15 @@ serial_read(int portid, char *buf, unsigned int len)
 	char	c;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* ƒRƒ“ƒeƒLƒXƒg‚Ìƒ`ƒFƒbƒN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* ƒ|[ƒg”Ô†‚Ìƒ`ƒFƒbƒN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* ‰Šú‰»Ï‚©‚Ìƒ`ƒFƒbƒN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
@@ -417,10 +406,10 @@ serial_read_one(SPCB *p)
 	c = *(p->in_buffer + p->in_read_ptr);
 	if (inc(p->in_write_ptr) == p->in_read_ptr) {
 		/*
-		 *  ƒoƒbƒtƒ@ƒtƒ‹ó‘Ô‚ª‰ğœ‚³‚ê‚½‚çCƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[
-		 *  ƒXŠ„‚İƒVƒ~ƒ…ƒŒ[ƒgƒ^ƒXƒN‚ğ‘Ò‚¿‰ğœ‚·‚éD
+		 *  $B%P%C%U%!%U%k>uBV$,2r=|$5$l$?$i!$3d9~$_$,F~$C$?$N$H(B
+		 *  $BF1$8?6$kIq$$$r$5$;$k!%(B
 		 */
-		syscall(rel_wai(TSK_BSD_SERIAL));
+		kill(getpid(), SIGIO);
 	}
 	INC(p->in_read_ptr);
 
@@ -436,7 +425,7 @@ serial_read_one(SPCB *p)
 }
 
 /*
- * ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ö‚Ì‘—M */
+ * $B%7%j%"%k%]!<%H$X$NAw?.(B */
 
 int
 serial_write(int portid, char *buf, unsigned int len)
@@ -444,15 +433,15 @@ serial_write(int portid, char *buf, unsigned int len)
 	SPCB	*p;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* ƒRƒ“ƒeƒLƒXƒg‚Ìƒ`ƒFƒbƒN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* ƒ|[ƒg”Ô†‚Ìƒ`ƒFƒbƒN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* ‰Šú‰»Ï‚©‚Ìƒ`ƒFƒbƒN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
@@ -487,7 +476,7 @@ serial_write_one(SPCB *p, char c)
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒg‚Ì§Œä
+ *  $B%7%j%"%k%]!<%H$N@)8f(B
  */
 
 int
@@ -496,15 +485,15 @@ serial_ioctl(int portid, int req, int arg)
 	SPCB	*p;
 	ER	ercd = E_OK;
 
-	if (sysstat() & TTS_INDP) {		/* ƒRƒ“ƒeƒLƒXƒg‚Ìƒ`ƒFƒbƒN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* ƒ|[ƒg”Ô†‚Ìƒ`ƒFƒbƒN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* ‰Šú‰»Ï‚©‚Ìƒ`ƒFƒbƒN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
@@ -538,7 +527,7 @@ serial_ioctl(int portid, int req, int arg)
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ƒ|[ƒgŠ„‚İƒnƒ“ƒhƒ‰
+ *  $B%7%j%"%k%]!<%H3d9~$_%O%s%I%i(B
  */
 
 static BOOL
@@ -552,10 +541,10 @@ serial_int_handler(int portid)
 	flag = 0;
 
 	/*
-	 *  1•¶šóMˆ—
+	 *  1$BJ8;z<u?.=hM}(B
 	 *
-	 *  ‚Ü‚¸Cƒoƒbƒtƒ@ƒtƒ‹‚Å‚È‚¢ê‡‚ÉC1•¶š“Ç‚ñ‚Å‚İ‚éD“Ç‚ß‚ê‚ÎC
-	 *  ‚»‚ê‚É‰‚¶‚½ˆ—‚ğs‚¤D
+	 *  $B$^$:!$%P%C%U%!%U%k$G$J$$>l9g$K!$(B1$BJ8;zFI$s$G$_$k!%FI$a$l$P!$(B
+	 *  $B$=$l$K1~$8$?=hM}$r9T$&!%(B
 	 */
 	if (inc(p->in_write_ptr) != p->in_read_ptr && read_char(p, &c)) {
 		if ((p->ctl.flowc & IXON) && c == STOP) {
@@ -580,7 +569,7 @@ serial_int_handler(int portid)
 	}
 
 	/*
-	 *  1•¶š‘—Mˆ—
+	 *  1$BJ8;zAw?.=hM}(B
 	 */
 	if (p->ixoff_send) {
 		if (write_char(p, p->ixoff_send)) {
@@ -599,26 +588,50 @@ serial_int_handler(int portid)
 }
 
 /*
- *  ƒVƒŠƒAƒ‹ƒCƒ“ƒ^ƒtƒF[ƒXŠ„‚İƒVƒ~ƒ…ƒŒ[ƒgƒ^ƒXƒN
+ *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%PMQ$N(B SIGIO $BDLCN%$%Y%s%H%V%m%C%/(B
+ */
+
+static SIGIOEB	serial_sigioeb;
+
+/*
+ *  SIGIO $B%3!<%k%P%C%/%k!<%A%s(B
+ */
+
+static BOOL
+serial_sigio_callback(VP arg)
+{
+	BOOL	flag;
+
+	do {
+		syscall(loc_cpu());
+		flag = serial_int_handler(1);
+		syscall(unl_cpu());
+	} while (flag);
+	return(0);
+}
+
+/*
+ *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P$N5/F0(B
  */
 
 void
-bsd_serial_task(void)
+serial_startup(int portid)
 {
-	BOOL	flag;
-	UINT	flgptn;
-	ER	ercd;
+	syscall(serial_init(portid));
+	console_portid = portid;
 
-	for (;;) {
-		ercd = wai_flg(&flgptn, FLG_BSD_SIGIO, 1, 0);
-		if (ercd < 0 && ercd != E_RLWAI) {
-			itis_perror(__FILE__, __LINE__-2, "wai_flg", ercd);
-		}
-		do {
-			syscall(loc_cpu());
-			flag = serial_int_handler(1);
-			syscall(unl_cpu());
-		} while (flag);
-	}
-	ext_tsk();
+#ifdef USE_EXTENDED_SVC
+	syscall(def_svc(SVC_SERIAL_INIT, DSVC(serial_init)));
+	syscall(def_svc(SVC_SERIAL_READ, DSVC(serial_read)));
+	syscall(def_svc(SVC_SERIAL_WRITE, DSVC(serial_write)));
+	syscall(def_svc(SVC_SERIAL_IOCTL, DSVC(serial_ioctl)));
+	syscall(def_svc(SVC_SERIAL_SHUTDOWN, DSVC(serial_shutdown)));
+#endif
+
+	serial_sigioeb.callback = serial_sigio_callback;
+	serial_sigioeb.arg = (VP) 0;
+	syscall(enqueue_sigioeb(&serial_sigioeb));
+
+	syslog(LOG_NOTICE, "Serial driver service starts on port %d.\r",
+		 portid);
 }

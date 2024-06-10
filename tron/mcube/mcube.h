@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,21 +30,21 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: mcube.h,v 1.4 1996/02/17 09:43:56 hiro Exp $
+ *  @(#) $Id: mcube.h,v 1.5 1998/01/30 09:57:03 hiro Exp $
  */
 
 #ifndef _MCUBE_
 #define _MCUBE_
 
 /*
- *  MCUBE äÓñ{É{Å[ÉhÇÃÉnÅ[ÉhÉEÉFÉAéëåπÇÃíËã`
+ *  MCUBE $B4pK\%\!<%I$N%O!<%I%&%'%";q8;$NDj5A(B
  */
 
 typedef	unsigned char	byte;
-typedef volatile byte	IOREG;		/* I/OÉåÉWÉXÉ^ÇÃå^ */
+typedef volatile byte	IOREG;		/* I/O$B%l%8%9%?$N7?(B */
 
 /*
- *  í·ë¨ÇÃ I/OÉfÉoÉCÉXÇëÄçÏÇ∑ÇÈÇΩÇﬂÇÃä÷êî
+ *  $BDcB.$N(B I/O$B%G%P%$%9$rA`:n$9$k$?$a$N4X?t(B
  */
 
 Inline void
@@ -71,7 +73,7 @@ io_write(IOREG *addr, byte val)
 }
 
 /*
- *  IRC (MB92421) ÇÃÉåÉWÉXÉ^
+ *  IRC (MB92421) $B$N%l%8%9%?(B
  */
 
 #define	IRC1_LMR(n)	((IOREG *) (0xffbffd3f+(n)*4))
@@ -94,23 +96,23 @@ io_write(IOREG *addr, byte val)
 #define	IRC2_BMR	((IOREG *) 0xffbffdb3)
 #define	IRC2_BRR	((IOREG *) 0xffbffdb7)
 
-#define	LIR0_BIT	0x01		/* ÉçÅ[ÉJÉãäÑçûÇ› 0 */
-#define	LIR1_BIT	0x02		/* ÉçÅ[ÉJÉãäÑçûÇ› 1 */
-#define	LIR2_BIT	0x04		/* ÉçÅ[ÉJÉãäÑçûÇ› 2 */
-#define	LIR3_BIT	0x08		/* ÉçÅ[ÉJÉãäÑçûÇ› 3 */
-#define	LIR4_BIT	0x10		/* ÉçÅ[ÉJÉãäÑçûÇ› 4 */
-#define	LIR5_BIT	0x20		/* ÉçÅ[ÉJÉãäÑçûÇ› 5 */
-#define	LIR6_BIT	0x40		/* ÉçÅ[ÉJÉãäÑçûÇ› 6 */
+#define	LIR0_BIT	0x01		/* $B%m!<%+%k3d9~$_(B 0 */
+#define	LIR1_BIT	0x02		/* $B%m!<%+%k3d9~$_(B 1 */
+#define	LIR2_BIT	0x04		/* $B%m!<%+%k3d9~$_(B 2 */
+#define	LIR3_BIT	0x08		/* $B%m!<%+%k3d9~$_(B 3 */
+#define	LIR4_BIT	0x10		/* $B%m!<%+%k3d9~$_(B 4 */
+#define	LIR5_BIT	0x20		/* $B%m!<%+%k3d9~$_(B 5 */
+#define	LIR6_BIT	0x40		/* $B%m!<%+%k3d9~$_(B 6 */
 
-#define	BIR0_BIT	0x01		/* ÉoÉXäÑçûÇ› 0 */
-#define	BIR1_BIT	0x02		/* ÉoÉXäÑçûÇ› 1 */
-#define	BIR2_BIT	0x04		/* ÉoÉXäÑçûÇ› 2 */
-#define	BIR3_BIT	0x08		/* ÉoÉXäÑçûÇ› 3 */
-#define	BIR4_BIT	0x10		/* ÉoÉXäÑçûÇ› 4 */
-#define	BIR5_BIT	0x20		/* ÉoÉXäÑçûÇ› 5 */
-#define	BIR6_BIT	0x40		/* ÉoÉXäÑçûÇ› 6 */
+#define	BIR0_BIT	0x01		/* $B%P%93d9~$_(B 0 */
+#define	BIR1_BIT	0x02		/* $B%P%93d9~$_(B 1 */
+#define	BIR2_BIT	0x04		/* $B%P%93d9~$_(B 2 */
+#define	BIR3_BIT	0x08		/* $B%P%93d9~$_(B 3 */
+#define	BIR4_BIT	0x10		/* $B%P%93d9~$_(B 4 */
+#define	BIR5_BIT	0x20		/* $B%P%93d9~$_(B 5 */
+#define	BIR6_BIT	0x40		/* $B%P%93d9~$_(B 6 */
 
-#define	IRC1_VECTOR(n)	(0x40+(n))	/* ÉåÉxÉãn ÇÃäÑçûÇ›ÇÃÉxÉNÉ^î‘çÜ */
+#define	IRC1_VECTOR(n)	(0x40+(n))	/* $B%l%Y%k(Bn $B$N3d9~$_$N%Y%/%?HV9f(B */
 #define IRC2_VECTOR_BASE 0x80
 #define	IRC2_VECTOR(n)	(IRC2_VECTOR_BASE+(n))
 
@@ -160,7 +162,7 @@ irc_read(IOREG *addr)
 }
 
 /*
- *  É^ÉCÉ} (MB89254) ÇÃÉåÉWÉXÉ^
+ *  $B%?%$%^(B (MB89254) $B$N%l%8%9%?(B
  */
 
 #define TMR_CNT0	((IOREG *) 0xffbffee3)
@@ -194,14 +196,14 @@ tmr_write(IOREG *addr, byte val)
 }
 
 /*
- *  SCC (Z85C30) ÇÃÉåÉWÉXÉ^
+ *  SCC (Z85C30) $B$N%l%8%9%?(B
  */
 #define	SCC_CNTRLB	((IOREG *) 0xffbfff03)
 #define	SCC_DATAB	((IOREG *) 0xffbfff07)
 #define	SCC_CNTRLA	((IOREG *) 0xffbffef3)
 #define	SCC_DATAA	((IOREG *) 0xffbffef7)
 
-#define	SCC_WR0		0x00		/* SCC èëÇ´çûÇ›ÉåÉWÉXÉ^ */
+#define	SCC_WR0		0x00		/* SCC $B=q$-9~$_%l%8%9%?(B */
 #define	SCC_WR1		0x01
 #define	SCC_WR2		0x02
 #define	SCC_WR3		0x03
@@ -215,7 +217,7 @@ tmr_write(IOREG *addr, byte val)
 #define	SCC_WR14	0x0e
 #define	SCC_WR15	0x0f
 
-#define	SCC_RR0		0x00		/* SCC ì«Ç›èoÇµÉåÉWÉXÉ^ */
+#define	SCC_RR0		0x00		/* SCC $BFI$_=P$7%l%8%9%?(B */
 
 Inline byte
 scc_read(IOREG *addr, int reg)
@@ -232,7 +234,7 @@ scc_write(IOREG *addr, int reg, int val)
 }
 
 /*
- *  ÉÇÉjÉ^åƒÇ—èoÇµÉãÅ[É`Éì
+ *  $B%b%K%?8F$S=P$7%k!<%A%s(B
  */
 
 Inline void

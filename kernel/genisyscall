@@ -1,8 +1,10 @@
 #! /usr/local/bin/perl
 # 
-# 	    ItIs - ITRON Implementation by Sakamura Lab
+# 	ItIs - An ITRON Implementation for Research and Education
 # 
-# Copyright (C) 1989-1997 by Sakamura Lab, the University of Tokyo, JAPAN
+# Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+# Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+# 				Toyohashi Univ. of Technology, JAPAN
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. Neither the name of the University nor the names of the laboratory
+# 3. Neither the name of the universities nor the names of the laboratories
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 # 
 # THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
 # WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
 # DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 # GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,23 +30,23 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-#  @(#) $Id: genisyscall,v 1.9 1998/01/30 06:57:49 hiro Exp $
-#
+#  @(#) $Id: genisyscall,v 1.10 1998/01/30 09:52:29 hiro Exp $
+# 
 
 #
-#  ÉVÉXÉeÉÄÉRÅ[ÉãÉCÉìÉ^ÉtÉFÅ[ÉXê∂ê¨ÉvÉçÉOÉâÉÄ (ÉJÅ[ÉlÉãóp)
+#  $B%7%9%F%`%3!<%k%$%s%?%U%'!<%9@8@.%W%m%0%i%`(B ($B%+!<%M%kMQ(B)
 #
-#  ÉVÉXÉeÉÄÉRÅ[ÉãíËã`ÉtÉ@ÉCÉã (syscall.def) Çì«Ç›çûÇÒÇ≈ÅCà»â∫ÇÃÉtÉ@ÉC
-#  ÉãÇê∂ê¨Ç∑ÇÈÅD
+#  $B%7%9%F%`%3!<%kDj5A%U%!%$%k(B (syscall.def) $B$rFI$_9~$s$G!$0J2<$N%U%!%$(B
+#  $B%k$r@8@.$9$k!%(B
 #
-#	itron_fncode.h	Å® ../include Ç…à⁄ìÆ
+#	itron_fncode.h	$B"*(B ../include $B$K0\F0(B
 #	isyscall.h
-#	itis_isyscall.h	Å® ../include Ç…à⁄ìÆ
+#	itis_isyscall.h	$B"*(B ../include $B$K0\F0(B
 #	itable.S
 #	ptable.S
 #
 
-#  ëÂàÊïœêîÇÃèâä˙âª
+#  $BBg0hJQ?t$N=i4|2=(B
 
 $lineno = 0;
 %flagtable = ();
@@ -53,7 +55,7 @@ $lineno = 0;
 %argstable = ();
 %argno = ();
 
-#  1çsì«Ç›çûÇ› (çsî‘çÜÇÉJÉEÉìÉgÇ∑ÇÈ)
+#  1$B9TFI$_9~$_(B ($B9THV9f$r%+%&%s%H$9$k(B)
 
 sub getline {
 	local($l);
@@ -63,7 +65,7 @@ sub getline {
 	return($l);
 }
 
-#  ÉGÉâÅ[èoóÕ
+#  $B%(%i!<=PNO(B
 
 sub syntax_error {
 	print STDERR "Syntax error at line: ",$lineno,".\n";
@@ -76,14 +78,14 @@ sub eof_error {
 }
 
 #
-#  íËã`ÉtÉ@ÉCÉãÇÃì«Ç›çûÇ›
+#  $BDj5A%U%!%$%k$NFI$_9~$_(B
 #
 
 $next_fncd = "";
 while ($line = do getline()) {
 	chop $line;
 
-	# åpë±çs ("\" Ç≈Ç®ÇÌÇÈçs) ÇÃèàóù
+	# $B7QB39T(B ("\" $B$G$*$o$k9T(B) $B$N=hM}(B
 	while ($line =~ /^(.*)\\$/) {
 		$line = $1;
 		unless ($line1 = do getline()) {
@@ -93,10 +95,10 @@ while ($line = do getline()) {
 		$line .= $line1;
 	}
 
-	# ÉRÉÅÉìÉgçsÇÃÉXÉLÉbÉv
+	# $B%3%a%s%H9T$N%9%-%C%W(B
 	next if ($line =~ /^[ \t]*$/ || $line =~ /^#/);
 
-	# ÉVÉXÉeÉÄÉRÅ[ÉãíËã`ÇÃÉpÅ[ÉY
+	# $B%7%9%F%`%3!<%kDj5A$N%Q!<%:(B
 	unless ($line =~ /^(-?[0-9]*)[ \t]+([^ \t]+)[ \t]*(.*)$/) {
 		do syntax_error();
 	}
@@ -104,7 +106,7 @@ while ($line = do getline()) {
 	$flags = $2;
 	$proto = $3;
 
-	# ã@î\ÉRÅ[ÉhÇÃÉGÉâÅ[ÇÉ`ÉFÉbÉN
+	# $B5!G=%3!<%I$N%(%i!<$r%A%'%C%/(B
 	if ($fncd eq "") {
 		print STDERR "Function code unknown at line: ",$lineno,"\n";
 		exit(1);
@@ -113,12 +115,12 @@ while ($line = do getline()) {
 		print STDERR "Function code skipped at line: ",$lineno,"\n";
 	}
 
-	# ÉVÉXÉeÉÄÉRÅ[ÉãíËã`ÇÃäiî[
+	# $B%7%9%F%`%3!<%kDj5A$N3JG<(B
 	$proto =~ s/,[ \t]+/, /g;
 	$flagtable{$fncd} = $flags;
 	$prototable{$fncd} = $proto;
 
-	# ÉVÉXÉeÉÄÉRÅ[ÉãíËã`ÇÃï∂ñ@É`ÉFÉbÉN
+	# $B%7%9%F%`%3!<%kDj5A$NJ8K!%A%'%C%/(B
 	if ($flags !~ /^-/) {
 		unless ($proto =~ /^([a-zX_]+)\((.*)\)$/) {
 			do syntax_error();
@@ -132,24 +134,24 @@ while ($line = do getline()) {
 		}
 	}
 
-	# ç≈èâÇÃã@î\ÉRÅ[ÉhÅCéüÇÃã@î\ÉRÅ[ÉhÇÃåvéZ
+	# $B:G=i$N5!G=%3!<%I!$<!$N5!G=%3!<%I$N7W;;(B
 	unless ($next_fncd) {
 		$first_fncd = $fncd;
 	}
 	$next_fncd = $fncd + 1;
 }
 
-# ç≈å„ÇÃã@î\ÉRÅ[ÉhÇÃÉ`ÉFÉbÉN
+# $B:G8e$N5!G=%3!<%I$N%A%'%C%/(B
 unless ($next_fncd == 0) {
 	print STDERR "The last function code is not -1.\n";
 }
 
 #
-#  ã@î\ÉRÅ[Éhî‘çÜÉäÉXÉgÇÃê∂ê¨
+#  $B5!G=%3!<%IHV9f%j%9%H$N@8@.(B
 #
-#	fncd_list: Ç∑Ç◊ÇƒÇÃã@î\ÉRÅ[Éhî‘çÜÉäÉXÉg
-#	valid_fncd_list: ÉVÉXÉeÉÄÉRÅ[ÉãÇ™Ç†ÇÈã@î\ÉRÅ[Éhî‘çÜÉäÉXÉg
-#	ivalid_fncd_list: ÉJÅ[ÉlÉãÇ…ÉVÉXÉeÉÄÉRÅ[ÉãÇ™Ç†ÇÈã@î\ÉRÅ[Éhî‘çÜÉäÉXÉg
+#	fncd_list: $B$9$Y$F$N5!G=%3!<%IHV9f%j%9%H(B
+#	valid_fncd_list: $B%7%9%F%`%3!<%k$,$"$k5!G=%3!<%IHV9f%j%9%H(B
+#	ivalid_fncd_list: $B%+!<%M%k$K%7%9%F%`%3!<%k$,$"$k5!G=%3!<%IHV9f%j%9%H(B
 #
 @fncd_list = ();
 @valid_fncd_list = ();
@@ -162,7 +164,7 @@ foreach $fncd (1 .. -$first_fncd) {
 }
 
 #
-#  itron_fncode.h ÇÃê∂ê¨
+#  itron_fncode.h $B$N@8@.(B
 #
 
 open(FILE, "> itron_fncode.h");
@@ -187,7 +189,7 @@ END_OF_TAILER
 close(FILE);
 
 #
-#  isyscall.h ÇÃê∂ê¨
+#  isyscall.h $B$N@8@.(B
 #
 
 open(FILE, "> isyscall.h");
@@ -215,7 +217,7 @@ END_OF_TAILER
 close(FILE);
 
 #
-#  itis_isyscall.h ÇÃê∂ê¨
+#  itis_isyscall.h $B$N@8@.(B
 #
 
 open(FILE, "> itis_isyscall.h");
@@ -231,7 +233,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ÉTÉuÉãÅ[É`ÉìÉRÅ[ÉãÇ≈åƒÇ—èoÇ∑èÍçáÇÃÉCÉìÉ^ÉtÉFÅ[ÉX
+# $B%5%V%k!<%A%s%3!<%k$G8F$S=P$9>l9g$N%$%s%?%U%'!<%9(B
 foreach $fncd (@ivalid_fncd_list) {
 	next if ($nametable{$fncd} =~ /X/);
 	print FILE "#define ";
@@ -249,7 +251,7 @@ foreach $fncd (@ivalid_fncd_list) {
 	print FILE $proto,";\n";
 }
 
-# TRAPA Ç≈åƒÇ—èoÇ∑èÍçáÇÃÉCÉìÉ^ÉtÉFÅ[ÉX
+# TRAPA $B$G8F$S=P$9>l9g$N%$%s%?%U%'!<%9(B
 print FILE <<END_OF_SEPARATOR;
 
 #else /* LINK_KERNEL */
@@ -266,7 +268,7 @@ foreach $fncd (@ivalid_fncd_list) {
 	$flag = $flagtable{$fncd};
 	$void = ($flag =~ /v/);
 
-	# ä÷êîÉwÉbÉ_ÇÃê∂ê¨
+	# $B4X?t%X%C%@$N@8@.(B
 	print FILE "Inline ";
 	print FILE $void ? "void\n" : "ER\n";
 
@@ -275,7 +277,7 @@ foreach $fncd (@ivalid_fncd_list) {
 	$proto =~ s/\* / */g;
 	print FILE $proto,"\n";
 
-	# ÉåÉWÉXÉ^ïœêîêÈåæÇÃê∂ê¨
+	# $B%l%8%9%?JQ?t@k8@$N@8@.(B
 	print FILE "{\n";
 	$arglist = "";
 	$argno = 0;
@@ -303,7 +305,7 @@ END_OF_TAILER
 close(FILE);
 
 #
-#  itable.S ÇÃê∂ê¨
+#  itable.S $B$N@8@.(B
 #
 
 open(FILE, "> itable.S");
@@ -315,11 +317,11 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ç≈èâÇÃã@î\ÉRÅ[ÉhÇÃèëÇ´èoÇµ
+# $B:G=i$N5!G=%3!<%I$N=q$-=P$7(B
 print FILE "FIRST_FNCD = ",$first_fncd,"\n";
 print FILE "\n";
 
-# ÉWÉÉÉìÉvÉeÅ[ÉuÉãÇÃê∂ê¨
+# $B%8%c%s%W%F!<%V%k$N@8@.(B
 foreach $fncd ($first_fncd .. -1) {
 	if ($flagtable{$fncd} =~ /^-/ || $flagtable{$fncd} =~ /i/) {
 		$name = "_no_support";
@@ -334,7 +336,7 @@ foreach $fncd ($first_fncd .. -1) {
 }
 
 #
-#  ptable.S ÇÃê∂ê¨
+#  ptable.S $B$N@8@.(B
 #
 
 open(FILE, "> ptable.S");
@@ -343,7 +345,7 @@ print FILE <<END_OF_HEADER;
 
 END_OF_HEADER
 
-# ÉWÉÉÉìÉvÉeÅ[ÉuÉãÇÃê∂ê¨
+# $B%8%c%s%W%F!<%V%k$N@8@.(B
 foreach $fncd ($first_fncd .. -1) {
 	if ($flagtable{$fncd} =~ /^-/ || $flagtable{$fncd} =~ /i/) {
 		$name = "push_0";

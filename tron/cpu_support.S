@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: cpu_support.S,v 1.5 1997/01/13 03:54:14 hiro Exp $
+ *  @(#) $Id: cpu_support.S,v 1.6 1998/01/30 09:56:29 hiro Exp $
  */
 
 #include <itron_errno.h>
@@ -42,10 +44,10 @@
 #include "offset.h"
 
 /*
- *  É^ÉXÉNÉfÉBÉXÉpÉbÉ`ÉÉ
+ *  $B%?%9%/%G%#%9%Q%C%A%c(B
  *
- *  íxâÑäÑçûÇ›ÇégÇ§èÍçáÇ∆égÇÌÇ»Ç¢èÍçáÇ≈ëÂÇ´Ç≠à·Ç§ÇΩÇﬂÅCç¨óêÇîÇØÇÈÇΩ
- *  ÇﬂÇ…ÅCÉtÉ@ÉCÉãÇï™ÇØÇƒÇ¢ÇÈÅD
+ *  $BCY1d3d9~$_$r;H$&>l9g$H;H$o$J$$>l9g$GBg$-$/0c$&$?$a!$:.Mp$rHr$1$k$?(B
+ *  $B$a$K!$%U%!%$%k$rJ,$1$F$$$k!%(B
  */
 #ifndef TRON_NO_DI
 #include "dispatch.S"
@@ -54,10 +56,10 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  ÉVÉXÉeÉÄÉRÅ[ÉããNìÆÉãÅ[É`Éì
+ *  $B%7%9%F%`%3!<%k5/F0%k!<%A%s(B
  *
- *  TRAPA ÇégÇ¡ÇƒÉVÉXÉeÉÄÉRÅ[ÉãÇãNìÆÇ∑ÇÈÇΩÇﬂÇÃï™äÚÉãÅ[É`ÉìÅDã@î\ÉRÅ[
- *  ÉhÇ…è]Ç¡ÇƒÅCäeÉVÉXÉeÉÄÉRÅ[ÉãÇÃèàóùÉãÅ[É`ÉìÇ÷ï™äÚÇ∑ÇÈÅD
+ *  TRAPA $B$r;H$C$F%7%9%F%`%3!<%k$r5/F0$9$k$?$a$NJ,4t%k!<%A%s!%5!G=%3!<(B
+ *  $B%I$K=>$C$F!$3F%7%9%F%`%3!<%k$N=hM}%k!<%A%s$XJ,4t$9$k!%(B
  */
 	.text
 	.align 1
@@ -65,13 +67,13 @@
 _trapa_ientry:
 	cmp #0, r6
 	bgt _trapa_ientry_1
-	cmp #FIRST_FNCD, r6		/* ã@î\ÉRÅ[ÉhÇÃâ∫å¿ÇÃÉ`ÉFÉbÉN */
+	cmp #FIRST_FNCD, r6		/* $B5!G=%3!<%I$N2<8B$N%A%'%C%/(B */
 	blt _trapa_ientry_2
-	jsr @@(_itable,r6*4)		/* ÉVÉXÉeÉÄÉRÅ[ÉãèàóùÉãÅ[É`ÉìÇ÷ï™äÚ */
+	jsr @@(_itable,r6*4)		/* $B%7%9%F%`%3!<%k=hM}%k!<%A%s$XJ,4t(B */
 	reit
 _trapa_ientry_1:
 #ifdef USE_SVC
-	jsr @_svc_ientry		/* ägí£SVCÉnÉìÉhÉâÇ÷ÇÃï™äÚ */
+	jsr @_svc_ientry		/* $B3HD%(BSVC$B%O%s%I%i$X$NJ,4t(B */
 	reit
 #endif /* USE_SVC */
 _trapa_ientry_2:
@@ -79,7 +81,7 @@ _trapa_ientry_2:
 	reit
 
 /*
- *  ñ¢ÉTÉ|Å[ÉgÉVÉXÉeÉÄÉRÅ[ÉãÇÃÉGÉìÉgÉä
+ *  $BL$%5%]!<%H%7%9%F%`%3!<%k$N%(%s%H%j(B
  */
 	.text
 	.align 1
@@ -89,17 +91,17 @@ _no_support:
 	rts
 
 /*
- *  ÉAÉZÉìÉuÉâÇ≈ãLèqÇ∑ÇÈïKóvÇ™Ç†ÇÈÉVÉXÉeÉÄÉRÅ[Éã
+ *  $B%"%;%s%V%i$G5-=R$9$kI,MW$,$"$k%7%9%F%`%3!<%k(B
  *
- *  ÉVÉXÉeÉÄÉRÅ[ÉãÉGÉìÉgÉäÉeÅ[ÉuÉãÇç∑Çµë÷Ç¶ÇÈÇΩÇﬂÇ…ÅCTRAPA Ç≈åƒÇ—èoÇµ
- *  ÇΩéûÇÃèàóùÇÉAÉZÉìÉuÉâÇ≈ãLèqÇ∑ÇÈïKóvÇÃÇ†ÇÈÉVÉXÉeÉÄÉRÅ[Éã ???_??? 
- *  Ç…ëŒÇµÇƒÇÕÅC_i_???_??? Ç _z_???_??? Ç…íËã`Ç∑ÇÈÅD
+ *  $B%7%9%F%`%3!<%k%(%s%H%j%F!<%V%k$r:9$7BX$($k$?$a$K!$(BTRAPA $B$G8F$S=P$7(B
+ *  $B$?;~$N=hM}$r%"%;%s%V%i$G5-=R$9$kI,MW$N$"$k%7%9%F%`%3!<%k(B ???_??? 
+ *  $B$KBP$7$F$O!$(B_i_???_??? $B$r(B _z_???_??? $B$KDj5A$9$k!%(B
  */
 
 /*
- *  ÉfÉBÉXÉpÉbÉ`ÇÃã÷é~/ãñâ¬ã@î\
+ *  $B%G%#%9%Q%C%A$N6X;_(B/$B5v2D5!G=(B
  *
- *  TRON_NO_DI ÇÃéûÇÕÅCCåæåÍÇ≈èëÇ¢ÇΩÉãÅ[É`ÉìÇégÇ¶ÇÈÅD
+ *  TRON_NO_DI $B$N;~$O!$(BC$B8@8l$G=q$$$?%k!<%A%s$r;H$($k!%(B
  */
 
 #ifndef TRON_NO_DI
@@ -111,11 +113,11 @@ _no_support:
 	.globl _z_dis_dsp
 _z_dis_dsp:
 #ifdef CHK_CTX
-	bfextu #12,#4,@(4,sp), r0	/* IMASK Ç EITèÓïÒÇ©ÇÁéÊÇËèoÇ∑ */
-	cmpu #14, r0			/* IMASK < 14 Ç»ÇÁ E_CTXÉGÉâÅ[ */
+	bfextu #12,#4,@(4,sp), r0	/* IMASK $B$r(B EIT$B>pJs$+$i<h$j=P$9(B */
+	cmpu #14, r0			/* IMASK < 14 $B$J$i(B E_CTX$B%(%i!<(B */
 	blt _context_error
 #endif /* CHK_CTX */
-	bfinsu #14, #12,#4,@(4,sp)	/* IMASK Ç EITèÓïÒíÜÇ…ê›íË */
+	bfinsu #14, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
 	mov #E_OK, r0
 	rts
 
@@ -128,11 +130,11 @@ _z_dis_dsp:
 	.globl _z_ena_dsp
 _z_ena_dsp:
 #ifdef CHK_CTX
-	bfextu #12,#4,@(4,sp), r0	/* IMASK Ç EITèÓïÒÇ©ÇÁéÊÇËèoÇ∑ */
-	cmpu #14, r0			/* IMASK < 14 Ç»ÇÁ E_CTXÉGÉâÅ[ */
+	bfextu #12,#4,@(4,sp), r0	/* IMASK $B$r(B EIT$B>pJs$+$i<h$j=P$9(B */
+	cmpu #14, r0			/* IMASK < 14 $B$J$i(B E_CTX$B%(%i!<(B */
 	blt _context_error
 #endif /* CHK_CTX */
-	bfinsu #15, #12,#4,@(4,sp)	/* IMASK Ç EITèÓïÒíÜÇ…ê›íË */
+	bfinsu #15, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
 	mov #E_OK, r0
 	rts
 
@@ -140,7 +142,7 @@ _z_ena_dsp:
 #endif /* TRON_NO_DI */
 
 /*
- *  äÑçûÇ›ÇÃã÷é~/ãñâ¬ã@î\
+ *  $B3d9~$_$N6X;_(B/$B5v2D5!G=(B
  */
 
 #ifndef _z_loc_cpu
@@ -151,10 +153,10 @@ _z_ena_dsp:
 	.globl _z_loc_cpu
 _z_loc_cpu:
 #ifdef CHK_CTX
-	btst #0,@(4,sp)			/* É^ÉXÉNì∆óßïîÇ»ÇÁ E_CTXÉGÉâÅ[ */
+	btst #0,@(4,sp)			/* $B%?%9%/FHN)It$J$i(B E_CTX$B%(%i!<(B */
 	beq _context_error
 #endif /* CHK_CTX */
-	bfinsu #0, #12,#4,@(4,sp)	/* IMASK Ç EITèÓïÒíÜÇ…ê›íË */
+	bfinsu #0, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
 	mov #E_OK, r0
 	rts
 
@@ -167,14 +169,14 @@ _z_loc_cpu:
 	.globl _z_unl_cpu
 _z_unl_cpu:
 #ifdef CHK_CTX
-	btst #0,@(4,sp)			/* É^ÉXÉNì∆óßïîÇ»ÇÁ E_CTXÉGÉâÅ[ */
+	btst #0,@(4,sp)			/* $B%?%9%/FHN)It$J$i(B E_CTX$B%(%i!<(B */
 	beq _context_error
 #endif /* CHK_CTX */
-	bfinsu #15, #12,#4,@(4,sp)	/* IMASK Ç EITèÓïÒíÜÇ…ê›íË */
+	bfinsu #15, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
 #ifdef TRON_NO_DI
 	mov #0, @_dispatch_disabled
-	cmp @_ctxtsk, @_schedtsk	/* ctxtsk != schedtsk ÇÃéû */
-        bne _dispatch			/* ÉfÉBÉXÉpÉbÉ`ÉÉÇãNìÆ */
+	cmp @_ctxtsk, @_schedtsk	/* ctxtsk != schedtsk $B$N;~(B */
+        bne _dispatch			/* $B%G%#%9%Q%C%A%c$r5/F0(B */
 #endif /* TRON_NO_DI */
 	mov #E_OK, r0
 	rts
@@ -182,7 +184,7 @@ _z_unl_cpu:
 #endif /* _z_unl_cpu */
 
 /*
- *  IMASK ÇÃê›íË/éQè∆ã@î\
+ *  IMASK $B$N@_Dj(B/$B;2>H5!G=(B
  */
 
 #ifndef _z_chg_ims
@@ -193,21 +195,21 @@ _z_unl_cpu:
 	.globl _z_chg_ims
 _z_chg_ims:
 #ifdef CHK_PAR
-	btst #0,@(4,sp)			/* É^ÉXÉNì∆óßïîÇ»ÇÁ z_chg_ims_1 Ç÷ */
+	btst #0,@(4,sp)			/* $B%?%9%/FHN)It$J$i(B z_chg_ims_1 $B$X(B */
 	beq z_chg_ims_1
-	cmpu #15, r0			/* IMASK > 15 Ç»ÇÁ E_PARÉGÉâÅ[ */
+	cmpu #15, r0			/* IMASK > 15 $B$J$i(B E_PAR$B%(%i!<(B */
 	bra z_chg_ims_2
 z_chg_ims_1:
-	cmpu #7, r0			/* IMASK > 7 Ç»ÇÁ E_PARÉGÉâÅ[ */
+	cmpu #7, r0			/* IMASK > 7 $B$J$i(B E_PAR$B%(%i!<(B */
 z_chg_ims_2:
 	bgt _parameter_error
 #endif /* CHK_PAR */
-	bfinsu r0, #12,#4,@(4,sp)	/* IMASK Ç EITèÓïÒíÜÇ…ê›íË */
+	bfinsu r0, #12,#4,@(4,sp)	/* IMASK $B$r(B EIT$B>pJsCf$K@_Dj(B */
 #ifdef TRON_NO_DI
-	cmp #15, r0			/* ê›íËÇµÇΩIMASKíl == 15 Ç©Ç¬ */
-	bne z_chg_ims_3			/* dispatch_disabled == 0 Ç©Ç¬ */
-	cmp #0, @_dispatch_disabled	/* ctxtsk != schedtsk ÇÃéû */
-	bne z_chg_ims_3			/* ÉfÉBÉXÉpÉbÉ`ÉÉÇãNìÆ */
+	cmp #15, r0			/* $B@_Dj$7$?(BIMASK$BCM(B == 15 $B$+$D(B */
+	bne z_chg_ims_3			/* dispatch_disabled == 0 $B$+$D(B */
+	cmp #0, @_dispatch_disabled	/* ctxtsk != schedtsk $B$N;~(B */
+	bne z_chg_ims_3			/* $B%G%#%9%Q%C%A%c$r5/F0(B */
 	cmp @_ctxtsk, @_schedtsk
 	bne _dispatch
 #endif /* TRON_NO_DI */
@@ -223,7 +225,7 @@ z_chg_ims_3:
 	.align 1
 	.globl _z_ref_ims
 _z_ref_ims:
-	bfextu #12,#4,@(4,sp), r1	/* IMASK Ç EITèÓïÒÇ©ÇÁéÊÇËèoÇ∑ */
+	bfextu #12,#4,@(4,sp), r1	/* IMASK $B$r(B EIT$B>pJs$+$i<h$j=P$9(B */
 	mov r1, @r0
 	mov #E_OK, r0
 	rts
@@ -231,46 +233,46 @@ _z_ref_ims:
 #endif /* _z_ref_ims */
 
 /*
- *  ÉfÉBÉXÉpÉbÉ`ÉÉÇ÷ÇÃï™äÚÉãÅ[É`Éì
+ *  $B%G%#%9%Q%C%A%c$X$NJ,4t%k!<%A%s(B
  */
 #ifdef TRON_NO_DI
 	.text
 	.align 1
 _dispatch:
-	trapa #4			/* ÉfÉBÉXÉpÉbÉ`ÉÉÇÃãNìÆ */
+	trapa #4			/* $B%G%#%9%Q%C%A%c$N5/F0(B */
 	mov #E_OK, r0
 	rts
 #endif /* TRON_NO_DI */
 
 /*
- *  ÉAÉZÉìÉuÉâÇ≈ãLèqÇ≥ÇÍÇΩÉVÉXÉeÉÄÉRÅ[ÉãÇÃã§í ÉGÉâÅ[èàóùÉãÅ[É`Éì
+ *  $B%"%;%s%V%i$G5-=R$5$l$?%7%9%F%`%3!<%k$N6&DL%(%i!<=hM}%k!<%A%s(B
  */
 	.text
 	.align 1
 
 #ifdef CHK_CTX
-_context_error:				/* ÉRÉìÉeÉLÉXÉgÉGÉâÅ[ */
+_context_error:				/* $B%3%s%F%-%9%H%(%i!<(B */
 	mov #E_CTX, r0
 	rts
 #endif /* CHK_CTX */
 
 #ifdef CHK_PAR
-_parameter_error:			/* ÉpÉâÉÅÅ[É^ÉGÉâÅ[ */
+_parameter_error:			/* $B%Q%i%a!<%?%(%i!<(B */
 	mov #E_PAR, r0
 	rts
 #endif /* CHK_PAR */
 
 /*
- *  ÉVÉXÉeÉÄÉRÅ[ÉãÉGÉìÉgÉäÉeÅ[ÉuÉã
+ *  $B%7%9%F%`%3!<%k%(%s%H%j%F!<%V%k(B
  */
 	.text
 	.align 2
 #include "itable.S"
 _itable:
-	.int _no_support		/* ã@î\î‘çÜ 0 Ç…ëŒâûÇ∑ÇÈÉGÉìÉgÉä */
+	.int _no_support		/* $B5!G=HV9f(B 0 $B$KBP1~$9$k%(%s%H%j(B */
 
 /*
- *  É^ÉCÉ}ÉnÉìÉhÉâãNìÆÇÃÇΩÇﬂÇÃçÇãâåæåÍëŒâûÉãÅ[É`Éì
+ *  $B%?%$%^%O%s%I%i5/F0$N$?$a$N9b5i8@8lBP1~%k!<%A%s(B
  */
 	.text
 	.align 1

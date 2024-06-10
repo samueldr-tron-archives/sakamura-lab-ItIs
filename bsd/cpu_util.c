@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,19 +30,19 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: cpu_util.c,v 1.6 1996/02/17 09:23:40 hiro Exp $
+ *  @(#) $Id: cpu_util.c,v 1.8 1998/06/08 10:52:08 hiro Exp $
  */
 
 #include "itis_kernel.h"
 #include "task.h"
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ
+ *  $B%?%9%/%G%#%9%Q%C%A%c(B
  * 
- *  Às’†‚Ìƒ^ƒXƒN (ctxtsk) ‚ÌƒRƒ“ƒeƒLƒXƒg‚ğ TCB ‚É•Û‘¶‚µCÀs‚·‚×‚«
- *  ƒ^ƒXƒN (schedtsk) ‚ğV‚µ‚¢Àsƒ^ƒXƒN‚Æ‚µ‚ÄC‚»‚ÌƒRƒ“ƒeƒLƒXƒg‚ğ TCB 
- *  ‚©‚ç•œ‹A‚·‚éDƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‚©‚ç–ß‚éÛ‚ÉCƒVƒOƒiƒ‹ƒ}ƒXƒN‚ÍˆÈ
- *  ‘O‚Ìó‘Ô‚É–ß‚³‚ê‚éD
+ *  $B<B9TCf$N%?%9%/(B (ctxtsk) $B$N%3%s%F%-%9%H$r(B TCB $B$KJ]B8$7!$<B9T$9$Y$-(B
+ *  $B%?%9%/(B (schedtsk) $B$r?7$7$$<B9T%?%9%/$H$7$F!$$=$N%3%s%F%-%9%H$r(B TCB 
+ *  $B$+$iI|5"$9$k!%%?%9%/%G%#%9%Q%C%A%c$+$iLa$k:]$K!$%7%0%J%k%^%9%/$O0J(B
+ *  $BA0$N>uBV$KLa$5$l$k!%(B
  */
 void
 dispatch_handler()
@@ -57,15 +59,15 @@ dispatch_handler()
 }
 
 /*
- *  ƒ^[ƒQƒbƒgCPUˆË‘¶‚Ì‰Šú‰»ƒ‹[ƒ`ƒ“
+ *  $B%?!<%2%C%H(BCPU$B0MB8$N=i4|2=%k!<%A%s(B
  */
 void
 cpu_initialize(void)
 {
 	/*
-	 *  ƒVƒOƒiƒ‹ƒXƒ^ƒbƒN‚ğCƒvƒƒZƒXƒXƒ^ƒbƒNã‚Éæ‚éDƒVƒOƒiƒ‹ƒXƒ^ƒb
-	 *  ƒN‚ğg‚Á‚Ä‚¢‚é‚Æİ’è‚·‚é‚Ì‚ÍCƒXƒ^[ƒgƒAƒbƒvƒ‹[ƒ`ƒ“‚ğƒ^ƒX
-	 *  ƒN“Æ—§•”‚Æ”»’è‚³‚¹‚é‚½‚ßD
+	 *  $B%7%0%J%k%9%?%C%/$r!$%W%m%;%9%9%?%C%/>e$K<h$k!%%7%0%J%k%9%?%C(B
+	 *  $B%/$r;H$C$F$$$k$H@_Dj$9$k$N$O!$%9%?!<%H%"%C%W%k!<%A%s$r%?%9(B
+	 *  $B%/FHN)It$HH=Dj$5$;$k$?$a!%(B
 	 */
 	{
 #ifdef USE_SIGSTACK
@@ -80,13 +82,13 @@ cpu_initialize(void)
 
 		ss.ss_sp = (void *)(((INT) &ss) - SIGSTACK_MERGIN - SIGSTKSZ);
 		ss.ss_size = SIGSTKSZ;
-		ss.ss_flags |= SA_ONSTACK;
+		ss.ss_flags |= SS_ONSTACK;
 		sigaltstack(&ss, 0);
 #endif /* USE_SIGALTSTACK */
 	}
 
 	/*
-	 *  ƒfƒBƒXƒpƒbƒ`—p‚ÌƒVƒOƒiƒ‹ƒnƒ“ƒhƒ‰‚ğİ’èD
+	 *  $B%G%#%9%Q%C%AMQ$N%7%0%J%k%O%s%I%i$r@_Dj!%(B
 	 */
 	{
 		struct sigvec	vec;
@@ -99,7 +101,7 @@ cpu_initialize(void)
 }
 
 /*
- *  ƒ^[ƒQƒbƒgCPUˆË‘¶‚ÌI—¹ˆ—ƒ‹[ƒ`ƒ“
+ *  $B%?!<%2%C%H(BCPU$B0MB8$N=*N;=hM}%k!<%A%s(B
  */
 void
 cpu_shutdown(void)
@@ -107,31 +109,31 @@ cpu_shutdown(void)
 }
 
 /*
- *  ƒ^ƒXƒN‹N“®ƒ‹[ƒ`ƒ“
+ *  $B%?%9%/5/F0%k!<%A%s(B
  *
- *  BSD UNIXã‚Å‚ÍCƒJ[ƒlƒ‹‚Æƒ^ƒXƒN‚ª“¯‚¶“ÁŒ ƒŒƒxƒ‹‚Å“®ì‚·‚é‚½‚ßCƒ^
- *  ƒXƒN‚Ö‚Ì•ªŠò‚ÍŠÖ”ŒÄ‚Ño‚µ‚ÅÀŒ»‚Å‚«‚éD
+ *  BSD UNIX$B>e$G$O!$%+!<%M%k$H%?%9%/$,F1$8FC8"%l%Y%k$GF0:n$9$k$?$a!$%?(B
+ *  $B%9%/$X$NJ,4t$O4X?t8F$S=P$7$G<B8=$G$-$k!%(B
  */
 void
 task_start()
 {
 	/*
-	 *  ƒVƒOƒiƒ‹ƒ}ƒXƒN‚ğİ’è‚µ‚ÄCƒ^ƒXƒN‚ğ‹N“®‚·‚éD
+	 *  $B%7%0%J%k%^%9%/$r@_Dj$7$F!$%?%9%/$r5/F0$9$k!%(B
 	 */
 	sigsetmask(SIGMASK_TASK);
 	(*ctxtsk->task)(ctxtsk->tskctxb.stacd, ctxtsk->exinf);
 
 	/*
-	 *  ƒ^ƒXƒN‚ÌI—¹‚É ext_tsk ‚ğŒÄ‚Ô‚Ì‚ÅC‚±‚±‚Ö‚Í–ß‚ç‚È‚¢D
+	 *  $B%?%9%/$N=*N;;~$K(B ext_tsk $B$r8F$V$N$G!$$3$3$X$OLa$i$J$$!%(B
 	 */
 	assert(0);
 }
 
 /*
- *  ƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚ğg‚í‚È‚¢ê‡
+ *  $B%7%9%F%`%a%b%j%W!<%k$r;H$o$J$$>l9g(B
  *
- *  UNIXƒ‰ƒCƒuƒ‰ƒŠ‚Ì malloc ‚Æ free ‚ÉƒVƒXƒeƒ€ƒƒ‚ƒŠƒv[ƒ‹‚Ì–ğŠ„‚ğ”C‚¹
- *  ‚éD
+ *  UNIX$B%i%$%V%i%j$N(B malloc $B$H(B free $B$K%7%9%F%`%a%b%j%W!<%k$NLr3d$rG$$;(B
+ *  $B$k!%(B
  */
 
 #ifndef USE_TMPL_OS
@@ -159,9 +161,9 @@ sys_rel_blk(VP blk)
 #endif /* USE_TMPL_OS */
 
 /*
- *  Šg’£SVC ‚Ìo“üŒû‚Ìˆ—
+ *  $B3HD%(BSVC $B$N=PF~8}$N=hM}(B
  *
- *  Šg’£SVC “à‚ÅƒVƒXƒeƒ€ƒIƒuƒWƒFƒNƒg‚ğƒAƒNƒZƒX‚Å‚«‚é‚æ‚¤‚É‚·‚é‚½‚ß‚Ìˆ—D
+ *  $B3HD%(BSVC $BFb$G%7%9%F%`%*%V%8%'%/%H$r%"%/%;%9$G$-$k$h$&$K$9$k$?$a$N=hM}!%(B
  */
 
 void

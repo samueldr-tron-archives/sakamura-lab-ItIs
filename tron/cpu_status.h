@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,28 +30,28 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: cpu_status.h,v 1.5 1998/01/30 06:48:12 hiro Exp $
+ *  @(#) $Id: cpu_status.h,v 1.6 1998/01/30 09:56:28 hiro Exp $
  */
 
 #ifndef	_CPU_STATUS_
 #define	_CPU_STATUS_
 
 /* 
- *  TRONd—lƒ`ƒbƒvˆË‘¶’è‹`
+ *  TRON$B;EMM%A%C%W0MB8Dj5A(B
  */
 
 /*
- *  TRONd—lƒ`ƒbƒv ’áƒŒƒxƒ‹’è‹`
+ *  TRON$B;EMM%A%C%W(B $BDc%l%Y%kDj5A(B
  */
 #include "tron_defs.h"
 #include "tron_insn.h"
 
 /*
- *  ƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“’è‹`—pƒ}ƒNƒ
+ *  $B%/%j%F%#%+%k%;%/%7%g%sDj5AMQ%^%/%m(B
  *
- *  ’x‰„Š„‚İ‚ğg‚í‚È‚¢ê‡‚É‚ÍCƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“I—¹‚ÉCƒfƒB
- *  ƒXƒpƒbƒ`‚ª•K—v‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚µC•K—v‚È‚çƒfƒBƒXƒpƒbƒ`ƒƒ‚ğ‹N“®‚·
- *  ‚é•K—v‚ª‚ ‚éD
+ *  $BCY1d3d9~$_$r;H$o$J$$>l9g$K$O!$%/%j%F%#%+%k%;%/%7%g%s=*N;;~$K!$%G%#(B
+ *  $B%9%Q%C%A$,I,MW$+$I$&$+$r%A%'%C%/$7!$I,MW$J$i%G%#%9%Q%C%A%c$r5/F0$9(B
+ *  $B$kI,MW$,$"$k!%(B
  */
 
 #ifndef TRON_NO_DI
@@ -71,30 +73,30 @@
 #define DISABLE_INTERRUPT	{ disint(); }
 
 /*
- *  ƒVƒXƒeƒ€ó‘Ô”»•Ê—pƒ}ƒNƒ
+ *  $B%7%9%F%`>uBVH=JLMQ%^%/%m(B
  */
 
 /*
- *  in_indp(): ƒVƒXƒeƒ€ƒR[ƒ‹‚ªCƒ^ƒXƒN“Æ—§•”‚©‚çŒÄ‚Î‚ê‚½‚©‚ğ”»•Ê‚·‚é‚½
- *  ‚ß‚Ìƒ}ƒNƒD
+ *  in_indp(): $B%7%9%F%`%3!<%k$,!$%?%9%/FHN)It$+$i8F$P$l$?$+$rH=JL$9$k$?(B
+ *  $B$a$N%^%/%m!%(B
  *
- *  ƒVƒXƒeƒ€ƒR[ƒ‹ŒÄo‚µ‚Ì TRAPA ‚Å‚ÍCPSW’†‚ÌƒXƒ^ƒbƒNƒ‚[ƒh‚Í•Ï‰»‚µ‚È
- *  ‚¢‚Ì‚ÅCin_indp ‚ªŒÄ‚Î‚ê‚½“_‚ÌƒXƒ^ƒbƒNƒ‚[ƒh‚ª 0 ‚È‚çƒ^ƒXƒN“Æ—§•”
- *  ‚©‚çŒÄ‚Î‚ê‚½‚Æ”»•Ê‚Å‚«‚éD
+ *  $B%7%9%F%`%3!<%k8F=P$7$N(B TRAPA $B$G$O!$(BPSW$BCf$N%9%?%C%/%b!<%I$OJQ2=$7$J(B
+ *  $B$$$N$G!$(Bin_indp $B$,8F$P$l$?;~E@$N%9%?%C%/%b!<%I$,(B 0 $B$J$i%?%9%/FHN)It(B
+ *  $B$+$i8F$P$l$?$HH=JL$G$-$k!%(B
  */
 #define in_indp()	((current_psw() & 0x80000000) == 0)
 
 /*
- *  in_ddsp(): ƒVƒXƒeƒ€ƒR[ƒ‹‚ªƒfƒBƒXƒpƒbƒ`‹Ö~’†‚ÉŒÄ‚Î‚ê‚½‚©‚ğ”»•Ê‚·‚é
- *  ‚½‚ß‚Ìƒ}ƒNƒDƒ^ƒXƒN“Æ—§•”‚àCƒfƒBƒXƒpƒbƒ`‹Ö~’†‚ÉŠÜ‚ŞD
+ *  in_ddsp(): $B%7%9%F%`%3!<%k$,%G%#%9%Q%C%A6X;_Cf$K8F$P$l$?$+$rH=JL$9$k(B
+ *  $B$?$a$N%^%/%m!%%?%9%/FHN)It$b!$%G%#%9%Q%C%A6X;_Cf$K4^$`!%(B
  *
- *  ƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ‚Ì TRAPA ‚Å‚Í IMASK ‚Í•Ï‰»‚µ‚È‚¢‚Ì‚ÅCin_ddsp 
- *  ‚ªŒÄ‚Î‚ê‚½“_‚Ì IMASK ‚ª 15 –¢–‚È‚çCƒfƒBƒXƒpƒbƒ`‹Ö~’†‚ÉŒÄ‚Î‚ê‚½
- *  ‚Æ”»•Ê‚Å‚«‚éDƒ^ƒXƒN“Æ—§•”‚Å IMASK ‚ª 15 ‚É‚È‚éƒP[ƒX‚Íl‚¦‚È‚¢D
+ *  $B%7%9%F%`%3!<%k8F$S=P$7$N(B TRAPA $B$G$O(B IMASK $B$OJQ2=$7$J$$$N$G!$(Bin_ddsp 
+ *  $B$,8F$P$l$?;~E@$N(B IMASK $B$,(B 15 $BL$K~$J$i!$%G%#%9%Q%C%A6X;_Cf$K8F$P$l$?(B
+ *  $B$HH=JL$G$-$k!%%?%9%/FHN)It$G(B IMASK $B$,(B 15 $B$K$J$k%1!<%9$O9M$($J$$!%(B
  *
- *  ’x‰„Š„‚İ‚ğg‚í‚È‚¢ê‡‚É‚ÍCIMASK = 14 ‚É‘Š“–‚·‚éó‘Ô‚ªC
- *  dispatch_disabled ‚ğ TRUE ‚É‚·‚é‚±‚Æ‚Å‹L‰¯‚³‚ê‚é‚½‚ßC
- *  dispatch_disabled ‚Ìƒ`ƒFƒbƒN‚à•K—v‚Å‚ ‚éD
+ *  $BCY1d3d9~$_$r;H$o$J$$>l9g$K$O!$(BIMASK = 14 $B$KAjEv$9$k>uBV$,!$(B
+ *  dispatch_disabled $B$r(B TRUE $B$K$9$k$3$H$G5-21$5$l$k$?$a!$(B
+ *  dispatch_disabled $B$N%A%'%C%/$bI,MW$G$"$k!%(B
  */
 #ifndef TRON_NO_DI
 #define in_ddsp()	(current_imask() < 15)
@@ -103,16 +105,16 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  in_loc(): ƒVƒXƒeƒ€ƒR[ƒ‹‚ª CPUƒƒbƒN’†‚ÉŒÄ‚Î‚ê‚½‚©‚ğ”»•Ê‚·‚é‚½‚ß‚Ì
- *  ƒ}ƒNƒDƒ^ƒXƒN“Æ—§•”‚àCCPUƒƒbƒN’†‚ÉŠÜ‚ŞD
+ *  in_loc(): $B%7%9%F%`%3!<%k$,(B CPU$B%m%C%/Cf$K8F$P$l$?$+$rH=JL$9$k$?$a$N(B
+ *  $B%^%/%m!%%?%9%/FHN)It$b!$(BCPU$B%m%C%/Cf$K4^$`!%(B
  *
- *  ƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ‚Ì TRAPA ‚Å‚Í IMASK ‚Í•Ï‰»‚µ‚È‚¢‚Ì‚ÅCin_loc 
- *  ‚ªŒÄ‚Î‚ê‚½“_‚Ì IMASK ‚ª 14 –¢–‚È‚çCCPUƒƒbƒN’†‚ÉŒÄ‚Î‚ê‚½‚Æl‚¦
- *  ‚éDÀÛ‚É‚ÍCloc_cpu ƒVƒXƒeƒ€ƒR[ƒ‹‚ğg‚¤‚ÆCIMASK ‚Í 0 ‚É‚È‚éDƒ^
- *  ƒXƒN“Æ—§•”‚Å IMASK ‚ª 14 ‚È‚¢‚µ‚Í 15 ‚É‚È‚éƒP[ƒX‚Íl‚¦‚È‚¢D
+ *  $B%7%9%F%`%3!<%k8F$S=P$7$N(B TRAPA $B$G$O(B IMASK $B$OJQ2=$7$J$$$N$G!$(Bin_loc 
+ *  $B$,8F$P$l$?;~E@$N(B IMASK $B$,(B 14 $BL$K~$J$i!$(BCPU$B%m%C%/Cf$K8F$P$l$?$H9M$((B
+ *  $B$k!%<B:]$K$O!$(Bloc_cpu $B%7%9%F%`%3!<%k$r;H$&$H!$(BIMASK $B$O(B 0 $B$K$J$k!%%?(B
+ *  $B%9%/FHN)It$G(B IMASK $B$,(B 14 $B$J$$$7$O(B 15 $B$K$J$k%1!<%9$O9M$($J$$!%(B
  *
- *  ’x‰„Š„‚İ‚ğg‚í‚È‚¢ê‡‚É‚ÍCIMASK ‚ª 14 ‚É‚È‚é‚±‚Æ‚Í‚È‚­C15 –¢–
- *  ‚©‚Ç‚¤‚©‚Åƒ`ƒFƒbƒN‚·‚éD
+ *  $BCY1d3d9~$_$r;H$o$J$$>l9g$K$O!$(BIMASK $B$,(B 14 $B$K$J$k$3$H$O$J$/!$(B15 $BL$K~(B
+ *  $B$+$I$&$+$G%A%'%C%/$9$k!%(B
  */
 #ifndef TRON_NO_DI
 #define in_loc()	(current_imask() < 14)
@@ -121,23 +123,23 @@
 #endif /* TRON_NO_DI */
 
 /*
- *  in_sysmode(): ƒVƒXƒeƒ€ƒR[ƒ‹‚ªƒVƒXƒeƒ€ƒŠƒ\[ƒX‚ğƒAƒNƒZƒX‚Å‚«‚éó‘Ô‚©
- *  ‚çŒÄ‚Î‚ê‚½‚©‚ğ”»•Ê‚·‚é‚½‚ß‚Ìƒ}ƒNƒDE_OACVƒGƒ‰[‚Ìƒ`ƒFƒbƒN‚É—p‚¢‚éD
+ *  in_sysmode(): $B%7%9%F%`%3!<%k$,%7%9%F%`%j%=!<%9$r%"%/%;%9$G$-$k>uBV$+(B
+ *  $B$i8F$P$l$?$+$rH=JL$9$k$?$a$N%^%/%m!%(BE_OACV$B%(%i!<$N%A%'%C%/$KMQ$$$k!%(B
  *
- *  PSW’†‚ÌƒŠƒ“ƒOƒŒƒxƒ‹‚ÍCƒVƒXƒeƒ€ƒR[ƒ‹ŒÄ‚Ño‚µ‚Ì TRAPA ‚É‚æ‚è•Ï‰»‚·‚é
- *  ‚½‚ßCin_sysmode ‚ªŒÄ‚Î‚ê‚½“_‚Ì RNG ‚ğŒ©‚Ä”»•Ê‚·‚é‚±‚Æ‚Í‚Å‚«‚¸C
- *  ctxtsk ‚Ì sysmodeƒtƒB[ƒ‹ƒh‚ğŒ©‚Ä”»•Ê‚·‚é•K—v‚ª‚ ‚éD
+ *  PSW$BCf$N%j%s%0%l%Y%k$O!$%7%9%F%`%3!<%k8F$S=P$7$N(B TRAPA $B$K$h$jJQ2=$9$k(B
+ *  $B$?$a!$(Bin_sysmode $B$,8F$P$l$?;~E@$N(B RNG $B$r8+$FH=JL$9$k$3$H$O$G$-$:!$(B
+ *  ctxtsk $B$N(B sysmode$B%U%#!<%k%I$r8+$FH=JL$9$kI,MW$,$"$k!%(B
  */
 #define	in_sysmode()	(in_indp() || ctxtsk->sysmode)
 
 /*
- *  in_qtsk(): ƒVƒXƒeƒ€ƒR[ƒ‹‚ªC€ƒ^ƒXƒN•”‚ğÀs’†‚©‚çŒÄ‚Î‚ê‚½‚©‚ğ”»•Ê
- *  ‚·‚é‚½‚ß‚Ìƒ}ƒNƒDƒ^ƒXƒN“Æ—§•”‚Æ‚Í‹æ•Ê‚µ‚È‚¢‚Ì‚ÅCin_indp() ‚ª FALSE 
- *  ‚Ì‚É‚Ì‚İg‚¤‚±‚ÆD
+ *  in_qtsk(): $B%7%9%F%`%3!<%k$,!$=`%?%9%/It$r<B9TCf$+$i8F$P$l$?$+$rH=JL(B
+ *  $B$9$k$?$a$N%^%/%m!%%?%9%/FHN)It$H$O6hJL$7$J$$$N$G!$(Bin_indp() $B$,(B FALSE 
+ *  $B$N;~$K$N$_;H$&$3$H!%(B
  *
- *  ‚±‚Ì”»•Ê‚ğ‰Â”\‚É‚·‚é‚½‚ß‚ÉCTCB ’†‚É isysmodeƒtƒB[ƒ‹ƒh‚ğ—pˆÓ‚·‚éD
- *  USE_QTSK_PORTION ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡‚É‚ÍC€ƒ^ƒXƒN•”‚Íg‚í‚ê‚È‚¢
- *  ‚Ì‚ÅCí‚É FALSE ‚Æ‚·‚éD
+ *  $B$3$NH=JL$r2DG=$K$9$k$?$a$K!$(BTCB $BCf$K(B isysmode$B%U%#!<%k%I$rMQ0U$9$k!%(B
+ *  USE_QTSK_PORTION $B$,Dj5A$5$l$F$$$J$$>l9g$K$O!$=`%?%9%/It$O;H$o$l$J$$(B
+ *  $B$N$G!$>o$K(B FALSE $B$H$9$k!%(B
  */
 #ifdef USE_QTSK_PORTION
 #define in_qtsk()	(ctxtsk->sysmode > ctxtsk->isysmode)
@@ -146,11 +148,11 @@
 #endif /* USE_QTSK_PORTION */
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‹N“®ƒ‹[ƒ`ƒ“
+ *  $B%?%9%/%G%#%9%Q%C%A%c5/F0%k!<%A%s(B
  */
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‹N“®—v‹‚ğo‚·D
+ *  $B%?%9%/%G%#%9%Q%C%A%c$N5/F0MW5a$r=P$9!%(B
  */
 Inline void
 dispatch_request(void)
@@ -161,17 +163,17 @@ dispatch_request(void)
 }
 
 /*
- *  Œ»İ‚Ìƒ^ƒXƒN‚ÌƒRƒ“ƒeƒLƒXƒg‚ğÌ‚Ä‚ÄCŸ‚ÉÀs‚·‚×‚«ƒ^ƒXƒN‚Ö‹­§“I‚É
- *  ƒfƒBƒXƒpƒbƒ`‚·‚éD
+ *  $B8=:_$N%?%9%/$N%3%s%F%-%9%H$r<N$F$F!$<!$K<B9T$9$Y$-%?%9%/$X6/@)E*$K(B
+ *  $B%G%#%9%Q%C%A$9$k!%(B
  *
- *  ƒVƒXƒeƒ€‹N“®‚¨‚æ‚Ñ ext_tsk, exd_tsk ‚Ìˆ—‚Å—p‚¢‚éD
+ *  $B%7%9%F%`5/F0;~$*$h$S(B ext_tsk, exd_tsk $B$N=hM}$GMQ$$$k!%(B
  *
- *  ˆ—“à—e‚Æ‚µ‚Ä‚ÍCdispatch_to_schedtsk ‚Ö•ªŠò‚·‚é‚¾‚¯‚Å‚ ‚éD•ªŠòŒã
- *  ‚Íƒ^ƒXƒN‚ÌƒRƒ“ƒeƒLƒXƒg‚ÍÌ‚Ä‚ç‚ê‚é‚Ì‚ÅŠÖ”ŒÄo‚µ‚Å‚àŠî–{“I‚É‚Í–â‘è
- *  ‚È‚¢‚ªCSPI ‚ğg‚Á‚Ä‚¢‚éƒ‚[ƒh‚ÅŒÄ‚ñ‚¾ê‡ (³í‚Ég‚Á‚Ä‚¢‚ê‚ÎCƒV
- *  ƒXƒeƒ€‹N“®‚Ì‚İ) ‚ÉCbra –½—ß‚Å•ªŠò‚µ‚½•û‚ªŠÖ”ŒÄo‚µ‚ğs‚¤‚æ‚è‚à
- *  •Ô‚è”Ô’n‚ÌƒXƒ^ƒbƒN—Ìˆæ•ª‚ª (‚í‚¸‚© 4ƒoƒCƒg‚¾‚¯‚Å‚Í‚ ‚é‚ª) ß–ñ‚Å‚«
- *  ‚éD
+ *  $B=hM}FbMF$H$7$F$O!$(Bdispatch_to_schedtsk $B$XJ,4t$9$k$@$1$G$"$k!%J,4t8e(B
+ *  $B$O%?%9%/$N%3%s%F%-%9%H$O<N$F$i$l$k$N$G4X?t8F=P$7$G$b4pK\E*$K$OLdBj(B
+ *  $B$J$$$,!$(BSPI $B$r;H$C$F$$$k%b!<%I$G8F$s$@>l9g(B ($B@5>o$K;H$C$F$$$l$P!$%7(B
+ *  $B%9%F%`5/F0;~$N$_(B) $B$K!$(Bbra $BL?Na$GJ,4t$7$?J}$,4X?t8F=P$7$r9T$&$h$j$b(B
+ *  $BJV$jHVCO$N%9%?%C%/NN0hJ,$,(B ($B$o$:$+(B 4$B%P%$%H$@$1$G$O$"$k$,(B) $B@aLs$G$-(B
+ *  $B$k!%(B
  */
 Inline void
 force_dispatch(void)
@@ -180,9 +182,9 @@ force_dispatch(void)
 }
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‚ğ‹N“®‚·‚éD
+ *  $B%?%9%/%G%#%9%Q%C%A%c$r5/F0$9$k!%(B
  *
- *  TRONd—lƒ`ƒbƒv‚Å‚ÍC’x‰„Š„‚İ‚ğg‚í‚È‚¢ê‡‚É‚Ì‚İg‚í‚ê‚éD
+ *  TRON$B;EMM%A%C%W$G$O!$CY1d3d9~$_$r;H$o$J$$>l9g$K$N$_;H$o$l$k!%(B
  */
 #ifdef TRON_NO_DI
 Inline void
@@ -193,7 +195,7 @@ dispatch()
 #endif /* TRON_NO_DI */
 
 /*
- *  ƒ^ƒXƒNƒRƒ“ƒeƒLƒXƒgƒuƒƒbƒN‚Ì’è‹`
+ *  $B%?%9%/%3%s%F%-%9%H%V%m%C%/$NDj5A(B
  */
 typedef struct {
 	VW	csw;		/* CSW (Context Status Word) */

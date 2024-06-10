@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,11 +30,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: serial.c,v 1.13 1996/02/17 09:38:15 hiro Exp $
+ *  @(#) $Id: serial.c,v 1.14 1998/01/30 09:58:16 hiro Exp $
  */
 
 /*
- *  ÉVÉäÉAÉãÉCÉìÉ^ÉtÉFÅ[ÉXÉhÉâÉCÉo
+ *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P(B
  */
 
 #include "systask.h"
@@ -42,12 +44,12 @@
 #define	assert(exp)
 
 /*
- *  ÉRÉìÉ\Å[ÉãópÇ…ópÇ¢ÇÈÉVÉäÉAÉãÉ|Å[Égî‘çÜ
+ *  $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B
  */
 static int	console_portid;
 
 /*
- *  ÉVÉäÉAÉãÉCÉìÉ^ÉtÉFÅ[ÉXÉhÉâÉCÉoÇÃãNìÆ
+ *  $B%7%j%"%k%$%s%?%U%'!<%9%I%i%$%P$N5/F0(B
  */
 void
 serial_startup(int portid)
@@ -67,7 +69,7 @@ serial_startup(int portid)
 }
 
 /*
- *  ÉVÉäÉAÉãÉ|Å[Égä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B%7%j%"%k%]!<%H4IM}%V%m%C%/$NDj5A(B
  */
 
 typedef struct ioctl_descripter {
@@ -77,37 +79,37 @@ typedef struct ioctl_descripter {
 	int	flowc;
 } IOCTL;
 
-#define	SERIAL_BUFSZ	256	/* ÉVÉäÉAÉãÉCÉìÉ^ÉtÉFÅ[ÉXópÉoÉbÉtÉ@ÇÃÉTÉCÉY */
+#define	SERIAL_BUFSZ	256	/* $B%7%j%"%k%$%s%?%U%'!<%9MQ%P%C%U%!$N%5%$%:(B */
 
 #define	inc(x)		(((x)+1 < SERIAL_BUFSZ) ? (x)+1 : 0)
 #define	INC(x)		((++(x) < SERIAL_BUFSZ) ? (x) : ((x) = 0))
 
 typedef struct serial_port_control_block {
-	int	init_flag;	/* èâä˙âªçœÇ©ÅH */
-	RPORT	rawport;	/* ÉnÅ[ÉhÉEÉFÉAàÀë∂èÓïÒ */
-	char	*in_buffer;	/* éÛêMÉoÉbÉtÉ@ÉGÉäÉAÇÃêÊì™ */
-	ID	in_sem_id;	/* éÛêMÉoÉbÉtÉ@ä«óùópÉZÉ}ÉtÉHÇÃ ID */
-	int	in_read_ptr;	/* éÛêMÉoÉbÉtÉ@ì«Ç›èoÇµÉ|ÉCÉìÉ^ */
-	int	in_write_ptr;	/* éÛêMÉoÉbÉtÉ@èëÇ´çûÇ›É|ÉCÉìÉ^ */
-	char	*out_buffer;	/* ëóêMÉoÉbÉtÉ@ÉGÉäÉAÇÃêÊì™ */
-	ID	out_sem_id;	/* ëóêMÉoÉbÉtÉ@ä«óùópÉZÉ}ÉtÉHÇÃ ID */
-	int	out_read_ptr;	/* ëóêMÉoÉbÉtÉ@ì«Ç›èoÇµÉ|ÉCÉìÉ^ */
-	int	out_write_ptr;	/* ëóêMÉoÉbÉtÉ@èëÇ´çûÇ›É|ÉCÉìÉ^ */
-	IOCTL	ctl;		/* ioctl Ç…ÇÊÇÈê›íËì‡óe */
-	BOOL	send_enabled;	/* ëóêMÇÉCÉlÅ[ÉuÉãÇµÇƒÇ†ÇÈÇ©ÅH */
-	BOOL	ixon_stopped;	/* STOP ÇéÛÇØéÊÇ¡ÇΩèÛë‘Ç©ÅH */
-	BOOL	ixoff_stopped;	/* ëäéËÇ… STOP ÇëóÇ¡ÇΩèÛë‘Ç©ÅH */
-	char	ixoff_send;	/* ëäéËÇ… START/STOP ÇëóÇÈÇ©ÅH */
+	int	init_flag;	/* $B=i4|2=:Q$+!)(B */
+	RPORT	rawport;	/* $B%O!<%I%&%'%"0MB8>pJs(B */
+	char	*in_buffer;	/* $B<u?.%P%C%U%!%(%j%"$N@hF,(B */
+	ID	in_sem_id;	/* $B<u?.%P%C%U%!4IM}MQ%;%^%U%)$N(B ID */
+	int	in_read_ptr;	/* $B<u?.%P%C%U%!FI$_=P$7%]%$%s%?(B */
+	int	in_write_ptr;	/* $B<u?.%P%C%U%!=q$-9~$_%]%$%s%?(B */
+	char	*out_buffer;	/* $BAw?.%P%C%U%!%(%j%"$N@hF,(B */
+	ID	out_sem_id;	/* $BAw?.%P%C%U%!4IM}MQ%;%^%U%)$N(B ID */
+	int	out_read_ptr;	/* $BAw?.%P%C%U%!FI$_=P$7%]%$%s%?(B */
+	int	out_write_ptr;	/* $BAw?.%P%C%U%!=q$-9~$_%]%$%s%?(B */
+	IOCTL	ctl;		/* ioctl $B$K$h$k@_DjFbMF(B */
+	BOOL	send_enabled;	/* $BAw?.$r%$%M!<%V%k$7$F$"$k$+!)(B */
+	BOOL	ixon_stopped;	/* STOP $B$r<u$1<h$C$?>uBV$+!)(B */
+	BOOL	ixoff_stopped;	/* $BAj<j$K(B STOP $B$rAw$C$?>uBV$+!)(B */
+	char	ixoff_send;	/* $BAj<j$K(B START/STOP $B$rAw$k$+!)(B */
 } SPCB;
 
 /*
- *  ÉÇÉWÉÖÅ[Éãì‡Ç≈égÇ§ä÷êî
+ *  $B%b%8%e!<%kFb$G;H$&4X?t(B
  */
 static char	serial_read_one(SPCB *p);
 static void	serial_write_one(SPCB *p, char c);
 
 /*
- *  ÉVÉäÉAÉãÉ|Å[Égä«óùÉuÉçÉbÉNÇÃíËã`Ç∆èâä˙âª
+ *  $B%7%j%"%k%]!<%H4IM}%V%m%C%/$NDj5A$H=i4|2=(B
  */
 
 SPCB spcb_table[NUM_PORT] = {
@@ -133,7 +135,7 @@ SPCB spcb_table[NUM_PORT] = {
 #define get_spcb_def(portid)	get_spcb((portid) ? (portid) : console_portid)
 
 /*
- *  É|Å[ÉgÇÃèâä˙âª
+ *  $B%]!<%H$N=i4|2=(B
  */
 
 int
@@ -144,7 +146,7 @@ serial_init(int portid)
 	T_DINT	pk_dint;
 	ER	ercd = E_OK;
 
-	if (sysstat() & TTS_INDP) {		/* ÉRÉìÉeÉLÉXÉgÇÃÉ`ÉFÉbÉN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(1 <= portid && portid <= NUM_PORT)) {
@@ -152,14 +154,14 @@ serial_init(int portid)
 	}
 
 	p = get_spcb(portid);
-	if (p->init_flag) {			/* èâä˙âªçœÇ©ÇÃÉ`ÉFÉbÉN */
+	if (p->init_flag) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OK);
 	}
 
 	ENTER_EXTENDED_SVC;
 
 	/*
-	 *  ÉoÉbÉtÉ@óÃàÊÇÃämï€ (ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÇ©ÇÁéÊÇÈ)
+	 *  $B%P%C%U%!NN0h$N3NJ](B ($B%7%9%F%`%a%b%j%W!<%k$+$i<h$k(B)
 	 */
 	if (pget_blk(&buffer, TMPL_OS, SERIAL_BUFSZ * 2) != E_OK) {
 		ercd = E_NOMEM;
@@ -169,7 +171,7 @@ serial_init(int portid)
 	p->out_buffer = ((char *) buffer) + SERIAL_BUFSZ;
 
 	/*
-	 *  ïœêîÇÃèâä˙âª
+	 *  $BJQ?t$N=i4|2=(B
 	 */
 	p->in_read_ptr = p->in_write_ptr = 0;
 	p->out_read_ptr = p->out_write_ptr = 0;
@@ -177,14 +179,14 @@ serial_init(int portid)
 	p->ixoff_send = 0;
 
 	/*
-	 *  äÑçûÇ›ÉnÉìÉhÉâÇÃíËã`
+	 *  $B3d9~$_%O%s%I%i$NDj5A(B
 	 */
 	pk_dint.intatr = TA_HLNG;
 	pk_dint.inthdr = raw_int_handler(&(p->rawport));
 	syscall(def_int(raw_int_vector(&(p->rawport)), &pk_dint));
 
 	/*
-	 *  ÉZÉ}ÉtÉHÇÃê∂ê¨
+	 *  $B%;%^%U%)$N@8@.(B
 	 */
 	syscall(cre_sem(p->in_sem_id,
 		&((T_CSEM) { 0, TA_TPRI, 0, SERIAL_BUFSZ-1 })));
@@ -192,7 +194,7 @@ serial_init(int portid)
 		&((T_CSEM) { 0, TA_TPRI, SERIAL_BUFSZ-1, SERIAL_BUFSZ-1 })));
 
 	/*
-	 *  ÉnÅ[ÉhÉEÉFÉAàÀë∂ÇÃèâä˙âª
+	 *  $B%O!<%I%&%'%"0MB8$N=i4|2=(B
 	 */
 	syscall(loc_cpu());
 	if (raw_port_init(&(p->rawport))) {
@@ -211,10 +213,10 @@ serial_init(int portid)
 }
 
 /*
- *  É|Å[ÉgÇÃÉVÉÉÉbÉgÉ_ÉEÉì
+ *  $B%]!<%H$N%7%c%C%H%@%&%s(B
  *
- *  flush Ç™ TRUE ÇÃèÍçáÇÕÅCÉVÉäÉAÉãÉ|Å[ÉgÇ÷ÇÃëóêMÉoÉbÉtÉ@Ç™ãÛÇ…Ç»ÇÈÇ‹
- *  Ç≈ë“Ç¬ÅD
+ *  flush $B$,(B TRUE $B$N>l9g$O!$%7%j%"%k%]!<%H$X$NAw?.%P%C%U%!$,6u$K$J$k$^(B
+ *  $B$GBT$D!%(B
  */
 
 #define	MAX_FLUSH_LOOP	1000000
@@ -225,22 +227,22 @@ serial_shutdown(int portid, int flush)
 	SPCB	*p;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* ÉRÉìÉeÉLÉXÉgÇÃÉ`ÉFÉbÉN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(1 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* É|Å[Égî‘çÜÇÃÉ`ÉFÉbÉN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb(portid);
-	if (!(p->init_flag)) {			/* èâä˙âªçœÇ©ÇÃÉ`ÉFÉbÉN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
 	ENTER_EXTENDED_SVC;
 
 	/*
-	 *  ÉoÉbÉtÉ@ÇÃÉtÉâÉbÉVÉÖèàóù
+	 *  $B%P%C%U%!$N%U%i%C%7%e=hM}(B
 	 */
 	if (flush) {
 		for (i = 0; i < MAX_FLUSH_LOOP; i++) {
@@ -251,20 +253,20 @@ serial_shutdown(int portid, int flush)
 	}
 
 	/*
-	 *  ÉnÅ[ÉhÉEÉFÉAàÀë∂ÇÃÉVÉÉÉbÉgÉ_ÉEÉìèàóù
+	 *  $B%O!<%I%&%'%"0MB8$N%7%c%C%H%@%&%s=hM}(B
 	 */
 	syscall(loc_cpu());
 	raw_port_shutdown(&(p->rawport));
 	syscall(unl_cpu());
 
 	/*
-	 *  ÉZÉ}ÉtÉHÇÃçÌèú
+	 *  $B%;%^%U%)$N:o=|(B
 	 */
 	syscall(del_sem(p->in_sem_id));
 	syscall(del_sem(p->out_sem_id));
 
 	/*
-	 *  ÉoÉbÉtÉ@óÃàÊÇÃâï˙
+	 *  $B%P%C%U%!NN0h$N2rJ|(B
 	 */
 	syscall(rel_blk(TMPL_OS, p->in_buffer));
 
@@ -275,7 +277,7 @@ serial_shutdown(int portid, int flush)
 }
 
 /*
- *  ÉtÉçÅ[ÉRÉìÉgÉçÅ[Éãä÷åWÇÃíËã`
+ *  $B%U%m!<%3%s%H%m!<%k4X78$NDj5A(B
  */
 #define	STOP	'\023'		/* Control-S */
 #define	START	'\021'		/* Control-Q */
@@ -288,7 +290,7 @@ serial_shutdown(int portid, int flush)
 			 (p->in_read_ptr + SERIAL_BUFSZ - p->in_write_ptr))
 
 /*
- *  ÉÜÅ[ÉeÉBÉäÉeÉBÉãÅ[É`Éì
+ *  $B%f!<%F%#%j%F%#%k!<%A%s(B
  */
 
 Inline BOOL
@@ -306,7 +308,7 @@ enable_send(SPCB *p, char c)
 }
 
 /*
- *  ÉVÉäÉAÉãÉ|Å[ÉgÇ©ÇÁÇÃéÛêM
+ *  $B%7%j%"%k%]!<%H$+$i$N<u?.(B
  */
 
 int
@@ -316,15 +318,15 @@ serial_read(int portid, char *buf, unsigned int len)
 	char	c;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* ÉRÉìÉeÉLÉXÉgÇÃÉ`ÉFÉbÉN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* É|Å[Égî‘çÜÇÃÉ`ÉFÉbÉN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* èâä˙âªçœÇ©ÇÃÉ`ÉFÉbÉN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
@@ -370,7 +372,7 @@ serial_read_one(SPCB *p)
 }
 
 /*
- *  ÉVÉäÉAÉãÉ|Å[ÉgÇ÷ÇÃëóêM
+ *  $B%7%j%"%k%]!<%H$X$NAw?.(B
  */
 
 int
@@ -379,15 +381,15 @@ serial_write(int portid, char *buf, unsigned int len)
 	SPCB	*p;
 	int	i;
 
-	if (sysstat() & TTS_INDP) {		/* ÉRÉìÉeÉLÉXÉgÇÃÉ`ÉFÉbÉN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* É|Å[Égî‘çÜÇÃÉ`ÉFÉbÉN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* èâä˙âªçœÇ©ÇÃÉ`ÉFÉbÉN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
@@ -422,7 +424,7 @@ serial_write_one(SPCB *p, char c)
 }
 
 /*
- *  ÉVÉäÉAÉãÉ|Å[ÉgÇÃêßå‰
+ *  $B%7%j%"%k%]!<%H$N@)8f(B
  */
 
 int
@@ -431,15 +433,15 @@ serial_ioctl(int portid, int req, int arg)
 	SPCB	*p;
 	ER	ercd = E_OK;
 
-	if (sysstat() & TTS_INDP) {		/* ÉRÉìÉeÉLÉXÉgÇÃÉ`ÉFÉbÉN */
+	if (sysstat() & TTS_INDP) {		/* $B%3%s%F%-%9%H$N%A%'%C%/(B */
 		return(E_CTX);
 	}
 	if (!(0 <= portid && portid <= NUM_PORT)) {
-		return(E_PAR);			/* É|Å[Égî‘çÜÇÃÉ`ÉFÉbÉN */
+		return(E_PAR);			/* $B%]!<%HHV9f$N%A%'%C%/(B */
 	}
 
 	p = get_spcb_def(portid);
-	if (!(p->init_flag)) {			/* èâä˙âªçœÇ©ÇÃÉ`ÉFÉbÉN */
+	if (!(p->init_flag)) {			/* $B=i4|2=:Q$+$N%A%'%C%/(B */
 		return(E_OBJ);
 	}
 
@@ -473,7 +475,7 @@ serial_ioctl(int portid, int req, int arg)
 }
 
 /*
- *  ÉVÉäÉAÉãÉ|Å[ÉgäÑçûÇ›ÉnÉìÉhÉâ
+ *  $B%7%j%"%k%]!<%H3d9~$_%O%s%I%i(B
  */
 
 static void
@@ -499,7 +501,7 @@ serial_int_handler(int portid)
 			}
 		}
 		else if (inc(p->in_write_ptr) == p->in_read_ptr) {
-			/* ÉoÉbÉtÉ@ÉtÉãÇÃèÍçáÅCéÛêMÇµÇΩï∂éöÇéÃÇƒÇÈÅD*/
+			/* $B%P%C%U%!%U%k$N>l9g!$<u?.$7$?J8;z$r<N$F$k!%(B*/
 		}
 		else {
 			*(p->in_buffer + p->in_write_ptr) = c;
@@ -528,7 +530,7 @@ serial_int_handler(int portid)
 		}
 		else if (p->ixon_stopped
 				|| p->out_read_ptr == p->out_write_ptr) {
-			/* ëóêMí‚é~ */
+			/* $BAw?.Dd;_(B */
 			raw_port_sendstop(&(p->rawport));
 			p->send_enabled = 0;
 		}

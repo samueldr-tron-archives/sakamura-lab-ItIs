@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: task.h,v 1.18 1997/01/10 13:36:31 hiro Exp $
+ *  @(#) $Id: task.h,v 1.19 1998/01/30 09:52:45 hiro Exp $
  */
 
 #ifndef _TASK_
@@ -43,22 +45,22 @@ typedef struct prisem_control_block	PISCB;
 #include "winfo.h"
 
 /*
- *  ƒ^ƒXƒNó‘Ô‚Ì“à•”•\Œ»‚Ì’è‹`
+ *  $B%?%9%/>uBV$NFbItI=8=$NDj5A(B
  *
- *  ƒ^ƒXƒN‚ª‘Ò‚¿ó‘Ô‚©‚Ç‚¤‚©‚Í (state & TS_WAIT) ‚Åƒ`ƒFƒbƒN‚Å‚«‚é.
- *  ƒ^ƒXƒN‚ª‹­§‘Ò‚¿ó‘Ô‚©‚Ç‚¤‚©‚Í (state & TS_SUSPEND) ‚Åƒ`ƒFƒbƒN‚Å‚«‚é.
+ *  $B%?%9%/$,BT$A>uBV$+$I$&$+$O(B (state & TS_WAIT) $B$G%A%'%C%/$G$-$k(B.
+ *  $B%?%9%/$,6/@)BT$A>uBV$+$I$&$+$O(B (state & TS_SUSPEND) $B$G%A%'%C%/$G$-$k(B.
  */
 typedef enum {
-	TS_NONEXIST = 0,	/* –¢“o˜^ó‘Ô */
-	TS_READY = 1,		/* Às‚Ü‚½‚ÍÀs‰Â”\ó‘Ô */
-	TS_WAIT = 2,		/* ‘Ò‚¿ó‘Ô */
-	TS_SUSPEND = 4,		/* ‹­§‘Ò‚¿ó‘Ô */
-	TS_WAITSUS = 6,		/* “ñd‘Ò‚¿ó‘Ô */
-	TS_DORMANT = 8		/* ‹x~ó‘Ô */
+	TS_NONEXIST = 0,	/* $BL$EPO?>uBV(B */
+	TS_READY = 1,		/* $B<B9T$^$?$O<B9T2DG=>uBV(B */
+	TS_WAIT = 2,		/* $BBT$A>uBV(B */
+	TS_SUSPEND = 4,		/* $B6/@)BT$A>uBV(B */
+	TS_WAITSUS = 6,		/* $BFs=EBT$A>uBV(B */
+	TS_DORMANT = 8		/* $B5Y;_>uBV(B */
 } TSTAT;
 
 /*
- *  ƒ^ƒXƒN‚ª¶‚«‚Ä‚¢‚é‚© (NON-EXISTENTCDORMANTˆÈŠO‚©) ‚Ìƒ`ƒFƒbƒN
+ *  $B%?%9%/$,@8$-$F$$$k$+(B (NON-EXISTENT$B!$(BDORMANT$B0J30$+(B) $B$N%A%'%C%/(B
  */
 Inline BOOL
 task_alive(TSTAT state)
@@ -67,144 +69,144 @@ task_alive(TSTAT state)
 }
 
 /*
- *  ƒ^ƒXƒN—Dæ“x‚Ì“à•”/ŠO•”•\Œ»•ÏŠ·ƒ}ƒNƒ
+ *  $B%?%9%/M%@hEY$NFbIt(B/$B30ItI=8=JQ49%^%/%m(B
  */
 #define int_priority(x)	((INT)((x) - MIN_PRI))
 #define ext_tskpri(x)	((PRI)((x) + MIN_PRI))
 
 /*
- *  ƒ^ƒXƒNƒRƒ“ƒgƒ[ƒ‹ƒuƒƒbƒN (TCB) ‚Ì’è‹`
+ *  $B%?%9%/%3%s%H%m!<%k%V%m%C%/(B (TCB) $B$NDj5A(B
  */
 struct task_control_block {
-	QUEUE	tskque;		/* ƒ^ƒXƒNƒLƒ…[ */
-	ID	tskid;		/* ƒ^ƒXƒNID */
-	VP	exinf;		/* Šg’£î•ñ */
-	ATR	tskatr;		/* ƒ^ƒXƒN‘®« */
-	FP	task;		/* ƒ^ƒXƒN‹N“®ƒAƒhƒŒƒX */
-	INT	ipriority;	/* ƒ^ƒXƒN‹N“®—Dæ“x */
+	QUEUE	tskque;		/* $B%?%9%/%-%e!<(B */
+	ID	tskid;		/* $B%?%9%/(BID */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	tskatr;		/* $B%?%9%/B0@-(B */
+	FP	task;		/* $B%?%9%/5/F0%"%I%l%9(B */
+	INT	ipriority;	/* $B%?%9%/5/F0;~M%@hEY(B */
 #ifdef USE_SEPARATE_SSTACK
-	INT	stksz;		/* ƒ†[ƒUƒXƒ^ƒbƒNƒTƒCƒY */
+	INT	stksz;		/* $B%f!<%6%9%?%C%/%5%$%:(B */
 #endif /* USE_SEPARATE_SSTACK */
-	INT	sstksz;		/* ƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒTƒCƒY */
-	INT	priority;	/* Œ»İ‚Ì—Dæ“x */
-	TSTAT	state;		/* ƒ^ƒXƒNó‘Ô (“à•”•\Œ») */
-	WSPEC	*wspec;		/* ‘Ò‚¿d—l */
-	GCB	*wgcb;		/* ‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚ÌƒRƒ“ƒgƒ[ƒ‹ƒuƒƒbƒN */
-	INT	wupcnt;		/* ‹N°—v‹ƒLƒ…[ƒCƒ“ƒO” */
-	INT	suscnt;		/* SUSPEND—v‹ƒlƒXƒg” */
-	INT	sysmode;	/* ƒ^ƒXƒN“®ìƒ‚[ƒhC€ƒ^ƒXƒN•”ŒÄo‚µƒŒƒxƒ‹ */
+	INT	sstksz;		/* $B%7%9%F%`%9%?%C%/%5%$%:(B */
+	INT	priority;	/* $B8=:_$NM%@hEY(B */
+	TSTAT	state;		/* $B%?%9%/>uBV(B ($BFbItI=8=(B) */
+	WSPEC	*wspec;		/* $BBT$A;EMM(B */
+	GCB	*wgcb;		/* $BBT$A%*%V%8%'%/%H$N%3%s%H%m!<%k%V%m%C%/(B */
+	INT	wupcnt;		/* $B5/>2MW5a%-%e!<%$%s%0?t(B */
+	INT	suscnt;		/* SUSPEND$BMW5a%M%9%H?t(B */
+	INT	sysmode;	/* $B%?%9%/F0:n%b!<%I!$=`%?%9%/It8F=P$7%l%Y%k(B */
 #ifdef USE_QTSK_PORTION
-	INT	isysmode;	/* ƒ^ƒXƒN“®ìƒ‚[ƒh‰Šú’l */
+	INT	isysmode;	/* $B%?%9%/F0:n%b!<%I=i4|CM(B */
 #endif /* USE_QTSK_PORTION */
 
 #ifdef USE_POR
-	RNO	wrdvno;		/* ƒ‰ƒ“ƒfƒu”Ô†¶¬—p */
+	RNO	wrdvno;		/* $B%i%s%G%VHV9f@8@.MQ(B */
 #endif /* USE_POR */
 #ifdef PRISEM_SPEC1
-	PISCB	*pislist;	/* Šl“¾—Dæ“xŒp³ƒZƒ}ƒtƒHƒŠƒXƒg */
+	PISCB	*pislist;	/* $B3MF@M%@hEY7Q>5%;%^%U%)%j%9%H(B */
 #endif /* PRISEM_SPEC1 */
 #ifdef USE_TASK_MAILBOX
-	T_MSG	*tmq_head;	/* ƒ^ƒXƒN•t‘®ƒƒbƒZ[ƒWƒLƒ…[‚Ìæ“ª */
-	T_MSG	*tmq_tail;	/* ƒ^ƒXƒN•t‘®ƒƒbƒZ[ƒWƒLƒ…[‚Ì––”ö */
+	T_MSG	*tmq_head;	/* $B%?%9%/IUB0%a%C%;!<%8%-%e!<$N@hF,(B */
+	T_MSG	*tmq_tail;	/* $B%?%9%/IUB0%a%C%;!<%8%-%e!<$NKvHx(B */
 #endif /* USE_TASK_MAILBOX */
-	ER	*wercd;		/* ‘Ò‚¿ƒGƒ‰[ƒR[ƒhİ’èƒGƒŠƒA */
-	WINFO	winfo;		/* ‘Ò‚¿î•ñ */
-	TMEB	wtmeb;		/* ‘Ò‚¿ƒ^ƒCƒ}ƒCƒxƒ“ƒgƒuƒƒbƒN */
+	ER	*wercd;		/* $BBT$A%(%i!<%3!<%I@_Dj%(%j%"(B */
+	WINFO	winfo;		/* $BBT$A>pJs(B */
+	TMEB	wtmeb;		/* $BBT$A%?%$%^%$%Y%s%H%V%m%C%/(B */
 
 #ifdef USE_SEPARATE_SSTACK
-	VP	istack;		/* ƒ†[ƒUƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^‚Ì‰Šú’l */
+	VP	istack;		/* $B%f!<%6%9%?%C%/%]%$%s%?$N=i4|CM(B */
 #endif /* USE_SEPARATE_SSTACK */
-	VP	isstack;	/* ƒVƒXƒeƒ€ƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^‚Ì‰Šú’l */
-	CTXB	tskctxb;	/* ƒ^ƒXƒNƒRƒ“ƒeƒLƒXƒgƒuƒƒbƒN */
+	VP	isstack;	/* $B%7%9%F%`%9%?%C%/%]%$%s%?$N=i4|CM(B */
+	CTXB	tskctxb;	/* $B%?%9%/%3%s%F%-%9%H%V%m%C%/(B */
 };
 
 /*
- *  ƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`‹Ö~ó‘Ô
+ *  $B%?%9%/%G%#%9%Q%C%A6X;_>uBV(B
  *
- *  dispatch_disabled ‚ÍCƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`‹Ö~ó‘Ô‚ğ‹L‰¯‚µ‚Ä‚¨‚­‚½‚ß
- *  ‚Ì•Ï”D’x‰„Š„‚İ‚ğg‚¤ê‡‚È‚Ç‚É‚ÍC•K—v‚È‚¢D
+ *  dispatch_disabled $B$O!$%?%9%/%G%#%9%Q%C%A6X;_>uBV$r5-21$7$F$*$/$?$a(B
+ *  $B$NJQ?t!%CY1d3d9~$_$r;H$&>l9g$J$I$K$O!$I,MW$J$$!%(B
  */
 #ifdef USE_DISPATCH_DISABLED
 extern BOOL	dispatch_disabled;
 #endif /* USE_DISPATCH_DISABLED */
 
 /*
- *  Às’†‚Ìƒ^ƒXƒN
+ *  $B<B9TCf$N%?%9%/(B
  *
- *  ctxtsk ‚ÍCÀs’†‚Ìƒ^ƒXƒN (= CPU ‚ªƒRƒ“ƒeƒLƒXƒg‚ğ‚Á‚Ä‚¢‚éƒ^ƒXƒN) 
- *  ‚Ì TCB ‚ğw‚·•Ï”DƒVƒXƒeƒ€ƒR[ƒ‹‚Ìˆ—’†‚ÅCƒVƒXƒeƒ€ƒR[ƒ‹‚ğ—v‹‚µ
- *  ‚½ƒ^ƒXƒN‚ÉŠÖ‚·‚éî•ñ‚ğQÆ‚·‚éê‡‚ÍCctxtsk ‚ğg‚¤Dctxtsk ‚ğ‘‚«
- *  Š·‚¦‚é‚Ì‚ÍCƒ^ƒXƒNƒfƒBƒXƒpƒbƒ`ƒƒ‚Ì‚İD
+ *  ctxtsk $B$O!$<B9TCf$N%?%9%/(B (= CPU $B$,%3%s%F%-%9%H$r;}$C$F$$$k%?%9%/(B) 
+ *  $B$N(B TCB $B$r;X$9JQ?t!%%7%9%F%`%3!<%k$N=hM}Cf$G!$%7%9%F%`%3!<%k$rMW5a$7(B
+ *  $B$?%?%9%/$K4X$9$k>pJs$r;2>H$9$k>l9g$O!$(Bctxtsk $B$r;H$&!%(Bctxtsk $B$r=q$-(B
+ *  $B49$($k$N$O!$%?%9%/%G%#%9%Q%C%A%c$N$_!%(B
  */
 extern TCB	*ctxtsk;
 
 /*
- *  Às‚·‚×‚«ƒ^ƒXƒN
+ *  $B<B9T$9$Y$-%?%9%/(B
  *
- *  schedtsk ‚ÍCÀs‚·‚×‚«ƒ^ƒXƒN‚Ì TCB ‚ğw‚·•Ï”D’x‰„ƒfƒBƒXƒpƒbƒ`‚â
- *  ƒfƒBƒXƒpƒbƒ`‚Ì‹Ö~‚É‚æ‚èƒfƒBƒXƒpƒbƒ`‚ª’x‰„‚³‚ê‚Ä‚¢‚éó‘Ô‚Å‚ÍC
- *  ctxtsk ‚Æˆê’v‚µ‚È‚¢D
+ *  schedtsk $B$O!$<B9T$9$Y$-%?%9%/$N(B TCB $B$r;X$9JQ?t!%CY1d%G%#%9%Q%C%A$d(B
+ *  $B%G%#%9%Q%C%A$N6X;_$K$h$j%G%#%9%Q%C%A$,CY1d$5$l$F$$$k>uBV$G$O!$(B
+ *  ctxtsk $B$H0lCW$7$J$$!%(B
  */
 extern TCB	*schedtsk;
 
 /*
- *  TCB ‚ÌƒGƒŠƒA
+ *  TCB $B$N%(%j%"(B
  *
- *  TCB ‚ÌƒGƒŠƒA‚ÍCƒVƒXƒeƒ€¶¬‚ÉÃ“I‚ÉŠ„‚è•t‚¯‚Ä‚¢‚éD
+ *  TCB $B$N%(%j%"$O!$%7%9%F%`@8@.;~$K@EE*$K3d$jIU$1$F$$$k!%(B
  */
 extern TCB	tcb_table[];
 
 /*
- *  –¢g—p‚Ì TCB ‚ÌƒŠƒXƒg
+ *  $BL$;HMQ$N(B TCB $B$N%j%9%H(B
  */
 #ifndef _i_vcre_tsk
 extern QUEUE	free_tcb;
 #endif /* _i_vcre_tsk */
 
 /*
- *  ƒ^ƒXƒNID ‚©‚ç TCB ‚ğæ‚èo‚·D
+ *  $B%?%9%/(BID $B$+$i(B TCB $B$r<h$j=P$9!%(B
  */
 #define get_tcb(id)	 (&tcb_table[INDEX_TSK(id)])
 #define get_tcb_self(id) ((id)==TSK_SELF ? ctxtsk : &tcb_table[INDEX_TSK(id)])
 
 /*
- *  ƒ^ƒXƒN‚ÌÀs€”õ‚ğ‚·‚éD
+ *  $B%?%9%/$N<B9T=`Hw$r$9$k!%(B
  */
 extern void	make_dormant(TCB *tcb);
 
 /*
- *  ƒ^ƒXƒN‚ğÀs‰Â”\ó‘Ô‚É‚·‚éD
+ *  $B%?%9%/$r<B9T2DG=>uBV$K$9$k!%(B
  *
- *  tcb ‚Å¦‚³‚ê‚éƒ^ƒXƒN‚Ì—Dæ“x‚ªCŒ»İÀs’†‚Ìƒ^ƒXƒN‚Ì—Dæ“x‚æ‚è‚à‚
- *  ‚¢ê‡‚ÍCÀsó‘Ô‚É‚·‚éD‚»‚¤‚Å‚È‚¢ê‡‚ÍCƒ^ƒXƒN‚ğƒŒƒfƒBƒLƒ…[‚É
- *  ‚Â‚È‚®D
+ *  tcb $B$G<($5$l$k%?%9%/$NM%@hEY$,!$8=:_<B9TCf$N%?%9%/$NM%@hEY$h$j$b9b(B
+ *  $B$$>l9g$O!$<B9T>uBV$K$9$k!%$=$&$G$J$$>l9g$O!$%?%9%/$r%l%G%#%-%e!<$K(B
+ *  $B$D$J$0!%(B
  */
 extern void	make_ready(TCB *tcb);
 
 /*
- *  ƒ^ƒXƒN‚ğÀs‰Â”\ˆÈŠO‚Ìó‘Ô‚É‚·‚éD
+ *  $B%?%9%/$r<B9T2DG=0J30$N>uBV$K$9$k!%(B
  *
- *  tcb ‚Å¦‚³‚ê‚éƒ^ƒXƒN‚ğÀs‰Â”\ˆÈŠO‚Ìó‘ÔC‚Â‚Ü‚è‘Ò‚¿ó‘ÔC‹­§‘Ò‚¿
- *  ó‘ÔC‹x~ó‘Ô‚ÖˆÚs‚³‚¹‚éD‚±‚ÌŠÖ”‚ğŒÄ‚Ño‚·Û‚É‚ÍCƒ^ƒXƒN‚ªÀs
- *  ‰Â”\ó‘Ô‚É‚È‚Á‚Ä‚¢‚é‚±‚ÆDtcb->state ‚ÍCŒÄ‚Ño‚µ‚½‘¤‚ÅC‚±‚ÌŠÖ”‚©
- *  ‚çƒŠƒ^[ƒ“Œã‚É•ÏX‚·‚éD
+ *  tcb $B$G<($5$l$k%?%9%/$r<B9T2DG=0J30$N>uBV!$$D$^$jBT$A>uBV!$6/@)BT$A(B
+ *  $B>uBV!$5Y;_>uBV$X0\9T$5$;$k!%$3$N4X?t$r8F$S=P$9:]$K$O!$%?%9%/$,<B9T(B
+ *  $B2DG=>uBV$K$J$C$F$$$k$3$H!%(Btcb->state $B$O!$8F$S=P$7$?B&$G!$$3$N4X?t$+(B
+ *  $B$i%j%?!<%s8e$KJQ99$9$k!%(B
  */
 extern void	make_non_ready(TCB *tcb);
 
 /*
- *  ƒ^ƒXƒN‚Ì—Dæ“x‚ğ•ÏX‚·‚éD
+ *  $B%?%9%/$NM%@hEY$rJQ99$9$k!%(B
  *
- *  tcb ‚Å¦‚³‚ê‚éƒ^ƒXƒN‚Ì—Dæ“x‚ğ priority ‚É•ÏX‚·‚éD‚»‚ê‚É”º‚Á‚Ä•K
- *  —v‚Æ‚È‚éƒ^ƒXƒN‚Ìó‘Ô‘JˆÚ‚ğ‹N‚±‚³‚¹‚éD
+ *  tcb $B$G<($5$l$k%?%9%/$NM%@hEY$r(B priority $B$KJQ99$9$k!%$=$l$KH<$C$FI,(B
+ *  $BMW$H$J$k%?%9%/$N>uBVA+0\$r5/$3$5$;$k!%(B
  */
 extern void	change_task_priority(TCB *tcb, INT priority);
 
 /*
- *  ƒŒƒfƒBƒLƒ…[‚ğ‰ñ“]‚³‚¹‚éD
+ *  $B%l%G%#%-%e!<$r2sE>$5$;$k!%(B
  *
- *  rotate_ready_queue ‚ÍCpriority ‚Åw’è‚³‚ê‚½—Dæ“x‚ÌƒŒƒfƒBƒLƒ…[‚ğ
- *  ‰ñ“]‚³‚¹‚éDrotate_ready_queue_run ‚ÍCƒŒƒfƒBƒLƒ…[’†‚ÌÅ‚—Dæ“x
- *  ‚Ìƒ^ƒXƒN‚ğŠÜ‚ŞƒŒƒfƒBƒLƒ…[‚ğ‰ñ“]‚³‚¹‚éD
+ *  rotate_ready_queue $B$O!$(Bpriority $B$G;XDj$5$l$?M%@hEY$N%l%G%#%-%e!<$r(B
+ *  $B2sE>$5$;$k!%(Brotate_ready_queue_run $B$O!$%l%G%#%-%e!<Cf$N:G9bM%@hEY(B
+ *  $B$N%?%9%/$r4^$`%l%G%#%-%e!<$r2sE>$5$;$k!%(B
  */
 extern void	rotate_ready_queue(INT priority);
 extern void	rotate_ready_queue_run(void);

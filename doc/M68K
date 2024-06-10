@@ -1,0 +1,427 @@
+
+		     ＝ 68040 に依存する機能 ＝
+
+	    （Release 1.4β対応，最終更新: 6-Jul-1998）
+
+------------------------------------------------------------------------ 
+	ItIs - An ITRON Implementation for Research and Education
+
+Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+				Toyohashi Univ. of Technology, JAPAN
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the names of the universities nor the names of the laboratories
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ * TRON は The Real-time Operating system Nucleus の略称です．
+ * ITRON は Industrial TRON の略称です．
+ * μITRON は Micro Industrial TRON の略称です．
+ * ItIs は ITRON Implementation by Sakamura Lab の略称です．
+------------------------------------------------------------------------
+
+
+１．68040 対応の概要
+
+1.1. ターゲットシステム，開発環境
+
+68040 用の開発環境としては，GNU開発環境の最新版を用いている．
+
+ターゲットシステムとしては，(株)電産製の DVE-68K/40 CPUボード（CPU:
+68040 ないしは 68040LC）のみをサポートしている．
+
+
+1.2. 用語の対応
+
+ユーザズマニュアルで用いている用語と 68040 の機能との対応は以下の通り．
+
+・「動作モード」，「スーパーバイザモード」はそのまま対応する．
+
+・「ソフトウェア割込み」は TRAP命令に対応する．
+
+・「INT型」「ポインタ」のサイズはいずれも 4バイトである．
+
+
+1.3. システムコールインタフェース
+
+(1) ソフトウェア割込みを使うインタフェース
+
+ret_int を除くシステムコールの呼び出しには TRAP #1 を用いる．機能コー
+ドは，μITRON3.0仕様の標準に従っている．ret_int は，すべてのレジスタを
+保存した状態で呼び出すことが必要であるため，専用の TRAP #6 を用いて呼
+び出し，機能コードは用いない．
+
+ソフトウェア割込みを使ったインタフェースの場合，スタック上にパラメータ
+を置くインタフェースは望ましくない．68040 のコーリングコンベンションで
+は，スタック上にパラメータを置く方法を標準としているため，システムコー
+ル呼び出し用に，パラメータをレジスタを使って渡す方法を定義している．
+
+具体的には，第1パラメータを D0，第2パラメータを D1，…，第6パラメータ
+を D5 に置く（μITRON3.0仕様の C言語インタフェースでは，最大 6つのパラ
+メータを用いる）．機能コードはパラメータ渡しに使わないレジスタに入れる
+必要があるため，D6 に入れる．エラーコードは，D0 に入れて返される．シス
+テムコールの実行によって，D1，A0，A1 の各レジスタの値は保存されない．
+
+(2) サブルーチンコールを使うインタフェース
+
+パラメータの渡し方，エラーコードの受け取り方は，コンパイラのコーリング
+コンベンションに従う．68040 のコーリングコンベンションでは，各パラメー
+タをスタック上に置いてシステムコールを呼び出す．エラーコードは D0 に返
+される．システムコールの実行によって，D1，A0，A1 の各レジスタの値は保
+存されない．
+
+
+1.4. タスク，ハンドラの起動インタフェース
+
+タスクやハンドラを C言語で記述する場合の起動インタフェースは，ターゲッ
+トCPU によらずに定められている．以下では，タスクやハンドラをアセンブラ
+で記述する場合を中心に説明する．
+
+(1) タスク
+
+タスク属性に TA_HLNG を指定しない場合，タスク起動時には，タスク起動コー
+ドが D0 に，タスクの拡張情報が D1 に渡される．
+
+タスク属性に TA_HLNG を指定した場合，タスク起動コードとタスクの拡張情
+報は，コンパイラのコーリングコンベンションに従って，スタック上に置いて
+渡される．
+
+(2) タイマハンドラ（周期起動ハンドラ，アラームハンドラ）
+
+タイマハンドラ起動時には，タイマハンドラの拡張情報が，コンパイラのコー
+リングコンベンションに従って，スタック上に置いて渡される．タイマハンド
+ラからの復帰には，サブルーチンコールからの復帰する命令（RTS）を用いる．
+
+(3) 拡張SVCハンドラ
+
+拡張SVCハンドラ起動時には，最大6つのパラメータが，コンパイラのコーリン
+グコンベンションに従って，スタック上に置いて渡される．ソフトウェア割込
+みを用いたインタフェースの場合は，7つめのパラメータとして，機能コード
+が渡される．拡張SVCハンドラからの復帰には，サブルーチンコールからの復
+帰する命令（RTS）を用いる．
+
+(4) 割込みハンドラ
+
+割込みハンドラ属性に TA_HLNG を指定しない場合，定義した割込みハンドラ
+を CPU が直接起動する．割込みハンドラは，すべてのレジスタの内容を保存
+するよう記述しなければならない．割込みハンドラから復帰する時には，すべ
+てのレジスタの内容を元の状態に戻した後，次のいずれかの方法で ret_int 
+を呼び出さなければならない．
+
+ (a) 専用のソフトウェア割込みにより ret_int を呼び出す（TRAP #6）
+ (b) _i_ret_int をサブルーチンコールする（jsr _i_ret_int）
+ (c) __ret_int に分岐する（jmp __ret_int）
+
+割込みハンドラ属性に TA_HLNG を指定し高級言語対応ルーチンを用いた場合
+に，第1引数に先頭番地が渡される「割込みスタックフレーム」は，68040 の
+例外スタックフレームに対応する．例外スタックフレームの先頭番地は，コン
+パイラのコーリングコンベンションに従って，スタック上に置いて渡される．
+またこの場合，割込みハンドラからの復帰には，サブルーチンコールから復帰
+する命令（RTS）を用いる．
+
+
+２．システムコール仕様の違い
+
+以下では，各システムコールの 68040 に依存する仕様について述べる．
+
+(1) cre_tsk		タスク生成
+
+・タスクID が正の場合には，以下のタスク属性により，タスクをどのリング
+レベル（動作モード）で動作させるかを指定することができる．
+
+#define TA_SMODE	0x00000000	/* スーパバイザモードで動作させる */
+#define TA_UMODE	0x01000000	/* ユーザモードで動作させる */
+
+(2) dis_dsp		ディスパッチ禁止
+
+・dis_dsp は，カーネル内のディスパッチ禁止フラグをセットするだけで，
+IPM（割込みマスク）の値は変化しない．
+
+(3) ena_dsp		ディスパッチ許可
+
+・ena_dsp は，カーネル内のディスパッチ禁止フラグをリセットするだけで， 
+IPM（割込みマスク）の値は変化しない．
+
+(4) def_int		割込みハンドラ定義
+
+・dintno は 68040 での割込みベクタ番号を表し，0x02 から 0xff までの値
+が使える．
+
+・外部割込み以外の割込みベクタに対してハンドラを設定する機能は，ItIs 
+で実装されていない例外管理機能をユーザが作れるようにするための拡張であ
+り，利用するにあたっては，カーネルの構造を十分に理解していることが望ま
+れる．
+
+(5) loc_cpu		割込みとディスパッチの禁止
+
+・loc_cpu は，IPM（割込みマスク）を 7 に設定する．
+
+(6) unl_cpu		割込みとディスパッチの許可
+
+・unl_cpu は，IPM（割込みマスク）を 0 に設定する．
+
+(7) dis_int		割込み禁止
+(8) ena_int		割込み許可
+
+・68040 では，これらのシステムコールは，周辺チップを操作するものと位置
+付けられる．周辺チップの操作は，CPU ばかりでなく，ハードウェア構成に大
+きく依存するため，これらのシステムコールはサポートしない．
+
+(9) chg_iXX		割込みマスク変更
+
+・名称は chg_ipm としている．
+
+・chg_ipm は IPM（割込みマスク）を指定した値に設定する．指定した値が 0〜
+7 以外の場合，E_PARエラーとなる．タスク独立部から呼び出した場合には， 
+IMASK を 0 に設定することはできない（設定しようとすると，E_PAR エラー
+になる）．
+
+・IPM を 1〜7 に設定すると，ディスパッチが禁止される．
+
+・設定した IPM の値と，ref_sys で参照できるタスク部のシステム状態
+（sysstat）の関係は以下のようになる．
+
+	IPM		sysstat
+	------------------------
+	0		TTS_DDSP または TTS_TSK
+	1〜7		TTS_LOC
+
+(10) ref_iXX		割込みマスク参照
+
+・名称は ref_ipm としている．
+
+・ref_ims は IPM（割込みマスク）の現在値を読み出すシステムコールである．
+
+(11) vset_reg		タスクのレジスタ内容設定
+
+・pk_regs，pk_eit，pk_cregs の内容は以下の通り．
+
+  pk_regs の内容
+    VW		d0		汎用レジスタ D0 の値
+	  …
+    VW		d7		汎用レジスタ D7 の値
+    VW		a0		汎用レジスタ A0 の値
+	  …
+    VW		a6		汎用レジスタ A6 の値
+    VW		sp		現在の動作モードのスタックポインタの値
+
+  pk_eit の内容
+    VW		pc		PC（プログラムカウンタ）の値
+    VH		sr		SR の値
+
+  pk_cregs の内容
+    VW		msp		MSP（スーパバイザモードのスタックポインタ）の値
+    VW		usp		USP（ユーザモードのスタックポインタ）の値
+
+・pk_regs, pk_cregs が共に NADR でない場合，pk_cregs に含まれている現
+在の動作モードのスタックポインタの値が有効になり，pk_regs のスタックポ
+インタ指定は無効になる．pk_cregs が NADR の場合には，pk_regs のスタッ
+クポインタの値が現在の動作モード（SR の値の変更により現在の動作モード
+が変更される場合には，変更後の動作モード）のスタックポインタに設定され
+る．
+
+・このシステムコールを用いて MSP（スーパバイザモードのスタックポインタ）
+の値を変更することは勧められない．どうしても変更したい場合には，カーネ
+ルの構造を十分に理解していることが必要になる．その場合，pk_eit を NADR 
+にして，割込みスタックフレームを全部自分で用意する方が間違いが起こりに
+くいだろう．また，ItIs が将来バージョンアップした際に，関連部分の書き
+直しが必要になることを覚悟しなければならない．
+
+・E_PAR が返るのは，SR の値が不正の場合．
+
+(12) vget_reg		タスクのレジスタ内容参照
+
+・pk_regs，pk_eit，pk_cregs の内容は vset_reg と同様．
+
+
+３．開発環境・その他
+
+3.1. 開発環境
+
+カーネルをインストールするには，ItIs の標準リリースに含まれる以外に，
+以下のツール，ライブラリが必要である．
+
+    GNU開発環境
+	GCC egcs-1.0.1 release（Cコンパイラ）
+	BINUTILS 2.8.1（アセンブラ,リンカなど）
+    標準Cライブラリ
+	Cygnus NEWLIB 1.8.0（標準Cライブラリ）
+    perl 4（動作確認は 4.036）
+    GNU Make（動作確認は 3.75）
+    aout2（a.out から Sフォーマットへの変換ツール）
+
+
+3.2. 開発環境の構築方法
+
+上記の開発環境は，すべてフリーのソースコードから構築することができる
+（ただし，現状では aout2 の構築環境は未整備である）．具体的な構築方法
+を以下に説明する．
+
+(1) 準備作業
+
+準備作業として，ホスト上に必要なツールをインストールする．具体的には，
+perl 4，GNU Make の最新版が必要である．さらに，開発環境の構築に使うた
+めに，ホスト上にも最新の GCC をインストールすることが望ましい．
+
+(2) ディレクトリの決定
+
+開発環境を構築するために，以下のディレクトリを用意する．
+
+    <PREFIX>		開発環境をインストールするディレクトリ
+    <BINUTILS-SRCDIR>	BINUTILS のソースを展開するディレクトリ
+    <BINUTILS-OBJDIR>	BITUTILS のオブジェクトを生成するディレクトリ
+    <EGCS-SRCDIR>	GCC のソースを展開するディレクトリ
+    <EGCS-OBJDIR>	GCC のオブジェクトを生成するディレクトリ
+    <NEWLIB-SRCDIR>	NEWLIB のソースを展開するディレクトリ
+    <NEWLIB-OBJDIR>	NEWLIB のオブジェクトを生成するディレクトリ
+    <ITIS>		ItIs の配付キットを展開するディレクトリ
+
+また，以下では，ローカルな実行ファイルを置くディレクトリ（通常は 
+/usr/local/bin）を <LOCALDIR> と記述する．
+
+(3) BINUTILS のインストール（2.8.1）
+
+インストール作業の前に，<BINUTILS-SRCDIR>/ld/scripttempl/aout.sc に次
+のパッチをあてる．
+
+------------------------------------------------------------------------
+*** aout.sc.dist	Tue May 27 02:35:01 1997
+--- aout.sc	Thu Jun 18 15:31:39 1998
+*************** ${STACKZERO+${RELOCATING+${STACKZERO}}}
+*** 11,16 ****
+--- 11,20 ----
+  ${SHLIB_PATH+${RELOCATING+${SHLIB_PATH}}}
+  ${RELOCATING+${EXECUTABLE_SYMBOLS}}
+  ${RELOCATING+PROVIDE (__stack = 0);}
++ ${RELOCATING+PROVIDE (_hardware_init_hook = 0);}
++ ${RELOCATING+PROVIDE (_software_init_hook = 0);}
++ ${RELOCATING+PROVIDE (__idata_start = 0);}
++ ${RELOCATING+PROVIDE (__idata_end = 0);}
+  SECTIONS
+  {
+    ${RELOCATING+. = ${TEXT_START_ADDR};}
+*************** SECTIONS
+*** 33,38 ****
+--- 37,43 ----
+    ${RELOCATING+. = ${DATA_ALIGNMENT};}
+    .data :
+    {
++     ${RELOCATING+ __data_start = .;}
+      /* The first three sections are for SunOS dynamic linking.  */
+      *(.dynamic)
+      *(.got)
+------------------------------------------------------------------------
+
+以下，次の手順に従って，BINUTILS の設定・構築・インストールを行う．
+
+    % cd <BINUTILS-OBJDIR>
+    % <BINUTILS-SRCDIR>/configure \
+		--target=m68k-unknown-aout \
+		--prefix=<PREFIX>
+    % gmake
+    % gmake install
+
+以上の手順により，<PREFIX>/bin に m68k-unknow-aout-XXXX が作られるので，
+シンボリックを用いて，それらを短い名前で使えるようにする．以下では，
+ItIs の構築に必要な最小限のツールのみを示している．
+
+    % cd <LOCALDIR>
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-as m68k-as
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-ld m68k-ld
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-ar m68k-ar
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-nm m68k-nm
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-ranlib m68k-ranlib
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-objdump m68k-objdump
+
+(4) GCC のインストール（egcs-1.0.1 release）
+
+最初に，GCC の構築に必要なヘッダファイルを NEWLIB からコピーする．
+
+    % mkdir <PREFIX>/m68k-unknown-aout/include
+    % cp -R <NEWLIB-SRCDIR>/newlib/libc/include/* \
+		<PREFIX>/m68k-unknown-aout/include/
+
+以下，次の手順に従って，GCC の設定・構築・インストールを行う．
+
+    % mkdir <EGCS-OBJDIR>
+    % cd <EGCS-OBJDIR>
+    % <EGCS-SRCDIR>/configure \
+		--target=m68k-unknown-aout \
+		--prefix=<PREFIX> \
+		--with-gnu-as --with-gnu-ld --with-newlib \
+		--with-headers=<PREFIX>/m68k-unknown-aout/include
+    % gmake cross LANGUAGES="c c++"
+    % gmake install LANGUAGES="c c++"
+
+以上の手順により，<PREFIX>/bin に m68k-unknow-aout-gcc が作られるので，
+シンボリックを用いて，それを短い名前で使えるようにする．
+
+    % cd <LOCALDIR>
+    % ln -s <PREFIX>/bin/m68k-unknown-aout-gcc m68k-gcc
+
+(5) NEWLIB のインストール（1.8.0）
+
+次の手順に従って，NEWLIB の設定・構築・インストールを行う．
+
+    % mkdir <NEWLIB-OBJDIR>
+    % cd <NEWLIB-OBJDIR>
+    % <NEWLIB-SRCDIR>/configure \
+		--target=m68k-unknown-aout \
+		--prefix=<PREFIX>
+    % gmake
+    % gmake install
+
+この手順でインストールされるスタートアップモジュールは，ItIs の環境で
+はそのまま使うことができない．そこで，安全のために，リネームしておく．
+
+    % cd <PREFIX>/m68k-unknown-aout/lib/
+    % mv crt0.o crt0.o.libgloss
+    % mv msoft-float/crt0.o msoft-float/crt0.o.libgloss
+    % mv m68000/crt0.o m68000/crt0.o.libgloss
+    % mv m5200/crt0.o m5200/crt0.o.libgloss
+
+(6) ItIs 用のスタートアップモジュールのインストール
+
+    % cd <ITIS>/m68k/start
+    % gmake
+    % gmake install
+
+以上により，ItIs の開発環境が構築できる．最初に述べた通り，現状では 
+aout2 の構築環境は未整備である（将来的には，ItIs の配付キットに含める
+予定）．aout2 が必要な方は，別途相談されたい．
+
+
+3.3. シリアルインタフェースドライバ
+
+タスクの標準入出力をシリアルインタフェースドライバ経由にするために，
+libitis の中に newlib 対応の低レベル入出力ルーチン（glue_newlib.c）を
+用意している．このモジュールをリンクすることで，タスクの標準入出力をシ
+リアルインタフェースドライバ経由となる．
+
+
+3.4. その他
+
+・xscheme で浮動少数点演算を使う設定はテストを行っていない．
+
+・カーネルの内部で，タスクディスパッチャの起動用に TRAP #7 を使ってい
+る．

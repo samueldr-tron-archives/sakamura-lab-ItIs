@@ -1,0 +1,334 @@
+
+		 ＝ TRON仕様チップに依存する機能 ＝
+
+	    （Release 1.4β対応，最終更新: 6-Jul-1998）
+
+------------------------------------------------------------------------ 
+	ItIs - An ITRON Implementation for Research and Education
+
+Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+				Toyohashi Univ. of Technology, JAPAN
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the names of the universities nor the names of the laboratories
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ * TRON は The Real-time Operating system Nucleus の略称です．
+ * ITRON は Industrial TRON の略称です．
+ * μITRON は Micro Industrial TRON の略称です．
+ * ItIs は ITRON Implementation by Sakamura Lab の略称です．
+------------------------------------------------------------------------
+
+
+１．TRON仕様チップ対応の概要
+
+1.1. ターゲットシステム，開発環境
+
+TRON仕様チップ用の開発環境としては，TRON仕様チップ用 GNU開発環境の新版 
+（GCC 2.X）を用いている．TRON仕様チップ用 GCC 2.X のパラメータ渡しのコ
+ーリングコンベンションに依存している部分があるため，他のコンパイラへの
+移植はかなり面倒と思われる．
+
+ターゲットシステムとしては，アバールデータ社製の TVME-150 CPUボード 
+（CPU: Gmicro/200）をサポートしている．Gmicroグループ各社製の Gmicro
+SBCシステムの CPUボード HS32/200SBC（CPU: Gmicro/200）および 
+HS32/300SBC（CPU: Gmicro/300），パーソナルメディア社製の MCUBE（CPU:
+Gmicro/300）用のモジュールも用意しているが，サポートはしていない．
+
+
+1.2. 用語の対応
+
+ユーザズマニュアルで用いている用語と TRON仕様チップの機能との対応は以
+下の通り．
+
+・「動作モード」はリングレベルに対応し，「スーパーバイザモード」はリン
+グ0 で動作している時を指す．
+
+・「ソフトウェア割込み」は TRAPA命令に対応する．
+
+・「INT型」「ポインタ」のサイズはいずれも 4バイトである．
+
+
+1.3. コンパイル時のオプション
+
+カーネルコード中で，以下の TRON仕様チップの L2レベルの命令を使用してい
+る．L1レベルの CPU で動作させる場合には，コンパイル時に -DTRON_LEVEL1 
+を指定することが必要である．
+
+    qsch/ge/f	キューサーチ命令
+    bvsch/1/f	任意長ビットフィールドサーチ命令
+
+ItIs は，TRON仕様チップの遅延割込みの機能を使っているが，他の CPU への
+移植性を検証するために，遅延割込みを使わない設定も用意している．コンパ
+イル時に，-DTRON_NO_DI を指定することで，この設定が使われる（このマニュ
+アルでは，遅延割込みを使う場合のみについて説明している）．
+
+
+1.4. システムコールインタフェース
+
+(1) ソフトウェア割込みを使うインタフェース
+
+ソフトウェア割込みを使ったシステムコールの呼び出しには TRAPA #1 を用い
+る．機能コードは，μITRON3.0仕様の標準に従っている．
+
+ソフトウェア割込みを使ったインタフェースの場合，スタック上にパラメータ
+を置くインタフェースは望ましくない．TRON仕様チップ用の GCC 2.X では，
+パラメータをレジスタを使って渡す方法を標準としているため，コンパイラの
+パラメータ渡しのコーリングコンベンションがそのまま使える．
+
+具体的には，第1パラメータを R0，第2パラメータを R1，…，第6パラメータ
+を R5 に置く（μITRON3.0仕様の C言語インタフェースでは，最大 6つのパラ
+メータを用いる）．機能コードはパラメータ渡しに使わないレジスタに入れる
+必要があるため，R6 に入れる．エラーコードは，R0 に入れて返される．シス
+テムコールの実行によって，R1〜R6 の各レジスタの値は保存されない．
+
+(2) サブルーチンコールを使うインタフェース
+
+パラメータの渡し方，エラーコードの受け取り方は，コンパイラのコーリング
+コンベンションに従う．TRON仕様チップ用の GCC 2.X では，第1パラメータを 
+R0，第2パラメータを R1，...，第6パラメータを R5 に置いてシステムコール
+を呼び出す．エラーコードは R0 に返される．システムコールの実行によって，
+R1〜R6 の各レジスタの値は保存されない．
+
+
+1.5. タスク，ハンドラの起動インタフェース
+
+タスクやハンドラを C言語で記述する場合の起動インタフェースは，ターゲッ
+トCPU によらずに定められている．以下では，タスクやハンドラをアセンブラ
+で記述する場合を中心に説明する．
+
+(1) タスク
+
+タスク起動時には，タスク属性に TA_HLNG が指定されているかどうかにかか
+わらず，R0 にタスク起動コードが，R1 にタスクの拡張情報が渡される．
+
+(2) タイマハンドラ（周期起動ハンドラ，アラームハンドラ）
+
+タイマハンドラ起動時には，R0 にタイマハンドラの拡張情報が渡される．タ
+イマハンドラからの復帰には，サブルーチンコールから復帰する命令（RTS）
+を用いる．
+
+(3) 拡張SVCハンドラ
+
+拡張SVCハンドラ起動時には，R0 に第1パラメータ，R1 に第2パラメータ，…，
+R5 に第6パラメータが渡される．ソフトウェア割込みを用いたインタフェース
+の場合は，R6 に機能コードが渡される．拡張SVCハンドラからの復帰には，サ
+ブルーチンコールから復帰する命令（RTS）を用いる．
+
+(4) 割込みハンドラ
+
+割込みハンドラ属性に TA_HLNG を指定しない場合，定義した割込みハンドラ
+を CPU が直接起動する．割込みハンドラは，すべてのレジスタの内容を保存
+するよう記述しなければならない．TRON仕様チップでは，遅延割込みによって
+タスクディスパッチャを起動するため，割込みハンドラから復帰時に ret_int 
+を呼び出す必要はなく，REIT命令で復帰すればよい．
+
+割込みハンドラ属性に TA_HLNG を指定し高級言語対応ルーチンを用いた場合
+に，第1引数に先頭番地が渡される「割込みスタックフレーム」は，TRON仕様
+チップの EITスタックフレームに対応する．EITスタックフレームの先頭番地
+は，コンパイラのコーリングコンベンションに従って，R0 に渡される．また
+この場合，割込みハンドラからの復帰には，サブルーチンコールから復帰する
+命令（RTS）を用いる．
+
+
+２．システムコール仕様の違い
+
+以下では，各システムコールの TRON仕様チップに依存する仕様について述べ
+る．
+
+(1) cre_tsk		タスク生成
+
+・タスクID が正の場合には，以下のタスク属性により，タスクをどのリング
+レベル（動作モード）で動作させるかを指定することができる．
+
+#define TA_RNG0		0x00000000	/* リングレベル0 で動作させる */
+#define TA_RNG1		0x01000000	/* リングレベル1 で動作させる */
+#define TA_RNG2		0x02000000	/* リングレベル2 で動作させる */
+#define TA_RNG3		0x03000000	/* リングレベル3 で動作させる */
+
+・タスク属性に TA_HLNG を指定しても，実際には何もしない．
+
+(2) dis_dsp		ディスパッチ禁止
+
+・dis_dsp は，IMASK（割込みマスク）を 14 に設定する．
+
+(3) ena_dsp		ディスパッチ許可
+
+・ena_dsp は，IMASK（割込みマスク）を 15 に設定する．
+
+(4) def_int		割込みハンドラ定義
+
+・dintno は TRON仕様チップでの EITベクタ番号を表し，0x01 から 0xff ま
+での値が使える．
+
+・外部割込み以外の EITベクタに対してハンドラを設定する機能は，ItIs で
+実装されていない例外管理機能をユーザが作れるようにするための拡張であり，
+利用するにあたっては，カーネルの構造を十分に理解していることが望まれる．
+
+例外管理機能を作る際には，TRON仕様チップでの EITハンドラ情報を指定する
+必要がある．例えば，コンテキストに依存して動作するハンドラの場合，SP0 
+を使って動作させることが必要になる．
+
+この設定を可能にするために，T_DINT構造体に eitatrフィールドを追加して
+いる．割込みハンドラ属性に TA_EITATR を設定すると，eitatrフィールドの
+値をそのまま EITベクタテーブルエントリの最初のワードに設定する．ちなみ
+に，デフォルトでは，通常の割込みハンドラ用の EITハンドラ属性 
+（0x000f0000）が設定される．
+
+#define TA_EITATR	0x00010000	/* EIT属性を指定 */
+
+(5) loc_cpu		割込みとディスパッチの禁止
+
+・loc_cpu は，IMASK（割込みマスク）を 0 に設定する．
+
+(6) unl_cpu		割込みとディスパッチの許可
+
+・unl_cpu は，IMASK（割込みマスク）を 15 に設定する．
+
+(7) dis_int		割込み禁止
+(8) ena_int		割込み許可
+
+・TRON仕様チップでは，ディスパッチを許可したまま割込みを禁止するには，
+周辺チップを操作する必要がある．周辺チップの操作は，CPU ばかりでなく，
+ハードウェア構成に大きく依存するため，これらのシステムコールはサポート
+しない．
+
+(9) chg_iXX		割込みマスク変更
+
+・名称は chg_ims としている．
+
+・chg_ims は IMASK（割込みマスク）を指定した値に設定する．指定した値が 
+0〜15 以外の場合，E_PARエラーとなる．タスク独立部から呼び出した場合に
+は，IMASK を 7 より大きい値に設定することはできない（設定しようとする
+と，E_PAR エラーになる）．
+
+・IMASK を 0〜14 に設定すると，ディスパッチが禁止される．
+
+・設定した IMASK の値と，ref_sys で参照できるタスク部のシステム状態
+（sysstat）の関係は以下のようになる．
+
+	IMASK		sysstat
+	------------------------
+	0〜13		TTS_LOC
+	14		TTS_DDSP
+	15		TTS_TSK
+
+(10) ref_iXX		割込みマスク参照
+
+・名称は ref_ims としている．
+
+・ref_ims は IMASK（割込みマスク）の現在値を読み出すシステムコールであ
+る．
+
+(11) vset_reg		タスクのレジスタ内容設定
+
+・pk_regs，pk_eit，pk_cregs の内容は以下の通り．
+
+  pk_regs の内容
+    VW		r0		汎用レジスタ R0 の値
+	  …
+    VW		r14		汎用レジスタ R14 の値
+    VW		sp		現在リングのスタックポインタの値
+
+  pk_eit の内容
+    VW		pc		PC（プログラムカウンタ）の値
+    VW		psw		PSW の値
+
+  pk_cregs の内容
+    VW		csw		CSW の値
+    VW		sp0		SP0（リング0 のスタックポインタ）の値
+    VW		sp1		SP1（リング1 のスタックポインタ）の値
+    VW		sp2		SP2（リング2 のスタックポインタ）の値
+    VW		sp3		SP3（リング3 のスタックポインタ）の値
+    VW		uatb		UATB の値
+    VW		lsid		LSID の値
+
+・pk_regs, pk_cregs が共に NADR でない場合，pk_cregs に含まれている現
+在リングのスタックポインタの値が有効になり，pk_regs のスタックポインタ
+指定は無効になる．pk_cregs が NADR の場合には，pk_regs のスタックポイ
+ンタの値が現在リング（PSW の値の変更により現在リングが変更される場合に
+は，変更後のリング）のスタックポインタに設定される．
+
+・UATB, LSID を持たない CPU で動作させた場合，pk_cregs の対応するフィ
+ールドの値は無視される．
+
+・DORMANT状態のタスクに対してこのシステムコールを発行し，タスク起動直
+後のレジスタの値を設定する場合に，R0 および R1 については，sta_tsk に
+より，それぞれタスク起動コード（stacd）およびタスク拡張情報が入れられ
+るため，このシステムコールで設定することはできない．
+
+・このシステムコールを用いて SP0（リング0 のスタックポインタ）の値を変
+更することは勧められない．どうしても変更したい場合には，カーネルの構造
+を十分に理解していることが必要になる．その場合，pk_eit を NADR にして， 
+EITスタックフレームを全部自分で用意する方が間違いが起こりにくいだろう．
+また，ItIs が将来バージョンアップした際に，関連部分の書き直しが必要に
+なることを覚悟しなければならない．
+
+・E_PAR が返るのは，psw の値が不正の場合．
+
+(12) vget_reg		タスクのレジスタ内容参照
+
+・pk_regs，pk_eit，pk_cregs の内容は vset_reg と同様．
+
+・UATB, LSID を持たない CPU で動作させた場合，pk_cregs の対応するフィ
+ールドの値は意味を持たない．
+
+
+３．開発環境・その他
+
+3.1. 開発環境
+
+カーネルをインストールするには，ItIs の標準リリースに含まれる以外に，
+以下のツール，ライブラリが必要である．
+
+    TRON仕様チップ用 GNU開発環境
+	GCC 2.6.3 Beta7.3（Cコンパイラ）
+	BINUTILS 2.5.2（アセンブラ,リンカなど）
+    TRON仕様チップ用 標準Cライブラリ
+	GLIBC 1.09（標準Cライブラリ）
+    perl 4（動作確認は 4.036）
+    GNU Make（動作確認は 3.75）
+    aout2（a.out から Sフォーマットへの変換ツール）
+
+TRON仕様チップ用の GNU開発環境ならびに標準Cライブラリの構築方法につい
+ては，別途相談されたい．
+
+
+3.2. シリアルインタフェースドライバ
+
+TRON仕様チップ用の GLIBC には，ItIs 用の低レベル入出力ルーチンが含まれ
+ているため，独立にリンクするタスクの標準入出力は，デフォルトでをシリア
+ルインタフェースドライバ経由になっている．
+
+ただし，カーネルをリンクする場合には，ItIs 用の設定を使わないため，カー
+ネルと一緒にリンクされるタスクの標準入出力をシリアルインタフェースドラ
+イバ経由に切替えるためには，カーネルに sysio.c をリンクする必要がある．
+
+
+3.3. 浮動小数点を使う場合の標準ライブラリ
+
+xscheme で浮動少数点演算を使うために -DO_FLOAT を外してコンパイルする
+場合に，GLIBC の浮動小数点用の printf ライブラリが大量のスタック（約
+40KB と言われている）を消費することが問題になる．これを考えて，各タス
+クのスタックの大きさを決める必要がある．

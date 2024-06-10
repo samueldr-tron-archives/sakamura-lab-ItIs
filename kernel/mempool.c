@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: mempool.c,v 1.14 1997/01/10 13:36:30 hiro Exp $
+ *  @(#) $Id: mempool.c,v 1.15 1998/01/30 09:52:34 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -39,20 +41,20 @@
 #ifdef USE_MPL
 
 /*
- *  â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B2DJQD9%a%b%j%W!<%k4IM}%V%m%C%/$NDj5A(B
  */
 
-typedef QUEUE	AREAQ;		/* ÉGÉäÉAÉLÉÖÅ[ */
-typedef QUEUE	FREEQ;		/* ÉtÉäÅ[ÉuÉçÉbÉNÉLÉÖÅ[ */
+typedef QUEUE	AREAQ;		/* $B%(%j%"%-%e!<(B */
+typedef QUEUE	FREEQ;		/* $B%U%j!<%V%m%C%/%-%e!<(B */
 
 typedef struct memorypool_control_block {
-	QUEUE	wait_queue;	/* ÉÅÉÇÉäÉvÅ[Éãë“ÇøÉLÉÖÅ[ */
-	ID	mplid;		/* â¬ïœí∑ÉÅÉÇÉäÉvÅ[ÉãID */
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mplatr;		/* ÉÅÉÇÉäÉvÅ[ÉãëÆê´ */
-	INT	mplsz;		/* ÉÅÉÇÉäÉvÅ[ÉãëSëÃÇÃÉTÉCÉY */
-	VP	mempool;	/* ÉÅÉÇÉäÉvÅ[ÉãÇÃêÊì™ÉAÉhÉåÉX */
-	FREEQ	freequeue;	/* ãÛÇ´ÉuÉçÉbÉNÇÃÉLÉÖÅ[ */
+	QUEUE	wait_queue;	/* $B%a%b%j%W!<%kBT$A%-%e!<(B */
+	ID	mplid;		/* $B2DJQD9%a%b%j%W!<%k(BID */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mplatr;		/* $B%a%b%j%W!<%kB0@-(B */
+	INT	mplsz;		/* $B%a%b%j%W!<%kA4BN$N%5%$%:(B */
+	VP	mempool;	/* $B%a%b%j%W!<%k$N@hF,%"%I%l%9(B */
+	FREEQ	freequeue;	/* $B6u$-%V%m%C%/$N%-%e!<(B */
 } MPLCB;
 
 static MPLCB	mplcb_table[NUM_MPLID];
@@ -60,14 +62,14 @@ static MPLCB	mplcb_table[NUM_MPLID];
 #define get_mplcb(id)	(&(mplcb_table[INDEX_MPL(id)]))
 
 /*
- *  ñ¢égópÇÃâ¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãä«óùÉuÉçÉbÉNÇÃÉäÉXÉg
+ *  $BL$;HMQ$N2DJQD9%a%b%j%W!<%k4IM}%V%m%C%/$N%j%9%H(B
  */
 #ifndef _i_vcre_mpl
 QUEUE	free_mplcb;
 #endif /* _i_vcre_mpl */
 
 /* 
- *  â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãä«óùÉuÉçÉbÉNÇÃèâä˙âª
+ *  $B2DJQD9%a%b%j%W!<%k4IM}%V%m%C%/$N=i4|2=(B
  */
 void
 memorypool_initialize(void)
@@ -93,7 +95,7 @@ memorypool_initialize(void)
 }
 
 /*
- *  â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãä«óùópÉãÅ[É`Éì
+ *  $B2DJQD9%a%b%j%W!<%k4IM}MQ%k!<%A%s(B
  */
 
 #define ROUNDSIZE	(sizeof(FREEQ))
@@ -130,7 +132,7 @@ mempool_end(MPLCB *mplcb)
 }
 
 /*
- *  ÉÅÉÇÉäÉvÅ[ÉãÇÃèâä˙âªÉãÅ[É`Éì
+ *  $B%a%b%j%W!<%k$N=i4|2=%k!<%A%s(B
  */
 static void
 init_mpl(VP mempool, INT mplsz)
@@ -147,7 +149,7 @@ init_mpl(VP mempool, INT mplsz)
 }
 
 /*
- *  ÉÅÉÇÉäÉuÉçÉbÉNÇÃälìæÉãÅ[É`Éì
+ *  $B%a%b%j%V%m%C%/$N3MF@%k!<%A%s(B
  */
 static VP
 _get_blk(FREEQ *freequeue, INT blksz)
@@ -161,7 +163,7 @@ _get_blk(FREEQ *freequeue, INT blksz)
 		if ((remsz = BLOCKSIZE(area) - blksz) >= 0) {
 			if (remsz >= MINSIZE) {
 				/*
-				 *  ÉGÉäÉAÇ 2Ç¬Ç…ï™äÑÇ∑ÇÈ
+				 *  $B%(%j%"$r(B 2$B$D$KJ,3d$9$k(B
 				 */
 				new = (AREAQ *)(((VB *) area) + remsz);
 				new->prev = area;
@@ -181,7 +183,7 @@ _get_blk(FREEQ *freequeue, INT blksz)
 }
 
 /*
- *  ÉÅÉÇÉäÉuÉçÉbÉNÇÃâï˙ÉãÅ[É`Éì
+ *  $B%a%b%j%V%m%C%/$N2rJ|%k!<%A%s(B
  */
 ER
 _rel_blk(FREEQ *freequeue, VP blk)
@@ -202,13 +204,13 @@ _rel_blk(FREEQ *freequeue, VP blk)
 	if (FIRST_AREA(area) || USED_AREA(prevarea = area->prev)) {
 		if (USED_AREA(nextarea = area->next)) {
 			/*
-			 *  É}Å[ÉWÇÃïKóvÇ»ÇµÅD
+			 *  $B%^!<%8$NI,MW$J$7!%(B
 			 */
 			queue_insert(free, freequeue->next);
 		}
 		else {
 			/*
-			 *  íºå„ÇÃÉGÉäÉAÇ∆É}Å[ÉWÇ∑ÇÈÅD
+			 *  $BD>8e$N%(%j%"$H%^!<%8$9$k!%(B
 			 */
 			area->next = nextarea->next;
 			_ASSIGN(nextarea->next->prev, area);
@@ -219,14 +221,14 @@ _rel_blk(FREEQ *freequeue, VP blk)
 	else {
 		if (USED_AREA(nextarea = area->next)) {
 			/*
-			 *  íºëOÇÃÉGÉäÉAÇ∆É}Å[ÉWÇ∑ÇÈÅD
+			 *  $BD>A0$N%(%j%"$H%^!<%8$9$k!%(B
 			 */
 			prevarea->next = nextarea;
 			_ASSIGN(nextarea->prev, prevarea);
 		}
 		else {
 			/*
-			 *  ëOå„ÇÃÉGÉäÉAÇ∆É}Å[ÉWÇ∑ÇÈÅD
+			 *  $BA08e$N%(%j%"$H%^!<%8$9$k!%(B
 			 */
 			prevarea->next = nextarea->next;
 			_ASSIGN(nextarea->next->prev, prevarea);
@@ -237,7 +239,7 @@ _rel_blk(FREEQ *freequeue, VP blk)
 }
 
 /*
- *  â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãë“ÇøÇÃÉ^ÉXÉNÇÉÅÉÇÉäÇ™Ç†ÇÈå¿ÇËãNÇ±Ç∑
+ *  $B2DJQD9%a%b%j%W!<%kBT$A$N%?%9%/$r%a%b%j$,$"$k8B$j5/$3$9(B
  */
 static void
 wakeup_mpl(MPLCB *mplcb)
@@ -266,13 +268,13 @@ wakeup_mpl(MPLCB *mplcb)
 }
 
 /*
- *  â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãë“ÇøédólÇÃíËã`
+ *  $B2DJQD9%a%b%j%W!<%kBT$A;EMM$NDj5A(B
  */
 static WSPEC wspec_mpl_tfifo = { TTW_MPL, 0, 0 };
 static WSPEC wspec_mpl_tpri = { TTW_MPL, obj_chg_pri, 0 };
 
 /*
- *  â¬ïœí∑ÉÅÉÇÉäÉvÅ[Éãä«óùã@î\
+ *  $B2DJQD9%a%b%j%W!<%k4IM}5!G=(B
  */
 
 #if !defined(_i_cre_mpl) || !defined(_i_vcre_mpl)
@@ -522,9 +524,9 @@ i_ref_mpl(T_RMPL *pk_rmpl, ID mplid)
 #endif /* _i_ref_mpl */
 
 /*
- *  ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[Éãä«óùÉãÅ[É`Éì
+ *  $B%7%9%F%`%a%b%j%W!<%k4IM}%k!<%A%s(B
  *
- *  à»â∫ÇÃä÷êîÇÕÅCïKÇ∏ÉNÉäÉeÉBÉJÉãÉZÉNÉVÉáÉìÇÃíÜÇ©ÇÁåƒÇ‘Ç±Ç∆ÅD
+ *  $B0J2<$N4X?t$O!$I,$:%/%j%F%#%+%k%;%/%7%g%s$NCf$+$i8F$V$3$H!%(B
  */
 
 #ifdef USE_TMPL_OS

@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: messagebuf.c,v 1.17 1997/01/10 13:36:26 hiro Exp $
+ *  @(#) $Id: messagebuf.c,v 1.18 1998/01/30 09:52:35 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -39,27 +41,27 @@
 #ifdef USE_MBF
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B%a%C%;!<%8%P%C%U%!4IM}%V%m%C%/$NDj5A(B
  *
- *  1Ç¬ÇÃÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@Ç…ëŒÇµÇƒÅCéÛêMë“Çø (TTW_MBF) ÇÃÉ^ÉXÉNÇ∆ëóêM
- *  ë“Çø (TTW_SMBF) ÇÃÉ^ÉXÉNÇ™ìØéûÇ…ë∂ç›Ç∑ÇÈÇ±Ç∆ÇÕÇ»Ç¢ÇΩÇﬂÅCë“ÇøÉLÉÖÅ[
- *  Çã§ópÇ≈Ç´ÇÈâ¬î\ê´Ç™Ç†ÇÈÇ™ÅCÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ÇÃÉTÉCÉYÇ™ 0 ÇÃéûÇ…ÅC
- *  ë“ÇøÉLÉÖÅ[Ç™Ç«ÇøÇÁÇÃñ⁄ìIÇ≈égÇÌÇÍÇƒÇ¢ÇÈÇ©îªï Ç∑ÇÈÇÃÇ™ñ ì|Ç…Ç»ÇÈÇΩÇﬂÅC
- *  Ç±ÇÃï˚ñ@ÇÕçÃópÇµÇ»Ç¢ÅD
+ *  1$B$D$N%a%C%;!<%8%P%C%U%!$KBP$7$F!$<u?.BT$A(B (TTW_MBF) $B$N%?%9%/$HAw?.(B
+ *  $BBT$A(B (TTW_SMBF) $B$N%?%9%/$,F1;~$KB8:_$9$k$3$H$O$J$$$?$a!$BT$A%-%e!<(B
+ *  $B$r6&MQ$G$-$k2DG=@-$,$"$k$,!$%a%C%;!<%8%P%C%U%!$N%5%$%:$,(B 0 $B$N;~$K!$(B
+ *  $BBT$A%-%e!<$,$I$A$i$NL\E*$G;H$o$l$F$$$k$+H=JL$9$k$N$,LLE]$K$J$k$?$a!$(B
+ *  $B$3$NJ}K!$O:NMQ$7$J$$!%(B
  */
 
 typedef struct messagebuffer_control_block {
-	QUEUE	wait_queue;	/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@éÛêMë“ÇøÉLÉÖÅ[ */
-	ID	mbfid;		/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ID */
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mbfatr;		/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ëÆê´ */
-	QUEUE	send_queue;	/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ëóêMë“ÇøÉLÉÖÅ[ */
-	INT	bufsz;		/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ÇÃÉTÉCÉY */
-	INT	maxmsz;		/* ÉÅÉbÉZÅ[ÉWÇÃç≈ëÂí∑ */
-	INT	frbufsz;	/* ãÛÇ´ÉoÉbÉtÉ@ÇÃÉTÉCÉY */
-	INT	head;		/* ç≈èâÇÃÉÅÉbÉZÅ[ÉWÇÃäiî[èÍèä */
-	INT	tail;		/* ç≈å„ÇÃÉÅÉbÉZÅ[ÉWÇÃäiî[èÍèäÇÃéü */
-	VB	*buffer;	/* ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ÇÃî‘ín */
+	QUEUE	wait_queue;	/* $B%a%C%;!<%8%P%C%U%!<u?.BT$A%-%e!<(B */
+	ID	mbfid;		/* $B%a%C%;!<%8%P%C%U%!(BID */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mbfatr;		/* $B%a%C%;!<%8%P%C%U%!B0@-(B */
+	QUEUE	send_queue;	/* $B%a%C%;!<%8%P%C%U%!Aw?.BT$A%-%e!<(B */
+	INT	bufsz;		/* $B%a%C%;!<%8%P%C%U%!$N%5%$%:(B */
+	INT	maxmsz;		/* $B%a%C%;!<%8$N:GBgD9(B */
+	INT	frbufsz;	/* $B6u$-%P%C%U%!$N%5%$%:(B */
+	INT	head;		/* $B:G=i$N%a%C%;!<%8$N3JG<>l=j(B */
+	INT	tail;		/* $B:G8e$N%a%C%;!<%8$N3JG<>l=j$N<!(B */
+	VB	*buffer;	/* $B%a%C%;!<%8%P%C%U%!$NHVCO(B */
 } MBFCB;
 
 static MBFCB	mbfcb_table[NUM_MBFID];
@@ -67,14 +69,14 @@ static MBFCB	mbfcb_table[NUM_MBFID];
 #define get_mbfcb(id)	(&(mbfcb_table[INDEX_MBF(id)]))
 
 /*
- *  ñ¢égópÇÃÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ä«óùÉuÉçÉbÉNÇÃÉäÉXÉg
+ *  $BL$;HMQ$N%a%C%;!<%8%P%C%U%!4IM}%V%m%C%/$N%j%9%H(B
  */
 #ifndef _i_vcre_mbf
 QUEUE	free_mbfcb;
 #endif /* _i_vcre_mbf */
 
 /* 
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ä«óùÉuÉçÉbÉNÇÃèâä˙âª
+ *  $B%a%C%;!<%8%P%C%U%!4IM}%V%m%C%/$N=i4|2=(B
  */
 void
 messagebuffer_initialize()
@@ -100,7 +102,7 @@ messagebuffer_initialize()
 }
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ëÄçÏÉãÅ[É`Éì
+ *  $B%a%C%;!<%8%P%C%U%!A`:n%k!<%A%s(B
  */
 
 typedef INT		HEADER;
@@ -110,11 +112,11 @@ typedef INT		HEADER;
 #define	ROUNDSZ(sz)	(((sz) + (ROUNDSIZE-1)) & ~(ROUNDSIZE-1))
 
 /*
- *  ÉTÉCÉYÇ™ msgsz ÉÅÉbÉZÅ[ÉWÇ™ÅCÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@Ç…ì¸ÇÈÇ©Ç«Ç§Ç©É`ÉFÉb
- *  ÉNÇ∑ÇÈÅD
+ *  $B%5%$%:$,(B msgsz $B%a%C%;!<%8$,!$%a%C%;!<%8%P%C%U%!$KF~$k$+$I$&$+%A%'%C(B
+ *  $B%/$9$k!%(B
  *
- *  ñ{óàÇÕ msgsz Ç≈ÇÕÇ»Ç≠ ROUNDSZ(msgsz) Ç∆Ç∑Ç◊Ç´Ç≈Ç†ÇÈÇ™ÅCHEADERSZ Ç‡ 
- *  mbfcb->frbufsz Ç‡ ROUNDSZ Ç≥ÇÍÇƒÇ¢ÇÈÇΩÇﬂÅCìØÇ∂Ç±Ç∆Ç…Ç»ÇÈÅD
+ *  $BK\Mh$O(B msgsz $B$G$O$J$/(B ROUNDSZ(msgsz) $B$H$9$Y$-$G$"$k$,!$(BHEADERSZ $B$b(B 
+ *  mbfcb->frbufsz $B$b(B ROUNDSZ $B$5$l$F$$$k$?$a!$F1$8$3$H$K$J$k!%(B
  */
 Inline BOOL
 mbf_free(MBFCB* mbfcb, INT msgsz)
@@ -123,7 +125,7 @@ mbf_free(MBFCB* mbfcb, INT msgsz)
 }
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@Ç™ãÛÇ©Ç«Ç§Ç©É`ÉFÉbÉNÇ∑ÇÈÅD
+ *  $B%a%C%;!<%8%P%C%U%!$,6u$+$I$&$+%A%'%C%/$9$k!%(B
  */
 Inline BOOL
 mbf_empty(MBFCB* mbfcb)
@@ -132,7 +134,7 @@ mbf_empty(MBFCB* mbfcb)
 }
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÇÅCÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@Ç÷í«â¡Ç∑ÇÈÅD
+ *  $B%a%C%;!<%8$r!$%a%C%;!<%8%P%C%U%!$XDI2C$9$k!%(B
  */
 static void
 msg_to_mbf(MBFCB* mbfcb, VP msg, INT msgsz)
@@ -163,7 +165,7 @@ msg_to_mbf(MBFCB* mbfcb, VP msg, INT msgsz)
 }
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@Ç©ÇÁÅCÉÅÉbÉZÅ[ÉWÇéÊÇËèoÇ∑ÅD
+ *  $B%a%C%;!<%8%P%C%U%!$+$i!$%a%C%;!<%8$r<h$j=P$9!%(B
  */
 static INT
 mbf_to_msg(MBFCB* mbfcb, VP msg)
@@ -197,14 +199,14 @@ mbf_to_msg(MBFCB* mbfcb, VP msg)
 }
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ë“ÇøédólÇÃíËã`
+ *  $B%a%C%;!<%8%P%C%U%!BT$A;EMM$NDj5A(B
  */
 static WSPEC wspec_mbf_tfifo = { TTW_MBF, 0, 0 };
 static WSPEC wspec_mbf_tpri = { TTW_MBF, obj_chg_pri, 0 };
 static WSPEC wspec_smbf = { TTW_SMBF, 0, 0 };
 
 /*
- *  ÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ä«óùã@î\
+ *  $B%a%C%;!<%8%P%C%U%!4IM}5!G=(B
  */
 
 #if !defined(_i_cre_mbf) || !defined(_i_vcre_mbf)
@@ -500,7 +502,7 @@ i_ref_mbf(T_RMBF *pk_rmbf, ID mbfid)
 #endif /* _i_ref_mbf */
 
 /*
- *  ÉVÉXÉeÉÄÉçÉOópÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@Ç÷ÇÃëóêM
+ *  $B%7%9%F%`%m%0MQ%a%C%;!<%8%P%C%U%!$X$NAw?.(B
  */
 
 #ifdef USE_TMBF_OS

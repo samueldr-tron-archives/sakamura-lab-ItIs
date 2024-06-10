@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: timer.c,v 1.7 1996/07/28 00:28:38 hiro Exp $
+ *  @(#) $Id: timer.c,v 1.8 1998/01/30 09:52:51 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -37,17 +39,17 @@
 #include "sys_timer.h"
 
 /*
- *  åªç›éûçè (É\ÉtÉgÉEÉFÉAÉNÉçÉbÉN)
+ *  $B8=:_;~9o(B ($B%=%U%H%&%'%"%/%m%C%/(B)
  */
 SYSTIME	current_time;
 
 /* 
- *  É^ÉCÉ}ÉLÉÖÅ[
+ *  $B%?%$%^%-%e!<(B
  */
 static QUEUE	timer_queue;
 
 /*
- *  É^ÉCÉ}ÉÇÉWÉÖÅ[ÉãÇÃèâä˙âª
+ *  $B%?%$%^%b%8%e!<%k$N=i4|2=(B
  */
 void
 timer_initialize(void)
@@ -58,7 +60,7 @@ timer_initialize(void)
 }
 
 /*
- *  É^ÉCÉ}ÇÃí‚é~
+ *  $B%?%$%^$NDd;_(B
  */
 void
 timer_shutdown(void)
@@ -67,7 +69,7 @@ timer_shutdown(void)
 }
 
 /*
- *  É^ÉCÉ}ÉCÉxÉìÉgÇÉ^ÉCÉ}ÉLÉÖÅ[Ç÷ë}ì¸
+ *  $B%?%$%^%$%Y%s%H$r%?%$%^%-%e!<$XA^F~(B
  */
 static void
 enqueue_tmeb(TMEB *event)
@@ -83,11 +85,11 @@ enqueue_tmeb(TMEB *event)
 }
 
 /*
- *  É^ÉCÉ}ÉCÉxÉìÉg event ÇÅCÉ^ÉCÉÄÉAÉEÉgéûä‘ tmout å„Ç…ãNìÆÇ≥ÇÍÇÈÇÊÇ§
- *  Ç…É^ÉCÉ}ÉLÉÖÅ[Ç÷ìoò^Ç∑ÇÈÅDÉ^ÉCÉÄÉAÉEÉgéûä‘Ç™óàÇÈÇ∆ÅCÉRÅ[ÉãÉoÉbÉNä÷ 
- *  êî callback Ç…à¯êî arg Çó^Ç¶ÇƒãNìÆÇ∑ÇÈÅDtmout Ç™ TMO_FEVR ÇÃéûÇÕÅC
- *  É^ÉCÉ}ÉLÉÖÅ[Ç…ÇÕìoò^ÇµÇ»Ç¢Ç™ÅCå„Ç≈ timer_delete Ç™åƒÇŒÇÍÇƒÇ‡ÇÊÇ¢ÇÊ
- *  Ç§Ç…ÅCÉLÉÖÅ[ÇÃÉGÉäÉAÇèâä˙âªÇ∑ÇÈÅD
+ *  $B%?%$%^%$%Y%s%H(B event $B$r!$%?%$%`%"%&%H;~4V(B tmout $B8e$K5/F0$5$l$k$h$&(B
+ *  $B$K%?%$%^%-%e!<$XEPO?$9$k!%%?%$%`%"%&%H;~4V$,Mh$k$H!$%3!<%k%P%C%/4X(B 
+ *  $B?t(B callback $B$K0z?t(B arg $B$rM?$($F5/F0$9$k!%(Btmout $B$,(B TMO_FEVR $B$N;~$O!$(B
+ *  $B%?%$%^%-%e!<$K$OEPO?$7$J$$$,!$8e$G(B timer_delete $B$,8F$P$l$F$b$h$$$h(B
+ *  $B$&$K!$%-%e!<$N%(%j%"$r=i4|2=$9$k!%(B
  */
 void
 timer_insert(TMEB *event, TMO tmout, CBACK callback, VP arg)
@@ -106,8 +108,8 @@ timer_insert(TMEB *event, TMO tmout, CBACK callback, VP arg)
 }
 
 /*
- *  É^ÉCÉ}ÉCÉxÉìÉg event ÇÅC(ê‚ëŒ) éûçè time Ç…ãNìÆÇ≥ÇÍÇÈÇÊÇ§Ç…É^ÉCÉ}
- *  ÉLÉÖÅ[Ç÷ìoò^Ç∑ÇÈÅD
+ *  $B%?%$%^%$%Y%s%H(B event $B$r!$(B($B@dBP(B) $B;~9o(B time $B$K5/F0$5$l$k$h$&$K%?%$%^(B
+ *  $B%-%e!<$XEPO?$9$k!%(B
  */
 void
 timer_insert_abs(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
@@ -120,8 +122,8 @@ timer_insert_abs(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
 }
 
 /*
- *  É^ÉCÉ}ÉCÉxÉìÉg event ÇÅCtime éûä‘å„Ç…ãNìÆÇ≥ÇÍÇÈÇÊÇ§Ç…Ç…É^ÉCÉ}ÉLÉÖÅ[
- *  Ç÷ìoò^Ç∑ÇÈÅD
+ *  $B%?%$%^%$%Y%s%H(B event $B$r!$(Btime $B;~4V8e$K5/F0$5$l$k$h$&$K$K%?%$%^%-%e!<(B
+ *  $B$XEPO?$9$k!%(B
  */
 void
 timer_insert_rel(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
@@ -134,18 +136,18 @@ timer_insert_rel(TMEB *event, SYSTIME *time, CBACK callback, VP arg)
 }
 
 /*
- *  É^ÉCÉ}äÑçûÇ›ÉnÉìÉhÉâ
+ *  $B%?%$%^3d9~$_%O%s%I%i(B
  *
- *  É^ÉCÉ}äÑçûÇ›ÉnÉìÉhÉâÇÕÅCÉnÅ[ÉhÉEÉFÉAÉ^ÉCÉ}Ç…ÇÊÇË TIMER_PERIODÉ~Éäïb
- *  ÇÃé¸ä˙Ç≈ãNìÆÇ≥ÇÍÇÈÅDÉ\ÉtÉgÉEÉFÉAÉNÉçÉbÉNÇçXêVÇµÅCãNìÆéûä‘ÇÃóàÇΩÉ^
- *  ÉCÉ}ÉCÉxÉìÉgÇÃãNìÆÇçsÇ§ÅD
+ *  $B%?%$%^3d9~$_%O%s%I%i$O!$%O!<%I%&%'%"%?%$%^$K$h$j(B TIMER_PERIOD$B%_%jIC(B
+ *  $B$N<~4|$G5/F0$5$l$k!%%=%U%H%&%'%"%/%m%C%/$r99?7$7!$5/F0;~4V$NMh$?%?(B
+ *  $B%$%^%$%Y%s%H$N5/F0$r9T$&!%(B
  */
 void
 timer_handler(void)
 {
 	TMEB	*event;
 
-	clear_hw_timer_interrupt();		/* É^ÉCÉ}äÑçûÇ›ÇÃÉNÉäÉA */
+	clear_hw_timer_interrupt();		/* $B%?%$%^3d9~$_$N%/%j%"(B */
 
 	BEGIN_CRITICAL_SECTION;
 	current_time += TIMER_PERIOD;
@@ -166,7 +168,7 @@ timer_handler(void)
 }
 
 /*
- *  ê´î\ï]âøópÉVÉXÉeÉÄéûçèéQè∆ã@î\
+ *  $B@-G=I>2AMQ%7%9%F%`;~9o;2>H5!G=(B
  */
 
 #ifndef _i_vget_tim

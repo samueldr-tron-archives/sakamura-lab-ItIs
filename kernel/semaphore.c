@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: semaphore.c,v 1.14 1997/01/10 13:36:24 hiro Exp $
+ *  @(#) $Id: semaphore.c,v 1.15 1998/01/30 09:52:42 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -39,16 +41,16 @@
 #ifdef USE_SEM
 
 /*
- *  ÉZÉ}ÉtÉHä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B%;%^%U%)4IM}%V%m%C%/$NDj5A(B
  */
 
 typedef struct semaphore_control_block {
-	QUEUE	wait_queue;	/* ÉZÉ}ÉtÉHë“ÇøÉLÉÖÅ[ */
-	ID	semid;		/* ÉZÉ}ÉtÉHID */
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	sematr;		/* ÉZÉ}ÉtÉHëÆê´ */
-	INT	semcnt;		/* ÉZÉ}ÉtÉHåªç›ÉJÉEÉìÉgíl */
-	INT	maxsem;		/* ÉZÉ}ÉtÉHç≈ëÂÉJÉEÉìÉgíl */
+	QUEUE	wait_queue;	/* $B%;%^%U%)BT$A%-%e!<(B */
+	ID	semid;		/* $B%;%^%U%)(BID */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	sematr;		/* $B%;%^%U%)B0@-(B */
+	INT	semcnt;		/* $B%;%^%U%)8=:_%+%&%s%HCM(B */
+	INT	maxsem;		/* $B%;%^%U%):GBg%+%&%s%HCM(B */
 } SEMCB;
 
 static SEMCB	semcb_table[NUM_SEMID];
@@ -56,14 +58,14 @@ static SEMCB	semcb_table[NUM_SEMID];
 #define get_semcb(id)	(&(semcb_table[INDEX_SEM(id)]))
 
 /*
- *  ñ¢égópÇÃÉZÉ}ÉtÉHä«óùÉuÉçÉbÉNÇÃÉäÉXÉg
+ *  $BL$;HMQ$N%;%^%U%)4IM}%V%m%C%/$N%j%9%H(B
  */
 #ifndef _i_vcre_sem
 QUEUE	free_semcb;
 #endif /* _i_vcre_sem */
 
 /* 
- *  ÉZÉ}ÉtÉHä«óùÉuÉçÉbÉNÇÃèâä˙âª
+ *  $B%;%^%U%)4IM}%V%m%C%/$N=i4|2=(B
  */
 void
 semaphore_initialize(void)
@@ -89,13 +91,13 @@ semaphore_initialize(void)
 }
 
 /*
- *  ÉZÉ}ÉtÉHë“ÇøédólÇÃíËã`
+ *  $B%;%^%U%)BT$A;EMM$NDj5A(B
  */
 static WSPEC wspec_sem_tfifo = { TTW_SEM, 0, 0 };
 static WSPEC wspec_sem_tpri = { TTW_SEM, obj_chg_pri, 0 };
 
 /*
- *  ÉZÉ}ÉtÉHä«óùã@î\
+ *  $B%;%^%U%)4IM}5!G=(B
  */
 
 #if !defined(_i_cre_sem) || !defined(_i_vcre_sem)

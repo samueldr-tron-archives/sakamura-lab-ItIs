@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,18 +30,18 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: tron_insn.h,v 1.4 1997/01/10 12:34:59 hiro Exp $
+ *  @(#) $Id: tron_insn.h,v 1.5 1998/01/30 09:56:33 hiro Exp $
  */
 
 #ifndef	_TRON_INSN_
 #define	_TRON_INSN_
 
 /*
- *  §ŒäƒŒƒWƒXƒ^‚Ì‘€ìŠÖ”
+ *  $B@)8f%l%8%9%?$NA`:n4X?t(B
  */
 
 /*
- *  PSW ‚ÌŒ»İ’l‚Ì“Ç‚İo‚µ
+ *  PSW $B$N8=:_CM$NFI$_=P$7(B
  */
 Inline VW
 current_psw(void)
@@ -51,7 +53,7 @@ current_psw(void)
 }
 
 /*
- *  PSW ‚ÌŒ»İ’l‚Ì•ÏX
+ *  PSW $B$N8=:_CM$NJQ99(B
  */
 Inline void
 set_psw(VW psw)
@@ -60,17 +62,17 @@ set_psw(VW psw)
 }
 
 /*
- *  IMASK ‚ÌŒ»İ’l‚Ì“Ç‚İo‚µ
+ *  IMASK $B$N8=:_CM$NFI$_=P$7(B
  *
- *  IMASK ‚Ì’l‚Æ‚µ‚ÄC0 ˆÈã 15 ˆÈ‰º‚Ì’l‚ª•Ô‚éD
+ *  IMASK $B$NCM$H$7$F!$(B0 $B0J>e(B 15 $B0J2<$NCM$,JV$k!%(B
  */
 #define imask_psw(psw)	((psw >> 16) & 15)
 #define current_imask() (imask_psw(current_psw()))
 
 /*
- *  IMASK ‚ÌŒ»İ’l‚Ì•ÏX
+ *  IMASK $B$N8=:_CM$NJQ99(B
  *
- *  imask ‚ÍC0 ˆÈã 15 ˆÈ‰º‚Å‚ ‚é‚±‚ÆD
+ *  imask $B$O!$(B0 $B0J>e(B 15 $B0J2<$G$"$k$3$H!%(B
  */
 Inline void
 set_imask(INT imask)
@@ -79,7 +81,7 @@ set_imask(INT imask)
 }
 
 /*
- *  Š„‚İƒ}ƒXƒNó‘Ô‚ğ“à•”•\Œ»‚Å•Ô‚·D
+ *  $B3d9~$_%^%9%/>uBV$rFbItI=8=$GJV$9!%(B
  */
 Inline INT
 current_intmask(void)
@@ -91,7 +93,7 @@ current_intmask(void)
 }
 
 /*
- *  NMI ‚ğœ‚­‚·‚×‚Ä‚ÌŠ„‚İ‚ğ‹Ö~‚·‚éD
+ *  NMI $B$r=|$/$9$Y$F$N3d9~$_$r6X;_$9$k!%(B
  */
 Inline void
 disint(void)
@@ -100,13 +102,13 @@ disint(void)
 }
 
 /*
- *  current_intmask ‚ª•Ô‚µ‚½Š„‚İƒ}ƒXƒNó‘Ô‚ğ“n‚µ‚ÄCŠ„‚İ‹Ö~‘O‚Ìó
- *  ‘Ô‚É–ß‚·D
+ *  current_intmask $B$,JV$7$?3d9~$_%^%9%/>uBV$rEO$7$F!$3d9~$_6X;_A0$N>u(B
+ *  $BBV$KLa$9!%(B
  *
- *  clobberƒŠƒXƒg‚É memory ‚ğ“ü‚ê‚Ä‚¢‚é‚Ì‚ÍCenaint ‚Ì’¼Œã‚Éƒ^ƒXƒNƒfƒB
- *  ƒXƒpƒbƒ`‚ª‹N‚±‚èC—\Šú‚µ‚È‚¢ƒƒ‚ƒŠƒGƒŠƒA‚ª‘‚«Š·‚¦‚ç‚ê‚é‰Â”\«‚ª‚ 
- *  ‚é‚±‚Æ‚ğƒRƒ“ƒpƒCƒ‰‚É’m‚ç‚¹‚é‚½‚ß‚Å‚ ‚éD‹ï‘Ì“I‚É‚ÍCƒGƒ‰[ƒR[ƒh‚ğ
- *  “ü‚ê‚é•Ï”‚ª–â‘è‚É‚È‚éD
+ *  clobber$B%j%9%H$K(B memory $B$rF~$l$F$$$k$N$O!$(Benaint $B$ND>8e$K%?%9%/%G%#(B
+ *  $B%9%Q%C%A$,5/$3$j!$M=4|$7$J$$%a%b%j%(%j%"$,=q$-49$($i$l$k2DG=@-$,$"(B
+ *  $B$k$3$H$r%3%s%Q%$%i$KCN$i$;$k$?$a$G$"$k!%6qBNE*$K$O!$%(%i!<%3!<%I$r(B
+ *  $BF~$l$kJQ?t$,LdBj$K$J$k!%(B
  */
 Inline void
 enaint(INT intmask)
@@ -115,7 +117,7 @@ enaint(INT intmask)
 }
 
 /*
- *  DIR (’x‰„Š„‚İ—v‹ƒŒƒWƒXƒ^) ‚ÌŒ»İ’l‚Ì“Ç‚İo‚µ
+ *  DIR ($BCY1d3d9~$_MW5a%l%8%9%?(B) $B$N8=:_CM$NFI$_=P$7(B
  */
 Inline VW
 current_dir(void)
@@ -127,9 +129,9 @@ current_dir(void)
 }
 
 /*
- *  DIR (’x‰„Š„‚İ—v‹ƒŒƒWƒXƒ^) ‚ÌŒ»İ’l‚Ì•ÏX
+ *  DIR ($BCY1d3d9~$_MW5a%l%8%9%?(B) $B$N8=:_CM$NJQ99(B
  *
- *  dir ‚ÍC0 ˆÈã 15 ˆÈ‰º‚Å‚ ‚é‚±‚ÆD
+ *  dir $B$O!$(B0 $B0J>e(B 15 $B0J2<$G$"$k$3$H!%(B
  */
 Inline void
 set_dir(INT dir)
@@ -138,30 +140,30 @@ set_dir(INT dir)
 }
 
 /*
- *  EITŠÖ˜A‚Ì’è‹`
+ *  EIT$B4XO"$NDj5A(B
  */
 
-#define EITVEC_BUSERR	0x11		/* ƒoƒXƒGƒ‰[‚ÌƒxƒNƒ^”Ô† */
-#define EITVEC_TRAPA1	0x21		/* TRAPA #1 ‚ÌƒxƒNƒ^”Ô† */
-#define EITVEC_TRAPA2	0x22		/* TRAPA #2 ‚ÌƒxƒNƒ^”Ô† */
-#define EITVEC_TRAPA3	0x23		/* TRAPA #3 ‚ÌƒxƒNƒ^”Ô† */
-#define EITVEC_TRAPA4	0x24		/* TRAPA #4 ‚ÌƒxƒNƒ^”Ô† */
-#define EITVEC_DI14	0x5e		/* DI=14 ‚ÌƒxƒNƒ^”Ô† */
+#define EITVEC_BUSERR	0x11		/* $B%P%9%(%i!<$N%Y%/%?HV9f(B */
+#define EITVEC_TRAPA1	0x21		/* TRAPA #1 $B$N%Y%/%?HV9f(B */
+#define EITVEC_TRAPA2	0x22		/* TRAPA #2 $B$N%Y%/%?HV9f(B */
+#define EITVEC_TRAPA3	0x23		/* TRAPA #3 $B$N%Y%/%?HV9f(B */
+#define EITVEC_TRAPA4	0x24		/* TRAPA #4 $B$N%Y%/%?HV9f(B */
+#define EITVEC_DI14	0x5e		/* DI=14 $B$N%Y%/%?HV9f(B */
 
 #define EITATR(smode, imask)	(((smode) << 31) + ((imask) << 16))
 
 /*
- *  EITƒxƒNƒ^ƒe[ƒuƒ‹‚Ì\‘¢‚Ì’è‹`
+ *  EIT$B%Y%/%?%F!<%V%k$N9=B$$NDj5A(B
  */
 typedef struct eit_vector_entry {
-	UINT	eitatr;			/* EIT‘®« */
-	FP	eithdr;			/* EITƒnƒ“ƒhƒ‰‚ÌƒAƒhƒŒƒX */
+	UINT	eitatr;			/* EIT$BB0@-(B */
+	FP	eithdr;			/* EIT$B%O%s%I%i$N%"%I%l%9(B */
 } EITVE;
 
 /*
- *  EITƒxƒNƒ^ƒe[ƒuƒ‹ƒx[ƒX (EITVB) ‚Ìİ’è
+ *  EIT$B%Y%/%?%F!<%V%k%Y!<%9(B (EITVB) $B$N@_Dj(B
  *
- *  ‰Šú‰»ˆ—‚Ì’†‚Åg‚¤‚½‚ß‚ÌŠÖ”D
+ *  $B=i4|2==hM}$NCf$G;H$&$?$a$N4X?t!%(B
  */
 Inline void
 set_eitvb(EITVE *eitvb)
@@ -170,11 +172,11 @@ set_eitvb(EITVE *eitvb)
 }
 
 /*
- *  EITƒxƒNƒ^ƒe[ƒuƒ‹ƒx[ƒX (EITVB) ‚ÌŒ»İ’l‚Ì“Ç‚İo‚µ
+ *  EIT$B%Y%/%?%F!<%V%k%Y!<%9(B (EITVB) $B$N8=:_CM$NFI$_=P$7(B
  *
- *  EITVB_ITIS ‚ª’è‹`‚³‚ê‚Ä‚¢‚é‚ÍC‰Šú‰»ˆ—‚Ì’†‚Å EITVBƒŒƒWƒXƒ^‚ğ
- *  EITVB_ITIS ‚Éİ’è‚·‚é‚Ì‚ÅCEITVB_ITIS ‚ğ•Ô‚¹‚Î‚æ‚¢D‚»‚¤‚Å‚È‚¢ê‡
- *  ‚ÍCCPU ‚Ì EITVBƒŒƒWƒXƒ^‚ğ“Ç‚İo‚·D
+ *  EITVB_ITIS $B$,Dj5A$5$l$F$$$k;~$O!$=i4|2==hM}$NCf$G(B EITVB$B%l%8%9%?$r(B
+ *  EITVB_ITIS $B$K@_Dj$9$k$N$G!$(BEITVB_ITIS $B$rJV$;$P$h$$!%$=$&$G$J$$>l9g(B
+ *  $B$O!$(BCPU $B$N(B EITVB$B%l%8%9%?$rFI$_=P$9!%(B
  */
 #ifdef EITVB_ITIS
 #define current_eitvb()	((EITVE *) EITVB_ITIS)
@@ -192,12 +194,12 @@ Inline EITVE
 #endif /* EITVB_ITIS */
 
 /*
- *  EITƒnƒ“ƒhƒ‰‚Ìİ’è
+ *  EIT$B%O%s%I%i$N@_Dj(B
  *
- *  ƒxƒNƒgƒ‹”Ô† eitvec ‚Ì EITƒxƒNƒ^ƒe[ƒuƒ‹ƒGƒ“ƒgƒŠ‚ÌCEIT‘®« (EITƒn
- *  ƒ“ƒhƒ‰Às‚ÌCƒXƒ^ƒbƒNƒ‚[ƒhCƒAƒhƒŒƒX•ÏŠ·ƒ‚[ƒhCƒfƒoƒbƒOƒ‚[ƒhC
- *  Š„‚İƒ}ƒXƒN‚ğŒˆ‚ß‚é) ‚ğ eitatrCEITƒnƒ“ƒhƒ‰ŠJn”Ô’n‚ğ eithdr ‚Éİ
- *  ’è‚·‚éD
+ *  $B%Y%/%H%kHV9f(B eitvec $B$N(B EIT$B%Y%/%?%F!<%V%k%(%s%H%j$N!$(BEIT$BB0@-(B (EIT$B%O(B
+ *  $B%s%I%i<B9T;~$N!$%9%?%C%/%b!<%I!$%"%I%l%9JQ49%b!<%I!$%G%P%C%0%b!<%I!$(B
+ *  $B3d9~$_%^%9%/$r7h$a$k(B) $B$r(B eitatr$B!$(BEIT$B%O%s%I%i3+;OHVCO$r(B eithdr $B$K@_(B
+ *  $BDj$9$k!%(B
  */
 Inline void
 define_eit(INT eitvec, UINT eitatr, FP eithdr)
@@ -209,10 +211,10 @@ define_eit(INT eitvec, UINT eitatr, FP eithdr)
 }
 
 /*
- *  ƒƒ‚ƒŠƒuƒƒbƒN‘€ìƒ‰ƒCƒuƒ‰ƒŠ
+ *  $B%a%b%j%V%m%C%/A`:n%i%$%V%i%j(B
  *
- *  ŠÖ”‚Ìd—l‚ÍCANSI C ƒ‰ƒCƒuƒ‰ƒŠ‚Ìd—l‚Æ“¯‚¶D•W€ƒ‰ƒCƒuƒ‰ƒŠ‚Ì‚à‚Ì‚ğ
- *  g‚Á‚½•û‚ªŒø—¦‚ª—Ç‚¢‰Â”\«‚ª‚ ‚éD
+ *  $B4X?t$N;EMM$O!$(BANSI C $B%i%$%V%i%j$N;EMM$HF1$8!%I8=`%i%$%V%i%j$N$b$N$r(B
+ *  $B;H$C$?J}$,8zN($,NI$$2DG=@-$,$"$k!%(B
  */
 
 Inline VP

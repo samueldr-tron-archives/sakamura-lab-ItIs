@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,49 +30,49 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: sys_conf.h,v 1.4 1996/02/17 09:43:58 hiro Exp $
+ *  @(#) $Id: sys_conf.h,v 1.5 1998/01/30 09:57:03 hiro Exp $
  */
 
 #ifndef _SYS_CONF_
 #define _SYS_CONF_
 
 /*
- *  ItIs ìÆçÏéûÇÃÉÅÉÇÉäÉ}ÉbÉv (ÉfÉtÉHÉãÉgéû)
+ *  ItIs $BF0:n;~$N%a%b%j%^%C%W(B ($B%G%U%)%k%H;~(B)
  *
- *	80000000 - 8000ffff	ROMÉÇÉjÉ^ÉèÅ[ÉNÉGÉäÉA
- *	80020000 -		ÉJÅ[ÉlÉãÉRÅ[ÉhóÃàÊ
- *		 - 8007efff	É^ÉXÉNì∆óßïîópÉXÉ^ÉbÉNóÃàÊ (ItIs ÇÃ SPI)
- *	8007f000 - 8007ffff	EITÉxÉNÉ^ÉeÅ[ÉuÉã (é¿ç€ÇÕÇ±ÇÃîºï™ÇÃÇ›égóp)
- *	80080000 - 800fffff	ÉJÅ[ÉlÉãÉfÅ[É^óÃàÊ (ëÂÇ´Ç≠Ç∑ÇÈÇ±Ç∆Ç‡â¬î\)
- *	80100000 -		ñ¢égóp (ÉÜÅ[ÉUÉvÉçÉOÉâÉÄóÃàÊ)
- *		 - 80ffffff	ROMÉÇÉjÉ^ÇÃèâä˙SPI (êîÉoÉCÉgâÛÇ≥ÇÍÇÈ)
+ *	80000000 - 8000ffff	ROM$B%b%K%?%o!<%/%(%j%"(B
+ *	80020000 -		$B%+!<%M%k%3!<%INN0h(B
+ *		 - 8007efff	$B%?%9%/FHN)ItMQ%9%?%C%/NN0h(B (ItIs $B$N(B SPI)
+ *	8007f000 - 8007ffff	EIT$B%Y%/%?%F!<%V%k(B ($B<B:]$O$3$NH>J,$N$_;HMQ(B)
+ *	80080000 - 800fffff	$B%+!<%M%k%G!<%?NN0h(B ($BBg$-$/$9$k$3$H$b2DG=(B)
+ *	80100000 -		$BL$;HMQ(B ($B%f!<%6%W%m%0%i%`NN0h(B)
+ *		 - 80ffffff	ROM$B%b%K%?$N=i4|(BSPI ($B?t%P%$%H2u$5$l$k(B)
  */
 
 /*
- *  ÉXÉ^ÉbÉNÉGÉäÉAÅCÉqÅ[ÉvÉGÉäÉAÇÃíËã`
+ *  $B%9%?%C%/%(%j%"!$%R!<%W%(%j%"$NDj5A(B
  *
- *  _end ÇÕÅCÉvÉçÉOÉâÉÄÇ≈égópÇ∑ÇÈÉfÅ[É^ÉGÉäÉAÇÃç≈å„ÇÃéüÇÃî‘ínÅD
+ *  _end $B$O!$%W%m%0%i%`$G;HMQ$9$k%G!<%?%(%j%"$N:G8e$N<!$NHVCO!%(B
  */
-#define STACKTOP	0x8007f000	/* É^ÉXÉNì∆óßïîópÉXÉ^ÉbÉNÇÃèâä˙íl */
-#define HEAPTOP		_end		/* ÉqÅ[ÉvÉGÉäÉAÇÃêÊì™ */
-#define HEAPLIMIT	0x80100000	/* ÉqÅ[ÉvÉGÉäÉAÇÃè„å¿ */
+#define STACKTOP	0x8007f000	/* $B%?%9%/FHN)ItMQ%9%?%C%/$N=i4|CM(B */
+#define HEAPTOP		_end		/* $B%R!<%W%(%j%"$N@hF,(B */
+#define HEAPLIMIT	0x80100000	/* $B%R!<%W%(%j%"$N>e8B(B */
 
 /*
- *  EITÉxÉNÉ^ÉeÅ[ÉuÉãä÷òAÇÃíËã`
+ *  EIT$B%Y%/%?%F!<%V%k4XO"$NDj5A(B
  *
- *  MCUBE ÇÃ ROMÉÇÉjÉ^ (BMS) Ç≈ÇÕÅCEITÉxÉNÉ^ÉeÅ[ÉuÉãÇ FFFFF000 î‘ínÇ©
- *  ÇÁ ROM Ç…íuÇ¢ÇƒÇ¢ÇÈÅDÇªÇ±Ç≈ÅCItIs ãNìÆéûÇ…ÅCEITÉxÉNÉ^ÉeÅ[ÉuÉãÇ RAM 
- *  è„Ç…çÏÇÈïKóvÇ™Ç†ÇÈÅDEITVB_ITIS î‘ínÇ…ÅCEITÉxÉNÉ^ÉeÅ[ÉuÉãÇÃèâä˙ê›íË
- *  Ç ROM Ç©ÇÁÉRÉsÅ[ÇµÇƒégÇ§ÅD
+ *  MCUBE $B$N(B ROM$B%b%K%?(B (BMS) $B$G$O!$(BEIT$B%Y%/%?%F!<%V%k$r(B FFFFF000 $BHVCO$+(B
+ *  $B$i(B ROM $B$KCV$$$F$$$k!%$=$3$G!$(BItIs $B5/F0;~$K!$(BEIT$B%Y%/%?%F!<%V%k$r(B RAM 
+ *  $B>e$K:n$kI,MW$,$"$k!%(BEITVB_ITIS $BHVCO$K!$(BEIT$B%Y%/%?%F!<%V%k$N=i4|@_Dj(B
+ *  $B$r(B ROM $B$+$i%3%T!<$7$F;H$&!%(B
  */
 #define EITVB_ORIG	((EITVE *) 0xfffff000)
 #define EITVB_ITIS	((EITVE *) 0x8007f000)
 #define EITVT_LEN	0x800
 
 /*
- *  ÉVÉXÉeÉÄÉ^ÉXÉNÇ…ä÷Ç∑ÇÈíËã`
+ *  $B%7%9%F%`%?%9%/$K4X$9$kDj5A(B
  */
-#define	CONSOLE_PORT	1	/* ÉRÉìÉ\Å[ÉãópÇ…ópÇ¢ÇÈÉVÉäÉAÉãÉ|Å[Égî‘çÜ */
-#define	LOGTASK_PORT	1	/* ÉVÉXÉeÉÄÉçÉOÇèoóÕÇ∑ÇÈÉVÉäÉAÉãÉ|Å[Égî‘çÜ */
+#define	CONSOLE_PORT	1	/* $B%3%s%=!<%kMQ$KMQ$$$k%7%j%"%k%]!<%HHV9f(B */
+#define	LOGTASK_PORT	1	/* $B%7%9%F%`%m%0$r=PNO$9$k%7%j%"%k%]!<%HHV9f(B */
 
 #endif /* _SYS_CONF_ */

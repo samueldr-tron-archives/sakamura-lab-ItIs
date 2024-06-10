@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: sys_support.S,v 1.4 1996/07/28 00:29:16 hiro Exp $
+ *  @(#) $Id: sys_support.S,v 1.5 1998/01/30 09:57:25 hiro Exp $
  */
 
 #include "config.h"
@@ -39,44 +41,44 @@
 #include "tron_defs.h"
 
 /*
- *  TVME-150 CPUÉ{Å[Éhè„ÇÃÉåÉWÉXÉ^ÉAÉhÉåÉXÇÃíËã`
+ *  TVME-150 CPU$B%\!<%I>e$N%l%8%9%?%"%I%l%9$NDj5A(B
  */
-#define TVME_STAT0	0xfffb0020	/* ÉXÉeÅ[É^ÉXÉåÉWÉXÉ^0 */
-#define TVME_STAT1	0xfffb0021	/* ÉXÉeÅ[É^ÉXÉåÉWÉXÉ^1 */
-#define TVME_STAT2	0xfffb0022	/* ÉXÉeÅ[É^ÉXÉåÉWÉXÉ^2 */
-#define TVME_CNTL1	0xfffb0029	/* ÉRÉìÉgÉçÅ[ÉãÉåÉWÉXÉ^1 */
-#define TVME_CNTL2	0xfffb002b	/* ÉRÉìÉgÉçÅ[ÉãÉåÉWÉXÉ^2 */
+#define TVME_STAT0	0xfffb0020	/* $B%9%F!<%?%9%l%8%9%?(B0 */
+#define TVME_STAT1	0xfffb0021	/* $B%9%F!<%?%9%l%8%9%?(B1 */
+#define TVME_STAT2	0xfffb0022	/* $B%9%F!<%?%9%l%8%9%?(B2 */
+#define TVME_CNTL1	0xfffb0029	/* $B%3%s%H%m!<%k%l%8%9%?(B1 */
+#define TVME_CNTL2	0xfffb002b	/* $B%3%s%H%m!<%k%l%8%9%?(B2 */
 
 /*
- *  TVME-150 CPUÉ{Å[Éhóp ÉXÉ^Å[ÉgÉAÉbÉvÉÇÉWÉÖÅ[Éã
+ *  TVME-150 CPU$B%\!<%IMQ(B $B%9%?!<%H%"%C%W%b%8%e!<%k(B
  */
 	.text
 	.align 1
 	.globl ___sys_init
 ___sys_init:
 tvme_start:
-	mov r0, r13			/* ñﬂÇËî‘ínÇ R13 Ç…ï€ë∂ */
+	mov r0, r13			/* $BLa$jHVCO$r(B R13 $B$KJ]B8(B */
 	stc @PSW, r0
-	and #0x1ff09fff, r0		/* SMRNG=0, IMASK=0, PRNG=0 Ç…ê›íË */
+	and #0x1ff09fff, r0		/* SMRNG=0, IMASK=0, PRNG=0 $B$K@_Dj(B */
 	ldc r0, @PSW
-	mov #STACKTOP, sp		/* ÉXÉ^ÉbÉNÉ|ÉCÉìÉ^ (SPI) ÇÃèâä˙âª */
-	mov #0, fp			/* ÉtÉåÅ[ÉÄÉ|ÉCÉìÉ^ÇÃèâä˙âª */
+	mov #STACKTOP, sp		/* $B%9%?%C%/%]%$%s%?(B (SPI) $B$N=i4|2=(B */
+	mov #0, fp			/* $B%U%l!<%`%]%$%s%?$N=i4|2=(B */
 
-	mov #0x30, @TVME_CNTL1.b	/* ÉRÉìÉgÉçÅ[ÉãÉåÉWÉXÉ^1 ÇÃèâä˙âª */
-	mov @TVME_STAT1.b, r0.b		/* ÉÅÉCÉãÉ{ÉbÉNÉXÉAÉhÉåÉXÇ∆ */
-	and #0x1f, r0.b			/*	VMEÉÇÅ[ÉhÇÃèâä˙âª */
+	mov #0x30, @TVME_CNTL1.b	/* $B%3%s%H%m!<%k%l%8%9%?(B1 $B$N=i4|2=(B */
+	mov @TVME_STAT1.b, r0.b		/* $B%a%$%k%\%C%/%9%"%I%l%9$H(B */
+	and #0x1f, r0.b			/*	VME$B%b!<%I$N=i4|2=(B */
 	sha #2, r0.b
 	or #0x03, r0.b
 	mov r0.b, @TVME_CNTL2.b
 
 	ldc #0xf00, @G200_DCCW		/* all cache ON */
-	ldcpid #7			/* ÉRÉvÉçÉZÉbÉTID Ç 7 Ç… */
-					/* (ÉRÉvÉçÉZÉbÉTÇégÇÌÇ»Ç¢) */
-	bsr ___rawio_init		/* ÉâÉCÉuÉâÉäÇÃèâä˙âª */
+	ldcpid #7			/* $B%3%W%m%;%C%5(BID $B$r(B 7 $B$K(B */
+					/* ($B%3%W%m%;%C%5$r;H$o$J$$(B) */
+	bsr ___rawio_init		/* $B%i%$%V%i%j$N=i4|2=(B */
 	jmp @r13
 
 /*
- *  í·ÉåÉxÉãÉÅÉÇÉäÉGÉäÉAämï€ÉãÅ[É`Éì
+ *  $BDc%l%Y%k%a%b%j%(%j%"3NJ]%k!<%A%s(B
  *
  *  void *sbrk(int size)
  */
@@ -84,16 +86,16 @@ tvme_start:
 	.align 1
 	.globl _sbrk
 _sbrk:
-	mov @_break, r1			/* _break ÇÃåªç›ílÇéÊÇËèoÇ∑ */
+	mov @_break, r1			/* _break $B$N8=:_CM$r<h$j=P$9(B */
 	add r1, r0
-	bxs sbrk_overflow		/* ÉÅÉÇÉäÉtÉãÇÃÉ`ÉFÉbÉN */
+	bxs sbrk_overflow		/* $B%a%b%j%U%k$N%A%'%C%/(B */
 	cmpu #HEAPLIMIT, r0
 	bgt sbrk_overflow
-	mov r0, @_break			/* _break ÇÃçXêV */
-	mov r1, r0			/* çXêVëOÇÃ _break Çï‘Ç∑ */
+	mov r0, @_break			/* _break $B$N99?7(B */
+	mov r1, r0			/* $B99?7A0$N(B _break $B$rJV$9(B */
 	rts
 sbrk_overflow:
-	mov #-1, r0			/* ÉIÅ[ÉoÅ[ÉtÉçÅ[ÇÃèÍçáÇÕ NADR */
+	mov #-1, r0			/* $B%*!<%P!<%U%m!<$N>l9g$O(B NADR */
 	rts
 
 	.data

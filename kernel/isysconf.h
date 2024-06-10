@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,50 +30,50 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: isysconf.h,v 1.15 1997/01/10 13:36:22 hiro Exp $
+ *  @(#) $Id: isysconf.h,v 1.16 1998/01/30 09:52:30 hiro Exp $
  */
 
 #ifndef _ISYSCONF_
 #define _ISYSCONF_
 
 /*
- *  ÉVÉXÉeÉÄç\ê¨ê›íËÉtÉ@ÉCÉãÇ…ëŒÇ∑ÇÈÉfÉtÉHÉãÉgílÇÃíËã`
+ *  $B%7%9%F%`9=@.@_Dj%U%!%$%k$KBP$9$k%G%U%)%k%HCM$NDj5A(B
  */
 
 /*
- *  ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÉTÉCÉYÇÃÉfÉtÉHÉãÉgíl
+ *  $B%7%9%F%`%a%b%j%W!<%k%5%$%:$N%G%U%)%k%HCM(B
  */
 #ifndef SYS_MPL_SIZE
 #define SYS_MPL_SIZE	0x60000
 #endif /* SYS_MPL_SIZE */
 
 /*
- *  óDêÊìxåpè≥ÉZÉ}ÉtÉHÇÃédólÇÃÉfÉtÉHÉãÉgíl
+ *  $BM%@hEY7Q>5%;%^%U%)$N;EMM$N%G%U%)%k%HCM(B
  */
 #ifndef PRISEM_SPEC
 #define PRISEM_SPEC	1
 #endif /* PRISEM_SPEC */
 
 /*
- *  ÉVÉXÉeÉÄç\ê¨Ç…ä÷Ç∑ÇÈï‚èïíËã`
+ *  $B%7%9%F%`9=@.$K4X$9$kJd=uDj5A(B
  */
 
 /*
- *  ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÇégÇ§Ç©Ç«Ç§Ç©ÇÃíËã`
+ *  $B%7%9%F%`%a%b%j%W!<%k$r;H$&$+$I$&$+$NDj5A(B
  */
 #if defined(NUM_MPLID) && CHK_MPLID(TMPL_OS)
 #define USE_TMPL_OS
 #endif
 
 /*
- *  ÉVÉXÉeÉÄÉçÉOópÉÅÉbÉZÅ[ÉWÉoÉbÉtÉ@ÇégÇ§Ç©Ç«Ç§Ç©ÇÃíËã`
+ *  $B%7%9%F%`%m%0MQ%a%C%;!<%8%P%C%U%!$r;H$&$+$I$&$+$NDj5A(B
  */
 #if defined(NUM_MBFID) && CHK_MBFID(TMBF_OS)
 #define USE_TMBF_OS
 #endif
 
 /*
- *  óDêÊìxåpè≥ÉZÉ}ÉtÉHÇÃédólÇ…ä÷òAÇ∑ÇÈíËã`
+ *  $BM%@hEY7Q>5%;%^%U%)$N;EMM$K4XO"$9$kDj5A(B
  */
 #ifdef NUM_PISID
 
@@ -88,17 +90,17 @@
 #endif /* NUM_PISID */
 
 /*
- *  É^ÉXÉNë“ÇøâèúéûÇÃèàóùÉtÉbÉNÇégÇ§Ç©Ç«Ç§Ç©ÇÃíËã`
+ *  $B%?%9%/BT$A2r=|;~$N=hM}%U%C%/$r;H$&$+$I$&$+$NDj5A(B
  *
- *  édól1 ÇÃóDêÊìxåpè≥ÉZÉ}ÉtÉHÇégÇ§èÍçáÇ…ÇÕÅCÉ^ÉXÉNë“ÇøâèúéûÇÃèàóùÉtÉb
- *  ÉNÇ™ïKóvÅD
+ *  $B;EMM(B1 $B$NM%@hEY7Q>5%;%^%U%)$r;H$&>l9g$K$O!$%?%9%/BT$A2r=|;~$N=hM}%U%C(B
+ *  $B%/$,I,MW!%(B
  */
 #ifdef PRISEM_SPEC1
 #define USE_REL_WAI_HOOK
 #endif /* PRISEM_SPEC1 */
 
 /*
- *  égópÇµÇ»Ç¢ã@î\ÉuÉçÉbÉNÇÃåàíË
+ *  $B;HMQ$7$J$$5!G=%V%m%C%/$N7hDj(B
  */
 
 #ifdef NUM_SEMID
@@ -146,7 +148,7 @@
 #endif
 
 /*
- *  égópÇµÇ»Ç¢ÉVÉXÉeÉÄÉRÅ[ÉãÇ…ä÷Ç∑ÇÈíËã`
+ *  $B;HMQ$7$J$$%7%9%F%`%3!<%k$K4X$9$kDj5A(B
  */
 
 #ifndef USE_SEM

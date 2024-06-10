@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: startup.c,v 1.12 1997/01/10 13:36:23 hiro Exp $
+ *  @(#) $Id: startup.c,v 1.14 1998/07/06 11:07:49 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -38,14 +40,13 @@
 #include "../systask/systask.h"
 
 /*
- *  ÉoÅ[ÉWÉáÉìèÓïÒ (version.c)
+ *  $B%P!<%8%g%s>pJs(B (version.c)
  */
 extern char	version[];
 
 /*
- *  ItIsÉJÅ[ÉlÉãÇÃèâä˙âªÇ∆èâä˙âªÉ^ÉXÉNÇÃê∂ê¨ÅEãNìÆ
+ *  ItIs$B%+!<%M%k$N=i4|2=$H=i4|2=%?%9%/$N@8@.!&5/F0(B
  */
-void
 main()
 {
 	ER	ercd;
@@ -55,13 +56,13 @@ main()
 		version, MAJOR_REL, MINOR_REL, PATCH_LEVEL);
 
 	/*
-	 *  É^Å[ÉQÉbÉgàÀë∂ÇÃèâä˙âª
+	 *  $B%?!<%2%C%H0MB8$N=i4|2=(B
 	 */
 	cpu_initialize();
 	sys_initialize();
 
 	/*
-	 *  äeÉÇÉWÉÖÅ[ÉãÇÃèâä˙âª
+	 *  $B3F%b%8%e!<%k$N=i4|2=(B
 	 */
 	task_initialize();
 #ifdef USE_SEM
@@ -100,7 +101,7 @@ main()
 	timer_initialize();
 
 	/*
-	 *  ÉVÉXÉeÉÄÉÅÉÇÉäÉvÅ[ÉãÇÃê∂ê¨
+	 *  $B%7%9%F%`%a%b%j%W!<%k$N@8@.(B
 	 */
 	if ((ercd = sys_cre_mpl()) < 0) {
 		i_syslog(LOG_KERN|LOG_EMERG,
@@ -109,7 +110,7 @@ main()
 	}
 
 	/*
-	 *  èâä˙âªÉ^ÉXÉNÇÃê∂ê¨ÅEãNìÆ
+	 *  $B=i4|2=%?%9%/$N@8@.!&5/F0(B
 	 */
 	if ((ercd = i_cre_tsk(TSK_INIT, &TSK_INIT_CTSK)) < 0) {
 		i_syslog(LOG_KERN|LOG_EMERG,
@@ -123,13 +124,13 @@ main()
 	}
 
 	/*
-	 *  ÉJÅ[ÉlÉãÇÃìÆçÏÇäJénÇ∑ÇÈÅD
+	 *  $B%+!<%M%k$NF0:n$r3+;O$9$k!%(B
 	 */
 	force_dispatch();
 }
 
 /*
- *  ItIs èIóπèàóù
+ *  ItIs $B=*N;=hM}(B
  */
 void
 itis_exit()

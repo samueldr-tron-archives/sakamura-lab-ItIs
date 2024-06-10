@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,43 +30,43 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: nd_dispatch.S,v 1.3 1996/02/17 09:43:23 hiro Exp $
+ *  @(#) $Id: nd_dispatch.S,v 1.4 1998/01/30 09:56:32 hiro Exp $
  */
 
 /*
- *  É^ÉXÉNÉfÉBÉXÉpÉbÉ`ÉÉ
+ *  $B%?%9%/%G%#%9%Q%C%A%c(B
  * 
- *  é¿çsíÜÇÃÉ^ÉXÉN (ctxtsk) ÇÃÉRÉìÉeÉLÉXÉgÇ TCB Ç…ï€ë∂ÇµÅCé¿çsÇ∑Ç◊Ç´É^
- *  ÉXÉN (schedtsk) ÇêVÇµÇ¢é¿çsÉ^ÉXÉNÇ∆ÇµÇƒÅCÇªÇÃÉRÉìÉeÉLÉXÉgÇ TCB Ç©
- *  ÇÁïúãAÇ∑ÇÈÅD
+ *  $B<B9TCf$N%?%9%/(B (ctxtsk) $B$N%3%s%F%-%9%H$r(B TCB $B$KJ]B8$7!$<B9T$9$Y$-%?(B
+ *  $B%9%/(B (schedtsk) $B$r?7$7$$<B9T%?%9%/$H$7$F!$$=$N%3%s%F%-%9%H$r(B TCB $B$+(B
+ *  $B$iI|5"$9$k!%(B
  *
- *  ÉfÉBÉXÉpÉbÉ`ÉÉÇÕÅCà»â∫ÇÃ 2í ÇËÇÃï˚ñ@Ç≈ãNìÆÇ≥ÇÍÇÈÅD
+ *  $B%G%#%9%Q%C%A%c$O!$0J2<$N(B 2$BDL$j$NJ}K!$G5/F0$5$l$k!%(B
  * 
- *  ãNìÆï˚ñ@1:
+ *  $B5/F0J}K!(B1:
  * 
- *  ÉVÉXÉeÉÄÉRÅ[Éãì‡Ç©ÇÁÅCÉXÉ^ÉbÉNÇÕ SP0ÅCIMASK ÇÕ 15 Ç≈ÅCTRAPAñΩóﬂÇ…ÇÊ
- *  ÇËãNìÆÇ≥ÇÍÇÈÅDÉ^ÉXÉNì∆óßïîÇ©ÇÁåƒÇŒÇÍÇΩÉVÉXÉeÉÄÉRÅ[Éãì‡Ç≈ãNìÆÇ≥ÇÍÇÈ
- *  Ç±Ç∆ÇÕÇ»Ç¢ÅD
+ *  $B%7%9%F%`%3!<%kFb$+$i!$%9%?%C%/$O(B SP0$B!$(BIMASK $B$O(B 15 $B$G!$(BTRAPA$BL?Na$K$h(B
+ *  $B$j5/F0$5$l$k!%%?%9%/FHN)It$+$i8F$P$l$?%7%9%F%`%3!<%kFb$G5/F0$5$l$k(B
+ *  $B$3$H$O$J$$!%(B
  *
- *  ãNìÆï˚ñ@2:
+ *  $B5/F0J}K!(B2:
  * 
- *  ÉXÉ^Å[ÉgÉAÉbÉvÉãÅ[É`ÉìÇ‹ÇΩÇÕé©É^ÉXÉNÇèIóπÇ∑ÇÈÉVÉXÉeÉÄÉRÅ[ÉãíÜÇ©ÇÁÅC
- *  ÉäÉìÉOÉåÉxÉãÅCIMASK Ç∆Ç‡Ç… 0 ÇÃèÛë‘Ç≈ÅC_dispatch_to_schedtsk Ç÷ÇÃï™
- *  äÚñΩóﬂÇ≈ãNìÆÇ≥ÇÍÇÈÅDÇ±ÇÃèÍçáÅCctxtsk ÇÕñ≥éãÇµÇƒ schedtsk Ç…ÉfÉBÉX
- *  ÉpÉbÉ`Ç∑ÇÈÅDãNìÆéûÇÃÉRÉìÉeÉLÉXÉgÇÕÅCSP0 Çä‹ÇﬂÇƒÇ«Ç±Ç…Ç‡ï€ë∂Ç≥ÇÍÇ»
- *  Ç¢ÅDÉXÉ^Å[ÉgÉAÉbÉvÉãÅ[É`ÉìÇ©ÇÁãNìÆÇ≥ÇÍÇÈèÍçáÇèúÇ¢ÇƒÇÕÅCÉ^ÉXÉNì∆óß
- *  ïîÇ©ÇÁãNìÆÇ≥ÇÍÇ»Ç¢ÇÃÇ™å¥ë•Ç≈Ç†ÇÈÇ™ÅCÉVÉXÉeÉÄÉRÅ[ÉãÇî≠çsÇµÇΩÉRÉìÉe
- *  ÉLÉXÉgÇ…ñﬂÇÁÇ»Ç¢ E_CTXÉGÉâÅ[ÇåüèoÇµÇΩèÍçáÇ…ÇÕÅCÇ‚ÇﬁÇÇ¶Ç∏É^ÉXÉNì∆
- *  óßïîÇ©ÇÁãNìÆÇ≥ÇÍÇÈÇ±Ç∆Ç…Ç»ÇÈÅD
+ *  $B%9%?!<%H%"%C%W%k!<%A%s$^$?$O<+%?%9%/$r=*N;$9$k%7%9%F%`%3!<%kCf$+$i!$(B
+ *  $B%j%s%0%l%Y%k!$(BIMASK $B$H$b$K(B 0 $B$N>uBV$G!$(B_dispatch_to_schedtsk $B$X$NJ,(B
+ *  $B4tL?Na$G5/F0$5$l$k!%$3$N>l9g!$(Bctxtsk $B$OL5;k$7$F(B schedtsk $B$K%G%#%9(B
+ *  $B%Q%C%A$9$k!%5/F0;~$N%3%s%F%-%9%H$O!$(BSP0 $B$r4^$a$F$I$3$K$bJ]B8$5$l$J(B
+ *  $B$$!%%9%?!<%H%"%C%W%k!<%A%s$+$i5/F0$5$l$k>l9g$r=|$$$F$O!$%?%9%/FHN)(B
+ *  $BIt$+$i5/F0$5$l$J$$$N$,86B'$G$"$k$,!$%7%9%F%`%3!<%k$rH/9T$7$?%3%s%F(B
+ *  $B%-%9%H$KLa$i$J$$(B E_CTX$B%(%i!<$r8!=P$7$?>l9g$K$O!$$d$`$r$($:%?%9%/FH(B
+ *  $BN)It$+$i5/F0$5$l$k$3$H$K$J$k!%(B
  *
- *  É^ÉXÉNÉfÉBÉXÉpÉbÉ`ÉÉì‡Ç≈ÇÕÅCÉRÉìÉeÉLÉXÉgÉXÉCÉbÉ`Ç…ÇÊÇË SP0 Ç™êÿÇËë÷
- *  ÇÌÇÈÇΩÇﬂÅCÉVÉXÉeÉÄÉXÉ^ÉbÉNè„Ç…ï€ë∂Ç≥ÇÍÇƒÇ¢ÇÈèÓïÒ (ãÔëÃìIÇ…ÇÕÅCÉfÉB
- *  ÉXÉpÉbÉ`ÉÉãNìÆëOÇÃ PCÅCPSWÅCR0Å`R14) ÇÕÅCÉRÉìÉeÉLÉXÉgÇ∆Ç∆Ç‡Ç…ï€ë∂Ç≥
- *  ÇÍÇÈÅDÇ±ÇÍÇ™ÅCÉfÉBÉXÉpÉbÉ`ÉÉÇ SP0 Ç≈ìÆÇ©Ç∑óùóRÇ≈Ç†ÇÈÅDé¿ç€Ç…ÇÕÅCÉV
- *  ÉXÉeÉÄÉXÉ^ÉbÉNè„Ç≈ÇÃÉtÉHÅ[É}ÉbÉgÇÕÅCéüÇÃÇÊÇ§Ç…Ç»ÇÈÅD
+ *  $B%?%9%/%G%#%9%Q%C%A%cFb$G$O!$%3%s%F%-%9%H%9%$%C%A$K$h$j(B SP0 $B$,@Z$jBX(B
+ *  $B$o$k$?$a!$%7%9%F%`%9%?%C%/>e$KJ]B8$5$l$F$$$k>pJs(B ($B6qBNE*$K$O!$%G%#(B
+ *  $B%9%Q%C%A%c5/F0A0$N(B PC$B!$(BPSW$B!$(BR0$B!A(BR14) $B$O!$%3%s%F%-%9%H$H$H$b$KJ]B8$5(B
+ *  $B$l$k!%$3$l$,!$%G%#%9%Q%C%A%c$r(B SP0 $B$GF0$+$9M}M3$G$"$k!%<B:]$K$O!$%7(B
+ *  $B%9%F%`%9%?%C%/>e$G$N%U%)!<%^%C%H$O!$<!$N$h$&$K$J$k!%(B
  *
- *  è¨ 	+-----------------------------------+ Å© TCB íÜÇ…ï€ë∂Ç≥ÇÍÇƒÇ¢ÇÈ SP0
- *  Å™	|                R0                 |
+ *  $B>.(B 	+-----------------------------------+ $B"+(B TCB $BCf$KJ]B8$5$l$F$$$k(B SP0
+ *  $B",(B	|                R0                 |
  *	+-----------------------------------+
  *	|                R1                 |
  *	+-----------------------------------+
@@ -72,99 +74,99 @@
  *	+-----------------------------------+
  *	|               R14                 |
  *	+-----------------------------------+
- *	|    (ÉfÉBÉXÉpÉbÉ`ÉÉãNìÆëOÇÃ) PSW   |
+ *	|    ($B%G%#%9%Q%C%A%c5/F0A0$N(B) PSW   |
  *	+-----------------------------------+
- *	| (ÉfÉBÉXÉpÉbÉ`ÉÉãNìÆÇ…ÇÊÇÈ) EITINF |
+ *	| ($B%G%#%9%Q%C%A%c5/F0$K$h$k(B) EITINF |
  *	+-----------------------------------+
- *	|    (ÉfÉBÉXÉpÉbÉ`ÉÉãNìÆëOÇÃ) PC    |
+ *	|    ($B%G%#%9%Q%C%A%c5/F0A0$N(B) PC    |
  *	+-----------------------------------+
- *  Å´	|  (ÉfÉBÉXÉpÉbÉ`ÉÉãNìÆÇ…ÇÊÇÈ) EXPC  |
- *  ëÂ	+-----------------------------------+ Å© ÉfÉBÉXÉpÉbÉ`ÉÉãNìÆëOÇÃ SP0
+ *  $B"-(B	|  ($B%G%#%9%Q%C%A%c5/F0$K$h$k(B) EXPC  |
+ *  $BBg(B	+-----------------------------------+ $B"+(B $B%G%#%9%Q%C%A%c5/F0A0$N(B SP0
  *
- *  ç≈å„Ç…Ç†ÇÈ EXPC ÇÕÅCTRAPAñΩóﬂÇ≈É^ÉXÉNÉfÉBÉXÉpÉbÉ`ÉÉÇ™ãNìÆÇ≥ÇÍÇΩèÍçá
- *  Ç…ÇÕÅCTRAPAñΩóﬂÇÃíuÇ©ÇÍÇƒÇ¢ÇÈî‘ínÇ™ì¸ÇÈÇ±Ç∆Ç…Ç»ÇÈÅDret_int Ç…ÇÊÇ¡Çƒ
- *  ÉRÉìÉeÉLÉXÉgÇ™ï€ë∂Ç≥ÇÍÇΩèÍçáÇ…ÇÕÅCTRAPAñΩóﬂÇÕégÇÌÇÍÇ»Ç¢ÇΩÇﬂÅCEXPC 
- *  Ç…ì¸ÇÈèÓïÒÇÕà”ñ°ÇéùÇΩÇ»Ç¢ (é¿ç€Ç…ÇÕ 0 Çì¸ÇÍÇƒÇ¢ÇÈÇ™ÅCè»ó™ÇµÇƒÇ‡ñ‚
- *  ëËÇ»Ç¢ÇæÇÎÇ§)ÅD
+ *  $B:G8e$K$"$k(B EXPC $B$O!$(BTRAPA$BL?Na$G%?%9%/%G%#%9%Q%C%A%c$,5/F0$5$l$?>l9g(B
+ *  $B$K$O!$(BTRAPA$BL?Na$NCV$+$l$F$$$kHVCO$,F~$k$3$H$K$J$k!%(Bret_int $B$K$h$C$F(B
+ *  $B%3%s%F%-%9%H$,J]B8$5$l$?>l9g$K$O!$(BTRAPA$BL?Na$O;H$o$l$J$$$?$a!$(BEXPC 
+ *  $B$KF~$k>pJs$O0UL#$r;}$?$J$$(B ($B<B:]$K$O(B 0 $B$rF~$l$F$$$k$,!$>JN,$7$F$bLd(B
+ *  $BBj$J$$$@$m$&(B)$B!%(B
  *
- *  ÉfÉBÉXÉpÉbÉ`ÉÉÇÃëOîºÇ≈ÇÕäÑçûÇ›ÇÕãñâ¬Ç≥ÇÍÇƒÇ¢ÇÈÇΩÇﬂÅCìríÜÇ≈ schedtsk
- *  Ç™èëÇ´Ç©ÇÌÇÈâ¬î\ê´Ç™Ç†ÇÈÇΩÇﬂÇ…íçà”Ç™ïKóvÇ≈Ç†ÇÈÅDÇ±ÇÍÇ…ëŒÇµÇƒÅCctxtsk 
- *  ÇÕÉfÉBÉXÉpÉbÉ`ÉÉÇÃíÜÇ≈ÇÃÇ›çXêVÇ≥ÇÍÇÈÅDëºÇÃïîï™Ç©ÇÁ ctxtsk ÇçXêVÇµ
- *  ÇƒÇÕÇ»ÇÁÇ»Ç¢ÅDÇ‹ÇΩÅCÉfÉBÉXÉpÉbÉ`ÉÉé¿çsíÜÇ…Ç©Ç©Ç¡ÇΩäÑçûÇ›ÉnÉìÉhÉâÇÃ
- *  ç≈å„ÇÃ ret_intÉVÉXÉeÉÄÉRÅ[ÉãÇ≈É^ÉXÉNÉfÉBÉXÉpÉbÉ`ÇãNÇ±Ç≥Ç»Ç¢ÇÊÇ§Ç…ÅC
- *  ÉfÉBÉXÉpÉbÉ`ÉÉìÆçÏíÜÇÕ dispatch_disabled Ç TRUE Ç…Ç∑ÇÈÅD
+ *  $B%G%#%9%Q%C%A%c$NA0H>$G$O3d9~$_$O5v2D$5$l$F$$$k$?$a!$ESCf$G(B schedtsk
+ *  $B$,=q$-$+$o$k2DG=@-$,$"$k$?$a$KCm0U$,I,MW$G$"$k!%$3$l$KBP$7$F!$(Bctxtsk 
+ *  $B$O%G%#%9%Q%C%A%c$NCf$G$N$_99?7$5$l$k!%B>$NItJ,$+$i(B ctxtsk $B$r99?7$7(B
+ *  $B$F$O$J$i$J$$!%$^$?!$%G%#%9%Q%C%A%c<B9TCf$K$+$+$C$?3d9~$_%O%s%I%i$N(B
+ *  $B:G8e$N(B ret_int$B%7%9%F%`%3!<%k$G%?%9%/%G%#%9%Q%C%A$r5/$3$5$J$$$h$&$K!$(B
+ *  $B%G%#%9%Q%C%A%cF0:nCf$O(B dispatch_disabled $B$r(B TRUE $B$K$9$k!%(B
  *
- *  ÉfÉBÉXÉpÉbÉ`ÉÉÇÃå„îºÇÕäÑçûÇ›ã÷é~èÛë‘Ç≈ìÆçÏÇ∑ÇÈÅDÇ±ÇÍÇÕÅCschedtsk Ç 
- *  R0 Ç…ì¸ÇÍÇΩå„Ç…äÑçûÇ›Ç™Ç©Ç©ÇËÅCÇªÇÃäÑçûÇ›ÉnÉìÉhÉâÇÃíÜÇ≈ schedtsk Ç™
- *  çÌèúÇ≥ÇÍÇΩèÍçáÇ… schedtsk ÇÃÉVÉXÉeÉÄÉXÉ^ÉbÉNóÃàÊÇ™âï˙Ç≥ÇÍÇƒÇµÇ‹Ç¢ÅC
- *  ÉRÉìÉeÉLÉXÉgÇÃïúãAÇ®ÇÊÇ—ç≈å„ÇÃ REITñΩóﬂÇÃìÆçÏÇ™ï€èÿÇ≈Ç´Ç»Ç≠Ç»ÇÈÇΩÇﬂ
- *  Ç≈Ç†ÇÈÅDÇÊÇ¡ÇƒÅCÉ^ÉXÉNì∆óßïîÇ©ÇÁ del_tsk ÇÃî≠çsÇ∑ÇÈÇ±Ç∆Çã÷é~ÇµÅCÉ^
- *  ÉXÉNÇÃÉRÉìÉeÉLÉXÉgÇ™ DORMANTèÛë‘Ç…Ç®Ç¢ÇƒÇ‡óLå¯Ç≈Ç†ÇÈÇ»ÇÁÅCäÑçûÇ›Ç
- *  ã÷é~Ç∑ÇÈïKóvÇÕÇ»Ç¢Ç‡ÇÃÇ∆évÇÌÇÍÇÈÅDÇ»Ç®ÅCäÑçûÇ›ã÷é~ÇÃâèúÇÕÅCREITñΩ
- *  óﬂÇ…ÇÊÇ¡ÇƒçsÇÌÇÍÇÈÅD
+ *  $B%G%#%9%Q%C%A%c$N8eH>$O3d9~$_6X;_>uBV$GF0:n$9$k!%$3$l$O!$(Bschedtsk $B$r(B 
+ *  R0 $B$KF~$l$?8e$K3d9~$_$,$+$+$j!$$=$N3d9~$_%O%s%I%i$NCf$G(B schedtsk $B$,(B
+ *  $B:o=|$5$l$?>l9g$K(B schedtsk $B$N%7%9%F%`%9%?%C%/NN0h$,2rJ|$5$l$F$7$^$$!$(B
+ *  $B%3%s%F%-%9%H$NI|5"$*$h$S:G8e$N(B REIT$BL?Na$NF0:n$,J]>Z$G$-$J$/$J$k$?$a(B
+ *  $B$G$"$k!%$h$C$F!$%?%9%/FHN)It$+$i(B del_tsk $B$NH/9T$9$k$3$H$r6X;_$7!$%?(B
+ *  $B%9%/$N%3%s%F%-%9%H$,(B DORMANT$B>uBV$K$*$$$F$bM-8z$G$"$k$J$i!$3d9~$_$r(B
+ *  $B6X;_$9$kI,MW$O$J$$$b$N$H;W$o$l$k!%$J$*!$3d9~$_6X;_$N2r=|$O!$(BREIT$BL?(B
+ *  $BNa$K$h$C$F9T$o$l$k!%(B
  *
- *  schedtsk Ç™ NULL ÇÃèÍçáÇÕÅCWAITñΩóﬂÇégÇ¡ÇƒÅCÇªÇ§Ç≈Ç»Ç≠Ç»ÇÈÇ‹Ç≈ÉfÉB
- *  ÉXÉpÉbÉ`ÉÉÇÃíÜÇ≈ë“Ç¬ÅDÇ‚ÇÕÇËÅCdispatch_disabled Ç TRUE Ç…Ç∑ÇÈÇ±Ç∆
- *  Ç≈ÅCÇ±ÇÃä‘Ç…ãNìÆÇ≥ÇÍÇΩäÑçûÇ›ÉnÉìÉhÉâÇÃç≈å„Ç≈åƒÇŒÇÍÇÈ ret_int ÇÃíÜÇ≈
- *  É^ÉXÉNÉXÉCÉbÉ`Ç™ãNÇ±ÇÁÇ»Ç¢ÇÊÇ§Ç…ÇµÇƒÇ¢ÇÈÅD
+ *  schedtsk $B$,(B NULL $B$N>l9g$O!$(BWAIT$BL?Na$r;H$C$F!$$=$&$G$J$/$J$k$^$G%G%#(B
+ *  $B%9%Q%C%A%c$NCf$GBT$D!%$d$O$j!$(Bdispatch_disabled $B$r(B TRUE $B$K$9$k$3$H(B
+ *  $B$G!$$3$N4V$K5/F0$5$l$?3d9~$_%O%s%I%i$N:G8e$G8F$P$l$k(B ret_int $B$NCf$G(B
+ *  $B%?%9%/%9%$%C%A$,5/$3$i$J$$$h$&$K$7$F$$$k!%(B
  */
 	.text
 	.align 1
 	.globl _dispatch_to_schedtsk
 	.globl _dispatch_entry
 _dispatch_to_schedtsk:
-	stc @PSW, r0			/* ÉXÉ^ÉbÉNÇ SP0 Ç…êÿë÷Ç¶ÇÈ */
+	stc @PSW, r0			/* $B%9%?%C%/$r(B SP0 $B$K@ZBX$($k(B */
 	bset #0, r0
 	ldc r0, @PSW
-	mov #1, @_dispatch_disabled	/* É^ÉXÉNÉfÉBÉXÉpÉbÉ`Çã÷é~ */
+	mov #1, @_dispatch_disabled	/* $B%?%9%/%G%#%9%Q%C%A$r6X;_(B */
 	bra dispatch_1
 _dispatch_entry:
-	mov #1, @_dispatch_disabled	/* É^ÉXÉNÉfÉBÉXÉpÉbÉ`Çã÷é~ */
-	stm (r0-r14), @-sp		/* ÉåÉWÉXÉ^Ç∆ÉRÉìÉeÉLÉXÉgÇÃï€ë∂ */
+	mov #1, @_dispatch_disabled	/* $B%?%9%/%G%#%9%Q%C%A$r6X;_(B */
+	stm (r0-r14), @-sp		/* $B%l%8%9%?$H%3%s%F%-%9%H$NJ]B8(B */
 	stctx/ls
 dispatch_1:
-	ldc #0, @IMASK			/* äÑçûÇ›Çã÷é~ */
-	mov @_schedtsk, r0		/* schedtsk Ç™Ç†ÇÈÇ©ÅH */
+	ldc #0, @IMASK			/* $B3d9~$_$r6X;_(B */
+	mov @_schedtsk, r0		/* schedtsk $B$,$"$k$+!)(B */
 	bne dispatch_2
-	mov #0, @_ctxtsk		/* ctxtsk Ç NULL Ç… */
-	wait #15			/* äÑçûÇ›ë“Çø */
+	mov #0, @_ctxtsk		/* ctxtsk $B$r(B NULL $B$K(B */
+	wait #15			/* $B3d9~$_BT$A(B */
 	bra dispatch_1
 dispatch_2:
 	mov r0, @_ctxtsk
-	ldctx/ls @(TCB_tskctxb,r0)	/* ÉåÉWÉXÉ^Ç∆ÉRÉìÉeÉLÉXÉgÇÃïúãA */
+	ldctx/ls @(TCB_tskctxb,r0)	/* $B%l%8%9%?$H%3%s%F%-%9%H$NI|5"(B */
 	ldm @sp+, (r0-r14)
-	mov #0, @_dispatch_disabled	/* É^ÉXÉNÉfÉBÉXÉpÉbÉ`Çãñâ¬ */
+	mov #0, @_dispatch_disabled	/* $B%?%9%/%G%#%9%Q%C%A$r5v2D(B */
 	reit
 
 /*
- *  ret_intÉVÉXÉeÉÄÉRÅ[ÉãèàóùÉãÅ[É`Éì
+ *  ret_int$B%7%9%F%`%3!<%k=hM}%k!<%A%s(B
  *
- *  _z_ret_int ÇÕ TRAPA ÇópÇ¢ÇΩÉVÉXÉeÉÄÉRÅ[ÉãåƒÇ—èoÇµÉCÉìÉ^ÉtÉFÅ[ÉXÇ…
- *  ÇÊÇÈì¸å˚ÅC_i_ret_int ÇÕÉTÉuÉãÅ[É`ÉìÉRÅ[ÉãÇópÇ¢ÇΩÉCÉìÉ^ÉtÉFÅ[ÉXÇ…ÇÊ
- *  ÇÈì¸å˚Ç≈Ç†ÇÈÅD__ret_int Ç… BRAñΩóﬂÇ»Ç¢ÇµÇÕ JMPñΩóﬂÇ≈ï™äÚÇ∑ÇÈï˚ñ@Ç‡
- *  Ç†ÇÈÅD
+ *  _z_ret_int $B$O(B TRAPA $B$rMQ$$$?%7%9%F%`%3!<%k8F$S=P$7%$%s%?%U%'!<%9$K(B
+ *  $B$h$kF~8}!$(B_i_ret_int $B$O%5%V%k!<%A%s%3!<%k$rMQ$$$?%$%s%?%U%'!<%9$K$h(B
+ *  $B$kF~8}$G$"$k!%(B__ret_int $B$K(B BRA$BL?Na$J$$$7$O(B JMP$BL?Na$GJ,4t$9$kJ}K!$b(B
+ *  $B$"$k!%(B
  *
- *  ret_int ÇÃèàóùÇÕÅCç≈èâÇ…ÉfÉBÉXÉpÉbÉ`Ç™ïKóvÇ©ÇÉ`ÉFÉbÉNÇ∑ÇÈïîï™Çèú
- *  Ç¢ÇƒÇÕÅCÉ^ÉXÉNÉfÉBÉXÉpÉbÉ`ÉÉÇ∆óﬁéóÇÃìÆçÏÇçsÇ§ÅDç≈ëÂÇÃà·Ç¢ÇÕÅCÉ^ÉX
- *  ÉNÉfÉBÉXÉpÉbÉ`ÉÉÇ™ SP0 ÇégÇ¡ÇƒìÆçÏÇ∑ÇÈÇÃÇ…ëŒÇµÇƒÅCret_int ÇÃèàóùÇÕ
- *  É^ÉXÉNì∆óßïîÇ©ÇÁåƒÇŒÇÍÇÈÇΩÇﬂÇ… SPI ÇégÇ¡ÇƒìÆçÏÇ∑ÇÈÇ±Ç∆Ç≈Ç†ÇÈÅDÇªÇÃ
- *  ÇΩÇﬂÅCÉåÉWÉXÉ^ìôÇï€ë∂Ç∑ÇÈç€Ç…ÅCR0 Ç SP0 ÇÃë„ÇÌÇËÇ…ópÇ¢ÇƒÇ¢ÇÈÅDÇ‹
- *  ÇΩÅCñﬂÇËêÊÇÃ PC Ç‚ PSW ÇÅCÉXÉ^ÉbÉNÉtÉåÅ[ÉÄÇÃíÜÇ©ÇÁéÊÇËèoÇµÇƒï€ë∂Ç∑
- *  ÇÈïKóvÇ™Ç†ÇÈÅD
+ *  ret_int $B$N=hM}$O!$:G=i$K%G%#%9%Q%C%A$,I,MW$+$r%A%'%C%/$9$kItJ,$r=|(B
+ *  $B$$$F$O!$%?%9%/%G%#%9%Q%C%A%c$HN`;w$NF0:n$r9T$&!%:GBg$N0c$$$O!$%?%9(B
+ *  $B%/%G%#%9%Q%C%A%c$,(B SP0 $B$r;H$C$FF0:n$9$k$N$KBP$7$F!$(Bret_int $B$N=hM}$O(B
+ *  $B%?%9%/FHN)It$+$i8F$P$l$k$?$a$K(B SPI $B$r;H$C$FF0:n$9$k$3$H$G$"$k!%$=$N(B
+ *  $B$?$a!$%l%8%9%?Ey$rJ]B8$9$k:]$K!$(BR0 $B$r(B SP0 $B$NBe$o$j$KMQ$$$F$$$k!%$^(B
+ *  $B$?!$La$j@h$N(B PC $B$d(B PSW $B$r!$%9%?%C%/%U%l!<%`$NCf$+$i<h$j=P$7$FJ]B8$9(B
+ *  $B$kI,MW$,$"$k!%(B
  *
- *  àÍï˚ÅCéüÇ…é¿çsÇ∑Ç◊Ç´É^ÉXÉNÇÃÉåÉWÉXÉ^ìôÇÃïúãAÇÕÅCÉ^ÉXÉNÉfÉBÉXÉpÉbÉ`
- *  ÉãÅ[É`ÉìÇ…îCÇπÇƒÇ¢ÇÈÅDÉ^ÉXÉNÉfÉBÉXÉpÉbÉ`ÉãÅ[É`ÉìÇ…ï™äÚÇ∑ÇÈç€Ç… REIT
- *  ñΩóﬂÇópÇ¢ÇƒÇ¢ÇÈÇÃÇÕÅCEITÉXÉ^ÉbÉNèÓïÒÇ…ï€ë∂Ç≥ÇÍÇƒÇ¢ÇÈèàóùÇçsÇ¢ÅC
- *  EITÉXÉ^ÉbÉNèÓïÒÇâï˙Ç∑ÇÈÇΩÇﬂÇ≈Ç†ÇÈÅD
+ *  $B0lJ}!$<!$K<B9T$9$Y$-%?%9%/$N%l%8%9%?Ey$NI|5"$O!$%?%9%/%G%#%9%Q%C%A(B
+ *  $B%k!<%A%s$KG$$;$F$$$k!%%?%9%/%G%#%9%Q%C%A%k!<%A%s$KJ,4t$9$k:]$K(B REIT
+ *  $BL?Na$rMQ$$$F$$$k$N$O!$(BEIT$B%9%?%C%/>pJs$KJ]B8$5$l$F$$$k=hM}$r9T$$!$(B
+ *  EIT$B%9%?%C%/>pJs$r2rJ|$9$k$?$a$G$"$k!%(B
  *
- *  ret_int Ç™åƒÇŒÇÍÇΩå„Ç… schedtsk Ç™èëÇ´Ç©ÇÌÇÈèÛãµÇ≈ÅCÉ^ÉXÉNÉXÉCÉbÉ`Ç™
- *  ä‘à·Ç¢Ç»Ç≠çsÇÌÇÍÇÈÇÊÇ§ÅCè\ï™Ç»îzó∂Ç™ïKóvÇ≈Ç†ÇÈÅDÇªÇÃÇΩÇﬂÇ…à»â∫ÇÃÉãÅ[
- *  É`ÉìÇ≈ÇÕÅCctxtsk Ç∆ schedtsk ÇÃî‰ärÇÃëOÇÃéûì_Ç≈äÑçûÇ›Çã÷é~ÇµÇƒÇ¢ÇÈÅD
- *  äÑçûÇ›ã÷é~ÇÇ±ÇÃî‰ärÇÃå„Ç…ÇµÇΩèÍçáÅCî‰ärÇÃíºå„Ç…äÑçûÇ›Ç™Ç©Ç©ÇËÇªÇÃ
- *  íÜÇ≈É^ÉXÉNÉfÉBÉXÉpÉbÉ`Ç™óvãÅÇ≥ÇÍÇΩèÍçáÇ…ÅCÉ^ÉXÉNÉXÉCÉbÉ`Ç™ãNÇ±ÇÁÇ»
- *  Ç¢ (ret_intèàóùÇÃíÜÇ≈Ç©Ç©Ç¡ÇΩäÑçûÇ›ÉnÉìÉhÉâÇ©ÇÁÇÃ ret_int Ç≈ÇÕÅCñﬂ
- *  ÇËêÊÇ™ IMASK != 15 Ç≈Ç†ÇÈÇΩÇﬂÇ…ÅCÉ^ÉXÉNÉXÉCÉbÉ`ÇÕãNÇ±ÇÁÇ»Ç¢Ç±Ç∆Ç…íç
- *  à”)ÅD
+ *  ret_int $B$,8F$P$l$?8e$K(B schedtsk $B$,=q$-$+$o$k>u67$G!$%?%9%/%9%$%C%A$,(B
+ *  $B4V0c$$$J$/9T$o$l$k$h$&!$==J,$JG[N8$,I,MW$G$"$k!%$=$N$?$a$K0J2<$N%k!<(B
+ *  $B%A%s$G$O!$(Bctxtsk $B$H(B schedtsk $B$NHf3S$NA0$N;~E@$G3d9~$_$r6X;_$7$F$$$k!%(B
+ *  $B3d9~$_6X;_$r$3$NHf3S$N8e$K$7$?>l9g!$Hf3S$ND>8e$K3d9~$_$,$+$+$j$=$N(B
+ *  $BCf$G%?%9%/%G%#%9%Q%C%A$,MW5a$5$l$?>l9g$K!$%?%9%/%9%$%C%A$,5/$3$i$J(B
+ *  $B$$(B (ret_int$B=hM}$NCf$G$+$+$C$?3d9~$_%O%s%I%i$+$i$N(B ret_int $B$G$O!$La(B
+ *  $B$j@h$,(B IMASK != 15 $B$G$"$k$?$a$K!$%?%9%/%9%$%C%A$O5/$3$i$J$$$3$H$KCm(B
+ *  $B0U(B)$B!%(B
  */
 	.text
 	.align 1
@@ -172,32 +174,32 @@ dispatch_2:
 	.globl _i_ret_int
 	.globl __ret_int
 _z_ret_int:
-	add #16, sp			/* TRAPA ÇÃ EITèÓïÒÇéÃÇƒÇÈ */
+	add #16, sp			/* TRAPA $B$N(B EIT$B>pJs$r<N$F$k(B */
 	bra __ret_int
 _i_ret_int:
-	add #4, sp			/* ñﬂÇËî‘ínÇéÃÇƒÇÈ */
+	add #4, sp			/* $BLa$jHVCO$r<N$F$k(B */
 __ret_int:
-	bfcmpu #15, #12,#4,@sp		/* EITèÓïÒíÜÇÃ IMASK != 15 Ç»ÇÁèIóπ */
+	bfcmpu #15, #12,#4,@sp		/* EIT$B>pJsCf$N(B IMASK != 15 $B$J$i=*N;(B */
 	bne ret_int_1
-	cmp #0, @_dispatch_disabled	/* É^ÉXÉNÉfÉBÉXÉpÉbÉ`ã÷é~íÜÇ©ÅH */
+	cmp #0, @_dispatch_disabled	/* $B%?%9%/%G%#%9%Q%C%A6X;_Cf$+!)(B */
 	bne ret_int_1
-	ldc #0, @IMASK			/* äÑçûÇ›Çã÷é~ */
-	cmp @_ctxtsk, @_schedtsk	/* É^ÉXÉNÉXÉCÉbÉ`Ç™ïKóvÇ©ÅH */
+	ldc #0, @IMASK			/* $B3d9~$_$r6X;_(B */
+	cmp @_ctxtsk, @_schedtsk	/* $B%?%9%/%9%$%C%A$,I,MW$+!)(B */
 	beq ret_int_1
 
-	mov #1, @_dispatch_disabled	/* É^ÉXÉNÉfÉBÉXÉpÉbÉ`Çã÷é~ */
+	mov #1, @_dispatch_disabled	/* $B%?%9%/%G%#%9%Q%C%A$r6X;_(B */
 	push r0
 	stc @SP0, r0
 	sub #76, r0
 	ldc r0, @SP0
-	mov #0, @(72,r0)		/* EXPC (É_É~Å[) ÇÃê›íË */
-	mov @(12,sp), @(68,r0)		/* ñﬂÇËî‘ínÇÃï€ë∂ */
-	mov #TRAPA4_EITINF, @(64,r0)	/* EITINF ÇÃê›íË */
-	mov @(4,sp), @(60,r0)		/* PSW ÇÃï€ë∂ */
-	stm (r1-r14), @(4,r0)		/* ÉåÉWÉXÉ^ÇÃï€ë∂ */
+	mov #0, @(72,r0)		/* EXPC ($B%@%_!<(B) $B$N@_Dj(B */
+	mov @(12,sp), @(68,r0)		/* $BLa$jHVCO$NJ]B8(B */
+	mov #TRAPA4_EITINF, @(64,r0)	/* EITINF $B$N@_Dj(B */
+	mov @(4,sp), @(60,r0)		/* PSW $B$NJ]B8(B */
+	stm (r1-r14), @(4,r0)		/* $B%l%8%9%?$NJ]B8(B */
 	pop @r0
-	stctx/ls			/* ÉRÉìÉeÉLÉXÉgÇÃï€ë∂ */
-	mov #dispatch_1, @(8,sp)	/* ñﬂÇËêÊÇ dispatch_1 Ç… */
-	mov #DISPATCHER_PSW, @sp	/* PSW ÇïœçX */
+	stctx/ls			/* $B%3%s%F%-%9%H$NJ]B8(B */
+	mov #dispatch_1, @(8,sp)	/* $BLa$j@h$r(B dispatch_1 $B$K(B */
+	mov #DISPATCHER_PSW, @sp	/* PSW $B$rJQ99(B */
 ret_int_1:
 	reit

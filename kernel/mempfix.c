@@ -1,8 +1,10 @@
 /**
  * 
- * 	    ItIs - ITRON Implementation by Sakamura Lab
+ * 	ItIs - An ITRON Implementation for Research and Education
  * 
- * Copyright (C) 1989-1996 by Sakamura Lab, the University of Tokyo, JAPAN
+ * Copyright (C) 1989-1997 by Sakamura Laboratory, Univ. of Tokyo, JAPAN
+ * Copyright (C) 1997-1998 by Embedded and Real-Time Systems Laboratory,
+ * 				Toyohashi Univ. of Technology, JAPAN
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -12,15 +14,15 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of the laboratory
+ * 3. Neither the name of the universities nor the names of the laboratories
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE UNIVERSITY OR THE LABORATORY BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * IN NO EVENT SHALL THE UNIVERSITIES OR THE LABORATORIES BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -28,7 +30,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- *  @(#) $Id: mempfix.c,v 1.14 1997/01/10 13:36:29 hiro Exp $
+ *  @(#) $Id: mempfix.c,v 1.16 1998/05/25 01:38:52 hiro Exp $
  */
 
 #include "itis_kernel.h"
@@ -39,7 +41,7 @@
 #ifdef USE_MPF
 
 /*
- *  å≈íËí∑ÉÅÉÇÉäÉvÅ[Éãä«óùÉuÉçÉbÉNÇÃíËã`
+ *  $B8GDjD9%a%b%j%W!<%k4IM}%V%m%C%/$NDj5A(B
  */
 
 typedef struct free_list {
@@ -47,17 +49,17 @@ typedef struct free_list {
 } FREEL;
 
 typedef struct fix_memorypool_control_block {
-	QUEUE	wait_queue;	/* ÉÅÉÇÉäÉvÅ[Éãë“ÇøÉLÉÖÅ[ */
-	ID	mpfid;		/* å≈íËí∑ÉÅÉÇÉäÉvÅ[ÉãID */
-	VP	exinf;		/* ägí£èÓïÒ */
-	ATR	mpfatr;		/* ÉÅÉÇÉäÉvÅ[ÉãëÆê´ */
-	INT	mpfcnt;		/* ÉÅÉÇÉäÉvÅ[ÉãëSëÃÇÃÉuÉçÉbÉNêî */
-	INT	blfsz;		/* å≈íËí∑ÉÅÉÇÉäÉuÉçÉbÉNÇÃÉTÉCÉY */
-	INT	mpfsz;		/* ÉÅÉÇÉäÉvÅ[ÉãëSëÃÇÃÉTÉCÉY */
-	INT	frbcnt;		/* ãÛÇ´óÃàÊÇÃÉuÉçÉbÉNêî */
-	VP	mempool;	/* ÉÅÉÇÉäÉvÅ[ÉãÇÃêÊì™ÉAÉhÉåÉX */
-	VP	unused;		/* ñ¢égópóÃàÊÇÃêÊì™ */
-	FREEL	*freelist;	/* ãÛÇ´ÉuÉçÉbÉNÇÃÉäÉXÉg */
+	QUEUE	wait_queue;	/* $B%a%b%j%W!<%kBT$A%-%e!<(B */
+	ID	mpfid;		/* $B8GDjD9%a%b%j%W!<%k(BID */
+	VP	exinf;		/* $B3HD%>pJs(B */
+	ATR	mpfatr;		/* $B%a%b%j%W!<%kB0@-(B */
+	INT	mpfcnt;		/* $B%a%b%j%W!<%kA4BN$N%V%m%C%/?t(B */
+	INT	blfsz;		/* $B8GDjD9%a%b%j%V%m%C%/$N%5%$%:(B */
+	INT	mpfsz;		/* $B%a%b%j%W!<%kA4BN$N%5%$%:(B */
+	INT	frbcnt;		/* $B6u$-NN0h$N%V%m%C%/?t(B */
+	VP	mempool;	/* $B%a%b%j%W!<%k$N@hF,%"%I%l%9(B */
+	VP	unused;		/* $BL$;HMQNN0h$N@hF,(B */
+	FREEL	*freelist;	/* $B6u$-%V%m%C%/$N%j%9%H(B */
 } MPFCB;
 
 static MPFCB	mpfcb_table[NUM_MPFID];
@@ -65,14 +67,14 @@ static MPFCB	mpfcb_table[NUM_MPFID];
 #define get_mpfcb(id)	(&(mpfcb_table[INDEX_MPF(id)]))
 
 /*
- *  ñ¢égópÇÃå≈íËí∑ÉÅÉÇÉäÉvÅ[Éãä«óùÉuÉçÉbÉNÇÃÉäÉXÉg
+ *  $BL$;HMQ$N8GDjD9%a%b%j%W!<%k4IM}%V%m%C%/$N%j%9%H(B
  */
 #ifndef _i_vcre_mpf
 QUEUE	free_mpfcb;
 #endif /* _i_vcre_mpf */
 
 /* 
- *  å≈íËí∑ÉÅÉÇÉäÉvÅ[Éãä«óùÉuÉçÉbÉNÇÃèâä˙âª
+ *  $B8GDjD9%a%b%j%W!<%k4IM}%V%m%C%/$N=i4|2=(B
  */
 void
 fix_memorypool_initialize(void)
@@ -98,7 +100,7 @@ fix_memorypool_initialize(void)
 }
 
 /*
- *  å≈íËí∑ÉÅÉÇÉäÉvÅ[Éãä«óùópÉãÅ[É`Éì
+ *  $B8GDjD9%a%b%j%W!<%k4IM}MQ%k!<%A%s(B
  */
 
 #define MINSIZE		(sizeof(FREEL))
@@ -111,13 +113,13 @@ mempool_end(MPFCB *mpfcb)
 }
 
 /*
- *  å≈íËí∑ÉÅÉÇÉäÉvÅ[Éãë“ÇøédólÇÃíËã`
+ *  $B8GDjD9%a%b%j%W!<%kBT$A;EMM$NDj5A(B
  */
 static WSPEC wspec_mpf_tfifo = { TTW_MPF, 0, 0 };
 static WSPEC wspec_mpf_tpri = { TTW_MPF, obj_chg_pri, 0 };
 
 /*
- *  å≈íËí∑ÉÅÉÇÉäÉvÅ[Éãä«óùã@î\
+ *  $B8GDjD9%a%b%j%W!<%k4IM}5!G=(B
  */
 
 #if !defined(_i_cre_mpf) || !defined(_i_vcre_mpf)
@@ -166,7 +168,7 @@ i_cre_mpf(ID mpfid, T_CMPF *pk_cmpf)
 	mpfcb = get_mpfcb(mpfid);
 
 	BEGIN_CRITICAL_SECTION;
-	if (mpfcb->mpfid != OBJ_NONEXIST) {
+	if (mpfcb->mpfatr != OBJ_NONEXIST) {
 		ercd = E_OBJ;
 	}
 	else {
@@ -221,7 +223,7 @@ i_del_mpf(ID mpfid)
 	mpfcb = get_mpfcb(mpfid);
 
 	BEGIN_CRITICAL_SECTION;
-	if (mpfcb->mpfid == OBJ_NONEXIST) {
+	if (mpfcb->mpfatr == OBJ_NONEXIST) {
 		ercd = E_NOEXS;
 	}
 	else {
@@ -232,7 +234,7 @@ i_del_mpf(ID mpfid)
 			queue_insert(&(mpfcb->wait_queue), &free_mpfcb);
 		}
 #endif /* _i_vcre_mpf */
-		mpfcb->mpfid = OBJ_NONEXIST;
+		mpfcb->mpfatr = OBJ_NONEXIST;
 	}
 	END_CRITICAL_SECTION;
 	return(ercd);
@@ -273,7 +275,7 @@ i_tget_blf(VP* p_blf, ID mpfid, TMO tmout)
 	mpfcb = get_mpfcb(mpfid);
 
 	BEGIN_CRITICAL_SECTION;
-	if (mpfcb->mpfid == OBJ_NONEXIST) {
+	if (mpfcb->mpfatr == OBJ_NONEXIST) {
 		ercd = E_NOEXS;
 	}
 	else if (mpfcb->freelist) {
@@ -317,7 +319,7 @@ i_rel_blf(ID mpfid, VP blf)
 	mpfcb = get_mpfcb(mpfid);
 
 	BEGIN_CRITICAL_SECTION;
-	if (mpfcb->mpfid == OBJ_NONEXIST) {
+	if (mpfcb->mpfatr == OBJ_NONEXIST) {
 		ercd = E_NOEXS;
 	}
 #ifdef CHK_PAR
@@ -357,7 +359,7 @@ i_ref_mpf(T_RMPF *pk_rmpf, ID mpfid)
 	mpfcb = get_mpfcb(mpfid);
 
 	BEGIN_CRITICAL_SECTION;
-	if (mpfcb->mpfid == OBJ_NONEXIST) {
+	if (mpfcb->mpfatr == OBJ_NONEXIST) {
 		ercd = E_NOEXS;
 	}
 	else {
